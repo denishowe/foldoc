@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/foldoc
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://foldoc.org
+  * I am foldoc (https://keybase.io/foldoc) on keybase.
+  * I have a public key ASBRywi2dd-qNtEVnY4apxANfzZuPTnKYU8Gf3ITxQVIUwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012007d370cc0e878d726c18b473d4f4423c1158854e7780680251dc638722b5a42e0a",
+      "host": "keybase.io",
+      "kid": "012051cb08b675dfaa36d1159d8e1aa7100d7f366e3d39ca614f067f7213c50548530a",
+      "uid": "c8240f753235f19a9f7367826c006c19",
+      "username": "foldoc"
+    },
+    "merkle_root": {
+      "ctime": 1539793440,
+      "hash": "6cdffcb01d3964dad3054b5a0b0e7803bf4e058f6cc88aa8814d3330c8bf34c18820a60e52f9e4a11ba65464384780dc131b1138f056667dce63e025e5918189",
+      "hash_meta": "2e8501f24680acfdc8dc75128fda09775e05c7b227a6d11aaae9c0c3ea15d243",
+      "seqno": 3809867
+    },
+    "service": {
+      "entropy": "mfS9+IBYa5jzRVye67XtuWir",
+      "hostname": "foldoc.org",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.7.3"
+  },
+  "ctime": 1539793469,
+  "expire_in": 504576000,
+  "prev": "425fc492659c16c476d5bd9f3ee15d0f1746f015047aa5ef3dcd8cba77ccf7cf",
+  "seqno": 9,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgUcsItnXfqjbRFZ2OGqcQDX82bj05ymFPBn9yE8UFSFMKp3BheWxvYWTESpcCCcQgQl/EkmWcFsR21b2fPuFdDxdG8BUEeqXvPc2MunfM98/EIO3cyodh98eCjUGFLADHX30S2yypr+SRE1uwqnSlZ6x5AgHCo3NpZ8RAmR3VTXn8mMLVQ4Aohqh4WTiwIF9xS6KQ+3gYR/wsri2YxBNZkpbC8z61TOyzLDMsykhevoIxxXhOVbvxpYW6DahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIMJjfCVQhqzF3YjbS5lUtNOK7kje9S58ne/uEhlEnbjwo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/foldoc
+
+==================================================================

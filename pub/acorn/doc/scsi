@@ -1,0 +1,117 @@
+From torq@gnu.ai.mit.edu (Andy Mell) Wed Nov 10 09:47:56 1993
+Path: doc.ic.ac.uk!warwick!zaphod.crihan.fr!pipex!howland.reston.ans.net!vixen.cso.uiuc.edu!sdd.hp.com!spool.mu.edu!bloom-beacon.mit.edu!ai-lab!torq
+From: torq@gnu.ai.mit.edu (Andy Mell)
+Newsgroups: comp.sys.acorn.tech
+Subject: Re: Does Acorn Replay really work
+Date: 9 Nov 1993 20:54:38 GMT
+Organization: MIT Artificial Intelligence Lab
+Lines: 103
+Message-ID: <2bp02eINNpoo@life.ai.mit.edu>
+References: <1993Nov8.075605.12868@lssec.bt.co.uk>
+NNTP-Posting-Host: kropotkin.ai.mit.edu
+X-Newsreader: TIN [version 1.1 PL6]
+
+Well Allan,
+
+You may be interested in the attached message which Hugo Fiennes posted to
+fidonet about a month ago about scsi cards (reproduced with permission)
+
+> Message: #320858 (Read 21 times, has 0 replies, 5277 bytes)
+> Date   : Thu Sep 16 10:08:58 1993
+> From   : Hugo Fiennes
+> To     : Steve Smith
+> Subject: SCSI card
+> 
+Acorn SCSI (mk3) has both internal and external connectors. The external is
+the SCSI standard 50w centronics (mac-style is 25 way d-type, as used by
+lingenuity and cumana).
+
+Cache on drives is *not* the same as 'cache' (I put it in quotes, because this
+isn't the cache that PC scsi cards talk of) on cards. The purpose of cache on
+drives is to hold recently read information (or information that the drive
+'thinks' is likely to be wanted next, eg the next few sectors of disk) and
+supply it to the computer without having to use the disk, hence it's much
+quicker.
+
+The cache on cards is to get over the limitation that acorn machines still
+don't have DMA (direct memory access - this would allow scsi cards to write
+data into the machines memory with no intervention on the CPU's part -
+currently the ARM has to fetch data from the card (into its registers) and
+write it to memory, hence using much cpu time). A card with no cache has to
+enter a tight loop, in which it checks to see if data is available from the
+SCSI bus, and if so read it and store it. The problem is that data can become
+available just after the machine has checked, hence the limitation on
+max transfer speed. With an 8-bit uncached interface, the max rate is around
+650kb'sec on ARM2 without disabling interrupts (as the techonomatic card used
+to do).
+
+SCSI data is only 8-bit (ok, there are 16- and 32- bit drives, but these are
+generally only on drives >=0.5Gb and there are no wide- scsi interfaces for
+the acorn yet) so what are 16-bit cards? A 16-bit card is a card in which the
+hardware will collect 2 bytes at a time, then present the whole 16-bits (the
+width of the databus on podules) at a time to the ARM. A basic 16-bit
+interface like this will get around 1.2Mb/sec.
+
+The oak scsi plays some other tricks to get max around 2.2Mb/sec: it is a 16-
+bit interface (using their own hardware and an 8-bit scsi controller to
+'double-up' the data). What it does is: every 128 bytes it uses a polling loop
+(see above) to check data is present and the drive has reported no errors, etc.
+ Inside each 128 byte block it just reads data as fast as it can: on a normal
+card this would result in disaster if the drive wasn't fast
+enough to feed the machine: on the oak card however, the hardware will not
+assert IOGT (IO grant), so hanging the machine in a wait state until data is
+ready. This can have problems: if the drive is to slow (unlikely) the machine
+will completely stiff as the ARM3 can't be kept in such a state for more than
+10(?) us.
+
+Morley uncached/Vertical twist 16-bit/ARXE 16-bit cards all use the NCR53c94
+(or Emulex/AMD equivalent). This is a true 16-bit controller chip, which does
+the doubling up internally, and also provides a 16-byte FIFO. This fifo
+enables the polling loop to check to see if the FIFO is half-full (8 bytes,
+4x16-bit words) and then use a LDM (load multiple) to read 8 bytes of
+information (in 4 registers), combine it, and store it in memory.
+
+The morley cached card adds 2kb of FIFO, allowing it to read 2kb for every
+polling operation (max of 4.5Mb/sec!!!).
+
+The acorn card has 64kb of static RAM, a DMA controller, and lots of bus
+buffers. The process of reading data into the onboard ram is totally automated
+by the DMA controller, and when the transfer has finished/the buffer is full,
+the ARM can read a whole bufferful. However, when it is doing so, the SCSI
+transfer cannot be running, hence the speed loss over the Morley cached card.
+
+Most SCSI cards use simple tricks like reading as much data as possible into
+registers and using STMs (store multiples) to write it to RAM. The old oak
+software (1.16? maybe the current one too) is quick on transfers to word
+boundaries (eg *load bigfile 10000) but much slower on non-aligned boundaries
+(eg *load bigfile 10001) because in that case it works byte-by-byte. The
+morley card is much better optimised for these situation, BUT they don't
+happen that often to be honest.
+
+'cache' on a PC SCSI cntroller almost always refers to a store like the drive
+cache (sometimes many many Mb of it!) to speed up operations (eg windows :-) ).
+ More advanced controllers will do things like 'elevator seeks' in which data
+to be written will be ordered so the data will be sent to the drive sorted by
+disk address, so the drive will be able to write all of it with one sweep of
+the heads - this is only really useful on UNIX, where a task can be suspended
+waiting for an IO operation, unlike RISC OS where another task isn't polled
+while an IO operation is waiting.
+
+Some drives (eg quantum 120/240Mb) have write caching as well, which will hold
+writes in drive cache in case it can optimise the process at all (max of about
+1 second holding though, for safety's sake!) - this can cause lots of problems
+if the completed SCSI operation (from the host's point of view) comes across a
+disk error while another SCSI operation is taking place.
+
+Well, there you go, a complete guide to SCSI cards on the acorn.
+
+Hugo
+(phew...)
+--- ARCbbs RISC OS [1.63]
+ * Origin: The World of Cryton +44 749 670030-v32bis/670883-ISDN (2:252/102)
+
+
+A
+
+
+

@@ -1,0 +1,136 @@
+From RWilson@acorn.co.uk Thu Sep 10 17:37:17 1992
+From: RWilson@acorn.co.uk
+Newsgroups: comp.sys.acorn.tech
+Subject: BASIC V all time bug list
+Date: 10 Sep 92 16:25:01 GMT
+
+. > BugList
+
+                 Bugs that have been mended
+
+Date        Description of fault
+
+20-Jul-86   WHILE loop was checking the line number to see if it was a token or
+            ENDWHILE or end of line.
+06-Aug-86   Nested block IF structures implemented.
+07-Aug-86   In the assembler, "LDRB first" and similar failed to read because
+            it trashed the position.
+14-Aug-86   In the assembler, LDR Rn,label had the U/D bit sense inverted.
+14-Aug-86   In the assembler EQUB, EQUW, EQUD implemented.
+14-Aug-86   In the assembler pre indexing writeback implemented.
+14-Aug-86   Direct function calls supported in assembler for macros.
+15-Aug-86   FNRET did not pull strange things from stack.
+15-Aug-86   LOCAL ERROR added as synonym for ON ERROR TO.
+15-Aug-86   ENDFN and FNRET process any error status they find on stack.
+18-Aug-86   += and -= implemented.
+19-Aug-86   Comments in assembler were not spotted before opcode.
+19-Aug-86   Assembler listings were wrong for comments and labels only.
+19-Aug-86   Assembler listings could not cope with comments including commands
+            e.g. \LOAD IT!
+20-Aug-86   Assembler couldn't branch to unaligned addresses.
+10-Sep-86   += now works for strings, also.
+30-Oct-86   LEFT$(A$) means LEFT$(A$,LENA$-1); RIGHT$(A$) means RIGHT$(A$,1).
+18-Nov-86   -chain, -load, -help added to startup.
+24-Nov-86   ^ in assembler set wrong bit.
+24-Nov-86   MOVEQ dealt with.
+24-Nov-86   misc corrections to help messages.
+08-Dec-86   O% in assembler incremented.
+08-Dec-86   RETURN etc. in direct mode no longer cause address exception.
+12-Jan-87   APPEND added.
+13-Jan-87   SYS added.
+13-Jan-87   line number range extended to 65279.
+16-Jan-87   LISTIF OPENIN no longer finds CASE.
+16-Jan-87   ; added to SYS.
+22-Jan-87   LVAR no longer says RETURN real array.
+22-Jan-87   LISTO2 indents IF THEN ELSE ENDIF.
+22-Jan-87   RENUMBER 10,65270 doesn't complain.
+22-Jan-87   TRACE ON will trace lines whose number is greater than &FE00.
+22-Jan-87   SWAP A(),B() etc. now work.
+23-Jan-87   CALL with parameters.
+29-Jan-87   -quit as a command line option.
+29-Jan-87   SAVE with date stamp does "B" option.
+02-Feb-87   Assembler accepts ranges in LDM etc.
+16-Feb-87   missing parameters allowed in SYS.
+19-Feb-87   COLOUR a,p,r,g,b implemented.
+23-Feb-87   RECORD, ON ERROR TO, ON ERROR RESTORE eliminated.
+05-Mar-87   A$+="JIM" bug introduced when STRACC moved removed.
+11-Mar-87   REM as first character in assembler line wasn't printed properly.
+11-Mar-87   LDR R0,[R0,-R0] couldn't be assembled.
+13-Mar-87   "A"="AB" bug introduced when register names in STNCMP changed.
+16-Mar-87   Line too long spotted.
+16-Mar-87   "fred"="" bug introduced when register names in STNCMP changed.
+16-Mar-87   bug in INSTR two parameter introduced when SPULL used R3.
+17-Mar-87   COLOUR a,r,g,b instead of COLOUR a,p,r,g,b.
+06-Apr-87   bug in BPUT#handle,""; fixed.
+06-Apr-87   OF value changed.
+10-Apr-87   ALIGN in assembler fixed.
+10-Apr-87   No room message added to string allocation (and about time!)
+14-Apr-87   a()+=1 error message fixed - by making it work!
+14-Apr-87   refence spelling corrected.
+14-Apr-87   Detection of unknown arrays in array operations corrected.
+22-Apr-87   PRINT#X,"HELLO" bug due to moving STRACC.
+18-May-87   LOCAL a$() etc. didn't recover space used by elements.
+11-Aug-87   nested LOCAL A$() got space recovery wrong.
+11-Aug-87   didn't call osbyte &da, called &d0, in error handler
+11-Aug-87   RND seed was non-word aligned.
+28-Aug-87   OPT 4+ ALIGNments corrected.
+01-Sep-87   CLEAR when PAGE changed removed (but not the ROM version).
+11-Sep-87   Detection of insufficient space for library.
+11-Sep-87   RESTORE and TRACE OFF removeed from low level error handler.
+11-Sep-87   SYS x,y TO ;V% allowed.
+18-Sep-87   division by power of 2 did not check under/overflow.
+24-Sep-87   LOCAL A() destroyed when nested LOCAL A$() fixed.
+28-Sep-87   A()=const destroyed by cache mechanism.
+08-Dec-87   LOCAL A():DIM A(1,1) messed stack due to bug in DIM re type (also
+            misallocates integer arrays!).
+04-Jan-88   LINE INPUT had sense of LINE flag wrong - misbehaved for A,B ans.
+05-Jan-88   HIMEM=HIMEM wouldn't work.
+08-Feb-88   CREATE was uncallable due to LVBLNK loosing R4.
+26-Feb-88   STRACC postion changed for Arthur 2.00.
+29-Feb-88   $A="" check for <&8000.
+07-Mar-88   50IF<false>THEN50 unescapeable due to cache.
+12-May-88   INPUT#,a$ at end of file gives end of file message.
+23-May-88   ATN of a large power of 2 went wrong.
+01-Sep-88   WHILE <no sd> failed in TRACE state due to moving LINE in SLOWMUNG
+20-Sep-88   EXP1E-5 bug fixed - epsmin coded as wrong number
+17-Nov-88   Fixed TAN1E-5 bug (misread the flow chart in Cody and Waite!)
+02-Dec-88   -1^-10 blew up
+14-Mar-89   " unlistable token " not terminated by >&7F
+15-Jun-89   F1XSUB, F1SUB could return -0 which various xxSTAs can't cope with
+17-Jul-89   Difference between IF THENELSE and IF THEN ELSE fixed
+18-Aug-89   Cache not being flushed on errors could cause problems with EVAL
+12-Oct-89   Problem printing 0 in e mode.
+17-Oct-89   INT-(3*2^30) didn't give error
+19-Oct-89   BYTESM not reset on -chain or -quit
+24-Oct-89   A()=B() messed up
+03-Nov-89   Change to ADVAL to return all 32 bits
+29-Nov-89   Altered fatal error to 0 only
+06-Dec-89   error bit in OPT for ADR didn't work
+11-Dec-89   INSTALL was a statement when it should have been a command
+11-Dec-89   TRACE TO "printer:" didn't work because of the type setting
+17-Jan-90   CRUNCH messed up EOR sample,sample,#1 and AND etc.
+19-Jan-90   FIX of maximum negative integer (a very long standing bug)
+19-Jan-90   BASIC64 printing -ve numbers rounded in the wrong place
+01-Feb-90   BASIC64 fp read inaccurate - changed to E precision
+20-Feb-90   LISTO3 indented SUM (due to checking for TESCFN as well as TESCSTMT)
+01-Mar-90   RESTORE DATA pulled one too many words off the stack
+08-Aug-90   COUNT not cleared on -run, -quit programs
+30-May-91   String concatenation via += failed to check maximum length properly.
+03-Jun-91   Assembler couldn't do CRUNCH'd BL FNE....
+05-Jun-91   Auto CRUNCH removed from BASIC V (not VI)
+10-Jun-91   Bug in printing 1E9-.5 removed from BASIC VI
+10-Jun-91   BASIC V AutoCRUNCHes if BASIC$Crunch is defined
+10-Jun-91   COUNT not cleared on -chain programs
+28-Jun-91   redesigned assembler condition code checking
+28-Jun-91   change TRACE so numbers and PROC can be on simultaneously
+21-Jan-92   'technical error' - ADVAL gets R2 value wrong - irrelevant on RISC OS
+21-Jan-92   1 S cycle removed from INKEY (INTEGZ rather than INTEGY)
+27-Jan-92   @% += and -= reimplemented
+27-Jan-92   CRUNCH of ) next to ! and ? disallowed
+12-Mar-92   10 registers allowed for SYS
+12-Mar-92   BBC MOS emulation removed from BASIC VI
+23-Mar-92   TEXTLOAD failed to do a NEW before merging the text (code copied from
+            FROMAT into LOADFILEFINAL)
+18-Aug-92   floating point comparison of positive numbers with zero exponent against
+            zero returned wrong sign
+

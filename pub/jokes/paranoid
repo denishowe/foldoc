@@ -1,0 +1,129 @@
+From Zacharias Bobolakis <zb@doc.ic.ac.uk> Fri Nov 19 12:36:22 1993
+From: Zacharias Bobolakis <zb@doc.ic.ac.uk>
+Date: Fri, 19 Nov 93 12:21:18 GMT
+To: dbh@doc.ic.ac.uk
+
+>From alt.best.of.internet Fri Jul 16 11:40:51 1993
+Newsgroups: alt.best.of.internet
+Path: doc.ic.ac.uk!decwrl!decwrl!parc!rocksanne!spirit.wrc.xerox.com!fleck
+From: fleck@spirit.wrc.xerox.com (Pat Fleckenstein)
+Subject: This was posted last year to comp.lang.c
+Message-ID: <1993Jul15.144403.24149@spectrum.xerox.com>
+Summary: Don't know if it made it here, but it deserves it again anyway
+Keywords: "More human than human" is our motto.
+Sender: news@spectrum.xerox.com
+Organization: The Tyrell Corporation
+Date: Thu, 15 Jul 1993 14:44:03 GMT
+Lines: 108
+
+I re-read this every few weeks.  It hasn't failed to make me smile, yet.
+
+- From: tps@chem.ucsd.edu (Tom Stockfisch)
+- Newsgroups: comp.lang.c
+- Subject: Re: opinion on return;
+- Date: 14 May 92 05:43:56 GMT
+- Organization: University of California San Diego, Chemistry
+- Lines: 93
+- 
+- In article ... crow@coos.dartmouth.edu (Preston F. Crow) writes:
+- >In article ... tleylan@pegasus.com (Tom Leylan) writes:
+- >What do people think about the explicit use of a return statement in a
+- >function that returns void ?
+- >void test()
+- >{
+- >  /* some code */
+- >  return;
+- >}
+- 
+- /* beginning of article */
+- 
+- This is good as far as it goes, and is certainly safer than running directly
+- into the final right brace.  I, however, use _two_ returns, like this:
+- 
+- void test()
+- { /* begin body of test */
+- 	...
+- 	return;
+- 	return;
+- } /* end body of test */
+- 
+- That way, if the reader happens to miss the first "return" he almost
+- surely will notice the second and pause to consider all the ramifications
+- of not returning a value from a void function.  In addition, if I
+- accidently remove one of the returns the other return is still there,
+- adding a nice safety margin for code reliability.
+- 
+- Along this same line I also add an extra ";" at the end of expression
+- statements to emphasize that these are complete statements.
+- Example:
+- 
+- 	while (i < n)
+- 	{
+- 		x[i] =	y[i];;
+- 		++i;;
+- 	}
+- 
+- Now, you might say that the extra ";" will mess up "if...else" sequences.
+- To that objection I would respond, why on earth are you not surrounding
+- all of the code controlled by an "if" with braces?  There is no excuse for
+- writing the dangerous
+- 	
+- 	if (condition)
+- 		statement;
+- 
+- when you can just as easily write
+- 
+- 	if (condition)
+- 	{
+- 		statement;;
+- 	}
+- 
+- If my "while" loop is in a particularly crucial part of the code I will
+- write it as
+- 
+- 	while (i < n && !(i >= n))
+- 	{
+- 		x[i] =	y[i];;
+- 		x[i] =	y[i];;
+- 		++i;;
+- 	}
+- 
+- This emphasizes to the reader what the loop invariant is, making him
+- think about it in two different ways, and also guarantees that the
+- assignment gets done, and that the reader notices for sure what gets
+- assigned to what.
+- 
+- If I actually do return a value from a function I use:
+- 
+- 	return( (1+2) );;
+- 
+- The first set of parentheses is to make "return" look like a function call,
+- which I like a lot, and the second is, again, a safety factor -- If later
+- I should add to the expression, as in
+- 
+- 	return( (1+2)*2 );;
+- 
+- Then I don't have to worry about the "*" binding to the wrong object.
+- 
+- 
+- /* end of article */
+- /* end of article */
+- 
+- [Just in case, :) :)]
+- 
+- "brevity is the essence of wit"
+- 
+- "if two nails will probably hold it together, 100 nails will _surely_ hold
+- it together"
+- -- 
+- 
+- || Tom Stockfisch, UCSD Chemistry	tps@chem.ucsd.edu
+- 
+- 
+-- 
+-------------------------------------------------------------------------------
+With your teeth in your mouth.  --- pat@nick.csh.rit.edu paf3580@ritvax.rit.edu
+-------------------------------------------------------------------------------
+
+
+

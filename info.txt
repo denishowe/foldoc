@@ -1,0 +1,7 @@
+# Contact info submission
+url: foldoc.org
+site_owner: Denis Howe
+city: London
+country: UK
+site_name: Free On-line Dictionary of Computing (FOLDOC)
+site_description: A searchable dictionary of terms from computing and related fields.

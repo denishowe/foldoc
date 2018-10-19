@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+
+Denis Howe 2018-08-10
+
+Fetch a list of URLs, log result, log content length.  Handle errors.
+
+-->
+
+<html>
+<head>
+<title>Fetch</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<script>
+
+(function () {
+
+    // List of URLs to fetch
+
+    const urls = [
+        'http://foldoc.org/',
+        'https://jsonplaceholder.typicode.com/todos/1'
+        , 'http://no.su.ch/domain'
+    ];
+
+    // Return a Promise of either the response text or, for errors, return the message.
+
+    const makeRequest = window.fetch;
+
+    Promise.all(urls.map(url => {
+        let status;
+        return makeRequest(url)
+            .then(response => {
+                status = response.status;
+                return response.text()
+            })
+            .catch(err => {
+                status = err.toString();
+                return '';
+            })
+            .then(text => {
+                const len = text.length;
+                console.log(url, 'Status:', status, 'Length:', len);
+                return len;
+            })
+    })).then(results => console.log('Total length:',
+                                    results.reduce((a, b) => a+b, 0)));
+
+})();
+
+</script>
+</body>
+</html>

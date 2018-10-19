@@ -1,0 +1,88 @@
+From mhardy@acorn.co.uk (Michael Hardy) Thu Dec  2 11:20:43 1993
+Path: doc.ic.ac.uk!uknet!acorn!not-for-mail
+From: mhardy@acorn.co.uk (Michael Hardy)
+Newsgroups: comp.sys.acorn
+Subject: Re: Clock on 400/1
+Date: 30 Nov 1993 16:19:54 -0000
+Organization: Acorn Computers Ltd, Cambridge, England
+Lines: 75
+Message-ID: <2dfrra$5hm@acorn.acorn.co.uk>
+References: <CHAyDG.6ww@dcs.ed.ac.uk>
+NNTP-Posting-Host: acorn.acorn.co.uk
+
+In article <CHAyDG.6ww@dcs.ed.ac.uk> gst@dcs.ed.ac.uk (George Taylor) writes:
+
+>In article <29149@armltd.uucp> mike@nsict.org writes:
+>
+>>So does mine. There was a fix posted for this some time back (involved
+>>resetting the IIC clock chip manually), but since I stopped being
+>>@phx.cam.ac.uk, I haven't got it anymore...
+>
+>I managed to *obtain* the problem using IIC_Control so be warned!
+
+Unfortunately, the RISC OS 2 PRMs got the read/write sense of IIC_Control
+reversed. This error has more potentially severe side effects than any other
+we're aware of. We have done our best to publicise this error, and have also
+corrected it in the RISC OS 3 PRMs. However, for those of you who don't have
+a copy, here is the correct description of this SWI:
+
+----------------------------------------------------------------------------
+IIC_Control (SWI &240)
+======================
+
+Control IIC devices
+
+On entry
+--------
+R0 = device address (bit 0 = 0 to write, bit 0 = 1 to read)
+R1 = pointer to block
+R2 = length of block in bytes
+
+On exit
+-------
+R0 - R2 preserved
+
+Interrupts
+----------
+Interrupts are disabled
+Fast interrupts are enabled
+
+Processor Mode
+--------------
+Processor is in SVC mode
+
+Re-entrancy
+-----------
+SWI is not re-entrant
+
+Use
+---
+This call allows reading and writing to IIC devices. IIC is an internal
+serial protocol. It is used in RISC OS machines for writing to the clock
+chip and IIC compatible devices on expansion cards.
+
+The possible error is `No acknowledge from IIC device' (&20300).
+
+Related SWIs
+------------
+None
+
+Related vectors
+---------------
+None
+----------------------------------------------------------------------------
+
+I hope this helps anyone trying to use this SWI.
+
+- Michael J Hardy
+
+--------------------------+-------------------------------------------------
+  Technical Publications  | Email:      mhardy@acorn.co.uk
+  Acorn Computers Ltd     |-------------------------------------------------
+  Acorn House             | Telephone:  +44 223 254352
+  Vision Park             | Fax:        +44 223 254262
+  Histon                  | Telex:      329118 EXECOM G
+  Cambridge CB4 4AE       |-------------------------------------------------
+  England                 | Disclaimer: All opinions are my own, not Acorn's
+--------------------------+-------------------------------------------------
+

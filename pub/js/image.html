@@ -1,0 +1,113 @@
+<body>
+<!-- Manipulate an image in JavaScript -->
+<div style="float: left; width: 100%">
+	<canvas id="0" style="border: solid"></canvas>
+	<canvas id="1" style="border: solid"></canvas>
+</div>
+<script>
+
+// "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files image.html
+
+var canvas, ctx;						// Two-element arrays
+var current = 0;						// 0 or 1 index into above
+var black = [0, 0, 0, 255];
+
+function draw(im)
+{
+	var can = canvas[current];
+	var ctx = ctx[current];
+	var w = can.width, h = can.height;
+
+	// Center the source image in the current canvas
+
+	if (im)
+		ctx.drawImage(im, (w - im.width)/2, im_y0 = (h - im.height)/2);
+
+	// Get the pixels of the image
+
+	var dl = ctx.getImageData(0, 0, w, h).data;
+
+	// Set each pixel of the next canvas to
+	// the corresponding pixel on this one
+
+	var dr = new Uint8ClampedArray(dl.length);
+	var i = 0;							// ImageData pointer
+	for (yt = 0; yt < h; yt++)			// Top down
+	{
+		for (xt = 0; xt < w; xt++)
+		{
+			var x = xt, y = yt;
+			var pr = rgb(dl, w, h, x, y);
+			dr[i]   = pr[0];			// red
+			dr[i+1] = pr[1];			// green
+			dr[i+2] = pr[2]+1;			// blue
+			if (dr[i+2] > 255) dr[i+2] = 255;
+			dr[i+3] = pr[3];			// alpha
+			i += 4;
+		}
+	}
+	current = 1-current;				// Swap canvases
+	ctx[other].putImageData(new ImageData(dr, w, h), 0, 0);
+	draw();
+}
+
+//  Called on load or after resize
+
+function restart()
+{
+	for (i = 0; i < 2; i++)
+	{
+		canvas[i] = canvas(i);
+		ctx[i] = canvas[i].getContext('2d');
+	}
+	// Load image from data url
+    var im = new Image();
+	// http://www.chrome-allow-file-access-from-file.com/
+	// chrome --allow-file-access-from-files
+    // http://media.philly.com/images/youre-awesome.jpg
+    im.src = "youre-awesome.jpg";
+    im.onload = draw(im);
+}
+
+// Return [r,g,b,a] at (x, y) in ImageData.data d of width w
+
+function rgb(d, w, h, x, y)
+{
+	if (x < 0 || x >= w || y < 0 || y >= h)
+		return black;					// No source pixel
+
+	var i = 4 * (w * y + x);
+
+	return [d[i], d[i+1], d[i+2], d[i+3]];
+}
+
+// Return the canvas with id, resized to fit the window
+
+function canvas(id)
+{
+	var can = document.getElementById(id);
+	can.width = 0.5 * window.innerWidth - 16;
+	can.height = window.innerHeight - 26;
+
+	return can;
+}
+
+// Restart on load and whenever they stop resizing
+
+var resize_timeout;
+
+window.onresize = function ()
+{
+	if (resize_timeout) clearTimeout(resize_timeout);
+	resize_timeout = setTimeout(restart, 500);
+};
+
+window.onresize();
+
+// Local variables:
+// compile-command: "http://foldoc.org/pub/js/transform-2d.html"
+// compile-command: "transform-2d.html"
+// End:
+
+</script>
+</body>

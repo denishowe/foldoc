@@ -1,0 +1,71 @@
+From burke@vxdesy.desy.de Mon Feb  1 19:08:09 1993
+Newsgroups: comp.sys.acorn.tech
+From: burke@vxdesy.desy.de (Stephen Burke)
+Subject: Throwback protocol (client end)
+Organization: (DESY, Hamburg, Germany)
+Date: Sun, 31 Jan 1993 16:40:05 GMT
+
+Nobody else has posted this, so here goes. To use throwback (as a client) you
+need the DDEUtils module, an editor which supports throwback, and (AFAIK) any
+version of RISC OS. There are three SWIs:
+
+DDEUtils_ThrowbackStart (&42587)
+
+Entry: Don't Care
+
+Exit: All registers preserved
+
+Function: Start a throwback session
+
+
+DDEUtils_ThrowbackSend (&42588) (The documentation actually calls this SWI
+                                 Throwback_Send, but I think it's a mistake).
+
+Entry: R0 = reason code
+       R2-R5 variable
+
+       R0 = 0 (Throwback_ReasonProcessing)
+       R2 = pointer to full pathname of file (null terminated)
+
+       R0 = 1 (Throwback_ReasonErrorDetails)
+       R2 = pointer to full pathname of file (null terminated)
+       R3 = error line number
+       R4 = severity:
+          = 0 for warning
+          = 1 for error
+          = 2 for serious error
+       R5 = pointer to error description string (null terminated)
+
+       R0 = 2 (Throwback_ReasonInfoDetails)
+       R2 = pointer to full pathname of file (null terminated)
+       R3 = line number to which info message refers
+       R4 = 0
+       R5 = pointer to informational message (null terminated)
+
+Exit: R0-R4 preserved
+
+Function: Call once with reason code 0, and then with code 1 or 2 for
+          each error/message
+
+
+DDEUtils_ThrowbackEnd (&42589)
+
+Entry: Don't Care
+
+Exit: All registers preserved
+
+Function: End a throwback session
+
+
+All three SWIs can give errors of "No task registered for throwback" and
+"Throwback not available outside the desktop" (no error numbers given).
+
+That's it; simple really :-)
+
+e----><----p | Stephen Burke           | Internet: burke@vxdesy.desy.de
+ H   H   1   | Gruppe FH1T (Liverpool) | DECnet:   vxdesy::burke (13313::burke)
+ H   H  11   | DESY, Notkestrasse 85   | BITNET:   BURKE@DESYVAX or SB2@UKACRL
+ HHHHH   1   | 2000 Hamburg 52         | JANET:    sb2@uk.ac.rl.ib
+ H   H   1   | Germany                 | Phone:    + 49 40 8998 2282
+ H   H 11111 | HERA, the world's largest electron microscope!
+

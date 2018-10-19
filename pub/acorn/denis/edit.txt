@@ -1,0 +1,79 @@
+REM > Edit  Denis Howe 28/06/91
+
+REM Run the appropriate editor for the argument file.
+REM If arg is a directory then look in it for a !RunImage file.
+REM If none just open a viewer for the directory.
+REM For basic files call !BasTxt or BasicEditor (after setting
+REM the current directory).
+REM Call !Paint for sprites else start !Edit on the file.
+
+Quote$=CHR$34
+bufsize%=256:DIM buf% bufsize%
+
+SYS "OS_GetEnv" TO cmd% :REM Get cmd line args - absolute pathname
+P%=cmd%:WHILE ?P%>31 P%+=1:ENDWHILE:?P%=13
+cmd%=cmd% OR 1<<31 :REM don't append other args
+REM Args are "Basic -quit Edit <file> [line]"
+SYS "OS_SubstituteArgs", cmd%, buf%, bufsize%, "%3", 2:File$=$buf%
+REM VDU4,30:PRINT"<";File$;">":z=GET
+SYS "OS_SubstituteArgs", cmd%, buf%, bufsize%, "%4", 2:Line$=$buf%
+IF LEFT$(File$,1)=Quote$ File$=MID$(File$,2,LENFile$-2)
+IF File$="" END
+SYS "OS_File",17,File$ TO ObjType%,,LoadAd%
+FileType%=LoadAd%>>8 AND &FFF
+IF ObjType%>1 THEN
+  F$=File$+".!RunImage" :REM Check directory arg for !RunImage file
+  I%=OPENIN(F$)
+  IF I% CLOSE #I%:File$=F$:FileType%=&FFB ELSE FileType%=-1
+ENDIF
+CASE FileType% OF
+WHEN -1:   Cmd$="Filer_OpenDir"
+WHEN &FFB:
+           Cmd$=FNBasTxt(File$,Line$)
+REM        Cmd$=FNBasicEdit(File$,Line$)
+WHEN &FF9: Cmd$="!Paint"
+OTHERWISE  REM Broadcast DataOpen message to !Edit to edit the file
+  $buf%="TASK":SYS "Wimp_Initialise",200,!buf%,"FEdit"
+  buf%!0=(48+LENFile$) AND NOT 3
+  buf%!12=0    :REM My ref
+  buf%!16=5    :REM DataOpen
+  buf%!36=0    :REM File size
+  buf%!40=&FFF :REM Type recognised by !Edit
+  $(buf%+44)=File$+CHR$0
+  SYS "Wimp_SendMessage",18,buf%,0
+  Cmd$=""
+  REPEAT
+    SYS "Wimp_Poll",&1973,buf% TO R%
+    CASE R% OF
+    WHEN 17,18 :REM Quit or broadcast ack'ed
+      CASE buf%!16 OF
+      WHEN 0,4:Cmd$="Quit"
+      ENDCASE
+    WHEN 19    :REM Broadcast returned unack'ed => no !Edit running
+      Cmd$="!Edit"
+    ENDCASE
+  UNTIL Cmd$>""
+  SYS "Wimp_CloseDown"
+  IF Cmd$="Quit" QUIT
+ENDCASE
+OSCLI Cmd$+" "+File$
+END
+
+DEF FNBasTxt(File$,Line$)
+REM Insert f5 = !Edit goto line (assume numbered in steps of 10)
+IF Line$>"0" Line$=STR$(VAL(Line$)DIV10):PROCStuff(CHR$&185+Line$+CHR$&0D)
+="!BasTxt"
+
+DEF FNBasicEdit(File$,Line$)
+REM Start Basic Editor on file in its directory
+LOCAL I%,P%
+*RMEnsure ARMBasicEditor RMLoad ARMBE
+I%=1:REPEAT P%=I%:I%=INSTR(File$,".",P%+1):UNTIL I%=0
+IF P%>1 OSCLI "Dir "+LEFT$(File$,P%-1)
+IF Line$="" Line$="."
+PROCStuff("EDIT"+Line$+CHR$&0D)
+="Basic -load"
+
+DEF PROCStuff($buf%)
+REPEAT SYS "OS_Byte",138,0,?buf%:buf%+=1:UNTIL buf%?-1=&0d
+ENDPROC

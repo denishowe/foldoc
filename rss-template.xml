@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/css"
+  href="http://www.rsspect.com/css/generic.css"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>FOLDOC</title>
+<link>http://foldoc.org/</link>
+<description>
+New and updated definitions from The Free On-Line
+Dictionary Of Computing (http://foldoc.org/)
+</description>
+<language>en-us</language>
+<category>Technology</category>
+<image>
+  <title>FOLDOC</title>
+  <link>http://foldoc.org/</link>
+  <url>http://foldoc.org/foldoc-vertical.jpg</url>
+</image>
+<lastBuildDate>$LASTBUILDDATE</lastBuildDate>
+<atom:link href="http://foldoc.org/rss.xml"
+	rel="self" type="application/rss+xml" />
+<item>
+  <title>$TITLE</title>
+  <link>http://foldoc.org/$TITLE</link>
+  <description>
+  $DESCRIPTION
+  </description>
+  <pubDate>$LASTBUILDDATE</pubDate>
+  <guid isPermaLink="false">$TITLE-$LASTBUILDDATE</guid>
+  <author>denis.howe@gmail.com (Denis Howe)</author>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,61 @@
+<html>
+<body>
+<script>
+'use strict';
+
+var can = document.createElement("canvas");
+document.body.appendChild(can);
+var m = 22;						 // Min margin with no scroll bars
+var w = Math.floor((window.innerWidth - m));
+var h = Math.floor((window.innerHeight - m));
+var dr = new Uint8ClampedArray(4*w*h);
+can.width = w; can.height = h;
+var ctx = can.getContext('2d');
+var t = 0;
+
+var sin = []; for (var a = 0; a < 1024; a++) sin[a] = Math.sin(2*Math.PI*a/1024);
+
+function s(a) { return sin[a & 1023] }
+
+function cc(a) { return 127.5 * (1 + s(a)) }
+
+var fr = [], fg = [], fb = [];
+for (var y = 0; y < h; y++)
+{
+	fr[y] = []; fg[y] = []; fb[y] = [];
+	var k = 1;
+	for (var x = 0; x < w; x++)
+	{
+		fr[y][x] = k * Math.random();
+		fg[y][x] = k * Math.random();
+		fb[y][x] = k * Math.random();
+	}
+}
+var v = [[1,0], [0,1],  [-1,0], [0,-1]]; // [-1,-1], [1,1], [-1,1], [1,-1]];
+
+run();
+
+function run()
+{
+	var i = 0;
+	for (var y = 0; y < h; y++)			// 0=top
+	{
+		for (var x = 0; x < w; x++)
+		{
+			var vr = v[Math.floor(v.length * Math.random())];
+			var xx = (x + vr[0] + w) % w, yy = (y + vr[1] + h) % h;
+			var fpr = fr[y][x] = fr[yy][xx];
+			var fpg = fg[y][x] = fg[yy][xx];
+			var fpb = fb[y][x] = fb[yy][xx];
+			var c = [cc(fpr * t), cc(fpg * t), cc(fpb * t), 255];
+			dr.set(c, i); i += 4;		// RGBA
+		}
+	}
+	ctx.putImageData(new ImageData(dr, w), 0, 0);
+	t++;
+	setTimeout(run, 0);
+}
+
+</script>
+</body>
+</html>

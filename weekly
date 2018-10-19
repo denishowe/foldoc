@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# Weekly web server maintenance
+
+# Denis Howe 2001-05-07 - 2009-11-16 13:15
+
+# Stats: https://www.doc.ic.ac.uk/stats/
+
+PATH=/usr/local/bin:$PATH; export PATH
+inst=/vol/www-virtual/foldoc
+
+echo Started `hostname` `date`
+
+echo World-writable files
+echo ====================
+find $HOME -perm o+w
+echo 
+
+echo Expire diffs
+echo ============
+cd $inst/diffs || exit 1
+rm -f .out*
+find . -mtime +60 -print | xargs --verbose rm -f
+echo
+
+cd $inst
+echo Error log
+echo =========
+errs=/vol/www-virtuallogs/foldoc.org/error.log
+echo Error Log: $errs
+# Use zcat if gz file
+egrep -v "File does not exist|found %2f|not found.*php" $errs | tail --lines=200
+
+echo Done `hostname` `date`
+
+# Local variables:
+# compile-command: "echo weblint -f .weblintrc foldoc | batch"
+# compile-command: "weekly |& mail -s 'FOLDOC weekly' dbh &"
+# compile-command: "weekly"
+# End:

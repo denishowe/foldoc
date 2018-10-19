@@ -1,0 +1,13 @@
+Template-Type:		 SITEINFO
+Host-Name:		 foldoc.org
+URI:			 http://foldoc.org/
+Admin-Handle:		 denis.howe=foldoc@gmail.com
+Owner-Organization-Name: Denis Howe
+Description:		 RedHat OpenShift hosting
+Keywords:		 computing, dictionary, terminology
+
+Template-Type:		SERVICE
+Name:			Free On-line Dictionary of Computing
+URI:			http://foldoc.org/
+Description:		Search the dictionary for definitions of computing terms
+Keywords:		computing, communications, dictionary, terminology, jargon

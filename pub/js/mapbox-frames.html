@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<!-- saved from url=(0040)http://foldoc.org/pub/misc/mapbox.html -->
+<!-- https://www.mapbox.com/mapbox.js/api/v1.6.0/ -->
+
+<html style="height: 100%">
+<head>
+<link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css" rel="stylesheet" />
+</head>
+<body style="height: 100%; overflow: hidden">
+<table height="100%" width="100%">
+<tr>
+<td width="100%">
+<div id="map" style="height: 100%">
+Map loading
+</div>
+</td>
+<td>
+<iframe id="intel" height="95%" width="980px" scrolling="no"
+  src="http://www.ingress.com/intel?z=15&ll=51.5101,-0.0906">
+</iframe>
+<button type="button" onclick="set_portal()">Set Portal</button>
+</td>
+</tr>
+</table>
+<script src="http://api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.js"></script>
+<script>
+var intel = document.getElementById("intel").contentWindow;
+
+// Create a map in the div #map
+var map = L.mapbox.map("map", "denishowe.h23j40ck",
+  {center: [51.5101, -0.0906], zoom: 15});
+map.markerLayer.on("click", station_click);
+
+var zoom = 18;
+
+function station_click(e)
+{
+	var ll = e.latlng;
+	// map.setView(ll, zoom);
+	intel.location.search = "z=" + zoom + "&ll=" + ll.lat + "," + ll.lng;
+}
+
+function set_portal()
+{
+	var c = intel.nemesis.dashboard.render.PortalInfoOverlay.getCurrentPortal();
+	console.log([c.lat, c.lng]);
+	map.panTo([c.lat, c.lng]);
+}
+</script>
+</body>
+</html>
+
+<!--
+Local variables:
+compile-command: "C:\\Progra~1\\Google\\Chrome\\Application\\chrome.exe --disable-web-security http://foldoc.org/pub/misc/mapbox.html"
+compile-command: "C:\\Progra~2\\Google\\Chrome\\Application\\chrome.exe --disable-web-security file://C:/Users/Denis/Projects/FOLDOC/foldoc/pub/misc/mapbox.html"
+End:
+-->

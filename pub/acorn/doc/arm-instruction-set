@@ -1,0 +1,118 @@
+From ijp@doc.ic.ac.uk (Ian Palmer) Wed May  4 14:40:06 1994
+Path: doc.ic.ac.uk!ijp
+From: ijp@doc.ic.ac.uk (Ian Palmer)
+Newsgroups: comp.sys.acorn.tech
+Subject: Re: ARM Instructions
+Date: 4 May 1994 11:45:39 GMT
+Organization: Dept. of Computing, Imperial College, University of London, UK.
+Lines: 104
+Message-ID: <2q81t3$p3n@frigate.doc.ic.ac.uk>
+References: <Cp9vGA.AzG@aston.ac.uk>
+NNTP-Posting-Host: dolphin.doc.ic.ac.uk
+X-Newsreader: TIN [version 1.1 PL8]
+
+Kevin Pearcey (pearcekf@aston.ac.uk) wrote:
+: Can somebody please post how many instructions the ARM processor has in theory
+: using all combinations of 
+
+: Instruction  [condition] [S]  ....  [shift]
+
+: If possible a list of the number of instructions, shifts & conditions would be nice
+
+The words "you're" and "kidding" spring instantly to mind, oh well
+here goes :
+
+I'll assume you don't want to include all the combinations of possible
+registers in each instruction (if you do it get's silly, especially
+with LDM and STM :-) )
+
+16 conditions (although really only 15) :
+
+        "AL","NV","EQ","NE","VS","VC","MI","PL","CS","CC",
+        "HI","LS","GE","LT","GT","LE","HS","LO" 
+
+which can be applied to all instructions.
+
+
+Shifts, there are basically 4 shifts LSL, LSR, ASR and ROR, each can
+have a value 0..31 (0's in LSR, ASR and ROR have special meanings)
+Thus there are a total of 128 different shifts available. Of course
+shifts can either be by a constant or the contents of a register
+(assume that's two different versions), thus 256 different shift
+types.
+
+
+Instruction groups :
+
+core: 10 insructions :
+
+        "ADD","ADC","SUB","SBC","RSB","RSC","EOR","ORR","AND","BIC"
+
+each core op can have optional 'S' flag and 2nd operand can be
+shifted, plus 2nd operand can also be a constant, thus you could call
+that 81920 + 320 = 82240 different core operations.
+
+compare operations : 4 instructions :
+
+        "CMP","CMN","TST","TEQ" 
+
+2 operands, second operand can be as above. Optional 'P' flag, thus a
+total of 32896 operations.
+
+Move operations: 2 inst. :
+
+        "MOV","MVN"
+
+Same as compare except 'S' flag instead of 'P' flag, thus 16448.
+
+Multiply operations : 2 :
+
+        "MUL","MLA"
+
+Optional 'S', but no shifting, thus only 64 instructions.
+
+Branch, 2 :
+
+        "B" , "BL"
+
+Only conditions, 32 instructions.
+
+Load, 2 :
+
+        "LDR", "STR"
+
+Oh heabens this is going to get very silly, optional 'B' 'T' and '!'
+flags ('!' only in pre index modes). One no index version, 3 Pre and
+Post index versions, shifting, and total left as an exercise to the
+reader :-)
+
+Load multiples, 2 :
+
+        "LDM", "STM" 
+
+4 modes of operation, optional '!' flag and optional '^' flag
+(sometimes), 512 I think.
+
+Others: some number :
+
+        "MRS", "MSR", "MCR", "MRC", "STC", "SWI", "SWP", "LDC"
+
+I really can't be bothered......
+
+Floating point and coprocessor: too bloody many.
+
+
+And they call it RISC :-) (And before anybody points it out, yes I do
+know what RISC means thank you very much, I was just joking)
+
+
+Ian
+---
+ 11 stupid things that people suffering     e-mail: ijp@doc.ic.ac.uk
+ from Claustrophobia shouldn't really do :     tel: +44 71 589 5111 (x7541)
+   - 9. Buy a Barratt 3-bedroom house.         fax: +44 71 581 8024
+                  (The Book of Stupid Lists)
+    ___           _                         Ian Palmer, Department of Computing,
+     /  _   _    /_) _   / _ _   _  _       Imperial College, 180 Queen's Gate,
+____/__(_|_| )__/ __(_|_(_| ) )_|/_) _______London SW7 2BZ. England.____________
+

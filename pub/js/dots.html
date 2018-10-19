@@ -1,0 +1,306 @@
+<html>
+<head>
+<title>Dots!</title>
+<style>
+canvas {width: 100%; height: 90%; border: solid}
+span {display: inline-table; width: 49%; height: 100%}
+</style>
+</head>
+<body width="100%">
+<span>
+  <canvas id="c0" onclick="return clicked(0)"></canvas>
+  <p id="p0">Working...</p>
+</span>
+&nbsp; &nbsp;
+<span>
+  <canvas id="c1" onclick="return clicked(1)"></canvas>
+  <p id="p1">Working...</p>
+</span>
+<script>
+
+/////////////////////////////////////////////////////////////////////////////
+
+// p = point(x, y)				# Black point
+// cp = colour(p, c)			# Coloured point
+// l = line(p1, p2)				# Width 1, black line
+// cl = colour(l, c)			# Width 1, single colour
+// gl = colour(cl)				# Linear colour gradient
+// sp = size(p, s)				# Black disc
+
+/////////////////////////////////////////////////////////////////////////////
+
+// A Codes object is a vector of 'width' Code objects, each
+// of 'length'.  This is used to generate points when width
+// is 5.  A point is an array (x, y, c) where c is a colour
+// string.  A Codes object has the following properties:
+
+// * codes[] = a vector of Code objects
+
+function Codes(width, length)
+{
+	this.codes = map_over(1, width, function()
+		{ return new Code(length); });
+}
+
+// Return a vector of vectors from running the codes
+
+Codes.prototype.vectors = function()
+{
+	return this.codes.map(function(c) {return c.values()});
+};
+
+Codes.prototype.to_string = function()
+{
+	var ss = this.codes.map(function(c) { return c.to_string() });
+
+	return "x:" + ss[0] + "  y:" + ss[1] +
+		"  r:" + ss[2]+ "  g:" + ss[3] + "  b:" + ss[4];
+};
+
+// Return an array of points {x:, y:, c:} from five vectors.  x and
+// y are in the range [0..1).  They are scaled to the canvas later.
+
+Codes.prototype.points = function()
+{
+	var v = this.vectors();
+	var x = v[0], y = v[1], r = v[2], g = v[3], b = v[4];
+	// console.log("x.length = ", x.length);
+	scale(1, x);
+	scale(1, y);
+	scale(256, r);
+ 	scale(256, g);
+	scale(256, b);
+	return map_over(0, x.length-1, function (i)
+		{
+			return {x: x[i], y: y[i],
+					c: "rgb(" + Math.floor(r[i]) + "," +
+					   Math.floor(g[i]) + "," + Math.floor(b[i]) + ")"
+				   };
+		});
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+// A Code object is a symbolic recipe for generating a
+// vector of scalars.  A Code has the following properties:
+
+// * length = number of elements to return
+// * type = string saying which kind of Code this is (random, constant, ...)
+// * value(i) return the ith value from running the code
+// Different types have other properties, e.g. random has a seed.
+
+// Return a Code object to generate N scalars
+
+// vector of scalars, S =
+//   const() = {K}
+//   rand() = {rand}
+//   seq() = {0, 1/N, 2/N, ..., 1}
+//   exp(S) = {e^s | s in S}
+//   sin(S) = {sin(s) | s in S}
+
+// 	 * add(V, W) = {v + w}
+// 	 * mult(V, S) = {v * s | v in V, s in S}
+// 	 * append(V, W) = {v in V, w in W}
+// 	 * interleave(V, W) = {v[0], w[0], v[1], w[1], ...}
+// 	 * rotate(VP1, VP2, S) = {rot(p1, p2, s) | p1 in VP1, p2 in VP2, s in S}
+// 	 	  rot(a, b, t) = point a rotated about point b by angle t
+// 	 * vov(V, W, op) = {V op w0, V op w1, ..., V op wN}
+// 	 * tween(V, W) = {twe(v, w)}  # length n+1
+// 	    twe(v, w) = {a*v + (1-a)*w | a = 0/n, 1/n, 2/n, ..., n/n}
+
+// Second argument, is_arg, is true if the code is an argument to a
+// function, in which case it doesn't make sense for it to be constant
+
+function Code(length, is_arg)
+{
+	this.length = length;
+	var types = ["rnd", "seq", "sin", "exp", "add"];
+	if (!is_arg) types.push("con");
+	var t = this.type = any(types);
+	this.value =
+		t == "rnd" ? (this.seed = rand(0, 9999),
+					  function (i) { return srand(this.seed, i); }) :
+		t == "con" ? (function (i) { return 0.5; }) :
+		t == "seq" ? (function (i) { return i/length; }) :
+		t == "sin" || t == "exp" ?
+					 this.apply_function(length) :
+	 /* t == "add"*/ (this.args = new Codes(2, length),
+					  c = this.args.codes,
+					  function (i) { return c[0].value(i) + c[1].value(i); });
+}
+
+// Return a function f(i) that applies the maths function
+// named by this.type to the result of some other code
+
+Code.prototype.apply_function = function (length)
+{
+	rf = eval("Math." + this.type);
+	var ac = this.arg = new Code(length, true);
+
+	return function(i) { return rf(ac.value(i)); };
+}
+
+// Return a vector of values produced by running the code
+
+Code.prototype.values = function ()
+{
+	return map_over(0, this.length-1, this.value);
+};
+
+Code.prototype.to_string = function()
+{
+	var t = this.type;
+	var s = t == "rnd" ? t + this.seed :
+			t == "con" || t == "seq" ? t :
+			t == "sin" || t == "exp" ? t + "(" + this.arg.to_string() + ")" :
+	     /* t == "add" */              (c = this.args.codes,
+										c[0].to_string() + "+" +
+										c[1].to_string());
+	return s; // "s(" + this.length + "*" + s + ")";
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+// Unseeded rands are used to generate code.  min <= r < max
+
+function rand(min, max)
+{
+	return Math.floor(min + (max - min) * Math.random());
+}
+
+// Code only returns seeded rands.  0 <= r < 1
+
+function srand(seed, i)
+{
+	return '0.' + Math.sin(seed+i).toString().substr(6);
+}
+
+// Transform all elements of the argument arrays to fit in [0, tmax).
+// If all elements are the same, return tmax/2.
+
+function scale()
+{
+	var tmax = arguments[0],
+	    min = arguments[1].min(),
+		max = arguments[1].max();
+	for (var i = 2; i < arguments.length; i++)
+	{
+		var ai = arguments[i];
+		min = ai.min(min);
+		max = ai.max(max);
+	}
+	var k = max - min;
+	if (k) {k = tmax / k} else {k = 1; min -= 0.5*tmax};
+	console.log("[" + min + "~" + max + "]*" + k + "=" + tmax);
+	for (var i = 1; i < arguments.length; i++)
+	{
+		var ai = arguments[i];
+		for (var j = 0; j < ai.length; j++)
+		{
+			ai[j] = (ai[j] - min) * k;
+		}
+	}
+}
+
+Array.prototype.min = function (r)
+{
+	var i = 0;
+	if (! arguments.length) r = this[i++];
+	for ( ; i  < this.length; i++)
+		if (this[i] < r) r = this[i];
+
+	return r;
+}
+
+Array.prototype.max = function (r)
+{
+	var i = 0;
+	if (! arguments.length) r = this[i++];
+	for ( ; i  < this.length; i++)
+		if (this[i] > r) r = this[i];
+
+	return r;
+}
+
+// Return the result of applying f to each int in min..max
+
+function map_over(min, max, f)
+{
+	var r = [];
+	for (var i = min; i <= max; i++) r.push(f(i));
+
+	return r;
+}
+
+// Return a random element of the arg array
+
+function any(a)
+{
+	return a[rand(0, a.length)];
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+// Generate initial code for each canvas
+
+var codes = [];
+
+function init()
+{
+	codes = map_over(0, 1, function() { return new Codes(5, rand(100, 10000)) });
+	draw_all();
+}
+
+// Run code to generate points and draw them
+
+function draw_all()
+{
+	map_over(0, 1, draw);
+}
+
+function draw(id)
+{
+	var can = document.getElementById("c" + id);
+	var ctx = can.getContext("2d");
+	ctx.clearRect(0, 0, can.width, can.height);
+	var status = document.getElementById("p"+id);
+	var s = codes[id].to_string();
+	status.innerHTML = s;
+	var ps = codes[id].points();
+	ps.map(function(p) { return draw_point(ctx, p); });
+	console.log(id + " done");
+}
+
+// Draw a dot
+
+function draw_point(ctx, p)
+{
+	can = ctx.canvas;
+	var x = Math.floor(p.x * can.width);
+	var y = Math.floor(p.y * can.height);
+	// console.log("(" + x + "," + y + ")" + p.c);
+	ctx.beginPath();
+	ctx.strokeStyle = p.c;
+	ctx.moveTo(x, y);
+	ctx.lineTo(x+1, y+1);
+	ctx.stroke();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+document.body.onresize = init;
+
+// window width lag: http://code.google.com/p/chromium/issues/detail?id=123639
+setTimeout(document.body.onresize, 500);
+
+// Copy the clicked canvas to the other one and redraw
+
+function clicked(i)
+{
+	codes[1-i] = codes[i];
+	draw(1-i);
+}
+
+</script>
+</body>
+</html>

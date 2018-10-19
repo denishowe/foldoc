@@ -1,0 +1,117 @@
+Updated: Wed Jun  9 23:49:57 BST 1999
+
+App:     ArcFS (read only)
+Contact: http://www.findon.demon.co.uk/arcfs/
+Latest:  0.73a
+Checked: 1998-11-05
+
+App:     ArcFS2 (r/w)
+Contact: http://www.findon.demon.co.uk/arcfs/
+Contact: VTI, Unit 1, The Shopwhyke Centre, Shopwhyke Road, Chichester,  W. Sussex PO20 6GD.
+Have:    2.52
+Latest:  2.56
+Checked: 1998-11-05
+
+App:     ArcWeb
+Contact: http://www.dsse.ecs.soton.ac.uk/~snb94r/arcweb/arcweb.html
+Checked: 1998-06-07
+
+App:     BasCompress
+Contact: Cy J. Booker <bascompress@cheepnis.demon.co.uk>
+Contact: http://www.cheepnis.demon.co.uk/acorn/
+Have:    2.0 (registered)
+Latest:  2.0
+Checked: 1998-06-23
+
+App:     Browse
+Contact: http://www.acorn.com/browser
+Have:    2.07
+Latest:  2.07
+Checked: 1999-06-09
+
+App:     FreeTerm
+Author:	 Tom Hughes, Tony Howat
+Contact: http://www.xargle.demon.co.uk/2020/fdown.html
+Have:    1.36
+Latest:  1.36
+Checked: 1998-12-01
+
+App:	 fsck, hardfix, eliminate
+Contact: Sergio Monesi <pel0015@cdc8g5.cdc.polimi.it>
+Contact: Sergio Monesi <sergio@phantom.com>
+Contact: Sergio Monesi <sergio@g386bsd.first.gmd.de>
+Contact: http://micros.hensa.ac.uk/cgi-bin/browser/local/riscos/diskmanager?
+Have:	 1.31, 1.11, 1.21
+Latest:  1.31
+Checked: 1998-08-05
+Contact: http://www.alphawave.ltd.uk/sergio/fsck.html
+Checked: 1998-08-31
+
+App:     Java
+Contact: http://www.acorn.com/browser/
+Have:    0.76
+Latest:  0.76
+Checked: 1999-06-09
+
+App:     Macros
+Contact: http://www.plasma.demon.co.uk/macros/index.html
+Have:    0.12
+Latest:  0.12
+Checked: 1999-01-15
+
+App:     Memphis
+Contact: http://bi.org/~nas/
+Have:    2.11
+Latest:  2.11
+Checked: 1998-06-23
+
+App:     Perl
+Have:    1.51 (Perl 5.001, 1996-02-21)
+Contact: http://www.oasis.leo.org/perl/ports/riscos/00-index.html
+Latest:  ??
+Checked: 1998-09-20
+Contact: ftp://ftp.informatik.uni-muenchen.de/pub/comp/programming/languages/script/perl/oasis/ports/riscos/a049.msg
+Latest:  1996-03-05
+Checked: 1998-09-20
+
+App:     QuickSave
+Contact: http://prompt.essex.ac.uk/users/jrflet
+Have:    1.02
+Checked: NOT FOUND 1998-07-06 no trace of it on HotBot, HENSA
+
+App:     RiScript
+Contact: bos@prl.philips.nl
+Contact: medema@prl.philips.nl
+Contact: http://micros.hensa.ac.uk/local/riscos/file/riscript/
+Have:    2.02
+Latest:  2.02
+Checked: 1998-08-09
+
+App:     Risc Tracker
+Contact: Ian Clark <se96ic@dmu.ac.uk>
+Contact: http://www.cms.dmu.ac.uk/~se96ic/rtrack.htm
+Have:    3.37
+Latest:  
+Checked: 
+
+App:     StrongEd
+Contact: http://login.eunet.no/~guttorvi/strong.html
+Have:    4.54
+Latest:  
+Checked: 
+
+App:     StrongHelp
+Contact: http://login.eunet.no/~guttorvi/strong.html
+Have:    2.60
+Latest:  2.60
+Checked: 1998-07-30
+
+App:     WebServe
+Contact: http://www.acorn.com/browser
+Have:    0.48
+Latest:  0.48
+Checked: 1998-07-31
+
+Local variables:
+eval: (add-hook 'local-write-file-hooks 'update-date)
+End:

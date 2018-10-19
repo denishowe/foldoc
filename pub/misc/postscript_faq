@@ -1,0 +1,324 @@
+>From: shiva@well.sf.ca.us (Kenneth Porter)
+Newsgroups: comp.lang.postscript
+Subject: Frequently Asked Questions (FAQ)
+Keywords: FAQ PostScript Adobe Bitmaps Previewers Documentation
+Date: 8 Jul 91 02:05:44 GMT
+
+
+Frequently Asked Questions in comp.lang.postscript
+ 
+Version 1.06 Last Changed 5-29-91
+ 
+No warranty is made as to the validity of the answers below.
+I don't work for any of these companies, and I've used only
+some of these products, so there will probably be minor
+errors.  I welcome corrections.
+ 
+If you think of questions appropiate for this FAQ, or would
+like to improve on an answer, please email me at the address
+below.
+ 
+If you manage an FTP PostScript repository, please leave a
+copy of this there as I don't have FTP access.
+ 
+================================================================
+ 
+What is EPS?
+How do I convert PS to EPS?
+How can I convert PS to [other graphics format]?
+How can I convert [other graphics format] to PS?
+How can I convert ASCII text to PS?
+How can I display PS on my [brand x] computer?
+Should I leave my printer on?
+How do I suppress the power-on start page?
+How do I remove a persistent ("permanent") downloaded font?
+How do I reset the printer without power-cycling?
+What documentation is available on the PostScript language?
+How do I get bitmap representations of Adobe fonts?
+What FTP resources are available?
+How do I get in touch with Adobe?
+Where can I get official documentation?
+How do I get the physical size of a page?
+ 
+================================================================
+ 
+What is EPS?
+How do I convert PS to EPS?
+ 
+An Encapsulated PostScript file (EPSF) is a standard format for
+importing and exporting PostScript language files in all
+environments. It is usually a single page PostScript language
+program that describes an illustration. The purpose of the EPS
+file is to be included as an illustration in other PostScript
+language page descriptions. The EPS file can contain any
+combination of text, graphics, and images. An EPS file is the
+same as any other PostScript language page description, with
+some restrictions.
+ 
+An EPS file must be a conforming file, that is, it must conform
+to the  document structuring conventions (DSC). At a minimum,
+it must include a header comment, %!PS-Adobe-3.0 EPSF-3.0, and
+a bounding box comment, %%BoundingBox: llx lly urx ury, that
+describes the bounds of the illustration.  (The specification
+does not require the EPSF version, but many programs will
+reject a file that does not have it.)
+ 
+The EPS program must not use operators that initialize or
+permanently change the state of the machine in a manner that
+cannot be undone by the enclosing application's use of save and
+restore (eg. the operators starting with "init" like
+initgraphics).  As a special case, the EPS program may use the
+showpage operator.  The importing application is responsible
+for disabling the normal effects of showpage.
+ 
+The EPS program should make no environment-sensitive decisions
+(the importing application may be trying to attain some special
+effect, and the EPS program shouldn't screw this up), although
+it can use some device-dependent tricks to improve appearance
+such as a snap-to-pixel algorithm.
+ 
+The complete EPS specification is available from Adobe (see
+below).
+ 
+A variation of EPS embeds the PS text in a binary file which
+contains a header and either a TIFF or MetaFile preview image.
+The header defines where in the file each section (EPS, TIFF,
+or MetaFile) starts and ends.  On the Macintosh, the preview
+is stored as a PICT in the file's resource fork.
+ 
+To convert from PS to EPS, one must guarantee that the PS file
+meets the above requirements.  If the actual program conforms
+to the programming requirements, then one can simply add the
+required comments at the top of the file saying that the file
+is EPS and giving its BoundingBox dimensions.
+ 
+================================================================
+ 
+How can I convert PS to [other graphics format]?
+How can I display PS on my [brand x] computer?
+ 
+Since PostScript is not just a picture-description language,
+but in fact a complete programming language, one needs a
+complete PostScript interpreter to convert or display a
+PostScript graphic. Adobe PostScript interpreters are available
+for some machines (notably those using the NextStep GUI).
+ 
+Numerous PostScript interpreter clones, both commercial and
+free, are available for other machines.  Not all clone
+interpreters know how to handle Adobe's encrypted Type 1 fonts,
+and some have other incompatibilities.  Clone interpreters will
+not have Adobe's proprietary rendering technology which
+interprets font hints to improve the appearance of fonts shown
+at small sizes on low-resolution devices.
+ 
+Ghostscript, a freeware product associated with the GNU
+project, is available for PC's, Sun's, X servers, and other
+architectures.  Source is included.  For more information about
+Ghostscript, read the gnu.ghostscript.bug newsgroup, or contact
+the author at ghost@aladdin.com (L. Peter Deutsch).
+ 
+Sun OpenWindows users can preview PostScript on-screen using a
+program called "pageview".  Or they can print postscript on any
+raster printer using the NeWSprint product which uses the same
+PostScript interpreter found in OpenWindows.
+ 
+AmigaDOS users can use PixelScript, a commercial product from
+Pixelations, and Post, which is freely redistributable and is
+available on Compuserve..
+ 
+MSDOS users can use Go-Script, QMS UltraScript-PC, or Freedom
+of the Press.  File format conversion is available with
+Hijack-PS.
+ 
+================================================================
+ 
+How can I convert [other graphics format] to PS?
+How can I convert ASCII text to PS?
+ 
+A list of text-to-PS software is available from Howard Gayle
+(howard@hal.com, phone 1(408)379-7000 ext 1080), including his
+cz package.
+ 
+Under Unix, you can use Adobe's TranScript package.
+ 
+To convert various bitmap formats to EPS, see the frequently
+asked questions posting in comp.graphics.
+ 
+================================================================
+ 
+What documentation is available on the PostScript language?
+ 
+Adobe has written numerous manuals, sometimes referred to
+by PostScript gurus by the color of the cover.  These books
+are published by Addison-Wesley.  They are listed here in
+order of (my) suggested reading:
+ 
+PostScript Language Tutorial & Cookbook, Adobe Systems
+Incorporated Addison Wesley 1985, 1990 (The "Blue" Book)
+ 
+PostScript Language Reference Manual, Second Edition, Adobe
+Systems Incorporated, Addison Wesley 1985, 1990 (The New "Red" Book
+(really Red and White))
+ 
+PostScript Language Program Design, Adobe Systems Incorporated
+Addison Wesley 1988 (The "Green" Book)
+ 
+Adobe Type 1 Font Format ("The Black Book")
+ 
+----------------------------------------------------------------
+ 
+Other books include:
+ 
+Thinking in PostScript, Glenn C. Reid, Addison-Wesley, 1989
+ 
+Understanding PostScript, David A. Holzgang, Sybex, 1988
+ 
+Display PostScript Programming, David A. Holzgang, Addison Wesley, 1990
+ 
+Mastering Adobe Illustrator, David A. Holzgang, Addison Wesley, 1988
+ 
+Learning PostScript, A Visual Approach, Ross Smith, Peachpit Press, 1990
+ 
+Real World PostScript, Stephen F. Roth Addison Wesley, 1988
+("The Orange Book")
+ 
+Graphic Design With PostScript, Gerard Kunkel Scott, Foresman and
+Company, 1990
+ 
+A PostScript Cookbook, Barry Thomas Van Nostrand Reinhold, 1988
+ 
+Inside PostScript, Frank Merritt Braswell, Systems of Merritt &
+Peachpit Press 1989
+ 
+The Verbum Book of PostScript Illustration, Michael Gosney, Janet
+Ashford, Linnea Dayton
+M&T Books, 1990
+ 
+Mastering Adobe Illustrator 88, Deke McClelland, Craig Danuloff
+Publishing Resources Inc.-Dow Jones Irwin 1989.
+ 
+Adobe Illustrator 88, The Official Handbook for Designers, Tony Bove,
+Cheryl Rhodes, Fred Davis , Bantam Computer Books 1987
+ 
+Encapsulated PostScript, Peter Vollenweider, Prentice Hall 1990.
+ 
+Running PostScript from MS-DOS, Gary Glover, Windcrest Books, 1989,
+ISBN 0-8306-2998-X
+ 
+================================================================
+ 
+Should I leave my printer on?
+How do I suppress the power-on start page?
+How do I remove a persistent ("permanent") downloaded font?
+How do I reset the printer without power-cycling?
+ 
+The general consensus seems to be that most computer equipment
+lasts longer if left on.  This presents less thermal stress to
+the components.  Disabling the start page is described in your
+printer's PostScript supplement.  The most common sequence is
+"serverdict begin 0 exitserver statusdict begin false
+dostartpage end".
+ 
+One trick for removing a persistent font (this requires that
+you knew you would need to remove it before you downloaded it)
+is to issue a "serverdict begin 0 exitserver /magic-cookie save
+def" before downloading and sending "serverdict begin 0
+exitserver magic-cookie restore" when you want to reclaim all
+VM used since the first download.  The downside of this is that
+is uses up a save level, but this is usually not a problem.
+ 
+Most printers can be reset by issuing "serverdict begin 0
+exitserver systemdict /quit get exec".
+ 
+================================================================
+ 
+How do I get bitmap representations of Adobe fonts?
+ 
+Use the Font Foundary program included with the font.  If you
+don't have it, contact Adobe for an upgrade.
+ 
+================================================================
+ 
+What FTP resources are available?
+ 
+There are bitmaps of many Adobe fonts in the info-mac archives
+on sumex-aim.stanford.edu.   They are available in TeX form,
+with the encoding expected by dvips, on ftp.cs.umb.edu
+[192.12.26.23], in pub/tex/ps-screenfonts.tar.Z.
+ 
+================================================================
+ 
+How do I get in touch with Adobe?
+Where can I get official documentation?
+ 
+Adobe Systems Incorporated
+1585 Charleston Road
+P.O. Box 7900
+Mountain View, CA 94039-7900
+ 
+Phones:
+Main:           (415)961-4400
+Tech Support:   (415)961-0911
+Developers Line & Tech Docs (voice mail):
+                (415)961-4111
+Sales:          (800)344-8335
+ 
+A selection of technical documents is available from Adobe's
+file server, including the aforementioned EPS specification.
+For more information on this, send the one-word message "help"
+to ps-file-server@adobe.com.  These documents are also
+available by mail; call the Developers Line and ask for the
+documents catalog.
+ 
+================================================================
+ 
+How do I get the physical size of a page?
+ 
+The initial clipping path gives you the size of the imagable
+area. Use "clippath pathbbox" to get these coordinates.  If you
+*must* know the size of the device's imageable area, use the
+sequence "gsave initclip clippath pathbbox grestore", but this
+will prevent an enclosing application from using the clippath
+to achieve some special effects (such as multiple pages per
+page).
+ 
+================================================================
+ 
+Who has helped fixed errors in earlier drafts?
+ 
+I am indebted to the following people for adding functionality
+to this document:
+ 
+wet!icv (Ilsa VanHook)
+skdutta@cs.tamu.edu (Saumen K Dutta)
+howard@hal.com (Howard Gayle)
+tneff@bfmny0.BFM.COM (Tom Neff)
+orthlieb@adobe (Carl Orthlieb)
+naughton@Eng.Sun.COM (Patrick Naughton)
+flar@Eng.Sun.COM (Jim Graham)
+cwitty@cs.Stanford.EDU (Carl Witty)
+squash@math.ufl.edu (Jonathan)
+rsmith@well.sf.ca.us (Ross Smith)
+u12570@uicvm.uic.edu (Edward A. Garay)
+karl@ai.mit.edu (Karl Berry)
+kwb@betasvm2.vnet.ibm.com (Ken Borgendale)
+us267388@web.mmc.mmmg.com (Bradley D. Rhoades)
+ 
+Ver  Date     Reason
+----------------------------------------------------------------
+1.00 12-18-90 Creation
+1.01  1- 8-91
+1.02  1-25-91
+1.03  2-26-91
+1.04  3-28-91
+1.05  4-30-91
+1.06  5-29-91 expanded on EPS explanation, new email address for
+              Howard Gayle, added version numbering
+ 
+================================================================
+ 
+Ken (shiva@well.sf.ca.us)
+"Pay no attention to that man behind the curtain!"
+
+ 
+

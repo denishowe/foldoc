@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/css"
+  href="http://www.rsspect.com/css/generic.css"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>FOLDOC</title>
+<link>http://foldoc.org/</link>
+<description>
+New and updated definitions from The Free On-Line
+Dictionary Of Computing (http://foldoc.org/)
+</description>
+<language>en-us</language>
+<category>Technology</category>
+<image>
+  <title>FOLDOC</title>
+  <link>http://foldoc.org/</link>
+  <url>http://foldoc.org/foldoc-vertical.jpg</url>
+</image>
+<lastBuildDate>2018-09-11</lastBuildDate>
+<atom:link href="http://foldoc.org/rss.xml"
+	rel="self" type="application/rss+xml" />
+<item>
+  <title>FOLDOC New Terms</title>
+  <link>http://foldoc.org/FOLDOC New Terms</link>
+  <description>
+  2018-09-11 &lt;strong&gt;&lt;a href="http://foldoc.org/IBM+1620"&gt;IBM 1620&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-09-07 &lt;strong&gt;&lt;a href="http://foldoc.org/.)"&gt;.)&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-09-05 &lt;strong&gt;&lt;a href="http://foldoc.org/stable"&gt;stable&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-09-05 &lt;strong&gt;&lt;a href="http://foldoc.org/stable+sort"&gt;stable sort&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-09-05 &lt;strong&gt;&lt;a href="http://foldoc.org/fall+over"&gt;fall over&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-09-04 &lt;strong&gt;&lt;a href="http://foldoc.org/stat"&gt;stat&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-09-01 &lt;strong&gt;&lt;a href="http://foldoc.org/status"&gt;status&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-31 &lt;strong&gt;&lt;a href="http://foldoc.org/instruction+register"&gt;instruction register&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-27 &lt;strong&gt;&lt;a href="http://foldoc.org/Stephen+Jobs"&gt;Stephen Jobs&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-27 &lt;strong&gt;&lt;a href="http://foldoc.org/Steve+Jobs"&gt;Steve Jobs&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-26 &lt;strong&gt;&lt;a href="http://foldoc.org/transfer+none"&gt;transfer none&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-26 &lt;strong&gt;&lt;a href="http://foldoc.org/introspection+annotation"&gt;introspection annotation&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-26 &lt;strong&gt;&lt;a href="http://foldoc.org/transfer+full"&gt;transfer full&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-24 &lt;strong&gt;&lt;a href="http://foldoc.org/@XX"&gt;@XX&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-24 &lt;strong&gt;&lt;a href="http://foldoc.org/decorated+name"&gt;decorated name&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-19 &lt;strong&gt;&lt;a href="http://foldoc.org/apple-touch-icon-precomposed"&gt;apple-touch-icon-precomposed&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-19 &lt;strong&gt;&lt;a href="http://foldoc.org/apple-touch-icon"&gt;apple-touch-icon&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-19 &lt;strong&gt;&lt;a href="http://foldoc.org/dead+code"&gt;dead code&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-15 &lt;strong&gt;&lt;a href="http://foldoc.org/Windows+for+Workgroups+3.1"&gt;Windows for Workgroups 3.1&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-15 &lt;strong&gt;&lt;a href="http://foldoc.org/Windows+for+Workgroups+3.11"&gt;Windows for Workgroups 3.11&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-09 &lt;strong&gt;&lt;a href="http://foldoc.org/Home+Network+Administration+Protocol"&gt;Home Network Administration Protocol&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-08-08 &lt;strong&gt;&lt;a href="http://foldoc.org/Web+Distributed+Authoring+and+Versioning"&gt;Web Distributed Authoring and Versioning&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-07-23 &lt;strong&gt;&lt;a href="http://foldoc.org/Muieblackcat"&gt;Muieblackcat&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-07-23 &lt;strong&gt;&lt;a href="http://foldoc.org/WIN386.SWP"&gt;WIN386.SWP&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-06-26 &lt;strong&gt;&lt;a href="http://foldoc.org/dead+code+elimination"&gt;dead code elimination&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-06-25 &lt;strong&gt;&lt;a href="http://foldoc.org/output+device"&gt;output device&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-06-25 &lt;strong&gt;&lt;a href="http://foldoc.org/computer"&gt;computer&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-05-25 &lt;strong&gt;&lt;a href="http://foldoc.org/{$formKeywords}"&gt;{$formKeywords}&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-05-25 &lt;strong&gt;&lt;a href="http://foldoc.org/higher-order+macro"&gt;higher-order macro&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-05-25 &lt;strong&gt;&lt;a href="http://foldoc.org/higher-order+function"&gt;higher-order function&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-05-22 &lt;strong&gt;&lt;a href="http://foldoc.org/Free+On-line+Dictionary+of+Computing"&gt;Free On-line Dictionary of Computing&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-04-11 &lt;strong&gt;&lt;a href="http://foldoc.org/data+storage"&gt;data storage&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-04-08 &lt;strong&gt;&lt;a href="http://foldoc.org/{searchTerms}"&gt;{searchTerms}&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-03-19 &lt;strong&gt;&lt;a href="http://foldoc.org/typography"&gt;typography&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-01-29 &lt;strong&gt;&lt;a href="http://foldoc.org/control+bus"&gt;control bus&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-01-29 &lt;strong&gt;&lt;a href="http://foldoc.org/Control+and+Status+Register"&gt;Control and Status Register&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-01-13 &lt;strong&gt;&lt;a href="http://foldoc.org/ayacc"&gt;ayacc&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-01-01 &lt;strong&gt;&lt;a href="http://foldoc.org/Aurora"&gt;Aurora&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2018-01-01 &lt;strong&gt;&lt;a href="http://foldoc.org/pompom"&gt;pompom&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-18 &lt;strong&gt;&lt;a href="http://foldoc.org/octal"&gt;octal&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-18 &lt;strong&gt;&lt;a href="http://foldoc.org/JS"&gt;JS&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-13 &lt;strong&gt;&lt;a href="http://foldoc.org/generic+type+variable"&gt;generic type variable&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-12 &lt;strong&gt;&lt;a href="http://foldoc.org/content-based+information+retrieval"&gt;content-based information retrieval&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-08 &lt;strong&gt;&lt;a href="http://foldoc.org/plokta"&gt;plokta&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-04 &lt;strong&gt;&lt;a href="http://foldoc.org/Set+Equation+Transformation+System"&gt;Set Equation Transformation System&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-02 &lt;strong&gt;&lt;a href="http://foldoc.org/backbone+network"&gt;backbone network&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-02 &lt;strong&gt;&lt;a href="http://foldoc.org/mid-level+network"&gt;mid-level network&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-12-02 &lt;strong&gt;&lt;a href="http://foldoc.org/hierarchical+routing"&gt;hierarchical routing&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-11-15 &lt;strong&gt;&lt;a href="http://foldoc.org/SOLID"&gt;SOLID&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-11-08 &lt;strong&gt;&lt;a href="http://foldoc.org/route+leak"&gt;route leak&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-11-01 &lt;strong&gt;&lt;a href="http://foldoc.org/World-Wide+Web"&gt;World-Wide Web&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-10-27 &lt;strong&gt;&lt;a href="http://foldoc.org/nn"&gt;nn&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-09-26 &lt;strong&gt;&lt;a href="http://foldoc.org/Usenet"&gt;Usenet&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-09-17 &lt;strong&gt;&lt;a href="http://foldoc.org/XPL"&gt;XPL&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-07-30 &lt;strong&gt;&lt;a href="http://foldoc.org/control+code"&gt;control code&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-07-30 &lt;strong&gt;&lt;a href="http://foldoc.org/control+flow"&gt;control flow&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-07-05 &lt;strong&gt;&lt;a href="http://foldoc.org/Wired+Equivalent+Privacy"&gt;Wired Equivalent Privacy&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-04-30 &lt;strong&gt;&lt;a href="http://foldoc.org/object+method"&gt;object method&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-02-26 &lt;strong&gt;&lt;a href="http://foldoc.org/Phil+Katz"&gt;Phil Katz&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-02-26 &lt;strong&gt;&lt;a href="http://foldoc.org/zip"&gt;zip&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-02-09 &lt;strong&gt;&lt;a href="http://foldoc.org/xmlrpc.php"&gt;xmlrpc.php&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2017-01-03 &lt;strong&gt;&lt;a href="http://foldoc.org/Global+System+for+Mobile+Communications"&gt;Global System for Mobile Communications&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-12-31 &lt;strong&gt;&lt;a href="http://foldoc.org/386SPART.PAR"&gt;386SPART.PAR&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-12-24 &lt;strong&gt;&lt;a href="http://foldoc.org/wp-login.php"&gt;wp-login.php&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-12-24 &lt;strong&gt;&lt;a href="http://foldoc.org/WPL%2b"&gt;WPL+&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-12-24 &lt;strong&gt;&lt;a href="http://foldoc.org/WonderPop"&gt;WonderPop&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-05-05 &lt;strong&gt;&lt;a href="http://foldoc.org/Distinguished+Encoding+Rules"&gt;Distinguished Encoding Rules&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-04-12 &lt;strong&gt;&lt;a href="http://foldoc.org/JNT+Association"&gt;JNT Association&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-04-12 &lt;strong&gt;&lt;a href="http://foldoc.org/United+Kingdom+Education+and+Research+Networking+Association"&gt;United Kingdom Education and Research Networking Association&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-03-02 &lt;strong&gt;&lt;a href="http://foldoc.org/C%23"&gt;C#&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2016-01-19 &lt;strong&gt;&lt;a href="http://foldoc.org/Meta-Crystal"&gt;Meta-Crystal&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-12-30 &lt;strong&gt;&lt;a href="http://foldoc.org/Melvin+Conway"&gt;Melvin Conway&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-12-30 &lt;strong&gt;&lt;a href="http://foldoc.org/Conway's+Law"&gt;Conway's Law&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-11-29 &lt;strong&gt;&lt;a href="http://foldoc.org/character+encoding"&gt;character encoding&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-11-29 &lt;strong&gt;&lt;a href="http://foldoc.org/string"&gt;string&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-11-29 &lt;strong&gt;&lt;a href="http://foldoc.org/character+set"&gt;character set&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-09-01 &lt;strong&gt;&lt;a href="http://foldoc.org/sequence"&gt;sequence&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-08-21 &lt;strong&gt;&lt;a href="http://foldoc.org/optical+computing"&gt;optical computing&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-08-14 &lt;strong&gt;&lt;a href="http://foldoc.org/A+Data+Management+System"&gt;A Data Management System&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-06-17 &lt;strong&gt;&lt;a href="http://foldoc.org/Berard+Object+and+Class+Specifier"&gt;Berard Object and Class Specifier&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-05-30 &lt;strong&gt;&lt;a href="http://foldoc.org/Kent+Applicative+Operating+System"&gt;Kent Applicative Operating System&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-05-04 &lt;strong&gt;&lt;a href="http://foldoc.org/life"&gt;life&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-04-30 &lt;strong&gt;&lt;a href="http://foldoc.org/regular+expression"&gt;regular expression&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-04-26 &lt;strong&gt;&lt;a href="http://foldoc.org/open+interval"&gt;open interval&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-04-26 &lt;strong&gt;&lt;a href="http://foldoc.org/Common+Data+Format"&gt;Common Data Format&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-04-26 &lt;strong&gt;&lt;a href="http://foldoc.org/interval"&gt;interval&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-26 &lt;strong&gt;&lt;a href="http://foldoc.org/Internet"&gt;Internet&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-22 &lt;strong&gt;&lt;a href="http://foldoc.org/qux"&gt;qux&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-22 &lt;strong&gt;&lt;a href="http://foldoc.org/waldo"&gt;waldo&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-08 &lt;strong&gt;&lt;a href="http://foldoc.org/Margaret+Hamilton"&gt;Margaret Hamilton&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-07 &lt;strong&gt;&lt;a href="http://foldoc.org/control+character"&gt;control character&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-07 &lt;strong&gt;&lt;a href="http://foldoc.org/control+key"&gt;control key&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-07 &lt;strong&gt;&lt;a href="http://foldoc.org/window+system"&gt;window system&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-07 &lt;strong&gt;&lt;a href="http://foldoc.org/Microsoft+Windows"&gt;Microsoft Windows&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-07 &lt;strong&gt;&lt;a href="http://foldoc.org/contract+programmer"&gt;contract programmer&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-03-01 &lt;strong&gt;&lt;a href="http://foldoc.org/.login"&gt;.login&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-02-26 &lt;strong&gt;&lt;a href="http://foldoc.org/revolutions+per+minute"&gt;revolutions per minute&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-02-23 &lt;strong&gt;&lt;a href="http://foldoc.org/malware+as+a+service"&gt;malware as a service&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-02-23 &lt;strong&gt;&lt;a href="http://foldoc.org/P+value"&gt;P value&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+2015-02-23 &lt;strong&gt;&lt;a href="http://foldoc.org/attacks+as+a+service"&gt;attacks as a service&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;
+
+  </description>
+  <pubDate>2018-09-11</pubDate>
+  <guid isPermaLink="false">FOLDOC New Terms-2018-09-11</guid>
+  <author>denis.howe@gmail.com (Denis Howe)</author>
+</item>
+</channel>
+</rss>

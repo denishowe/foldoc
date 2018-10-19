@@ -1,0 +1,11 @@
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/Crypt/SSLeay.pm
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/Crypt/SSLeay/CTX.pm
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/Crypt/SSLeay/Conn.pm
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/Crypt/SSLeay/Err.pm
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/Crypt/SSLeay/MainContext.pm
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/Crypt/SSLeay/X509.pm
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/Net/SSL.pm
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/auto/Crypt/SSLeay/SSLeay.bs
+/vol/www-virtual/foldoc/local/lib/perl/5.14.2/auto/Crypt/SSLeay/SSLeay.so
+/vol/www-virtual/foldoc/local/man/man3/Crypt::SSLeay.3pm
+/vol/www-virtual/foldoc/local/man/man3/Net::SSL.3pm
