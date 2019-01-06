@@ -66,10 +66,9 @@ sub check_redirect
 	debug "check_redirect", $_;
 
 	# Redirect legacy URLs
-	# Test: http://foldoc.org/foldoc/		  --> /
 	# Test: http://foldoc.org/index.cgi?xyzzy --> /?xyzzy
 	# Test: http://foldoc.org/home.html		  --> /
-	return 1 if (s|^foldoc/|| + s/^index.cgi// + s/^home.html//);
+	return 1 if (s/^index.cgi// + s/^home.html//);
 
 	# Redirect to /pub/misc or /pub
 	# Test: http://foldoc.org/x/dates --> /pub/misc/dates

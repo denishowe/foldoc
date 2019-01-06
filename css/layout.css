@@ -191,7 +191,11 @@ input[type='text']
 
 .fb-like { padding-bottom: 10px }
 
-#___plusone_0 { margin: 0 10px !important }
+.twitter-tweet-button
+{
+	position: relative !important;
+	top: 3px;
+}
 
 #HCB_comment_box { clear: both; margin-bottom: 30px }
 

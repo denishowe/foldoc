@@ -1,11 +1,17 @@
-Dictionary
+# One shell glob pattern per line
+Dictionary*
 about.html
 contents.html
 contents/
 contributors.html
+foldoc.tar*
 help.html
+keys
+logs
 make.out
 missing.html
 offsets
+private
+rss.xml
 
-A.html
+./

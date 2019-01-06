@@ -6,7 +6,7 @@
 # Denis Howe <dbh@doc.ic.ac.uk>
 # 1999-11-10 - 2018-04-08
 
-# SET HTTP_HOST=foldoc.org& SET REQUEST_URI=/ABCL%2fc%2b& SET QUERY_STRING=debug& perl index.cgi
+# SET REQUEST_URI=/ABCL%2fc%2b& SET QUERY_STRING=debug& perl index.cgi
 # HTTP_HOST=foldoc.org REQUEST_URI=/ABCL%2fc%2b QUERY_STRING=debug perl index.cgi
 
 # ############################################################################################### #
@@ -34,7 +34,7 @@ $_ .= "?$ENV{QUERY_STRING}" if (($ENV{QUERY_STRING} || "") ne "");
 debug "URL:", $_;
 
 # Test: http://wombat.doc.ic.ac.uk/foo  --> foldoc.org/foo
-if ($ENV{HTTP_HOST} ne $server_name || check_redirect($_))
+if ($ENV{HTTP_HOST} && $ENV{HTTP_HOST} ne $server_name || check_redirect($_))
 {
 	s|^/*|$root_url/|
 		unless (/^http/);
@@ -63,7 +63,7 @@ if ($query eq "random-entry")
 	# Different versions of different browsers require one or other
 	# of these.  Apache translates "Expires: 0" to current time.
 	$ENV{HEADERS} = "Expires: 0\nPragma: no-cache\nCache-Control: no-cache\n";
-	$ENV{HTMLCOMMENTBOX} = 0;
+	$ENV{HTMLCOMMENTBOX} = 0;			# No comments on /random-entry URL
 	srand;
 	$min = $max = int(rand($num_entries));
 }
@@ -71,6 +71,7 @@ else
 {
 	# This causes Firefox to cache, whatever other headers we give
 	$ENV{HEADERS} = "Last-Modified: " . last_modified() . "\n";
+	$ENV{HTMLCOMMENTBOX} = 1;
 	($min, $max) = find_entries($query);
 }
 debug "Min ", $min, "  Max ", $max;
@@ -119,6 +120,7 @@ Try this search on
 
 $ENV{URL} = "$root_url/$query_url";
 my $query_html = text2html($query);
+my $index;
 if ($min > $max)	# No hits
 {
 	# Test: http://foldoc.org/queezil
@@ -128,35 +130,50 @@ if ($min > $max)	# No hits
 the spelling and try removing suffixes like "-ing" and "-s".</p>
 
 <p><a href="/?Missing definition">Why is this definition missing?</a></p>
-	}
-	. listneighbors($min) . $elsewhere;
+};
 }
 else				# One or more hits
 {
 	$ENV{STATUS} = "200 OK";
 	$ENV{TITLE} = "$query_html from FOLDOC";
 	$ENV{CONTENT} = "";
-	for my $index ($min .. $max)
+	for $index ($min .. $max)
 	{
-		$ENV{CONTENT} .= "<h3>$via &#8669;</h3>\n"
-			if (defined($via));
-		seeknth($dic_fh, $off_fh, $index);		# Position dictionary at hit
-		$ENV{CONTENT} .= foldoctohtml($dic_fh)	# Entry as HTML
-			. "<p>\n"
-			. listneighbors($index) . $elsewhere;
+		seeknth($dic_fh, $off_fh, $index); # Position dictionary at hit
+		$ENV{CONTENT}
+			.= (defined($via) && "<h3>$via &#8669;</h3>\n")
+			. foldoctohtml($dic_fh)			# Entry as HTML
+    		. sticker_you();
 	}
 }
+$ENV{CONTENT}
+	.= '<p class="vertical-space"></p>'
+	. listneighbors($min)
+	. $elsewhere;
+
 close $off_fh;
 close $dic_fh;
-
-# Single-page ads under nearby terms at bottom
-$ENV{BOTTOM_ADS} = "";
 
 print template();
 
 exit 0;
 
 ##################################################################
+
+# Sticker-you ads per query
+
+sub sticker_you
+{
+	return unless (open my $SY, "<", "sticker-you.csv");
+
+	while (<$SY>)
+	{
+		my ($term, $ad) = split /,/, $_, 2;
+		return $term ne $query ? "" : qq{<p class="vertical-space"></p>\n<div>SPONSOR: $ad</div>}
+			if ($term ge $query);
+	}
+	return "";
+}
 
 # Return some headings before and after INDEX
 

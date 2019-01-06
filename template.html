@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- Template $SOURCE -->
 <title>$TITLE</title>
 $META_DESCRIPTION
-<link href="http://fonts.googleapis.com/css?family=Duru+Sans|Belgrano|Inconsolata|Alef|Armata" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="/css/layout.css?3">
+<meta charset="utf-8" />
+<link href="//fonts.googleapis.com/css?family=Duru+Sans%7CBelgrano%7CInconsolata%7CAlef%7CArmata"
+  rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/css/layout.css?4" />
 
 <!-- realfavicongenerator.net -->
 <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png">
@@ -27,9 +27,15 @@ $META_DESCRIPTION
 <link rel="alternate" type="application/rss+xml" title="FOLDOC" href="/rss.xml"/>
 <link rel="search" title="FOLDOC"
 	type="application/opensearchdescription+xml"
-	href="http://foldoc.org/search.xml"/>
+	href="//foldoc.org/search.xml"/>
 
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<!-- Google AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+(adsbygoogle = window.adsbygoogle || [])
+  .push({google_ad_client: "ca-pub-5521724329338202", enable_page_level_ads: true});
+</script>
+
 <meta name="google-translate-customization"
 	content="828219db36930e1e-c51d915bf2ea717c-g9b503f9a85d5b5a7-a" />
 </head>
@@ -70,8 +76,8 @@ $CONTENT
 				<!-- if HTMLCOMMENTBOX -->
 				<div id="HCB_comment_box">Loading</div>
 				<link rel="stylesheet" type="text/css"
-					href="http://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-				<script type="text/javascript" language="javascript" id="hcb">
+					href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+				<script language="javascript" id="hcb">
 				hcb_user =
 				{
 					PAGE: '$URL',
@@ -82,7 +88,7 @@ $CONTENT
 				};
 				var s = document.createElement("script");
 				s.setAttribute("type", "text/javascript");
-				s.setAttribute("src", "http://www.htmlcommentbox.com/jread?page="
+				s.setAttribute("src", "//www.htmlcommentbox.com/jread?page="
 					+ escape(hcb_user.PAGE).replace("+", "%2B")
 					+ "&mod=%241%24wq1rdBcg%24.0y2uzvjA2bsnhzpXVq9F."
 					+ "&opts=17374&num=10"); // No e-mail field: 16846
@@ -94,24 +100,20 @@ $CONTENT
 				</script>
 				<hr />
 				<!-- end HTMLCOMMENTBOX -->
-				<div id="footer">
-$BOTTOM_ADS
-				</div> <!-- footer -->
 			</div> <!-- content -->
 		</div> <!-- left -->
 	</div> <!-- left-mid -->
 
 	<div id="right">
-		<div id="google_translate_element" />
-			<script type="text/javascript">
+		<div id="google_translate_element">
+			<script>
 				function googleTranslateElementInit()
 				{
 					new google.translate.TranslateElement(
 						{pageLanguage: 'en'}, 'google_translate_element');
 				}
 			</script>
-			<script type="text/javascript"
-				src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+			<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 		</div>
 		<p><br /></p>
 
@@ -123,28 +125,19 @@ $BOTTOM_ADS
 				data-show-faces="false" data-share="true">
 			</div>
 
-			<g:plusone size="medium"></g:plusone>
-
-			<a href="https://twitter.com/share" class="twitter-share-button" data-via="foldoc">Tweet</a>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="foldoc">
+              Tweet
+            </a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','twitter-wjs');</script>
 		</div>
 
 		<hr />
 
 		<div>
-		  <!--p>
-			FOLDOC is sponsored by
-			<a href="https://www.stickeryou.com/products/business-stickers/464">
-			  <img src="/sticker-you.png" style="margin-left: 120px"> Business Stickers
-			</a>
-		  </p-->
-
 		  <p>
 $RIGHT_ADS
 		  </p>
 		</div>
-
-		<hr />
 
 		<p>
 			<a href="/rss.xml">
@@ -159,7 +152,7 @@ $RIGHT_ADS
 		<p>Updated: $UPDATED</p>
 		<p><numterms>$NUM_TERMS</numterms> terms</p>
 
-		<p>Supported by <a href="http://www.doc.ic.ac.uk/">
+		<p>No longer supported by <a href="//www.doc.ic.ac.uk/">
 			Imperial College Department of Computing</a>
 		</p>
 
@@ -170,13 +163,12 @@ $RIGHT_ADS
 </div> <!-- container -->
 
 <!-- Quantcast -->
-<script type="text/javascript">
+<script>
 	var _qevents = _qevents || [];
 	(function()
 	{
 		var elem = document.createElement('script');
-		elem.src = (document.location.protocol == "https:"
-			? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+		elem.src = "https://secure.quantserve.com/quant.js";
 		elem.async = true;
 		elem.type = "text/javascript";
 		var scpt = document.getElementsByTagName('script')[0];
@@ -192,13 +184,11 @@ $RIGHT_ADS
 </noscript>
 
 <!-- Google Analytics -->
-<script type="text/javascript">
-	var gaJsHost = "https:" == document.location.protocol
-		? "https://ssl." : "http://www.";
+<script>
 	document.write(unescape(
-		"%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		"%3Cscript src='https://ssl.google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 </script>
-<script type="text/javascript">
+<script>
 	try
 	{
 		var pageTracker = _gat._getTracker("UA-9715943-1");
