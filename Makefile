@@ -24,7 +24,7 @@ date:
 DISTFILES = Dictionary Makefile *.gif *.png *.jpg \
 	index.cgi build.pl Foldoc.pm *.html \
 	about.html contents.html contributors.html help.html \
-	home.html missing.html sitemap.html source.html
+	home.html missing.html sitemap.txt source.html
 
 foldoc.tar.gz: $(DISTFILES)
 	tar cfz $@ $(DISTFILES)
@@ -35,7 +35,7 @@ Dictionary keys offsets:	new/Dictionary junk_searches build.pl Foldoc.pm templat
 	-rm -rf jUnK
 	cd new && ../build.pl index
 	-mv -f contents jUnK
-	cd new && mv -f contents keys offsets sitemap.html .. && cp -f Dictionary ..
+	cd new && mv -f contents keys offsets sitemap.txt .. && cp -f Dictionary ..
 	chmod 444 Dictionary
 	rm -rf jUnK
 

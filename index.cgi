@@ -6,7 +6,7 @@
 # Denis Howe <dbh@doc.ic.ac.uk>
 # 1999-11-10 - 2018-04-08
 
-# SET REQUEST_URI=/ABCL%2fc%2b& SET QUERY_STRING=debug& perl index.cgi
+# SET REQUEST_URI=/+& SET QUERY_STRING=debug& perl index.cgi
 # HTTP_HOST=foldoc.org REQUEST_URI=/ABCL%2fc%2b QUERY_STRING=debug perl index.cgi
 
 # ############################################################################################### #
@@ -45,7 +45,7 @@ if ($ENV{HTTP_HOST} && $ENV{HTTP_HOST} ne $server_name || check_redirect($_))
 }
 
 # $_ is now decoded query term
-debug "Query", $_;
+debug "Query ($_)";
 
 home() if ($_ eq "home-page");			# Special case
 

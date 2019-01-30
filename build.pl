@@ -192,19 +192,20 @@ categorised yet, <a href="/contents/alias.html"> some entries
 		template("contents/$file", "../template.html");
 	}
 
-	# Google sitemap
-	# http://www.google.com/support/webmasters/bin/answer.py?answer=40318
-	# http://www.google.com/support/webmasters/bin/answer.py?answer=34657
+	# Google sitemap - UTF-8 text file one URL per line
+	# https://support.google.com/webmasters/answer/183668?hl=en
+	# http://www.google.com/ping?sitemap=http://foldoc.org/sitemap.txt
 
-	my $sm = join "", map "<url><loc>$root_url/contents/"
-		. subjectfile($_) . "</loc></url>\n", @subjects;
-
-	open SM, ">", "sitemap.html";
-	print SM qq{<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-$sm
-</urlset>
-};
+	my @pages = (qw{
+		/
+		/Free+On-line+Dictionary
+		/contents.html
+		/help.html
+		/missing.html
+		/new.html
+	}, map "/contents/" . subjectfile($_), @subjects);
+	open SM, ">", "sitemap.txt";
+	print SM map "$root_url$_\n", @pages;
 	close SM;
 }
 

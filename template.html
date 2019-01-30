@@ -6,7 +6,7 @@ $META_DESCRIPTION
 <meta charset="utf-8" />
 <link href="//fonts.googleapis.com/css?family=Duru+Sans%7CBelgrano%7CInconsolata%7CAlef%7CArmata"
   rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="/css/layout.css?4" />
+<link rel="stylesheet" type="text/css" href="/css/layout.css?1" />
 
 <!-- realfavicongenerator.net -->
 <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png">
@@ -14,6 +14,7 @@ $META_DESCRIPTION
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
@@ -54,55 +55,53 @@ $META_DESCRIPTION
 </script>
 
 <div id="container">
-	<div id="left-mid">
-		<div id="left">
-			<a href="/">
-				<img src="/foldoc.gif" width="300" height="98"
-					alt="Free On-line Dictionary of Computing" class="logo" />
-			</a>
-			<div id="nav">
-				<a href="/contents.html" class="button">Contents</a>
-				<a href="/help.html" class="button">Help</a>
-				<a href="/random-entry" class="button">Random</a>
-			</div>
-			<form action="/">
-				<input type="text" name="query" id="query" autofocus="autofocus" />
-				<input type="submit" name="action" value="Search" class="button" />
-			</form>
-			<div id="content">
+    <div id="left">
+        <a href="/">
+            <img src="/foldoc.gif" width="300" height="98"
+                alt="Free On-line Dictionary of Computing" class="logo" />
+        </a>
+        <div id="nav">
+            <a href="/contents.html" class="button">Contents</a>
+            <a href="/help.html" class="button">Help</a>
+            <a href="/random-entry" class="button">Random</a>
+        </div>
+        <form action="/">
+            <input type="text" name="query" id="query" autofocus="autofocus" />
+            <input type="submit" name="action" value="Search" class="button" />
+        </form>
+        <div id="content">
 $CONTENT
-				<p class="vertical-space"></p>
-				<hr />
-				<!-- if HTMLCOMMENTBOX -->
-				<div id="HCB_comment_box">Loading</div>
-				<link rel="stylesheet" type="text/css"
-					href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-				<script language="javascript" id="hcb">
-				hcb_user =
-				{
-					PAGE: '$URL',
-					comments_header: ' ',
-					no_comments_msg: ' ',
-					err_comment_empty: 'Your comment was not posted because it was empty!',
-					rss: '',
-				};
-				var s = document.createElement("script");
-				s.setAttribute("type", "text/javascript");
-				s.setAttribute("src", "//www.htmlcommentbox.com/jread?page="
-					+ escape(hcb_user.PAGE).replace("+", "%2B")
-					+ "&mod=%241%24wq1rdBcg%24.0y2uzvjA2bsnhzpXVq9F."
-					+ "&opts=17374&num=10"); // No e-mail field: 16846
-				if (typeof s != "undefined")
-					document.getElementsByTagName("head")[0].appendChild(s);
-				</script>
-				<script>
-				setTimeout(function () { document.getElementById('hcb_form_content').rows = 1 }, 1000);
-				</script>
-				<hr />
-				<!-- end HTMLCOMMENTBOX -->
-			</div> <!-- content -->
-		</div> <!-- left -->
-	</div> <!-- left-mid -->
+            <p class="vertical-space"></p>
+            <hr />
+            <!-- if HTMLCOMMENTBOX -->
+            <div id="HCB_comment_box">Loading</div>
+            <link rel="stylesheet" type="text/css"
+                href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+            <script language="javascript" id="hcb">
+            hcb_user =
+            {
+                PAGE: '$URL',
+                comments_header: ' ',
+                no_comments_msg: ' ',
+                err_comment_empty: 'Your comment was not posted because it was empty!',
+                rss: '',
+            };
+            var s = document.createElement("script");
+            s.setAttribute("type", "text/javascript");
+            s.setAttribute("src", "//www.htmlcommentbox.com/jread?page="
+                + escape(hcb_user.PAGE).replace("+", "%2B")
+                + "&mod=%241%24wq1rdBcg%24.0y2uzvjA2bsnhzpXVq9F."
+                + "&opts=17374&num=10"); // No e-mail field: 16846
+            if (typeof s != "undefined")
+                document.getElementsByTagName("head")[0].appendChild(s);
+            </script>
+            <script>
+            setTimeout(function () { document.getElementById('hcb_form_content').rows = 1 }, 1000);
+            </script>
+            <hr />
+            <!-- end HTMLCOMMENTBOX -->
+        </div> <!-- content -->
+    </div> <!-- left -->
 
 	<div id="right">
 		<div id="google_translate_element">
@@ -151,10 +150,6 @@ $RIGHT_ADS
 		</p>
 		<p>Updated: $UPDATED</p>
 		<p><numterms>$NUM_TERMS</numterms> terms</p>
-
-		<p>No longer supported by <a href="//www.doc.ic.ac.uk/">
-			Imperial College Department of Computing</a>
-		</p>
 
 		<p><em><a href="/Free+On-line+Dictionary">
 			Copyright Denis Howe 1985</a></em>

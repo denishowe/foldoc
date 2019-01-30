@@ -32,7 +32,7 @@ print qq{<html><head><title>Words matching $re</title></head>
 <body>
 <form style="font-size: large">
   <b>RE</b>
-  <input name="r" type="text" value="$re" style="font-size: large" />
+  <input name="r" type="text" value="$re" style="width: 90%; font-size: large" />
   <input type="submit" value="Find Words" style="font-size: large" />
 </form><p>
 };

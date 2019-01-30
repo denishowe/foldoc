@@ -383,6 +383,8 @@ Pos.init = function ()
 	var ww = window.innerWidth, wh = window.innerHeight;
 	var cw = Pos.round(ww), ch = Pos.round(wh);
 	Pos.ctx = Pos.context(ww, wh, cw, ch);
+	Pos.ctx.fillStyle = 'blue';
+	Pos.ctx.rect(0, 0, cw, ch);
 	// Set the inclusive max x and y for the given width and height in pixels
 	Pos.x_max = Math.floor(cw / Pos.grid_size - 1);
 	Pos.y_max = Math.floor(ch / Pos.grid_size - 1);

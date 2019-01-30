@@ -85,7 +85,7 @@ sub check_redirect
 	return 1 if (s/denis-cv.html/Denis Howe CV.pdf/i);
 
 	$_ = url2text($_);
-	debug "url2text -> $_";
+	debug "url2text -> ($_)";
 
 	# No query string
 	# Test: http://foldoc.org/foo
@@ -215,7 +215,8 @@ sub find_entries
 	# Normalise the query to match in the keys file.
 
 	my $key = make_key($query);
-	debug "Query $query  Key $key";
+	die "Empty key for query ($query)" unless (length $key);
+	debug "Query ($query)  Key ($key)";
 
 	# Check for initial special entries
 
@@ -660,10 +661,13 @@ sub url2text
 {
 	local ($_) = @_;
 
-	s/\+/ /g unless (/^c\+/i);			# C++ C+- C+@
+	# Only treat + as space if there's a letter later in the string, not, e.g. C++ C+-.
+	s/\+(.*?:\w)/ /g unless (/^c\+/i);
+
 	s/%([\da-f]{2})/chr(hex($1))/eig;
+
 	# Replace double-encoded multiple, non-adjacent +s with spaces
-	s/\+/ /g if (/\+.+\+/);
+	# s/\+/ /g if (/\+.+\+/);
 
 	return $_;
 }

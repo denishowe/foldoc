@@ -3,6 +3,8 @@
 # http://www.kollar.com/robots.html
 # Absolute paths
 
+Sitemap: http://foldoc.org/sitemap.txt
+
 User-agent: Mediapartners-Google
 Disallow:
 

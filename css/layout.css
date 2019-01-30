@@ -1,15 +1,15 @@
 body
 {
-	font-family: 'Belgrano', serif;
-	font-size: 0.5cm;
-	background: url("images/daimondeyes-73f4.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
-	min-height: 0 !important;
-	height: 86%;
-	margin: 0;
-	padding: 0;
+    font-family: 'Belgrano', serif;
+    font-size: 100%;
+    background: url("images/daimondeyes-73f4.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    min-height: 0 !important;
+    height: 86%;
+    margin: 0;
+    padding: 0;
 }
 
-#left, #left-mid, #right { float: left }
+#left, #right { float: left }
 
 a { text-decoration: none }
 
@@ -19,70 +19,75 @@ h2, h3 { clear: both }
 
 hr
 {
-	clear: both;
-	height: 30px;
-	border-style: solid;
-	border-color: #999;
-	border-width: 1px 0 0 0;
-	border-radius: 20px;
-	margin-bottom: -20px;
+    clear: both;
+    overflow: visible;
+    height: 30px;
+    border-style: solid;
+    border-color: #999;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    margin-bottom: -20px;
 }
+
 hr:before
 {
-	display: block;
-	content: "";
-	height: 30px;
-	margin-top: -31px;
-	border-style: solid;
-	border-color: #999;
-	border-width: 0 0 1px 0;
-	border-radius: 20px;
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: #999;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
 }
-#right hr { width: 120% }
+#right hr { width: 105% }
 
 table
 {
-	width: 100%;
- 	border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 35px;
 }
 
 td
 {
-	width: 33%;
-	border-spacing: 0;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #FFDDDD;
-	padding: 5px;
+    width: 33%;
+    border-spacing: 0;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #FFDDDD;
+    padding: 5px;
 }
 
 dt { font-weight: bold }
+
+pre { margin-left: -50px }
 
 .vertical-space { height: 20px }
 
 #container
 {
-	width: 90%;
-	min-height: 100%;
-	background-color: #fff;
-	box-shadow: 0 0 9px rgba(0, 0, 0, 0.1);
-	padding: 30px;
-	margin: 30px auto;
-	overflow: hidden;
+    width: 90%;
+    min-height: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 30px auto;
+    overflow: hidden;
 }
 
-#left-mid { width: 75% }
-
-#left { width: 95% }
+#left
+{
+    min-width: 75%;
+    max-width: 100%;
+}
 
 #right
 {
-	width: 18%;
-	min-width: 140px;
-	border-left: 1px dotted #999;
-	padding: 0 0 0 20px;
-	font-size: 10px !important;
+    width: 22em;
+    padding: 0 0 0 20px;
+    border-left: 1px dotted #999;
+    font-size: 75%;
 }
 
 #right p { margin: 10px 0 20px 15px }
@@ -93,77 +98,77 @@ form { clear: both }
 
 input[type='text']
 {
-	margin: 10px 18px 30px 0;
-	border: 1px solid #ccc !important;
-	border-radius: 0px;
-	-webkit-box-shadow: 2px 2px 3px 0px rgba(50, 50, 50, 0.34);
-	-moz-box-shadow:	2px 2px 3px 0px rgba(50, 50, 50, 0.34);
-	box-shadow:			2px 2px 3px 0px rgba(50, 50, 50, 0.34);
+    margin: 10px 18px 30px 0;
+    border: 1px solid #ccc !important;
+    border-radius: 0px;
+    -webkit-box-shadow: 2px 2px 3px 0px rgba(50, 50, 50, 0.34);
+    -moz-box-shadow:    2px 2px 3px 0px rgba(50, 50, 50, 0.34);
+    box-shadow:         2px 2px 3px 0px rgba(50, 50, 50, 0.34);
 }
 
 .button
 {
-	float: left;
-	width: 6em;
-	height: 40px;
-	text-indent: 0;
-	border: 1px solid #dcdcdc;
-	display: inline-block;
-	color: #777777;
-	text-align: center;
-	font-family: arial;
-	font-size: 20px;
-	font-weight: bold;
-	font-style: normal;
-	text-decoration: none;
-	text-shadow: 1px 1px 0px #ffffff;
-	margin: 12px;
-	-moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
-	-webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-	box-shadow: inset 0px 1px 0px 0px #ffffff;
-	background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );*/
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-	background-color: #ededed;
-	-webkit-border-top-left-radius: 6px;
-	-moz-border-radius-topleft: 6px;
-	border-top-left-radius: 6px;
-	-webkit-border-top-right-radius: 6px;
-	-moz-border-radius-topright: 6px;
-	border-top-right-radius: 6px;
-	-webkit-border-bottom-right-radius: 6px;
-	-moz-border-radius-bottomright: 6px;
-	border-bottom-right-radius: 6px;
-	-webkit-border-bottom-left-radius: 6px;
-	-moz-border-radius-bottomleft: 6px;
-	border-bottom-left-radius: 6px;
+    float: left;
+    width: 6em;
+    height: 40px;
+    text-indent: 0;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    color: #777777;
+    text-align: center;
+    font-family: arial;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    text-decoration: none;
+    text-shadow: 1px 1px 0px #ffffff;
+    margin: 12px;
+    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );*/
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    background-color: #ededed;
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
 }
 #nav .button { height: 30px; padding-top: 8px }
 
 .button:hover
 {
-	background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
-	background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-	background-color: #dfdfdf;
-	cursor: pointer;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+    background-color: #dfdfdf;
+    cursor: pointer;
 }
 .button input:active, input[name=action]:active
 {
-	position: relative;
-	top: 1px;
+    position: relative;
+    top: 1px;
 }
 
 #content { clear: left; max-width: 47em }
 
 #query, #query:hover, #cse-search-box input[type='text']
 {
-	float: left;
-	width: 43.5em;
-	max-width: 95%;
-	height: 40px;
-	padding: 0 10px !important;
-	font-family: 'Belgrano',serif;
-	color: #999999;
+    float: left;
+    width: 43.5em;
+    max-width: 95%;
+    height: 40px;
+    padding: 0 10px !important;
+    font-family: 'Belgrano',serif;
+    color: #999999;
 }
 #query:active, #query:hover { color: #000 }
 
@@ -171,8 +176,8 @@ input[type='text']
 
 #blurb
 {
-	clear: both;
-	width: 95%;
+    clear: both;
+    width: 95%;
 }
 
 .updated { float: right; font-size: 12px }
@@ -193,8 +198,8 @@ input[type='text']
 
 .twitter-tweet-button
 {
-	position: relative !important;
-	top: 3px;
+    position: relative !important;
+    top: 3px;
 }
 
 #HCB_comment_box { clear: both; margin-bottom: 30px }
@@ -207,11 +212,11 @@ input[type='text']
 
 #footer
 {
-	clear: both;
-	width: 100%;
-	margin-top: 20px;
-	font-size: 10px;
-	color: #999999;
+    clear: both;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 10px;
+    color: #999999;
 }
 
 #missing td:first-child { text-align: right }
