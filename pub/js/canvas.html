@@ -1,19 +1,25 @@
-<body>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Canvas Demo</title>
+</head>
+	<body>
 <!--
-   start "" "%USERPROFILE%/Projects/FOLDOC/foldoc/pub/misc/canvas.html"
-   http://foldoc.org/pub/misc/canvas.html
+   start "" "%USERPROFILE%/Projects/FOLDOC/foldoc/pub/js/canvas.html"
+   open ~/Projects/FOLDOC/foldoc/pub/js/canvas.html
+   http://foldoc.org/pub/js/canvas.html
   -->
 <canvas id="canvas" style="border: solid">No canvas :-(</canvas>
 <script>
-var d = 2;
-var dc = 0.5;
-var ctx, x, y, r, g, b;
+const d = 1;
+const dc = 0.1;
+let ctx, p;
 clear();
-setInterval(draw, 0);
 
 function clear()
 {
-	var m = 22; // Min margin with no scroll bars
+	const m = 22; // Min margin with no scroll bars
 	can = document.getElementById("canvas");
 	can.onclick = go_full_screen;
 	window.onresize = go_full_screen;
@@ -26,44 +32,35 @@ function clear()
 function go_full_screen()
 {
 	// Must be initiated by user action
-	document.documentElement.webkitRequestFullScreen();
+	document.documentElement.requestFullScreen();
 	setTimeout(clear, 50);
 };
 
-function reset()
-{
-	x = ctx.canvas.width/2;
-	y = ctx.canvas.height/2;
-	r = 128;
-	g = 128;
-	b = 128;
-}
+function reset() { p = { x: ctx.canvas.width/2, y: ctx.canvas.height/2, r: 128, g: 128, b: 255 } }
+
+function colourChange() { return dc*(Math.random()-0.5) }
+
+function rgb(f) { return ['r', 'g', 'b'].map(f) }
+
+function rgbString(p) { return "rgb(" + rgb( c => Math.floor(p[c]) ).join(",") + ")" }
 
 function draw()
 {
-	for (var i = 0; i < 2000; i++) draw1();
-	if (Math.random() < 0.002) { reset() }
+	for (let i = 0; i < 2000; i++) {
+		ctx.beginPath();
+		ctx.moveTo(p.x, p.y);
+		p.x += d*(Math.random()-0.5); p.y += d*(Math.random()-0.5);
+		rgb( c => p[c] += colourChange() );
+		ctx.strokeStyle = rgbString(p);
+		ctx.lineTo(p.x, p.y);
+		ctx.stroke();
+	}
+	if (Math.random() < 1E-6) reset();
+	setTimeout(draw, 0);
 }
 
-function draw1()
-{
-	ctx.beginPath();
-	ctx.moveTo(x, y);
-    x += d*(Math.random()-0.5);
-    y += d*(Math.random()-0.5);
-	// console.log(x + "," + y);
-    r += dc*(Math.random()-0.5);
-    g += dc*(Math.random()-0.5);
-    b += dc*(Math.random()-0.5);
-    ctx.strokeStyle = "rgb(" + Math.floor(r) + "," + Math.floor(g) + "," + Math.floor(b) + ")";
-    ctx.lineTo(x, y);
-	// ctx.endPath
-	ctx.stroke();
-}
+draw();
 
-// Local variables:
-// compile-command: "..\\..\\..\\sync.bat"
-// compile-command: "canvas.html"
-// End:
 </script>
 </body>
+</html>
