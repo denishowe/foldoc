@@ -1,7 +1,18 @@
 <!DOCTYPE HTML>
 <!-- saved from url=(0040)http://foldoc.org/pub/js/automata.html -->
 <html>
-<head><title>Cellular Automata</title></head>
+<head>
+<title>Cellular Automata</title>
+<meta charset="UTF-8">
+<style type="text/css">
+
+body {
+  overflow: hidden; /* Prevent scroll bars with no margin */
+  background-color: white;
+}
+
+</style>
+</head>
 <body>
 <!--
 	http://foldoc.org/pub/js/automata.html
@@ -12,10 +23,10 @@
 
 // Main entry point.  Restart once they stop resizing.
 
-var grid_size = 16;					   	// Grid size in px
-var max_cycles = 10000;
-var bots_per_cell = 0.4;
-var max_energy = 500;					// Initial & food energy
+const grid_size = 16;					// Grid size in px
+const max_cycles = 2000;
+const bots_per_cell = 0.5;
+const max_energy = 500;					// Initial energy
 
 var resize_timeout;
 
@@ -24,12 +35,12 @@ window.onresize = function (e)
 	if (! resized()) return;
 	Run.stop();							// Pause while resizing
 	clearTimeout(resize_timeout);
-	resize_timeout = setTimeout(Run.reset, 500);
+	resize_timeout = setTimeout(Run.init, 500);
 };
 
 window.onkeydown = function (e)
 {
-	var kc = e.keyCode, ks = String.fromCharCode(kc);
+	const kc = e.keyCode, ks = String.fromCharCode(kc);
 	// console.log('key', kc,ks);
 	if (kc == 17 || kc == 18) return;		// Ignore Alt keys
 	if (kc == 27) return close_window();	// Esc key --> close window
@@ -46,19 +57,25 @@ function Run()
 {
 	Colour.init();
 	Direction.init();
-	Run.reset();
+	Run.init();
 };
 
-// (Re)start, e.g. after resize, with empty grid.  Initialise and run bots.
+// Initialise things that depend on screen size.  Start with empty grid.
+
+Run.init = function ()
+{
+  Pos.init();
+  Run.reset();
+}
+
+// Start, resize or all dead
 
 Run.reset = function ()
 {
-	Pos.init();
-	Bot.init();
-	Bot.reset();
-	Run.periods = [0, 100, 500];
-	Run.t = 0;
-	Run.start();
+  Bot.reset();
+  Run.periods = [0, 100, 500];
+  Run.t = 0;
+  Run.start(); //??
 };
 
 // Pause or run
@@ -70,22 +87,16 @@ Run.stop = function () { Run.running = false };
 Run.start = function ()
 {
 	Run.running = true;
-	Run.step();
+	Run.step(); //??
 };
 
 Run.step = function ()
 {
-	if (! Run.running) return;
-	Bot.add_food();
-	if (Run.t++ > max_cycles || ! Bot.step())		// Long run or all dead?
-		return Run.end();
-	setTimeout(function () { requestAnimationFrame(Run.step) }, Run.periods[0]);
-}
-
-Run.end = function ()
-{
-	if (Bot.best) Bot.best.show();
-	Run.reset();
+  if (! Run.running) return;
+  const numAlive = Bot.step();
+  if (Run.t++ > max_cycles || ! numAlive) // Long run or all dead?
+	return Run.reset(); //??
+  setTimeout(function () { requestAnimationFrame(Run.step) }, Run.periods[0]);
 }
 
 Run.change_speed = function()
@@ -96,121 +107,97 @@ Run.change_speed = function()
 
 /// Bot ////////////////////////////////////////////////////////////////////////////////////////////
 
-function Bot(is_food, index, num_bots)
+function Bot(index)
 {
-	this.pos = Pos.any_empty();
-	if (! this.pos) return;
-	this.pos.occupant(this);
-	this.is_food = is_food;
-	this.offset = is_food ? 3 : 2;
-	this.colour = is_food ? Colour.light_green : Colour.colourful(index, num_bots);
-}
+  this.pos = Pos.any_empty();
 
-Bot.init = function ()
-{
-	var num_bots = Math.floor(Pos.num_cells * bots_per_cell);
-	Bot.all = Array.repeat(num_bots, function (i) { return new Bot(false, i, num_bots) });
+  if (! this.pos) return;
+
+  this.pos.occupant(this);
+  this.offset = 2;
+  this.colour = Colour.colourful(index, Bot.initialNum);
+  this.rules = Bot.best && p(0.9) ? Bot.best.mutate() : Bot.rules();
+  this.rule = this.rules[0];
+  this.energy = Bot.energy();
+  this.points = 0;
 };
 
-// Add some food and reset bots
+// Recreate all Bots depending on the screen size
 
 Bot.reset = function ()
 {
-	while (Bot.add_food()) ;
-	Bot.all.map(function (b) {b.reset()});
-	Bot.all.mapm("draw");				// Draw all non-food at once
-	Bot.best = undefined;
+  if (Bot.best) Bot.best.show();
+  Bot.initialNum = Math.floor(Pos.num_cells * bots_per_cell);
+  Bot.all = Array.repeat(Bot.initialNum, i => new Bot(i));
+  Bot.all.forEach(b => b.draw());		// Draw all at once
+  Bot.best = undefined;
 };
 
 // Return random initial fraction of max energy
 
 Bot.energy = function ()
 {
-	return Math.floor(Math.random() * max_energy);
-};
-
-// Return true if can add food in an empty cell
-
-Bot.add_food = function ()
-{
-	var f = new Bot(true);
-	if (f.pos) f.draw();
-
-	return f.pos;
+  return Math.floor(Math.random() * max_energy);
 };
 
 // Run one step of bot activity and return number left alive
 
 Bot.step = function()
 {
-	Pos.clear_claims();
-	Bot.all.mapm("calc");				// Claim new positions
-	Bot.all.mapm("move");				// Then move
-	Bot.all = Bot.all.filterm("live");
+  Pos.clear_claims();
+  Bot.all.mapm("calc");				// Claim new positions
+  Bot.all.mapm("move");				// Then move
+  Bot.all = Bot.all.filterm("live");
+  // console.log('Pop', Bot.all.length);
 
-	return Bot.all.length;
+  return Bot.all.length;
 };
 
 // Return a single rule loop
 
 Bot.rules = function ()
 {
-	var r = Rule.random();
-	r.next = r;
+  const r = Rule.random();
+  r.next = r;
 
-	return [r];
+  return [r];
 };
 
-// Prepare Bot for new run
-
-Bot.prototype.reset = function ()
-{
-	this.energy = Bot.energy();
-	this.points = 0;
-	if (Bot.best && this == Bot.best) return;	// Keep best's rules
-	this.rules = Bot.best && p(0.9) ? Bot.best.mutate() : Bot.rules();
-	this.rule = this.rules.any();				// Start anywhere
-};
-
-// If bot's Rule "rule" is active at position pos, set the
-// bot's next position unless off the grid or occupied.
-// Advance bot's pointer to next rule.  Claim new or old pos.
+// If bot's current Rule is active at position pos, set the bot's next position
+// unless off the grid.  Advance bot's pointer to next rule.  Claim new or old pos.
 
 Bot.prototype.calc = function ()
 {
-	var rule = this.rule;
-	this.rule = rule.next;						// Point Bot to next rule
-	var action = rule.active(this.pos) && rule.action;
-	var p;
-	this.next_pos = action && (p = this.pos.add(action)) && p.vacant() && p;
-	(this.next_pos || this.pos).claim(true);	// Claim new or current pos
+  const rule = this.rule;
+  this.rule = rule.next;					// Point Bot to next rule
+  const action = rule.active(this.pos) && rule.action;
+  this.next_pos = action && this.pos.add(action);
+  (this.next_pos || this.pos).claim(true);	// Claim new or current pos
 };
 
-// If new position is empty or food and I'm sole
-// claimant, move there.  Die if out of energy.
+// If new position is empty and I'm sole claimant, move there.  Die if out of energy.
 
 Bot.prototype.move = function ()
 {
-	var n = this.next_pos;
-	if (n && n.claim() != 1) n = false;	// Drop disputed claim
-	this.energy--;
-	if (n && n.type() == 'food')
-	{
-		this.energy = max_energy;		// Food resets energy
-		this.points++;
-		if (! Bot.best || this.points > Bot.best.points) Bot.best = this;
-	}
-	var dead = ! this.live();
-	if (n || dead)
-	{
-		this.pos.occupant(undefined);	// Clear old pos
-		this.draw();
-		if (dead) return;
-		this.previous_pos = this.pos;
-		this.pos = n;
-		n.occupant(this);
-	}
-	this.draw();						// Draw old/new pos, colour
+  var n = this.next_pos;
+  if (n && n.claim() != 1) n = false;	// Drop disputed claim
+  this.energy--;
+  var dead = ! this.live();
+  if (n || dead)
+  {
+	this.pos.occupant(undefined);		// Clear old pos
+	this.draw();
+	if (dead) return;
+	const prev = this.previous_pos;
+	if (! n.equal(prev) && ! n.equal(this.pos)) this.energy += 5;
+	this.points++;
+	if (! Bot.best || this.points > Bot.best.points)
+	  Bot.best = this;
+	this.previous_pos = this.pos;
+	this.pos = n;
+	n.occupant(this);
+  }
+  this.draw();							// Draw old/new pos, colour
 }
 
 Bot.prototype.live = function () { return this.energy > 0 };
@@ -219,8 +206,10 @@ Bot.prototype.draw = function () { this.pos.draw() };
 
 Bot.prototype.show = function ()
 {
-	console.log("%cbest %c" + this.toString() + " " + this.points + " points",
-		"color: " + this.colour.toString(), "color: black");
+  const bs = this.toString();
+  const p = this.points;
+  const c = this.colour.toString();
+  console.log('%cbest%c %s %d points', `color: ${ c }`, 'color: black', bs, p);
 };
 
 // Die if this bot's position is occupied by another bot
@@ -234,54 +223,52 @@ Bot.prototype.check = function ()
 	Bot.stop();
 };
 
-// Return white for food or black faded towards white as the Bot's energy decreases
+// Return black faded towards white as the Bot's energy decreases
 
 Bot.prototype.border_colour = function ()
 {
-	var c = Colour.white;
-	if (! this.is_food) c = c.multiply(1 - this.energy / max_energy);
+  const k = 1 - this.energy / max_energy;
 
-	return c;
+  return Colour.white.multiply(k < 0 ? 0 : k);
 };
 
 // Return a randomly modified copy of the Bot's rules
 
 Bot.prototype.mutate = function ()
 {
-	var rules = this.clone_rules();
-	if (p(0.2))
-		rules.push(rules[rules.length-1].append()); // Append new rule
-	else
-		rules.any().mutate(rules);					// Change an existing rule
+  const rules = this.clone_rules();
+  const newRule = rules[rules.length-1].append(); // Append new rule to last rule
+  newRule.mutate(rules);
+  rules.push(newRule);
 
-	return rules;
+  return rules;
 }
 
-// Return a copy of the rules with "next" properties pointing to the new rules
+// Return a copy of the rules
 
 Bot.prototype.clone_rules = function ()
 {
-	var old_rules = this.rules;
-	old_rules.set_indexes();
-	var new_rules = old_rules.map(function (r) { return new Rule(r.look, r.want, r.action) });
-	new_rules.map(function (r, i) { r.next = new_rules[old_rules[i].next.index] });
+  const old_rules = this.rules;
+  // Update next pointers
+  old_rules.set_indexes();
+  const new_rules = old_rules.map(r => r.clone());
 
-	return new_rules;
+  new_rules.map(function (r, i) { r.next = new_rules[old_rules[i].next.index] });
+
+  return new_rules;
 };
 
 Bot.prototype.toString = function ()
 {
-	var rs = this.rules;
-	rs.set_indexes();
-
-	return "(" + rs.length + ") " + rs.mapm("toString").join(" ");
+  const rs = this.rules || [];
+  rs.set_indexes();
+  return rs.map(r => r.toString(rs.length)).join(' ');
 };
-
 
 /// Rule ////////////////////////////////////////////////////////////
 
 // A Rule has a look direction and wanted type (off,
-// empty, bot, food), an action direction and a next rule
+// empty, bot), an action direction and a next rule
 
 function Rule(look, want, action)
 {
@@ -305,23 +292,24 @@ Rule.prototype.active = function (pos)
 	return lp && lp.type() == this.want && pos.add(this.action);
 };
 
+Rule.prototype.clone = function () {
+  return new Rule(this.look, this.want, this.action);
+}
+
 // Randomly change the rule's look or action direction or next rule
 
 Rule.prototype.mutate = function (rules)
 {
-	var r = Math.random();
-	if (r < 0.33)
-	{
-		this.look = Direction.any();
-	}
-	else if (r < 0.66)
-	{
-		this.action = Direction.any();
-	}
-	else
-	{
-		this.next = rules.any();	// Set random jump
-	}
+  const r = Math.random();
+  if (r < 0.2) {
+	this.look = Direction.any();
+  } else if (r < 0.4) {
+	this.want = Pos.types.any();
+  } else if (r < 0.6) {
+	this.action = Direction.any();
+  } else if (r < 0.8) {
+	this.next = rules.any();	// Set random jump
+  }
 };
 
 // Insert new rule after this and return it
@@ -335,39 +323,39 @@ Rule.prototype.append = function ()
 	return new_rule;
 };
 
-Rule.prototype.toString = function (i, rs)
+Rule.prototype.toString = function (nr)
 {
-	var n = this.next ? this.next.index : "?";
-	n = n == (this.index + 1) % rs.length ? "" : "»" + n;
+  const { action, index, look, next, want } = this;
+  let nx = next ? next.index : '?';
+  nx = nx == (index + 1) % nr ? '' : ' » #' + nx;
 
-	return this.index + ":" + this.look + this.want.substring(0, 1) + this.action + n;
+  return `${ index }:[if ${ look.toString() } is ${ want } go ${ action.toString() }${ nx }]`;
 };
 
 
 /// Direction ///////////////////////////////////////////////////////////////
 
-function Direction(dxy)
+function Direction([symbol, x, y])
 {
-	this.symbol = dxy[0]; this.x = dxy[1]; this.y = dxy[2];
+  this.symbol = symbol; this.x = x; this.y = y;
 }
 
 Direction.init = function ()
 {
-	Direction.all =
+  Direction.all =
 	[
-		["N",  0, -1, 1],	// y increases downwards
-		["E",  1,  0, 2],
-		["S",  0,  1, 4],
-		["W", -1,  0, 8]
-	] . map(function (dxyb) { return new Direction(dxyb); });
+	  ["N",  0, -1, 1],	// y increases downwards
+	  ["E",  1,  0, 2],
+	  ["S",  0,  1, 4],
+	  ["W", -1,  0, 8]
+	].map(dxyb => new Direction(dxyb));
 };
 
 // Return a random direction from NESW
 
 Direction.any = function () { return Direction.all.any() };
 
-Direction.prototype.toString = function (d) { return this.symbol; };
-
+Direction.prototype.toString = function () { return this.symbol };
 
 /// Pos ////////////////////////////////////////////////////////////
 
@@ -389,7 +377,7 @@ Pos.init = function ()
 	Pos.x_max = Math.floor(cw / Pos.grid_size - 1);
 	Pos.y_max = Math.floor(ch / Pos.grid_size - 1);
 	Pos.num_cells = (Pos.x_max+1) * (Pos.y_max+1);
-	Pos.types = ['food', 'empty', 'bot', 'off'];
+	Pos.types = ['empty', 'bot', 'off'];
 };
 
 // Return a context for canvas
@@ -399,8 +387,8 @@ Pos.context = function (ww, wh, cw, ch)
 	var canvas = document.getElementById("canvas");
 	canvas.width = cw; canvas.height = ch;
 	// Centre the canvas in the window
-	canvas.style.marginLeft = ((ww - cw)/2 - 12) + "px";
-	canvas.style.marginTop	= ((wh - ch)/2 - 12) + "px";
+	canvas.style.marginLeft = ((ww - cw)/2 - 11) + "px";
+	canvas.style.marginTop	= ((wh - ch)/2 - 11) + "px";
 	canvas.style.border = "solid";
 	canvas.onclick = Run.start_stop;
 
@@ -408,11 +396,10 @@ Pos.context = function (ww, wh, cw, ch)
 }
 
 // Round window coord to a multiple of the grid size.
-// Trying to fill the window too precisely causes scroll bars.
 
 Pos.round = function (x)
 {
-	return Math.floor((x-29) / Pos.grid_size) * Pos.grid_size + 1;
+	return Math.floor((x-6) / Pos.grid_size) * Pos.grid_size;
 };
 
 // Return a random empty position
@@ -460,25 +447,21 @@ Pos.prototype.occupant = function (new_occupant)
 	return row[this.x];
 };
 
-// What type of thing is at pos?  'off' (off screen), 'empty', 'food' or 'bot'
+// What type of thing is at pos?  'off' (off screen), 'empty' or 'bot'
 
 Pos.prototype.type = function ()
 {
 	if (this.x < 0 || this.x > Pos.x_max || this.y < 0 || this.y > Pos.y_max)
 		return 'off';
 
-	var oc = this.occupant();
-
-	return ! oc ? 'empty' : oc.is_food ? 'food' : 'bot';
+	return this.occupant() ? 'bot' : 'empty';
 }
 
 // Can a bot move to pos?
 
 Pos.prototype.vacant = function ()
 {
-	var type = this.type();
-
-	return type == 'empty' || type == 'food';
+	return this.type() == 'empty';
 }
 
 Pos.clear_claims = function () { Pos.claims = [] }
@@ -638,7 +621,7 @@ Array.prototype.any = function (k)
 
 Array.prototype.set_indexes = function ()
 {
-	this.map(function(e, i) { e.index = i });
+  this.map((e, i) => e.index = i);
 };
 
 // Sort the original array randomly in place and return it
@@ -685,10 +668,10 @@ Array.prototype.indexes = function ()
 
 Array.repeat = function (n, f)
 {
-	var r = [];
-	for (var i = 0; i < n; i++) r.push(f(i));
+  const r = [];
+  for (let i = 0; i < n; i++) r.push(f(i));
 
-	return r;
+  return r;
 };
 
 Array.prototype.flatten = function ()
@@ -714,13 +697,12 @@ Array.prototype.drop_one = function ()
 
 Array.prototype.with_max = function (property)
 {
-	var best;
-	this.map(function (e)
-	{
-		if (! best || e[property] > best[property])
-			best = e;
-	});
-	return best;
+  let best;
+  this.forEach(e => {
+	if (! best || e[property] > best[property])
+	  best = e;
+  });
+  return best;
 };
 
 /// Utils ////////////////////////////////////////////////////////////

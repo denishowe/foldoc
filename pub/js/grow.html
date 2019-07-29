@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Grow</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/grow.html">
+<style type="text/css">
+
+body {
+  overflow: hidden; /* Prevent scrollbars with no margin */
+  background-color: black;
+}
+
+/* canvas { margin-left: -8px; margin-top: -8px; } */
+
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+'use strict';
+
+const maxSize = 20;
+const size = Math.floor(3 + (maxSize - 2) * Math.random());
+const radius = Math.floor(100 / size);
+const nAngle = 2 * radius;
+const numFoci = Math.floor(1 + 0.05 * radius * radius * Math.random());
+const numCopies = Math.floor(1000 / (size*size));
+const speed = 0.1 * Math.floor(2 + 16 * Math.random());
+console.log('size', size, 'radius', radius, 'foci', numFoci, 'copies', numCopies, 'speed', speed);
+
+const velocity = [
+  [1,0], [0,1], [-1,0], [0,-1],
+  [1,1], [1,-1], [-1,1], [-1,-1],
+  // [2,0], [0,2], [-2,0], [0,-2]
+].map( function(vxy) { return { x: vxy[0] * speed, y: vxy[1] * speed }; });
+
+const sin = [], cos = [];
+for (let i = 0; i < nAngle; i++) {
+  const t = 2*Math.PI*i/nAngle;
+  sin[i] = Math.sin(t);
+  cos[i] = Math.cos(t);
+}
+
+function hex(x) { return "#" + ((0x1000000 + x).toString(16)).substr(-6) }
+
+function rndCpt() { return 0x11 * Math.floor(16 * Math.random()) }
+
+function rndColour() { return 0x10000 * rndCpt() + 0x100 * rndCpt() + rndCpt() }
+
+function nOf(n, f) {
+  const result = [];
+  while (n-- > 0)
+	result.push(f());
+  return result;
+}
+
+function run()
+{
+  foci.forEach(function (focus) {
+	for (let i = numCopies; i--; ) {
+	  const a = Math.floor(nAngle * Math.random());
+	  const r = radius * Math.random();
+	  let x = (focus.x + r * cos[a] + xMax) % xMax;
+	  let y = (focus.y + r * sin[a] + yMax) % yMax;
+	  const c = sc[Math.floor(y)][Math.floor(x)];
+	  ctx.fillStyle = hex(c);
+	  velocity.forEach( function(v) {
+		const xx = Math.floor((x + v.x + xMax) % xMax);
+		const yy = Math.floor((y + v.y + yMax) % yMax);
+		sc[yy][xx] = c;
+		ctx.fillRect(size*xx, size*yy, size-1, size-1);
+	  });
+	}
+	const v = velocity[Math.floor(velocity.length * Math.random())];
+	focus.x += (v.x + xMax) % xMax; focus.y += (v.y + yMax) % yMax;
+  });
+  setTimeout(run, 0);
+}
+
+const can = document.getElementById("canvas");
+const xMax = Math.floor(window.innerWidth / size);
+const yMax = Math.floor(window.innerHeight / size);
+can.width = size * xMax;
+can.height = size * yMax;
+can.style.marginLeft = (window.innerWidth - can.width) / 2 - 8;
+can.style.marginTop = (window.innerHeight - can.height) / 2 - 8;
+document.body.appendChild(can);
+const ctx = can.getContext('2d');
+
+const foci = nOf(numFoci, function() {
+  return { x: Math.floor(xMax / 2), y: Math.floor(yMax / 2) };
+});
+
+const sc = nOf(yMax, function () { return nOf(xMax, rndColour); });
+
+run();
+</script>
+</body>
+</html>

@@ -93,18 +93,22 @@
         gl_Position = position;
       }
     </script>
-    <script id="fs" type="x-shader/x-fragment">precision mediump float;
+    <script id="fs" type="x-shader/x-fragment">/* Esc toggles UI */
+precision mediump float;
 uniform float time;
 uniform vec2 resolution;
 void main(void)
 {
-  vec2 p = gl_FragCoord.xy/resolution-0.5; float x = p.x, y = p.y;
-  float r = 1.0;
-  float g = 0.0;
-  float b = 0.0;
+  vec2 p = gl_FragCoord.xy/resolution-0.5;
+  float x = p.x, y = p.y;
+  float t = 0.005 * time;
+  float k = 10.0 + (10.0*sin(t));
+  float r = 0.5 + 0.5 * sin(23.0*k*x*sin(t) + t) * sin(31.0*k*y*cos(t) + t);
+  float g = 0.5 + 0.5 * sin(37.0*k*x*sin(t) - t) * sin(19.0*k*y*cos(t) - t);
+  float b = 0.5 + 0.5 * sin(29.0*k*x*sin(t) + t) * sin(41.0*k*y*cos(t) + t);
   gl_FragColor = vec4(r, g, b, 1.0);
 }
-</script>
+	</script>
     <script language="javascript" src="https://twgljs.org/dist/2.x/twgl-full.min.js"></script>
     <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
     <script>
@@ -201,6 +205,7 @@ void main(void)
       onresize = resize;
       code.oninput = update;
       code.onkeydown = (e) => {if(e.keyCode == 9) {e.preventDefault(); tab(e.shiftKey);}};
+      if (!location.search) toggleUI();
       onkeydown = (e) => {if(e.keyCode == 27) toggleUI();};
       navigate();
       requestAnimationFrame(render);

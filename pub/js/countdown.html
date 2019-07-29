@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<!--
+	Display a countdown from a period determined by the query string
+-->
+
+<html>
+<head>
+<title>Timer</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/pompom.html">
+<style type="text/css">
+
+body {
+  overflow: hidden; /* Prevent scrollbars with no margin */
+  font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+
+a {
+  display: inline-block;
+  width: 3em;
+  height: 1.2em;
+  text-align: center;
+  margin: 5px;
+  border: 1px solid grey;
+  padding: 5px;
+  border-radius: 12px;
+  background-color: #fef;
+  text-decoration: none;
+}
+
+.timer {
+  display: none;
+  width: 100%;
+}
+
+.time {
+  text-align: center;
+  color: darkblue;
+}
+
+.time {
+  font-size: 18vw;
+}
+
+.sep {
+  font-size: 6vw;
+}
+
+.links { font-size: 2.5vw }
+
+.options { line-height: 40pt }
+
+</style>
+</head>
+<body>
+<div class="links">
+  <a class="options" href="#">&#9881;</a>
+  <a href="?5">5s</a>
+  <a href="?10">10s</a>
+  <a href="?20">20s</a>
+  <a href="?30">30s</a>
+  <a href="?60">1m</a>
+  <a href="?120">2m</a>
+  <a href="?300">5m</a>
+  <a href="?600">10m</a>
+  <a href="?1200">20m</a>
+  <a href="?1800">30m</a>
+  <a href="?3600">1h</a>
+  <a href="?86400">1d</a>
+  <a href="?2592000">1m</a>
+  <a href="?31104000">1y</a>
+</div>
+<div class="timer"><div class="time"></div></div>
+<script>
+
+"use strict";
+
+el('.options').forEach(e => { e.onclick = toggleTimes });
+
+let endMs;
+
+let timesShown = true;
+
+go();
+
+function go() {
+  const query = queryString()
+  if (! query || query.match(/\D/)) return;
+  show('.timer', true);
+  endMs = 1000 * Math.floor(nowMs()/1000 + parseFloat(query) + 1);
+  allowNotify();
+  schedule();
+  toggleTimes();
+}
+
+function schedule() { setTimeout(update, 1000 - nowMs() % 1000) }
+
+function update() {
+  let delta = Math.floor((endMs - nowMs() + 999) / 1000); // Seconds to go
+  if (delta < 0) return done();
+  const bases = [Infinity, 12, 30, 24, 60, 60];  // Modulos for y, m, d, h, m, s
+  const seps = [ 'y ', 'm ', 'd<br/>', ' : ', ' : ', '' ];
+  let s = '';
+  do {
+	s = seps.pop() + s;
+	const base = bases.pop();
+	const part = delta % base;
+	s = (base <= 60 && part < 10 ? '0' : '') + part + s;
+	delta = Math.floor(delta / base);
+  } while (delta);
+  document.title = s;
+  const htmlTime = s.replace(/(\D+)/g, '<span class="sep">$1</span>');
+  el('.time').forEach(e => e.innerHTML = htmlTime);
+  schedule();
+}
+
+function done() {
+  sound();
+  document.title = 'Done';
+  notify();
+}
+
+function toggleTimes() {
+  show('.links a:not(.options)', timesShown = ! timesShown);
+}
+
+function nowMs() { return (new Date).getTime() }
+
+function queryString() { return location.search.substr(1) }
+
+function show(sel, showHide) {
+  el(sel).forEach(e => e.style.display = showHide ? 'inline-block' : 'none');
+}
+
+function el(sel) { return document.querySelectorAll(sel) }
+
+// https://stackoverflow.com/questions/2271156/chrome-desktop-notification-example#
+
+function allowNotify() {
+  if (Notification.permission !== 'granted') Notification.requestPermission();
+}
+
+function notify() { new Notification('Timer expired', { body: "Time's up!" }) }
+
+function sound() { (new Audio('countdown.wav')).play() }
+
+</script>
+</body>
+</html>

@@ -1,113 +1,123 @@
-<body>
+<!DOCTYPE html>
 <!-- Manipulate an image in JavaScript -->
-<div style="float: left; width: 100%">
-	<canvas id="0" style="border: solid"></canvas>
-	<canvas id="1" style="border: solid"></canvas>
-</div>
+
+<!-- saved from url=(0014)about:internet -->
+<!--
+  IE needs the above "Mark of the Web" comment - with a
+  trailing \r - to allow JavaScript from a local file.
+    write-contents-functions may delete-trailing-whitespace.
+
+  "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files image.html
+-->
+
+<html>
+<head>
+<title>Image</title>
+<meta charset="UTF-8">
+<body>
 <script>
 
-// "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files image.html
-
-var canvas, ctx;						// Two-element arrays
-var current = 0;						// 0 or 1 index into above
-var black = [0, 0, 0, 255];
-
-function draw(im)
-{
-	var can = canvas[current];
-	var ctx = ctx[current];
-	var w = can.width, h = can.height;
-
-	// Center the source image in the current canvas
-
-	if (im)
-		ctx.drawImage(im, (w - im.width)/2, im_y0 = (h - im.height)/2);
-
-	// Get the pixels of the image
-
-	var dl = ctx.getImageData(0, 0, w, h).data;
-
-	// Set each pixel of the next canvas to
-	// the corresponding pixel on this one
-
-	var dr = new Uint8ClampedArray(dl.length);
-	var i = 0;							// ImageData pointer
-	for (yt = 0; yt < h; yt++)			// Top down
-	{
-		for (xt = 0; xt < w; xt++)
-		{
-			var x = xt, y = yt;
-			var pr = rgb(dl, w, h, x, y);
-			dr[i]   = pr[0];			// red
-			dr[i+1] = pr[1];			// green
-			dr[i+2] = pr[2]+1;			// blue
-			if (dr[i+2] > 255) dr[i+2] = 255;
-			dr[i+3] = pr[3];			// alpha
-			i += 4;
-		}
-	}
-	current = 1-current;				// Swap canvases
-	ctx[other].putImageData(new ImageData(dr, w, h), 0, 0);
-	draw();
-}
+var background = [0, 128, 128, 255];
 
 //  Called on load or after resize
 
-function restart()
-{
-	for (i = 0; i < 2; i++)
-	{
-		canvas[i] = canvas(i);
-		ctx[i] = canvas[i].getContext('2d');
-	}
-	// Load image from data url
-    var im = new Image();
-	// http://www.chrome-allow-file-access-from-file.com/
-	// chrome --allow-file-access-from-files
-    // http://media.philly.com/images/youre-awesome.jpg
-    im.src = "youre-awesome.jpg";
-    im.onload = draw(im);
+// Call callback with an image element containing an image read from a URL
+
+// http://www.chrome-allow-file-access-from-file.com/
+// chrome --allow-file-access-from-files
+
+function restart() {
+  document.body.innerHTML = '';
+  const im = new Image();
+  im.src = 'youre-awesome.jpg'; // http://media.philly.com/images/youre-awesome.jpg
+  im.onload = () => draw(im);
 }
 
-// Return [r,g,b,a] at (x, y) in ImageData.data d of width w
-
-function rgb(d, w, h, x, y)
+function draw(im)
 {
-	if (x < 0 || x >= w || y < 0 || y >= h)
-		return black;					// No source pixel
+  const ctxLeft = canvas();
+  const w = ctxLeft.canvas.width;
+  const h = ctxLeft.canvas.height;
 
-	var i = 4 * (w * y + x);
+  // Center the source image in the left canvas
 
-	return [d[i], d[i+1], d[i+2], d[i+3]];
+  ctxLeft.drawImage(im, (w - im.width)/2, (h - im.height)/2);
+
+  ctxLeft.font = '48px sansserif';      // CSS font property
+  ctxLeft.textAlign = 'center';
+  ctxLeft.fillText("You're awesome", w/2, h/2);
+
+  // Get the pixels of the image from the canvas
+
+  var dl = ctxLeft.getImageData(0, 0, w, h).data;
+
+  // Calculate each pixel of the right canvas from a pixel on the left
+
+  const dr = new Uint8ClampedArray(dl.length);
+  let i = 0;                            // ImageData pointer
+  for (let yr = 0; yr < h; yr++)        // Top down
+  {
+    for (let xr = 0; xr < w; xr++)
+    {
+      // Get left image pixel at (xl, yl)
+
+      const xl = Math.floor(15E-7 * Math.pow(0.8*w-xr, 3) + 275);
+      const yl = Math.floor(1.2*yr + 0.6*xr - 300);
+      const pl = rgba(dl, w, h, xl, yl);  // { r, g, b, a }
+      const rightRed = pl.g
+      const rightGreen = Math.min(100-pl.r, 255);
+      const rightBlue = Math.min(pl.b+100, 255);
+      const rightAlpha = pl.a;
+
+      // Set right image pixel at (xr, yr)
+
+      dr[i] = rightRed; dr[i+1] = rightGreen; dr[i+2] = rightBlue; dr[i+3] = rightAlpha;
+
+      i += 4;
+    }
+  }
+  const imageRight = new ImageData(dr, w, h);
+
+  // Write right image to right canvas top left
+
+  const ctxRight = canvas();
+  ctxRight.putImageData(imageRight, 0, 0);
 }
 
-// Return the canvas with id, resized to fit the window
+// Return { r, g, b, a } at (x, y) in ImageData.data d of width w
 
-function canvas(id)
+function rgba(d, w, h, x, y)
 {
-	var can = document.getElementById(id);
-	can.width = 0.5 * window.innerWidth - 16;
-	can.height = window.innerHeight - 26;
+  if (x < 0 || x >= w || y < 0 || y >= h)
+    return background;                  // No source pixel
 
-	return can;
+  const i = 4 * (w * y + x);
+
+  return { r: d[i], g: d[i+1], b: d[i+2], a: d[i+3] };
+}
+
+// Return a canvas context sized to fit the half window width
+
+function canvas()
+{
+  const can = document.createElement('canvas');
+  can.width = 0.5 * window.innerWidth - 16;
+  can.height = window.innerHeight - 26;
+  document.body.appendChild(can);
+
+  return can.getContext('2d');
 }
 
 // Restart on load and whenever they stop resizing
 
-var resize_timeout;
+let resizeTimeout = null;
 
 window.onresize = function ()
 {
-	if (resize_timeout) clearTimeout(resize_timeout);
-	resize_timeout = setTimeout(restart, 500);
+  if (resizeTimeout) clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(restart, 500);
 };
 
 window.onresize();
-
-// Local variables:
-// compile-command: "http://foldoc.org/pub/js/transform-2d.html"
-// compile-command: "transform-2d.html"
-// End:
-
 </script>
 </body>
