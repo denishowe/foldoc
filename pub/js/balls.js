@@ -24,9 +24,11 @@ const allGroups = [ // HL
 
 function assert(ok, ...args) {
   if (ok) return;
-  console.error('assertion failed:', args.join(' '));
-  process.exit(1);
+  // console.error('assertion failed:', args.join(' ')); process.exit(1);
+  throw new Error(`assertion failed: ${args.join(' ')}`);
 }
+
+// function todo() { throw Error('todo'); }
 
 function fromTo(from, to) {
   const result = [];
@@ -85,6 +87,7 @@ class State extends SS {
   // Return all different weighings with "n" balls in each pan, selected from "state"
 
   weighNumBalls(n) {
+    assert(n, 'No balls');
     console.log(`All weighings of ${n} per pan from ${this.toString()}`);
     const results = [];
     const leftSelections = this.selections(n);
@@ -107,33 +110,47 @@ class State extends SS {
 
   // Return all possible selections of "nTotal" balls from state
 
-  selections(nTotal) {
+  selections(numTotal) {
+    assert(numTotal, 'Selecting from zero balls');
     const stateGroups = this.groups();
-    const results = stateGroups.map(g => this.selectionsWithGroup(nTotal, g));
-    console.log(' Select', nTotal, `from ${this.toString()} =>`, results);
+    const results = stateGroups.map(g => this.selectionsWithGroup(numTotal, g));
+    console.log(' Selected', numTotal, `from ${this.toString()} =>`, results);
 
     return results;
   }
 
   // Return all selections of "nTotal" balls from state starting with group g
 
-  selectionsWithGroup(nTotal, g) {
-    const ng = this[g];
-    const maxFromGroup = Math.min(ng, nTotal);
+  selectionsWithGroup(numTotal, g) {
+    const maxFromGroup = Math.min(this[g], numTotal);
+    assert(maxFromGroup, `Nothing from ${g}`);
     const numsFromGroup = fromTo(1, maxFromGroup);
-    const sels = numsFromGroup.map(n => this.selectionsWithNumOfGroup(nTotal, n, g));
+    console.log(' Select', numsFromGroup, 'of', numTotal, `from ${this} starting with`, g);
+    const sels = numsFromGroup.map(n => this.selectionsWithNumOfGroup(numTotal - n, g, n));
 
     return sels;
   }
 
-  // After selecting n of g, what can we add to the selection from other groups?
+  // Return all ways of extending a selection of n of g with numLeft to select from
 
-  selectionsWithNumOfGroup(nTotal, n, g) {
+  selectionsWithNumOfGroup(numLeft, g, n) {
     const sel = new Selection({ [g]: n });
-    const remain = this.subtract(sel);
-    console.log(` Select ${sel.toString()} of ${this.toString()} leaving ${remain.toString()}`);
-    const moreSels = remain.selections(nTotal - n);
+    const remain = this.removeGroup(g);
+    console.log(` Select ${sel.toString()} of ${this.toString()} leaving ${numLeft} in ${remain}`);
+    if (!numLeft) return [sel];
+    const moreSels = remain.selections(numLeft);
+    console.log(` Select ${sel.toString()} of ${this.toString()} leaving ${remain.toString()} giving`, moreSels);
     const result = moreSels.map(more => sel.add(more));
+
+    return result;
+  }
+
+  // Return a copy of state without g
+
+  removeGroup(g) {
+    assert(this[g], `Can't remove ${g} from ${this}`);
+    const result = new State(this);
+    delete result[g];
 
     return result;
   }
@@ -234,7 +251,6 @@ function puzzle(ballsTotal) {
 //     const rightResult = pan(right, r, left);
 //     const unResult = notWeighed(unweighed, l === '=');
 //   });
-//   todo;
 // }
 
 // Weighings change balls' groups:
@@ -248,17 +264,14 @@ function puzzle(ballsTotal) {
 // function pan(selection, result, otherPan) {
 //   const othersAllStandard = allStandard(otherPan);
 //   console.log('Pan', selection, result, 'vs', otherPan);
-//   todo;
 // }
 
 // function allStandard(selection) {
-//   todo;
 // }
 
 // Not part of an unbalanced weighing -> standard
 
 // function unWeighed(selection, balanced) {
-//   todo;
 // }
 
 // function showWeighings(ws) { return ws.map(showWeighing).join(', '); }
