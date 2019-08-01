@@ -28,7 +28,7 @@ function assert(ok, ...args) {
   throw new Error(`assertion failed: ${args.join(' ')}`);
 }
 
-// function todo() { throw Error('todo'); }
+function todo() { throw Error('todo'); }
 
 function fromTo(from, to) {
   const result = [];
@@ -88,18 +88,18 @@ class State extends SS {
 
   weighNumBalls(n) {
     assert(n, 'No balls');
-    console.log(`All weighings of ${n} per pan from ${this.toString()}`);
+    console.log(`All weighings of ${n} per pan from ${this}`);
     const results = [];
     const leftSelections = this.selections(n);
     console.log(' Lefts', leftSelections.toString());
     leftSelections.forEach((left) => {
       const remain = this.subtract(left);
-      console.log('  Left', left.toString(), 'leaves', remain.toString());
+      console.log('  Left', left, 'leaves', remain);
       const rightSelections = remain.selections(n);
       console.log('   Rights', rightSelections.toString());
       rightSelections.forEach((right) => {
         const rest = remain.subtract(right);
-        console.log('   Right', right.toString(), 'Rest', rest.toString());
+        console.log(`   Left ${left}  Right ${right}  Rest ${rest}`);
         const w = [left, right, rest];
         console.log('    ', w.toString());
         results.push(w);
@@ -108,39 +108,43 @@ class State extends SS {
     return results;
   }
 
-  // Return all possible selections of "nTotal" balls from state
+  // Return all possible selections of "numWant" balls from state
 
-  selections(numTotal) {
-    assert(numTotal, 'Selecting from zero balls');
+  selections(numWant) {
+    assert(numWant, 'Selecting from zero balls');
+    console.log(` Select ${numWant} from ${this}`);
     const stateGroups = this.groups();
-    const results = stateGroups.map(g => this.selectionsWithGroup(numTotal, g));
-    console.log(' Selected', numTotal, `from ${this.toString()} =>`, results);
+    const groupsTails = stateGroups.tails();
+    const results = groupsTails.map(gs => this.selectionsWithGroups(numWant, gs));
+    console.log(` Selected ${numWant} from ${this} =>`, results);
 
     return results;
   }
 
-  // Return all selections of "nTotal" balls from state starting with group g
+  // Return all selections of "numWant" balls from group gs of state
 
-  selectionsWithGroup(numTotal, g) {
-    const maxFromGroup = Math.min(this[g], numTotal);
+  selectionsWithGroups(numWant, gs) {
+    console.log('  Select', numWant, `from groups ${gs} of ${this}`);
+    const g = todo();
+    const maxFromGroup = Math.min(this[g], numWant);
     assert(maxFromGroup, `Nothing from ${g}`);
     const numsFromGroup = fromTo(1, maxFromGroup);
-    console.log(' Select', numsFromGroup, 'of', numTotal, `from ${this} starting with`, g);
-    const sels = numsFromGroup.map(n => this.selectionsWithNumOfGroup(numTotal - n, g, n));
+    const sels = numsFromGroup.map(n => this.selectionsWithNumOfGroup(numWant - n, g, n));
+    console.log('  Selected', numWant, `from ${this} starting with`, g, '=>', sels);
 
     return sels;
   }
 
-  // Return all ways of extending a selection of n of g with numLeft to select from
+  // Return all ways of extending a selection of n of g with numWant to select from
 
-  selectionsWithNumOfGroup(numLeft, g, n) {
+  selectionsWithNumOfGroup(numWant, g, n) {
     const sel = new Selection({ [g]: n });
     const remain = this.removeGroup(g);
-    console.log(` Select ${sel.toString()} of ${this.toString()} leaving ${numLeft} in ${remain}`);
-    if (!numLeft) return [sel];
-    const moreSels = remain.selections(numLeft);
-    console.log(` Select ${sel.toString()} of ${this.toString()} leaving ${remain.toString()} giving`, moreSels);
+    console.log(`   Select ${sel} of ${this} leaving ${numWant} in ${remain}`);
+    if (!numWant) return [sel];
+    const moreSels = remain.selections(numWant);
     const result = moreSels.map(more => sel.add(more));
+    console.log(`   Selected ${sel} of ${this} =>`, result);
 
     return result;
   }
@@ -200,7 +204,7 @@ class Sequence extends Array {
     // console.log('Extend', this.toString(), 'ending with', state.toString());
     if (state.isSolved()) return;
     const ws = state.weighings();
-    console.log('Extend', state.toString(), '->', ws.toString());
+    console.log(`Extend ${state} => ${ws}`);
     ws.forEach((w) => {
       const nextStates = state.weigh(w);
       nextStates.forEach((nextState) => {
@@ -223,6 +227,12 @@ class Sequence extends Array {
 
 Array.prototype.flatten = function flatten() {
   return this.reduce((res, a) => res.concat(a), []);
+};
+
+// Given [a, b, c], return [[a, b, c], [b, c], [c]]
+
+Array.prototype.tails = function tails() {
+  return !this.length ? [] : [this].concat(this.slice(1).tails());
 };
 
 /* eslint-enable no-extend-native */
