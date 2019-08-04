@@ -14,6 +14,9 @@ module.exports = {
     },
     "rules": {
 	  "no-continue": 0,
+      "no-nested-ternary": 0,
 	  "no-plusplus": 0,
+	  "no-return-assign": 0,
+      "object-curly-newline": 0,
     }
 };
