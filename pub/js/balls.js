@@ -1,6 +1,8 @@
 #!/usr/bin/node
 
-/* eslint-disable no-console */
+// Ball weighing puzzle
+
+// Denis Howe 2019-06-22 - 2019-08-03
 
 // Given "m" balls that all weigh the same except one that is heavier or
 // lighter than the rest, what is the minimum number of weighings it takes
@@ -8,146 +10,235 @@
 
 // Supplementary questions:
 
-// If m is even, can weighing m/2 vs m/2 ever be on a shortest sequence?
+// If m is even, can weighing m/2 v m/2 ever be on a shortest sequence?
+
+/* eslint-disable no-console */
 
 // Each ball is either standard, heavy or light.
 // At any time, each ball is in one of six groups:
 
-const allGroups = [ // HL
-  'strange', // ?? One heavy or one light
-  'brother', // 0? None heavy
-  'dark', // ?0 None light
-  'heavy', // 10 One heavy
-  'light', // 01 One light
-  'standard', // 00 None heavy, none light
-];
+// Group       HL
+// 'strange',  ?? One heavy or one light
+// 'brother',  0? None heavy
+// 'dark',     ?0 None light
+// 'heavy',    10 One heavy
+// 'light',    01 One light
+// 'standard', 00 None heavy, none light
 
 function assert(ok, ...args) {
-  if (ok) return;
-  // console.error('assertion failed:', args.join(' ')); process.exit(1);
-  throw new Error(`assertion failed: ${args.join(' ')}`);
+  if (!ok) throw new Error(`assertion failed: ${args.join(' ')}`);
 }
 
+/* eslint-disable-next-line no-unused-vars */
 function todo() { throw Error('todo'); }
 
-function fromTo(from, to) {
-  const result = [];
-  for (let i = from; i <= to; i++) result.push(i);
+const opposites = { up: 'down', down: 'up', level: 'level' };
+const moves = Object.keys(opposites);
 
-  return result;
+// Return the better of old and new groups
+
+const groupLevel = {
+  heavy: 2,
+  light: 2,
+  standard: 2,
+  brother: 1,
+  dark: 1,
+  strange: 0,
+};
+
+function betterGroup(oldG, newG) {
+  const oldLevel = groupLevel[oldG];
+  const newLevel = groupLevel[newG];
+  assert(newLevel !== oldLevel || newG === oldG, `${oldG} became ${newG}`);
+
+  return newLevel > oldLevel ? newG : oldG;
 }
 
-// Base class for State and Selection
+// ================================================================================ //
 
-class SS {
+// A Result has a left pan movement and a new state for each pan
+
+class Result {
+  constructor({ weighing, leftMove, leftState, rightState, unweighedState }) {
+    this.weighing = weighing;
+    this.leftMove = leftMove;
+    this.leftState = leftState;
+    this.rightState = rightState;
+    this.unweighedState = unweighedState;
+  }
+
+  toString() {
+    const { weighing, leftMove, leftState, rightState, unweighedState } = this;
+    const { left, right, unweighed } = weighing;
+    const rightMove = opposites[leftMove];
+    const sym = { up: '↑', down: '↓', level: '=' };
+    const lSym = sym[leftMove];
+    const rSym = sym[rightMove];
+
+    return `${left}${lSym}:${leftState} ${right}${rSym}:${rightState} ${unweighed}:${unweighedState}`;
+  }
+}
+
+// ================================================================================ //
+
+class List extends Array {
+  // If called with one integer arg, just pass it to super else
+  // concatenate all arguments, each one of which is an array
+
+  constructor(...args) {
+    if (args.length === 1) {
+      const length = args[0];
+      if (typeof length === 'number') {
+        super(length);
+        return;
+      }
+    }
+    super(); // Start empty
+    args.forEach(a => a.forEach(v => this.push(v)));
+  }
+
+  static fromTo(from, to) {
+    const seq = new List();
+    for (let i = from; i <= to; i++) seq.push(i);
+
+    return seq;
+  }
+
+  // Given [[a, b], [c, ,d]], return [a, b, c, d]
+
+  flatten() {
+    return this.reduce((res, a) => res.concat(a), new List());
+  }
+
+  // Given [a, b, c], return [b, c]
+
+  tail() { return this.slice(1); }
+
+  // Given [a, b, c], return [[a, b, c], [b, c], [c]]
+
+  tails() {
+    return new List(!this.length ? [] : [this].concat(this.tail().tails()));
+  }
+
+  toString() {
+    const ss = this.map(s => s.toString());
+    const s = ss.join(', ');
+
+    return `[${s}]`;
+  }
+}
+
+// ================================================================================ //
+
+// A State is an object { group: numBallsInGroup, ... }
+
+// A selection is a State that doesn't necessarily include all balls
+
+class State {
   constructor(s) {
     Object.keys(s).forEach((k) => { this[k] = s[k]; });
   }
 
-  groups() { return Object.keys(this); }
-
-  toString() {
-    const strings = this.groups().reduce((ss, g) => {
-      const n = this[g];
-      if (n) ss.push(`${n} ${g}`);
-      return ss;
-    }, []);
-    const s = strings.join(', ');
-
-    return `<${s}>`;
-  }
-}
-
-// A Selection is a State with different methods
-
-class Selection extends SS {
-  // Return a new Selection formed by adding "sel" and this one
-
-  add(sel) {
-    const copy = new Selection(this);
-    const gs = sel.groups();
-    const result = gs.reduce((res, g) => ({ ...res, [g]: res[g] + sel[g] }), copy);
-
-    return result;
-  }
-}
-
-// A State is an object { group: numBallsInGroup, ... }
-
-class State extends SS {
   // Return all weighings based on state
 
   weighings() {
     const weighMax = Math.floor(this.total() / 2);
-    const ws = fromTo(1, weighMax).map(n => this.weighNumBalls(n));
 
-    return ws;
+    return List.fromTo(1, weighMax)
+      .map(n => this.weighNumBalls(n))
+      .flatten();
   }
 
   // Return all different weighings with "n" balls in each pan, selected from "state"
 
   weighNumBalls(n) {
-    assert(n, 'No balls');
     console.log(`All weighings of ${n} per pan from ${this}`);
-    const results = [];
     const leftSelections = this.selections(n);
-    console.log(' Lefts', leftSelections.toString());
-    leftSelections.forEach((left) => {
+    console.log(` Lefts ${leftSelections}`);
+    const ws = leftSelections.map((left) => {
       const remain = this.subtract(left);
-      console.log('  Left', left, 'leaves', remain);
+      console.log(`  Left ${left} from ${this} leaves ${remain}`);
       const rightSelections = remain.selections(n);
-      console.log('   Rights', rightSelections.toString());
-      rightSelections.forEach((right) => {
+      console.log(`   Rights ${rightSelections}`);
+      return rightSelections.map((right) => {
         const rest = remain.subtract(right);
-        console.log(`   Left ${left}  Right ${right}  Rest ${rest}`);
-        const w = [left, right, rest];
-        console.log('    ', w.toString());
-        results.push(w);
+        /* eslint-disable-next-line no-use-before-define */
+        const w = new Weighing(left, right, rest);
+        console.log(`    ${w}`);
+        return w;
       });
     });
-    return results;
+    return ws.flatten();
   }
 
   // Return all possible selections of "numWant" balls from state
 
   selections(numWant) {
-    assert(numWant, 'Selecting from zero balls');
-    console.log(` Select ${numWant} from ${this}`);
+    // console.log(` Select ${numWant} from ${this}`);
+    assert(numWant > 0, `Want ${numWant} balls`);
     const stateGroups = this.groups();
-    const groupsTails = stateGroups.tails();
-    const results = groupsTails.map(gs => this.selectionsWithGroups(numWant, gs));
-    console.log(` Selected ${numWant} from ${this} =>`, results);
+    const sels = stateGroups
+      .tails()
+      .map(gs => this.selectionsWithGroups(numWant, gs))
+      .flatten();
+    console.log(`  Selected ${numWant} from ${this} => ${sels}`);
 
-    return results;
+    return sels;
   }
 
   // Return all selections of "numWant" balls from group gs of state
 
   selectionsWithGroups(numWant, gs) {
-    console.log('  Select', numWant, `from groups ${gs} of ${this}`);
-    const g = todo();
-    const maxFromGroup = Math.min(this[g], numWant);
-    assert(maxFromGroup, `Nothing from ${g}`);
-    const numsFromGroup = fromTo(1, maxFromGroup);
-    const sels = numsFromGroup.map(n => this.selectionsWithNumOfGroup(numWant - n, g, n));
-    console.log('  Selected', numWant, `from ${this} starting with`, g, '=>', sels);
+    const g = gs[0];
+    const otherGroups = gs.tail();
+    const otherBalls = this.total(otherGroups);
+    const minThisGroup = Math.max(numWant - otherBalls, 1);
+    const maxThisGroup = Math.min(this[g], numWant);
+    const numsFromGroup = List.fromTo(minThisGroup, maxThisGroup);
+    const sels = numsFromGroup
+      .map(n => this.selectionsWithNumOfGroup(n, g, numWant - n))
+      .flatten();
+    // console.log(`  Selected ${numWant} from ${this} starting with ${g} => ${sels}`);
 
     return sels;
   }
 
-  // Return all ways of extending a selection of n of g with numWant to select from
+  // Return all ways of extending a selection of n of g by selecting numWant more balls
 
-  selectionsWithNumOfGroup(numWant, g, n) {
-    const sel = new Selection({ [g]: n });
+  selectionsWithNumOfGroup(n, g, numWant) {
+    assert(n > 0, `Selected ${n} ${g}`);
+    const sel = new State({ [g]: n });
     const remain = this.removeGroup(g);
-    console.log(`   Select ${sel} of ${this} leaving ${numWant} in ${remain}`);
-    if (!numWant) return [sel];
-    const moreSels = remain.selections(numWant);
-    const result = moreSels.map(more => sel.add(more));
-    console.log(`   Selected ${sel} of ${this} =>`, result);
+    const sels = numWant ? remain.selections(numWant).map(more => sel.add(more)) : [sel];
+    console.log(` Selected ${sel} from ${this} => ${sels}`);
 
-    return result;
+    return sels;
   }
+
+  groups() { return new List(Object.keys(this)); }
+
+  // Return a copy of this selection possibly updated to newGroup
+
+  update(newGroup) {
+    const sel = new State({});
+    this.groups().forEach((g) => {
+      sel[betterGroup(g, newGroup)] = this[g];
+    });
+    return sel;
+  }
+
+  // Return a new Selection formed by adding "sel" and this one
+
+  add(sel) {
+    const copy = new State(this);
+    copy.addToState(sel);
+
+    return copy;
+  }
+
+  // Add selection "sel" to this state, modifying the subject state
+
+  addToState(sel) { sel.groups().forEach((g) => { this[g] = (this[g] || 0) + sel[g]; }); }
 
   // Return a copy of state without g
 
@@ -159,56 +250,123 @@ class State extends SS {
     return result;
   }
 
-  // Return state after removing selection
+  // Return state minus selection.  Only set non-empty groups.
 
   subtract(selection) {
-    const result = this.groups().reduce((res, g) => {
-      const nSel = selection[g] || 0;
-      const nState = this[g] || 0;
-      const nRemain = nState - nSel;
-      assert(nRemain >= 0, "Can't subtract", nSel, 'from', nState);
-      if (nRemain) res[g] = nRemain;
-      return res;
-    }, new State({}));
-
+    const result = new State({});
+    this.groups().forEach((g) => {
+      const n = this[g] - (selection[g] || 0);
+      if (n) result[g] = n;
+    });
     return result;
   }
 
-  isEmpty() { return Object.keys(this).length === 0; }
+  // Return true if this selection has only a 'standard' group
 
-  total() { return allGroups.reduce((tot, g) => tot + (this[g] || 0), 0); }
+  allStandard() {
+    return this.standard && !this.groups().find(g => g !== 'standard');
+  }
+
+  // Return the total number of balls in the state, optionally limited to GROUPS
+
+  total(gs = this.groups()) { return gs.reduce((tot, g) => tot + (this[g] || 0), 0); }
+
+  // Return true if the state is a solution - exactly one ball in heavy or light
 
   isSolved() { return ['heavy', 'light'].some(g => this[g] === 1); }
+
+  toString() {
+    const strings = this.groups().map(g => `${this[g]} ${g}`);
+    const s = strings.join(', ');
+    const solved = this.isSolved() ? '***' : '';
+
+    return `<${s}${solved}>`;
+  }
 }
 
-// class States {
-//   static toString(states) {
-//     // console.log('States toString', states[0].groups());
-//     const ss = states.map(s => s.toString());
-//     const s = ss.join(', ');
+// ================================================================================ //
 
-//     return `[${s}]`;
-//   }
-// }
+// A Weighing is a selection for each pan: left, right, unweighed
 
-// A sequence, [state, weigh, state, ..., weigh, state],
-// starts with all balls in the strange group and ends
-// with exactly one ball in either heavy or light group.
+class Weighing {
+  constructor(leftSelection, rightSelection, unweighed) {
+    this.left = leftSelection;
+    this.right = rightSelection;
+    this.unweighed = unweighed;
+  }
 
-class Sequence extends Array {
-  // Exit if the sequence's final state is a solution, else
-  // extend it with all possible weighings based on that state.
+  // Some weighings are pointless, e.g. brothers v
+  // darks, heavys v lights, standard v standard
+
+  todo
+
+  // Given a left pan movement, return next states for each pan
+
+  weigh(leftMove) {
+    const rightMove = opposites[leftMove];
+    const leftState = Weighing.pan(leftMove, this.right);
+    const rightState = Weighing.pan(rightMove, this.left);
+    // Not level => unweighed = standard
+    const unweighedState = leftMove === 'level' ? undefined : 'standard';
+
+    return new Result({ weighing: this, leftMove, leftState, rightState, unweighedState });
+  }
+
+  // Return the new state of the balls in this pan depending on how it
+  // moved and whether the balls in the other pan were all standard or not
+
+  static pan(move, otherPan) {
+    if (move === 'level') return 'standard'; // Level => standard
+
+    const allStd = otherPan.allStandard();
+    const up = move === 'up';
+
+    // Against all standard: up -> light, down -> heavy
+    // Against some non-standard: up -> brother, down -> dark
+
+    return allStd ? (up ? 'light' : 'heavy') : (up ? 'brother' : 'dark');
+  }
+
+  // Return a new State created by updating the states of my pan's selections
+
+  newState({ leftState, rightState, unweighedState }) {
+    const { left, right, unweighed } = this;
+    const state = new State({});
+    state.addToState(left.update(leftState));
+    state.addToState(right.update(rightState));
+    state.addToState(unweighed.update(unweighedState));
+
+    return state;
+  }
+
+  toString() {
+    const { left, right, unweighed } = this;
+
+    return `${left} v ${right} & ${unweighed}`;
+  }
+}
+
+// ================================================================================ //
+
+// A Sequence, [state, weigh, result, state, ..., weigh, result, state],
+// starts with all balls in the strange group and ends with a solution.
+
+class Sequence extends List {
+  // If the sequence's final state is a solution then return, else extend
+  // the sequence with all possible weighings based on that state.
 
   extend() {
     const state = this.last();
-    // console.log('Extend', this.toString(), 'ending with', state.toString());
     if (state.isSolved()) return;
-    const ws = state.weighings();
-    console.log(`Extend ${state} => ${ws}`);
-    ws.forEach((w) => {
-      const nextStates = state.weigh(w);
-      nextStates.forEach((nextState) => {
-        this.extend([w, nextState]);
+    state.weighings().forEach((weighing) => {
+      moves.forEach((leftMove) => {
+        const result = weighing.weigh(leftMove);
+        const newState = weighing.newState(result);
+        const newSeq = new Sequence(this);
+        newSeq.push(result, newState);
+        // console.log(`Extend ${this} by ${result}`);
+        console.log(`\n${newSeq}\n`);
+        newSeq.extend();
       });
     });
   }
@@ -217,79 +375,18 @@ class Sequence extends Array {
 
   toString() {
     const ss = this.map(sw => sw.toString());
-    const s = ss.join(', ');
+    const s = ss.join('\n  ');
 
     return `{{${s}}}`;
   }
+
+  // List all different sequences of weighings
+
+  static puzzle(ballsTotal) {
+    const state = new State({ strange: ballsTotal });
+    const sequence = new Sequence([state]);
+    sequence.extend();
+  }
 }
 
-/* eslint-disable no-extend-native */
-
-Array.prototype.flatten = function flatten() {
-  return this.reduce((res, a) => res.concat(a), []);
-};
-
-// Given [a, b, c], return [[a, b, c], [b, c], [c]]
-
-Array.prototype.tails = function tails() {
-  return !this.length ? [] : [this].concat(this.slice(1).tails());
-};
-
-/* eslint-enable no-extend-native */
-
-// Try all different sequences of weighings to find the shortest.
-
-function puzzle(ballsTotal) {
-  const state = new State({ strange: ballsTotal });
-  const sequence = new Sequence(state);
-  sequence.extend();
-}
-
-// A weighing is the states [left, right, unweighed].  E.g.
-// left: 3 strange; right: 1 standard, 2 dark; unweighed: 2 strange
-
-// Return all possible result states after weighing left vs right with unweighed
-
-// function weigh(left, right, unweighed) {
-//   console.log(showState(left), 'vs', showState(right), 'leaving', showState(unweighed));
-
-//   // A weighing results in the pans being up-down, down-up or level.
-
-//   [['u', 'd'], ['d', 'u'], ['=', '=']].forEach(([l, r]) => {
-//     console.log('Left', l, 'Right', r);
-//     const leftResult = pan(left, l, right);
-//     const rightResult = pan(right, r, left);
-//     const unResult = notWeighed(unweighed, l === '=');
-//   });
-// }
-
-// Weighings change balls' groups:
-
-// Balanced  -> standard
-// Up vs standards           -> light
-// Down vs standards         -> heavy
-// Up vs not all standards   -> brother
-// Down vs not all standards -> dark
-
-// function pan(selection, result, otherPan) {
-//   const othersAllStandard = allStandard(otherPan);
-//   console.log('Pan', selection, result, 'vs', otherPan);
-// }
-
-// function allStandard(selection) {
-// }
-
-// Not part of an unbalanced weighing -> standard
-
-// function unWeighed(selection, balanced) {
-// }
-
-// function showWeighings(ws) { return ws.map(showWeighing).join(', '); }
-
-// function showWeighing(w) {
-//   const [left, right, rest] = w;
-
-//   return `Weigh ${showState(left)} vs ${showState(right)} leaving ${showState(rest)}`;
-// }
-
-puzzle(4);
+Sequence.puzzle(4);
