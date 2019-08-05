@@ -40,8 +40,8 @@ const moves = Object.keys(opposites);
 const groupLevel = {
   heavy: 2,
   light: 2,
-  standard: 2,
-  brother: 1,
+  std: 2,
+  bro: 1,
   dark: 1,
   strange: 0,
 };
@@ -152,10 +152,11 @@ class State {
   // Return all different weighings with "n" balls in each pan, selected from "state"
 
   weighNumBalls(n) {
-    console.log(`All weighings of ${n} per pan from ${this}`);
+    console.log(`\nAll weighings of ${n} per pan from ${this}`);
     const leftSelections = this.selections(n);
     console.log(` Lefts ${leftSelections}`);
-    const ws = leftSelections.map((left) => {
+    const wss = leftSelections.map((left) => {
+      todo(); // Right selection should only use "later" balls
       const remain = this.subtract(left);
       console.log(`  Left ${left} from ${this} leaves ${remain}`);
       const rightSelections = remain.selections(n);
@@ -164,11 +165,15 @@ class State {
         const rest = remain.subtract(right);
         /* eslint-disable-next-line no-use-before-define */
         const w = new Weighing(left, right, rest);
-        console.log(`    ${w}`);
-        return w;
+        const p = w.pointless();
+        console.log(`    ${w}${p ? ' is pointless' : ''}`);
+        return !p && w;
       });
     });
-    return ws.flatten();
+    const ws = wss.flatten().filter(w => w);
+    // console.log(`All weighings ${ws}`);
+
+    return ws;
   }
 
   // Return all possible selections of "numWant" balls from state
@@ -264,7 +269,7 @@ class State {
   // Return true if this selection has only a 'standard' group
 
   allStandard() {
-    return this.standard && !this.groups().find(g => g !== 'standard');
+    return this.std && !this.groups().find(g => g !== 'std');
   }
 
   // Return the total number of balls in the state, optionally limited to GROUPS
@@ -295,10 +300,11 @@ class Weighing {
     this.unweighed = unweighed;
   }
 
-  // Some weighings are pointless, e.g. brothers v
-  // darks, heavys v lights, standard v standard
+  // Some weighings are pointless
 
-  todo
+  pointless() {
+    return this.left.allStandard() && this.right.allStandard();
+  }
 
   // Given a left pan movement, return next states for each pan
 
@@ -307,7 +313,7 @@ class Weighing {
     const leftState = Weighing.pan(leftMove, this.right);
     const rightState = Weighing.pan(rightMove, this.left);
     // Not level => unweighed = standard
-    const unweighedState = leftMove === 'level' ? undefined : 'standard';
+    const unweighedState = leftMove === 'level' ? undefined : 'std';
 
     return new Result({ weighing: this, leftMove, leftState, rightState, unweighedState });
   }
@@ -316,7 +322,7 @@ class Weighing {
   // moved and whether the balls in the other pan were all standard or not
 
   static pan(move, otherPan) {
-    if (move === 'level') return 'standard'; // Level => standard
+    if (move === 'level') return 'std'; // Level => standard
 
     const allStd = otherPan.allStandard();
     const up = move === 'up';
@@ -324,7 +330,7 @@ class Weighing {
     // Against all standard: up -> light, down -> heavy
     // Against some non-standard: up -> brother, down -> dark
 
-    return allStd ? (up ? 'light' : 'heavy') : (up ? 'brother' : 'dark');
+    return allStd ? (up ? 'light' : 'heavy') : (up ? 'bro' : 'dark');
   }
 
   // Return a new State created by updating the states of my pan's selections
@@ -365,7 +371,7 @@ class Sequence extends List {
         const newSeq = new Sequence(this);
         newSeq.push(result, newState);
         // console.log(`Extend ${this} by ${result}`);
-        console.log(`\n${newSeq}\n`);
+        console.log(`\n${newSeq}`);
         newSeq.extend();
       });
     });
