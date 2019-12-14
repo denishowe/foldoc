@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <!--
-	A hexagonal Grid of Nodes, each with one to six
-	unidirectional Links to its nearest neighbours
+	A hexagonal Grid of Nodes, with Links to their nearest neighbours, over which Pulses travel
 -->
 
 <html>
@@ -23,18 +22,17 @@
 const config = {
 	nodesPerRow: rand(20, 50),
 	numColours: rand(1, 20),
-	nodeRadius: 0.05 * rand(4, 6),
+	nodeRadius: 0.05 * rand(8, 12),							// In colWidths
 	pulseRadiusFrac: 0.1 * rand(4, 7),
 	maxPulses: Number.POSITIVE_INFINITY,
 	addPulseMaxCount: Number.POSITIVE_INFINITY, // Add periodically if < this
 	loopDelay: 50, // 10-50,
 	pulseStep: 0.02,
-	probCellOccupied: 0.02,
+	probNodeOccupied: 0.02,
 	probAddLink: 0.05,
 }
 
-const TWO_PI = 2*Math.PI;
-const equiTriangleHeightOverWidth = Math.sqrt(3/4); // Math.sin(TWO_PI/6);
+const TWO_PI = 2 * Math.PI;
 
 
 class Clearable {
@@ -48,23 +46,24 @@ class Clearable {
 
 // Grid  ///////////////////////////////////////////////////////////////////////////////////////////
 
-// A hex Grid in which each node occupies a cell two   	  0 1 2 3 4
-// columns wide.  Odd index rows have nodesPerRow-1    	0 * . * . *
-// nodes in odd index columns.  Even index rows        	1 . * . * .
-// have nodesPerRow nodes in even index cols.          	2 * . * . *
+// A hex Grid in which even index rows have nodesPerRow nodes in
+// even index columns and odd index rows have one less in odd index
+// columns.  Nodes in the same row are two column widths apart.
 
 class Grid extends Clearable {
 	static init() {
 		Node.stop();
 		const { canvas: { height, width } } = this.ctx = getContext("node");
-		this.cellWidth = Math.floor(width / config.nodesPerRow);
-		// The row height is the height of an equilateral triangle whose side is the cell width
-		this.rowHeight = Math.floor(this.cellWidth * equiTriangleHeightOverWidth);
+		// This colWidth is half the distance between Nodes in the same row
+		this.colWidth = Math.floor(0.5 * width / config.nodesPerRow);
+		// Height of anequilateral triangle two columns wide
+		this.rowHeight = Math.floor(this.colWidth * Math.sqrt(3));
 		this.numRows = Math.floor(height / this.rowHeight);
-		this.x = (width - config.nodesPerRow * this.cellWidth) / 2; // Centre grid in window
+		// Centre grid in window
+		this.x = (width - config.nodesPerRow * 2 * this.colWidth) / 2;
 		this.y = (height - this.numRows * this.rowHeight) / 2;
-		this.clear();
 
+		this.clear();
 		Colour.init();
 		Node.init(Grid);
 		Link.init();
@@ -72,19 +71,30 @@ class Grid extends Clearable {
 		Node.start();
 	}
 
+	// Return the result of applying function
+	// f(rowIndex, colIndex) to all Nodes in the Grid
+
 	static map(f) {
 		return zeroTo(this.numRows).map(rowI => {
 			const oddRow = rowI % 2;
-			const numCells = config.nodesPerRow - oddRow;
-			return zeroTo(numCells).map(cellI => {
-				const colI = 2 * cellI + oddRow;	// Even row nodes in even cols
-				return f(rowI, cellI, colI);
+			const numCols = config.nodesPerRow - oddRow;
+			return zeroTo(numCols).map(colI => {
+				return f(rowI, 2*colI + oddRow);
 			});
 		});
 	}
 
+	// Return the result of applying function f(dCol, dRow)
+	// to vectors to each of the six nearest neighbours,
+	// clockwise from NW.  E.g. (3, 1) and its neighbours:
+
+	//            col
+	//     0     2   4
+	// row 1   1   3   5
+	//     2     2   4
+
 	static mapNeighbours(f) {
-		return [[-1, -1], [1, -1], [-2, 0], [2, 0], [-1, 1], [1, 1]]
+		return [[-1, -1], [1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0]]
 			.map(([dCol, dRow]) => f(dRow, dCol));
 	}
 
@@ -111,8 +121,7 @@ class Grid extends Clearable {
 
 class Coloured extends Clearable {
 	setColour() {
-		const { ctx } = this;
-		const colour = this.getColour();
+		const { colour, ctx } = this;
 		const c = Colour.palette[colour] || colour;
 		ctx.fillStyle = c;
 		ctx.strokeStyle = c;
@@ -149,18 +158,18 @@ class Disc extends Coloured {
 // Node  /////////////////////////////////////////////////////////////////////////////////////////
 
 class Node extends Disc {
-	static init({ cellWidth, ctx, rowHeight }) {
+	static init({ colWidth, ctx, rowHeight }) {
 		this.stop();
-		this.radius = Math.floor(config.nodeRadius * cellWidth);
+		this.radius = Math.floor(config.nodeRadius * colWidth);
 		this.ctx = ctx;
 		this.all = [];
 
-		// Store Nodes in array indexed by row and column
+		// Store Nodes in array indexed by row and column.
+		// Column is even in even rows and odd in odd rows.
 
 		const rows = [];
-		Grid.map((rowI, cellI, colI) => {
-			// Calculate centre.  Odd rows of hex grid are offset right by half a cell.
-			const x = Grid.x + 0.5 * (colI + 1) * cellWidth;
+		Grid.map((rowI, colI) => {
+			const x = Grid.x + (colI + 0.5) * colWidth;	// Centre node in cell
 			const y = Grid.y + (rowI + 0.5) * rowHeight;
 			const node = new Node(x, y);
 			Node.all.push(node);
@@ -170,7 +179,7 @@ class Node extends Disc {
 
 		// Set each Node's neighbours
 
-		Grid.map((rowI, cellI, colI) => {
+		Grid.map((rowI, colI) => {
 			const node = rows[rowI][colI];
 			if (!node) throw(rowI + ',' + colI);
 			node.neighbours =
@@ -212,7 +221,7 @@ class Node extends Disc {
 		this.x = x;
 		this.y = y;
 		this.occupied = false;
-		if (p(config.probCellOccupied)) this.occupy();
+		if (p(config.probNodeOccupied)) this.occupy();
 	}
 
 	// Ensure node is occupied
@@ -323,8 +332,6 @@ class Node extends Disc {
 		this.draw();
 	}
 
-	getColour() { return this.colour }
-
 	draw() {
 		this.setColour();
 		this.circle();
@@ -352,6 +359,7 @@ class Link extends Coloured {
 		this.ctx = Link.ctx;
 		this.from = from;
 		this.to = to;
+		this.colour = from.colour;
 		this.draw();
 	}
 
@@ -372,8 +380,6 @@ class Link extends Coloured {
 		pulse.stop();
 		this.pulse = undefined;
 	}
-
-	getColour() { return this.from.getColour() }
 
 	draw(extraWidth) {
 		const { ctx, from, to } = this;
@@ -401,7 +407,8 @@ class Pulse extends Disc {
 	static init() {
 		Pulse.ctx = getContext("pulse");
 		Pulse.radius = Math.floor(config.pulseRadiusFrac * Node.radius);
-		Pulse.margin = (0.99 * Node.radius - Pulse.radius) / Grid.cellWidth;
+		// Initial fraction of distance between centres
+		Pulse.margin = 0.5 * (Node.radius - Pulse.radius) / Grid.colWidth;
 		Pulse.all = [];
 	}
 
@@ -410,9 +417,9 @@ class Pulse extends Disc {
 		this.ctx = Pulse.ctx;
 		this.radius = Pulse.radius;
 		this.link = link;
-		this.frac = Pulse.margin;			 // Initial fraction of distance between centres
+		this.frac = Pulse.margin;
+		this.colour = link.colour;
 		Pulse.all.push(this);
-		// console.log(Pulse.count());
 	}
 
 	static count() { return this.all.length }
@@ -442,10 +449,7 @@ class Pulse extends Disc {
 	stop() {
 		this.stopping = true;
 		Pulse.all = Pulse.all.filter(pulse => pulse !== this);
-		// console.log(Pulse.count());
 	}
-
-	getColour() { return this.link.getColour() }
 
 	draw() {
 		this.setColour();
@@ -456,7 +460,7 @@ class Pulse extends Disc {
 
 // Colour //////////////////////////////////////////////////////////////////////////////////////////
 
-// A Colour's r, g, b are floats in 0..1
+// A Colour's r, g, b are integers in 0..255 and rgb = "rgb(R,G,B)"
 
 class Colour {
 	// Fill the palette with n equally spaced hues as rgb() strings
@@ -464,20 +468,25 @@ class Colour {
 	static init() {
 		const { numColours } = config;
 		this.hueOffset = Math.random();
-		this.palette = zeroTo(numColours)
-			.map(i => new Colour(i, numColours).rgb());
+		this.palette = this.makePalette(numColours);
 		this.white = "white";
 		this.transparent = "rgba(0,0,0,0)";
 	}
 
-	// Set a new colour to colour i of n equally spaced
-	// hues with maximum saturation and luminance
+	// Create a palette of numColours equally spaced hues
 
-	constructor(i, n) {
-		const h = (6 * i / n + Colour.hueOffset) % 6;		// n equally spaced hues in [0..6)
+	static makePalette(numColours) {
+		return zeroTo(numColours)
+			.map(i => new Colour(i / numColours).rgb);
+	}
+
+	// Set a new colour with hue in 0..1 and maximum saturation and luminance
+
+	constructor(hue) {
+		const h = (6 * hue + Colour.hueOffset) % 6;		// n equally spaced hues in [0..6)
 		const x = h % 1;				// x = 0 .. 1
-		const y = 1 - x;
-		const c = [
+		const y = 1 - x;				// y = 1 .. 0
+		const c = [							// r, g, b in 0..1
 			{r: 1, g: x, b: 0},		// red	   .. yellow
 			{r: y, g: 1, b: 0},		// yellow  .. green
 			{r: 0, g: 1, b: x},		// green   .. cyan
@@ -486,20 +495,11 @@ class Colour {
 			{r: 1, g: 0, b: y}		// magenta .. red
 		][Math.floor(h)];
 
-		this.forRGB(cpt => this[cpt] = c[cpt]);
-	}
-
-	// Return the result of calling f on each of r, g, b
-
-	forRGB(f) { return ["r", "g", "b"].map(f) }
-
-	// Return the colour as an "rgb(R,G,B)" string
-
-	rgb() {
-		const components = this.forRGB(cpt => Math.floor(256 * this[cpt]));
-		const s = components.join(",");
-
-		return `rgb(${ s })`;
+		const cpts = ["r", "g", "b"]
+					.map(cpt => this[cpt] = Math.floor(256 * c[cpt]));
+		// Set the Colour's "rgb(R,G,B)" string
+		const s = cpts.join(",");
+		this.rgb = `rgb(${ s })`;
 	}
 
 	static randIndex() { return rand(0, this.palette.length-1) }
