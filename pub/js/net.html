@@ -26,9 +26,9 @@ const config = {
 	pulseRadiusFrac: 0.1 * rand(4, 7),
 	maxPulses: Number.POSITIVE_INFINITY,
 	addPulseMaxCount: Number.POSITIVE_INFINITY, // Add periodically if < this
-	loopDelay: 10,															// 10-50
+	loopDelay: 50,															// 10-50
 	pulseStep: 0.02,
-	probNodeOccupied: Math.random(),						// 0.02
+	probNodeOccupied: 0.2 * rand(0, 5),
 	probAddLink: 0.05,
 }
 
@@ -117,27 +117,11 @@ class Grid extends Clearable {
 }
 
 
-// Coloured ///////////////////////////////////////////////////////////////////////////////////////
-
-class Coloured extends Clearable {
-	setRadialGradient() {
-		const { ctx, radius, x, y } = this;
-		if (radius < 5) return;
-		const fs = ctx.fillStyle;
-		const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
-		g.addColorStop(0, fs);
-		const a = 0.8 + 0.2 * Math.sin((new Date).getTime() * 0.01);
-		g.addColorStop(a, fs);
-		g.addColorStop(1, Colour.transparent);
-		ctx.fillStyle = g;
-	}
-}
-
 // Disc ///////////////////////////////////////////////////////////////////////////////////////////
 
 // Drawing with destination-out doesn't remove everything so add some extra
 
-class Disc extends Coloured {
+class Disc extends Clearable {
 	circle(extra) {
 		const { ctx, radius, x, y } = this;
 		ctx.beginPath();
@@ -344,7 +328,7 @@ class Node extends Disc {
 
 // Link ////////////////////////////////////////////////////////////////////////////////////////////
 
-class Link extends Coloured {
+class Link extends Clearable {
 	static init() {
 		this.ctx = getContext("link");
 	}
@@ -450,6 +434,18 @@ class Pulse extends Disc {
 		this.colour.setColour(this.ctx);
 		this.setRadialGradient();
 		this.circle();
+	}
+
+	setRadialGradient() {
+		const { ctx, frac, radius, x, y } = this;
+		if (radius < 5) return;
+		const fs = ctx.fillStyle;
+		const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+		g.addColorStop(0, fs);
+		const a = 0.8 + 0.2 * Math.sin(30 * frac);
+		g.addColorStop(a, fs);
+		g.addColorStop(1, Colour.transparent);
+		ctx.fillStyle = g;
 	}
 }
 
