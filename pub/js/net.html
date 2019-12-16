@@ -146,8 +146,9 @@ class Node extends Disc {
 
 		const rows = [];
 		Grid.map((rowI, colI) => {
-			const x = Grid.x + (colI + 1) * colWidth;	// Centre node in cell
-			const y = Grid.y + (rowI + 0.5) * rowHeight;
+			const j = 4;
+			const x = Grid.x + (colI + 1) * colWidth + rand(-j, j);	// Centre node in cell
+			const y = Grid.y + (rowI + 0.5) * rowHeight + rand(-j, j);
 			const node = new Node(x, y);
 			Node.all.push(node);
 			rows[rowI] = rows[rowI] || [];
