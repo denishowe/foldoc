@@ -1,6 +1,8 @@
-cd ~/Projects/FOLDOC/scaleway
-export UNISON=.
-u='unison -sshcmd=ssh foldoc'
-$u -batch
-ssh denis@foldoc make --directory=/var/www/foldoc.org
+#!/bin/sh
+
+# sshargs is set in ~/Library/Application Support/Unison/scaleway.prf
+
+u="unison -ui text scaleway"
+$u -batch || $u
+ssh -l denis -i ~/.ssh/personal/id_rsa foldoc make --directory=/var/www/foldoc.org
 $u -batch || $u
