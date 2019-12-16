@@ -26,9 +26,9 @@ const config = {
 	pulseRadiusFrac: 0.1 * rand(4, 7),
 	maxPulses: Number.POSITIVE_INFINITY,
 	addPulseMaxCount: Number.POSITIVE_INFINITY, // Add periodically if < this
-	loopDelay: 50, // 10-50,
+	loopDelay: 0,																// 10-50
 	pulseStep: 0.02,
-	probNodeOccupied: 0.02,
+	probNodeOccupied: Math.random(),						// 0.02
 	probAddLink: 0.05,
 }
 
@@ -86,7 +86,7 @@ class Grid extends Clearable {
 
 	// Return the result of applying function f(dCol, dRow)
 	// to vectors to each of the six nearest neighbours,
-	// clockwise from NW.  E.g. (3, 1) and its neighbours:
+	// clockwise from NE.  E.g. (3, 1) and its neighbours:
 
 	//            col
 	//     0     2   4
@@ -94,7 +94,7 @@ class Grid extends Clearable {
 	//     2     2   4
 
 	static mapNeighbours(f) {
-		return [[-1, -1], [1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0]]
+		return [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
 			.map(([dCol, dRow]) => f(dRow, dCol));
 	}
 
@@ -104,8 +104,8 @@ class Grid extends Clearable {
 
 	static fullscreen() {
 		if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
-		const d = document.documentElement,
-			f = d.webkitRequestFullscreen || d.requestFullscreen ||
+		const d = document.documentElement;
+		const f = d.webkitRequestFullscreen || d.requestFullscreen ||
 			d.msRequestFullscreen || d.mozRequestFullScreen;
 		if (! f) return console.log('No full screen API');
 		f.call(d);
@@ -120,13 +120,6 @@ class Grid extends Clearable {
 // Coloured ///////////////////////////////////////////////////////////////////////////////////////
 
 class Coloured extends Clearable {
-	setColour() {
-		const { colour, ctx } = this;
-		const c = Colour.palette[colour] || colour;
-		ctx.fillStyle = c;
-		ctx.strokeStyle = c;
-	}
-
 	setRadialGradient() {
 		const { ctx, radius, x, y } = this;
 		if (radius < 5) return;
@@ -169,7 +162,7 @@ class Node extends Disc {
 
 		const rows = [];
 		Grid.map((rowI, colI) => {
-			const x = Grid.x + (colI + 0.5) * colWidth;	// Centre node in cell
+			const x = Grid.x + (colI + 1) * colWidth;	// Centre node in cell
 			const y = Grid.y + (rowI + 0.5) * rowHeight;
 			const node = new Node(x, y);
 			Node.all.push(node);
@@ -231,14 +224,14 @@ class Node extends Disc {
 		this.occupied = true;
 		this.ctx = Node.ctx;
 		this.radius = Node.radius;
-		this.colour = Colour.randIndex();
+		this.colour = Colour.random();
 		this.links = [];
 		this.draw();
 	}
 
 	pulseIn(from) {
 		if (this.surrounded()) { this.die(); return }
-		if (p(0.5)) this.changeColour(from.colour);
+		this.changeColour(from.colour);
 		this.maybeRemoveLink();
 		this.maybeAddLink();
 		this.addPulses();
@@ -326,14 +319,16 @@ class Node extends Disc {
 		this.links.forEach(link => link.clearPulse());
 	}
 
-	changeColour(colour) {
-		this.colour = colour;
+	changeColour(newColour) {
+		const c = this.colour.changeColour(newColour);
+		this.colour = c;
+		this.links.forEach(link => link.colour = c);
 		this.erase();
 		this.draw();
 	}
 
 	draw() {
-		this.setColour();
+		this.colour.setColour(this.ctx);
 		this.circle();
 		this.links.forEach(link => link.draw());
 	}
@@ -383,7 +378,7 @@ class Link extends Coloured {
 
 	draw(extraWidth) {
 		const { ctx, from, to } = this;
-		this.setColour();
+		this.colour.setColour(ctx);
 		ctx.lineWidth = 2 + (extraWidth || 0);
 		ctx.beginPath();
 		ctx.moveTo(from.x, from.y);
@@ -452,15 +447,16 @@ class Pulse extends Disc {
 	}
 
 	draw() {
-		this.setColour();
+		this.colour.setColour(this.ctx);
 		this.setRadialGradient();
 		this.circle();
 	}
 }
 
+
 // Colour //////////////////////////////////////////////////////////////////////////////////////////
 
-// A Colour's r, g, b are integers in 0..255 and rgb = "rgb(R,G,B)"
+// A Colour has r, g, b = ints 0..255 and rgb = "rgb(R,G,B)"
 
 class Colour {
 	// Fill the palette with n equally spaced hues as rgb() strings
@@ -477,12 +473,12 @@ class Colour {
 
 	static makePalette(numColours) {
 		return zeroTo(numColours)
-			.map(i => new Colour(i / numColours).rgb);
+			.map(i => new Colour(this.hueRGB(i / numColours)));
 	}
 
-	// Set a new colour with hue in 0..1 and maximum saturation and luminance
+	// Return [r, g, b] for hue in 0..1 and maximum saturation and luminance
 
-	constructor(hue) {
+	static hueRGB(hue) {
 		const h = (6 * hue + Colour.hueOffset) % 6;		// n equally spaced hues in [0..6)
 		const x = h % 1;				// x = 0 .. 1
 		const y = 1 - x;				// y = 1 .. 0
@@ -495,14 +491,33 @@ class Colour {
 			{r: 1, g: 0, b: y}		// magenta .. red
 		][Math.floor(h)];
 
-		const cpts = ["r", "g", "b"]
-					.map(cpt => this[cpt] = Math.floor(256 * c[cpt]));
-		// Set the Colour's "rgb(R,G,B)" string
+		return Colour.map(cpt => Math.floor(256 * c[cpt]));
+	}
+
+	static map(f) { return ["r", "g", "b"].map(f) }
+
+	static random() { return this.palette.any() }
+
+	// Set the new Colour's components and "rgb(R,G,B)" string if given [r, g, b]
+
+	constructor(cpts) {
+		if (!cpts) return;
+		Colour.map((cpt, i) => this[cpt] = cpts[i]);
 		const s = cpts.join(",");
 		this.rgb = `rgb(${ s })`;
 	}
 
-	static randIndex() { return rand(0, this.palette.length-1) }
+	setColour(ctx) {
+		const { rgb } = this;
+		ctx.fillStyle = rgb;
+		ctx.strokeStyle = rgb;
+	}
+
+	changeColour(newColour) {
+		const cpts = Colour.map(cpt => 0.5 * (this[cpt] + newColour[cpt]));
+
+		return new Colour(cpts);
+	}
 }
 
 
