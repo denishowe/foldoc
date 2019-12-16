@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<!--
+	A hexagonal Grid of Nodes, with Links to their nearest neighbours, over which Pulses travel
+-->
+
+<html>
+<head>
+<title>Net</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/net.html">
+</head>
+<body style="overflow: hidden">
+<div id="message"></div>
+<div style="margin-top: -8px; margin-left: -8px">
+	<canvas id="link" style="position: absolute; z-index: 1">No canvas</canvas>
+	<canvas id="pulse" style="position: absolute; z-index: 2">No canvas</canvas>
+	<canvas id="node" style="position: absolute; z-index: 3">No canvas</canvas>
+</div>
+<script>
+"use strict";
+
+const config = {
+	nodesPerRow: rand(20, 50),
+	numColours: rand(1, 20),
+	nodeRadius: 0.05 * rand(8, 12),							// In colWidths
+	pulseRadiusFrac: 0.1 * rand(4, 7),
+	maxPulses: Number.POSITIVE_INFINITY,
+	addPulseMaxCount: Number.POSITIVE_INFINITY, // Add periodically if < this
+	loopDelay: 20,														  // 10-50
+	pulseStep: 0.02,
+	probNodeOccupied: 0.2 * rand(0, 5),
+	probAddLink: Math.random(),                 // 0.05
+}
+
+const TWO_PI = 2 * Math.PI;
+
+
+class Clearable {
+	static clear() {
+		const { ctx } = this;
+		const { canvas: { height, width } } = ctx;
+		ctx.clearRect(0, 0, width, height);
+	}
+}
+
+
+// Grid  ///////////////////////////////////////////////////////////////////////////////////////////
+
+// A hex Grid in which even index rows have nodesPerRow nodes in
+// even index columns and odd index rows have one less in odd index
+// columns.  Nodes in the same row are two column widths apart.
+
+class Grid extends Clearable {
+	static init() {
+		Node.stop();
+		const { canvas: { height, width } } = this.ctx = getContext("node");
+		// This colWidth is half the distance between Nodes in the same row
+		this.colWidth = Math.floor(0.5 * width / config.nodesPerRow);
+		// Height of anequilateral triangle two columns wide
+		this.rowHeight = Math.floor(this.colWidth * Math.sqrt(3));
+		this.numRows = Math.floor(height / this.rowHeight);
+		// Centre grid in window
+		this.x = (width - config.nodesPerRow * 2 * this.colWidth) / 2;
+		this.y = (height - this.numRows * this.rowHeight) / 2;
+
+		this.clear();
+		Colour.init();
+		Node.init(Grid);
+		Link.init();
+		Pulse.init();
+		Node.start();
+	}
+
+	// Return the result of applying function
+	// f(rowIndex, colIndex) to all Nodes in the Grid
+
+	static map(f) {
+		return zeroTo(this.numRows).map(rowI => {
+			const oddRow = rowI % 2;
+			const numCols = config.nodesPerRow - oddRow;
+			return zeroTo(numCols).map(colI => {
+				return f(rowI, 2*colI + oddRow);
+			});
+		});
+	}
+
+	// Return the result of applying function f(dCol, dRow)
+	// to vectors to each of the six nearest neighbours,
+	// clockwise from NE.  E.g. (3, 1) and its neighbours:
+
+	//            col
+	//     0     2   4
+	// row 1   1   3   5
+	//     2     2   4
+
+	static mapNeighbours(f) {
+		return [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+			.map(([dCol, dRow]) => f(dRow, dCol));
+	}
+
+	// Request for full screen must be initiated by user action in Chrome or Firefox
+	// Firefox fix - https://stackoverflow.com/a/27078920/285129
+	// about:config > full-screen-api.allow-trusted-requests-only: false
+
+	static fullscreen() {
+		if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
+		const d = document.documentElement;
+		const f = d.webkitRequestFullscreen || d.requestFullscreen ||
+			d.msRequestFullscreen || d.mozRequestFullScreen;
+		if (! f) return console.log('No full screen API');
+		f.call(d);
+	}
+
+	static handle_click(x, y) { this.clicked = {x, y} }
+
+	static handle_key(k) { console.log("Key event", k) }
+}
+
+
+// Disc ///////////////////////////////////////////////////////////////////////////////////////////
+
+// Drawing with destination-out doesn't remove everything so add some extra
+
+class Disc extends Clearable {
+	circle(extra) {
+		const { ctx, radius, x, y } = this;
+		ctx.beginPath();
+		ctx.arc(x, y, radius + (extra || 0), 0, TWO_PI);
+		ctx.fill();
+		ctx.closePath();
+	}
+}
+
+
+// Node  /////////////////////////////////////////////////////////////////////////////////////////
+
+class Node extends Disc {
+	static init({ colWidth, ctx, rowHeight }) {
+		this.stop();
+		this.radius = Math.floor(config.nodeRadius * colWidth);
+		this.ctx = ctx;
+		this.all = [];
+
+		// Store Nodes in array indexed by row and column.
+		// Column is even in even rows and odd in odd rows.
+
+		const rows = [];
+		Grid.map((rowI, colI) => {
+			const x = Grid.x + (colI + 1) * colWidth;	// Centre node in cell
+			const y = Grid.y + (rowI + 0.5) * rowHeight;
+			const node = new Node(x, y);
+			Node.all.push(node);
+			rows[rowI] = rows[rowI] || [];
+			rows[rowI][colI] = node;
+		});
+
+		// Set each Node's neighbours
+
+		Grid.map((rowI, colI) => {
+			const node = rows[rowI][colI];
+			if (!node) throw(rowI + ',' + colI);
+			node.neighbours =
+				Grid.mapNeighbours((dRow, dCol) => {
+					const r = rows[rowI + dRow];
+					return r && r[colI + dCol];
+				})
+				.filter(n => n);
+		});
+	}
+
+	static occupied() { return Node.all.filter(node => node.occupied) }
+
+	static start() {
+		this.all.any().occupy();
+		this.loop();
+	}
+
+	static loop() {
+		this.step();
+		Pulse.step();
+		this.timeout = setTimeout(() => this.loop(), config.loopDelay);
+	}
+
+	static step() {
+		if (Pulse.count() >= config.addPulseMaxCount) return;
+		const node = Node.occupied().any();
+		node.maybeAddLink();
+		node.addPulses();
+	}
+
+	static stop() {
+		clearTimeout(this.timeout);
+		(this.all || []).forEach(node => node.stopLinks());
+	}
+
+	constructor(x, y) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.occupied = false;
+		if (p(config.probNodeOccupied)) this.occupy();
+	}
+
+	// Ensure node is occupied
+
+	occupy(from) {
+		if (this.occupied) return;
+		this.occupied = true;
+		this.ctx = Node.ctx;
+		this.radius = Node.radius;
+		this.colour = from ? from.colour : Colour.random();
+		this.links = [];
+		this.draw();
+	}
+
+	pulseIn(from) {
+		if (this.surrounded()) { this.die(); return }
+		this.changeColour(from.colour);
+		this.maybeRemoveLink();
+		this.maybeAddLink();
+		this.addPulses();
+	}
+
+	// Return true if all neighbours are occupied
+
+	surrounded() { return this.neighbours.every(neigh => neigh.occupied) }
+
+	// Return a measure for the number of outbound links that
+	// increases from 0 for less than 2 links up to 1 for 5 or 6
+
+	linkFullness() {
+		const { links } = this;
+		const len = links ? links.length : 0;
+
+		return len < 2 ? 0 : (len - 1) / 4;
+	}
+
+	maybeAddLink() {
+		if (p(config.probAddLink)) this.addLink();
+	}
+
+	addLink() {
+		const unlinked = this.linkableNeighbours();
+		if (unlinked.length === 0) return;
+		const neigh = unlinked.any();
+		this.occupyNeighbour(neigh);
+		this.addLinkTo(neigh);
+	}
+
+	occupyNeighbour(neigh) {
+		neigh.occupy(this);
+	}
+
+	addLinkTo(neigh) { this.links.push(new Link(this, neigh)) }
+
+	maybeRemoveLink() {
+		if (p(0.5 * this.linkFullness()))
+			this.links.any().die();
+	}
+
+	findLinkTo(node) { return this.links.find(link => link.to === node) }
+
+	addPulses() { this.links.forEach(link => link.setPulse()) }
+
+	die() {
+		this.links.forEach(link => link.die());
+		this.incomingLinks().forEach(link => link.die());
+		this.occupied = false;
+		this.erase();
+	}
+
+	// Return occupied or unoccupied neighbours that are not linked to or from this node
+
+	linkableNeighbours() {
+		return this.neighbours.filter(neigh => ! neigh.getLinkToOrFrom(this));
+	}
+
+	incomingLinks() {
+		return this.neighbours
+			.map(neigh => neigh.getLinkTo(this))
+			.filter(l => l);
+	}
+
+	removeDeadLink(linkToRemove) {
+		this.links = this.links.filter(link => link !== linkToRemove);
+	}
+
+	removeLinkTo(neigh) {
+		const link = this.links.findLinkTo(neigh);
+		if (! link) return;
+		this.links = this.links.filter(link => link.to !== neigh);
+		link.die();
+	}
+
+	getLinkToOrFrom(node) { return node.getLinkTo(this) || this.getLinkTo(node) }
+
+	// Return the link from this node to "to" if it exists, else undefined
+
+	getLinkTo(to) {
+		const links = this.links || [];
+
+		return links.filter(link => link.to === to)[0];
+	}
+
+	stopLinks() {
+		if (! this.occupied) return;
+		this.links.forEach(link => link.clearPulse());
+	}
+
+	changeColour(newColour) {
+		const c = this.colour.changeColour(newColour);
+		this.colour = c;
+		this.links.forEach(link => link.colour = c);
+		this.erase();
+		this.draw();
+	}
+
+	draw() {
+		this.colour.setColour(this.ctx);
+		this.circle();
+		this.links.forEach(link => link.draw());
+	}
+
+	erase() {
+		const { ctx } = this;
+		ctx.globalCompositeOperation = "destination-out";
+		this.circle(1);
+    ctx.globalCompositeOperation = "source-over";
+	}
+}
+
+
+// Link ////////////////////////////////////////////////////////////////////////////////////////////
+
+class Link extends Clearable {
+	static init() {
+		this.ctx = getContext("link");
+	}
+
+	constructor(from, to) {
+		super();
+		this.ctx = Link.ctx;
+		this.from = from;
+		this.to = to;
+		this.colour = from.colour;
+		this.draw();
+	}
+
+	setPulse() {
+		if (! this.pulse)
+			this.pulse = new Pulse(this);
+	}
+
+	die() {
+		this.clearPulse();
+		this.from.removeDeadLink(this);
+		this.erase();
+	}
+
+	clearPulse() {
+		const { pulse } = this;
+		if (! pulse) return;
+		pulse.stop();
+		this.pulse = undefined;
+	}
+
+	draw(extraWidth) {
+		const { ctx, from, to } = this;
+		this.colour.setColour(ctx);
+		ctx.lineWidth = 2 + (extraWidth || 0);
+		ctx.beginPath();
+		ctx.moveTo(from.x, from.y);
+		ctx.lineTo(to.x, to.y);
+		ctx.stroke();
+		ctx.closePath();
+	}
+
+	erase() {
+		const { ctx } = this;
+		ctx.globalCompositeOperation = "destination-out";
+		this.draw(3);
+    ctx.globalCompositeOperation = "source-over";
+	}
+}
+
+
+// Pulse ///////////////////////////////////////////////////////////////////////////////////////////
+
+class Pulse extends Disc {
+	static init() {
+		Pulse.ctx = getContext("pulse");
+		Pulse.radius = Math.floor(config.pulseRadiusFrac * Node.radius);
+		// Initial fraction of distance between centres
+		Pulse.margin = 0.5 * (Node.radius - Pulse.radius) / Grid.colWidth;
+		Pulse.all = [];
+	}
+
+	constructor(link) {
+		super();
+		this.ctx = Pulse.ctx;
+		this.radius = Pulse.radius;
+		this.link = link;
+		this.frac = Pulse.margin;
+		this.colour = link.colour;
+		Pulse.all.push(this);
+	}
+
+	static count() { return this.all.length }
+
+	static step() {
+		this.clear();
+		this.all.forEach(pulse => pulse.step());
+	}
+
+	step() {
+		const { frac, link, stopping } = this;
+		if (stopping) return;
+		const fracMax = 1 - Pulse.margin;
+		const { from, to } = link;
+		if (frac > fracMax) {
+			link.clearPulse();
+			to.pulseIn(link.from);
+			return;
+		}
+		const { x, y } = from;
+		this.x = x + frac * (to.x - x);
+		this.y = y + frac * (to.y - y);
+		this.frac += config.pulseStep;
+		this.draw();
+	}
+
+	stop() {
+		this.stopping = true;
+		Pulse.all = Pulse.all.filter(pulse => pulse !== this);
+	}
+
+	draw() {
+		this.colour.setColour(this.ctx);
+		this.setRadialGradient();
+		this.circle();
+	}
+
+	setRadialGradient() {
+		const { ctx, frac, radius, x, y } = this;
+		if (radius < 5) return;
+		const fs = ctx.fillStyle;
+		const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+		g.addColorStop(0, fs);
+		const a = 0.8 + 0.2 * Math.sin(30 * frac);
+		g.addColorStop(a, fs);
+		g.addColorStop(1, Colour.transparent);
+		ctx.fillStyle = g;
+	}
+}
+
+
+// Colour //////////////////////////////////////////////////////////////////////////////////////////
+
+// A Colour has r, g, b = ints 0..255 and rgb = "rgb(R,G,B)"
+
+class Colour {
+	// Fill the palette with n equally spaced hues as rgb() strings
+
+	static init() {
+		const { numColours } = config;
+		this.hueOffset = Math.random();
+		this.palette = this.makePalette(numColours);
+		this.white = "white";
+		this.transparent = "rgba(0,0,0,0)";
+	}
+
+	// Create a palette of numColours equally spaced hues
+
+	static makePalette(numColours) {
+		return zeroTo(numColours)
+			.map(i => new Colour(this.hueRGB(i / numColours)));
+	}
+
+	// Return [r, g, b] for hue in 0..1 and maximum saturation and luminance
+
+	static hueRGB(hue) {
+		const h = (6 * hue + Colour.hueOffset) % 6;		// n equally spaced hues in [0..6)
+		const x = h % 1;				// x = 0 .. 1
+		const y = 1 - x;				// y = 1 .. 0
+		const c = [							// r, g, b in 0..1
+			{r: 1, g: x, b: 0},		// red	   .. yellow
+			{r: y, g: 1, b: 0},		// yellow  .. green
+			{r: 0, g: 1, b: x},		// green   .. cyan
+			{r: 0, g: y, b: 1},		// cyan	   .. blue
+			{r: x, g: 0, b: 1},		// blue	   .. magenta
+			{r: 1, g: 0, b: y}		// magenta .. red
+		][Math.floor(h)];
+
+		return Colour.map(cpt => Math.floor(256 * c[cpt]));
+	}
+
+	static map(f) { return ["r", "g", "b"].map(f) }
+
+	static random() { return this.palette.any() }
+
+	// Set the new Colour's components and "rgb(R,G,B)" string if given [r, g, b]
+
+	constructor(cpts) {
+		if (!cpts) return;
+		Colour.map((cpt, i) => this[cpt] = cpts[i]);
+		const s = cpts.join(",");
+		this.rgb = `rgb(${ s })`;
+	}
+
+	setColour(ctx) {
+		const { rgb } = this;
+		ctx.fillStyle = rgb;
+		ctx.strokeStyle = rgb;
+	}
+
+	changeColour(newColour) {
+		const cpts = Colour.map(cpt => 0.5 * (this[cpt] + newColour[cpt]));
+
+		return new Colour(cpts);
+	}
+}
+
+
+// Array  //////////////////////////////////////////////////////////////////////////////////////////
+
+Array.prototype.any = function () {
+	const i = Math.floor(this.length * Math.random());
+
+	return this[i];
+}
+
+Array.prototype.shuffle = function () {
+	return this.sort(() => Math.random() < 0.5);
+}
+
+
+// Events & Window ////////////////////////////////////////////////////////////////////////////////
+
+document.onclick = click;
+document.onmousemove = click;
+
+function click(e) {
+	if (e.buttons == 2) return;			// Ignore right-click
+	// Stationary click -> type 'click'.  Drag -> mousemove.
+	// Ignore first "click" after movement.
+	const clickEvent = e.type == 'click' && ! click.moving;
+	if (clickEvent) Grid.fullscreen();
+	// Ignore mouse move unless button pressed and moved > 1 pixel
+	click.moving = e.type == 'mousemove' && e.buttons && click.old_x
+	  && Math.abs(e.clientX - click.old_x) + Math.abs(e.clientY - click.old_y) > 1;
+	click.old_x = e.clientX;
+	click.old_y = e.clientY;
+	if (! clickEvent && ! click.moving) return;
+	Grid.handle_click(e.offsetX, e.offsetY);
+};
+
+click.moving = false;
+click.old_x = 0;
+
+// Wait until done resizing
+
+window.onresize = function () {
+	if (window.onresize.timeout) clearTimeout(window.onresize.timeout);
+	window.onresize.timeout = setTimeout(() => Grid.init(), 500)
+};
+
+// Handle key press
+
+// onkeypress doesn't get ESC
+
+window.onkeydown = function (e) {
+	let k = e.keyCode;
+	k = k == 27 ? "Esc" : String.fromCharCode(k);
+	Grid.handle_key(k);
+}
+
+// Utilities //////////////////////////////////////////////////////////////////////////////////////
+
+// Return a 2D context for the canvas with "id", set to fill the window
+
+function getContext(id) {
+	const canvas = document.getElementById(id);
+	const { innerWidth, innerHeight } = window;
+	canvas.width = innerWidth;
+	canvas.height = innerHeight;
+
+	return canvas.getContext('2d');
+}
+
+// Return ints 0 .. n-1
+
+function zeroTo(n) { return n < 1 ? [] : [...Array(n).keys()] }
+
+// Return the results of calling f(i) for i = 0 .. n-1
+
+function nResults(n, f) { zeroTo(n).map(f) }
+
+// Return true with probability x
+
+function p(x) { return Math.random() < x }
+
+// Return a random int, min <= r <= max
+
+function rand(min, max, pow) {
+	let r = Math.random();
+	if (pow) r = Math.pow(r, pow);
+	return Math.floor(min + (max+1 - min) * r);
+}
+
+// Return x rounded to the nearest multiple of m
+
+function quant(x, m) { return Math.floor(x / m + 0.5) * m }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+window.onresize();
+
+</script>
+</body>
+</html>

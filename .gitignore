@@ -3,6 +3,8 @@ about.html
 contents.html
 contents/
 contributors.html
+Dictionary.*
+.eslintcache
 foldoc.tar*
 help.html
 keys
@@ -14,3 +16,4 @@ private
 rss.xml
 sitemap.txt
 source.html
+tailortravels.co.uk
