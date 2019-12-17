@@ -26,10 +26,11 @@ const config = {
 	pulseRadiusFrac: 0.1 * rand(4, 7),
 	maxPulses: Number.POSITIVE_INFINITY,
 	addPulseMaxCount: Number.POSITIVE_INFINITY, // Add periodically if < this
-	loopDelay: 50,															// 10-50
+	loopDelay: 20,														  // 10-50
 	pulseStep: 0.02,
-	probNodeOccupied: 0.2 * rand(0, 5),
-	probAddLink: 0.05,
+	probNodeOccupied: 0.333 * rand(0, 3),
+	probAddLink: Math.random(),                 // 0.05
+	nodePositionNoise: 0.1 * rand(0, 3),
 }
 
 const TWO_PI = 2 * Math.PI;
@@ -146,8 +147,9 @@ class Node extends Disc {
 
 		const rows = [];
 		Grid.map((rowI, colI) => {
-			const x = Grid.x + (colI + 1) * colWidth;	// Centre node in cell
-			const y = Grid.y + (rowI + 0.5) * rowHeight;
+			const j = config.nodePositionNoise * colWidth;
+			const x = Grid.x + (colI + 1) * colWidth + rand(-j, j);	// Centre node in cell
+			const y = Grid.y + (rowI + 0.5) * rowHeight + rand(-j, j);
 			const node = new Node(x, y);
 			Node.all.push(node);
 			rows[rowI] = rows[rowI] || [];
@@ -171,7 +173,7 @@ class Node extends Disc {
 	static occupied() { return Node.all.filter(node => node.occupied) }
 
 	static start() {
-		this.all.any().occupy();
+		if (config.probNodeOccupied === 0) this.all.any().occupy();
 		this.loop();
 	}
 
@@ -203,12 +205,12 @@ class Node extends Disc {
 
 	// Ensure node is occupied
 
-	occupy() {
+	occupy(from) {
 		if (this.occupied) return;
 		this.occupied = true;
 		this.ctx = Node.ctx;
 		this.radius = Node.radius;
-		this.colour = Colour.random();
+		this.colour = from ? from.colour : Colour.random();
 		this.links = [];
 		this.draw();
 	}
@@ -243,8 +245,12 @@ class Node extends Disc {
 		const unlinked = this.linkableNeighbours();
 		if (unlinked.length === 0) return;
 		const neigh = unlinked.any();
-		neigh.occupy();
+		this.occupyNeighbour(neigh);
 		this.addLinkTo(neigh);
+	}
+
+	occupyNeighbour(neigh) {
+		neigh.occupy(this);
 	}
 
 	addLinkTo(neigh) { this.links.push(new Link(this, neigh)) }
