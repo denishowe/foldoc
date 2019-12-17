@@ -4,6 +4,7 @@ contents.html
 contents/
 contributors.html
 Dictionary.*
+.eslintcache
 foldoc.tar*
 help.html
 keys

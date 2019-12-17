@@ -45,7 +45,7 @@ Dictionary keys offsets:	new/Dictionary junk_searches build.pl Foldoc.pm templat
 new.html rss.xml: Dictionary build.pl Foldoc.pm
 	./build.pl new
 
-LOGS = /var/log/apache2/foldoc.org-access-*
+LOGS = /var/log/apache2/foldoc.org/access-*
 
 missing.html: Dictionary build.pl Foldoc.pm template.html $(LOGS)
 	./build.pl missing

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<!-- https://foldoc.org/lunch/map.html  file:///Users/denis/Projects/FOLDOC/foldoc/lunch/map.html -->
+<head>
+  <title>Lunch</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <style>
+    html, body, #map { margin: 0; padding: 0; height: 100% }
+
+    .control {
+      margin: 10px;
+      background-color: white;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .control.edit {
+      padding: 9px;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+      font-size: 18px;
+      font-family: Roboto, Arial, sans-serif;
+      font-weight: 500;
+    }
+
+    .control.myLoc {
+      width: 40px;
+      height: 40px;
+    }
+
+    .control.myLoc .myLocIcon {
+      width: 36px;
+      height: 36px;
+      position: absolute; top: 2px; left: 2px;
+      background-image: url("https://maps.gstatic.com/tactile/mylocation/mylocation-sprite-cookieless-v2-1x.png");
+      background-size: 360px 36px;
+      background-position: 180px 0;
+    }
+
+    .gm-style-iw-c {
+	  width: 600px;
+	}
+
+  </style>
+  <script>
+    'use strict';
+
+    // https://developers.google.com/maps/documentation/javascript/
+    // apiKey = 'AIzaSyA5kT5488ytqIeJUPg6MJgE_NejzGvELRA';
+    // https://www.google.com/maps/d/u/0/embed?mid=1S6TpY0cG3zxhIQ7zJSB_1HVGADhDZpma
+
+    function initMap() {
+      makeMap();                        // Sets global var map
+      getPlaces()
+      .then(places => {
+        map.my.places = places;
+        showPlaces(places);
+        trackUser();
+        addControls();
+      });
+    }
+
+    // Set global map to a new map
+
+    function makeMap() {
+      const mapDiv = document.getElementById('map');
+      const mapTypeId = 'roadmap';
+      const center = { lat: 51.522, lng: -0.088 };
+      const zoom = 15;
+
+      map = new google.maps.Map(mapDiv, { mapTypeId, center, zoom });
+	  map.my = {};						// Custom global props
+    }
+
+    // Promise the saved places {lat, lng, title, description}
+
+    const dataUrl = 'https://foldoc.org/lunch/data.pl';
+
+    function getPlaces() {
+      return fetch(dataUrl)
+        .catch(error => console.log("Can't get", dataUrl, error))
+        .then(response => response.text())
+        .then(JSON.parse);
+    }
+
+    function putPlaces(places) {
+	  const method = 'PUT';
+      const body = arrayJSON(places);
+      const request = new Request(dataUrl, { method, body });
+      fetch(request);
+    }
+
+    // Return JSON for an array with each element on its own line
+
+    function arrayJSON(array) {
+	  const ajs = array.map(JSON.stringify).join(',\n');
+
+	  return `[\n${ ajs }\n]\n`;
+	}
+
+    // Show places and new target bearing
+
+    function showPlaces([origin, ...places]) {
+	  map.my.origin = origin;
+      showOrigin(origin);
+      places.forEach(p => {
+        p.bearing = bearing(origin, p);
+        showPlace(p);
+      });
+      showTarget(origin, places);
+    }
+
+    // Show bearings that bisect the biggest and smallest gaps
+
+    function showTarget(origin, places) {
+      const bearings = places.map(p => p.bearing);
+      const { midMin, midMax } = splitDiff(bearings);
+      const targetMax = pointOn(origin, midMax);
+      new google.maps.Polyline(
+        { map, path: [origin, targetMax], strokeColor: '#FF4488', strokeWeight: 2 });
+      const targetMin = pointOn(origin, midMin);
+      new google.maps.Polyline(
+        { map, path: [origin, targetMin], strokeColor: '#004444', strokeWeight: 1 });
+    }
+
+    // Show a marker and bearing for place p
+
+    function showOrigin(origin) {
+	  const circleFill = '558bff';
+      const pound = `https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1514-bank-pound_4x.png&highlight=${circleFill}`;
+      marker(origin, pound);
+    }
+
+    function showPlace(place) {
+	  console.log(place.lat, place.lng, place.title, '-', place.description);
+      const burger = 'https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1530-burger_4x.png&highlight=ff000000,FF5252,ff000000';
+      const mark = marker(place, burger);
+	  mark.addListener('click', event => clickBurger(mark, place));
+
+      // Draw bearing, more opaque from origin to place, less from place to distant point
+      new google.maps.Polyline(
+        { map, path: [map.my.origin, place],
+		  strokeColor: '#2222FF', strokeWeight: 2, strokeOpacity: 0.6 });
+      const target = pointOn(map.my.origin, place.bearing);
+      new google.maps.Polyline(
+        { map, path: [place, target], strokeColor: '#8888FF', strokeWeight: 2, strokeOpacity: 0.6 });
+    }
+
+    function clickBurger(mark, place) {
+	  infowin(mark, place);
+    }
+
+    function clear(prop) {
+	  const thing = map.my[prop];
+	  if (!thing) return;
+	  if (prop === 'tempMarker') thing.setMap(null);
+	  if (prop === 'infowin') thing.close();
+	  delete map.my[prop];
+	}
+
+    function marker(place, iconUrl) {
+      const icon = iconUrl && { url: iconUrl, anchor: new google.maps.Point(16, 16) };
+      const title = place.title + '\n' + place.description;
+
+      return new google.maps.Marker({ map, position: place, title, icon });
+    }
+
+    function addControls() {
+      // Add "Edit" control to go to edit source map
+      const url = 'https://www.google.com/maps/d/u/0/edit?hl=en&mid=1S6TpY0cG3zxhIQ7zJSB_1HVGADhDZpma&ll=51.52188783045966%2C-0.08890248334353146&z=16';
+      addControl('edit', 'TOP_LEFT', () => location = url)
+        .innerText = 'Edit';
+      map.addListener('click', clickMap);
+    }
+
+    function clickMap(event) {
+      const { latLng, placeId } = event;
+      if (placeId) event.stop();
+      const lat = latLng.lat(), lng = latLng.lng();
+	  const description = ymd() + ' ';
+	  const place = { lat, lng, description };
+      placeName(placeId, title => showClick(place, placeId, title || posString(place)));
+	}
+
+    function showClick(place, placeId, title) {
+	  place.title = title;
+	  clear('tempMarker');
+	  map.my.tempMarker = new google.maps.Marker({ position: place, map, title: place.title });
+	  map.my.tempMarker.placeId = placeId; // For showGoogleMap
+	  infowin(map.my.tempMarker, place);
+	}
+
+    function posString(place) {
+	  return ['lat', 'lng'].map(ll => dp(place[ll])).join(',');
+	}
+
+    // https://developers.google.com/maps/documentation/javascript/places#place_details
+
+    function placeName(placeId, callback) {
+      if (! placeId) return callback();
+      if (! map.my.service)
+        map.my.service = new google.maps.places.PlacesService(map);
+      const request = { placeId, fields: ['name'] };
+      map.my.service.getDetails(request, function gotPlace(place, status) {
+        // console.log('place', place, 'status', status);
+        if (status == google.maps.places.PlacesServiceStatus.OK)
+          return callback(place.name);
+        console.log("Can't get place name", status);
+        callback('No name');
+      });
+    }
+
+    function infowin(marker, place) {
+	  const { title, description } = place;
+	  clear('infowindow');
+	  const titleInput = element('input', { type: 'text', value: title, style: 'width: 99%' });
+	  const descInput = element('textarea',
+		{ rows: 5, style: 'display: table; width: 99%; margin: 5px 0' }, description);
+	  const saveButton = button('Save', () => savePlace(place, titleInput.value, descInput.value));
+	  const mapsButton = button('Google Maps', () => showGoogleMaps(marker));
+	  const content = element('div', {}, titleInput, descInput, saveButton, mapsButton);
+	  map.my.infowindow = new google.maps.InfoWindow({ content });
+      map.my.infowindow.open(map, marker);
+	}
+
+    function showGoogleMaps(marker) {
+	  const { placeId, title } = marker;
+	  const url = 'https://www.google.com/maps/search/?api=1&query=' + title
+	    + (placeId ? '&query_place_id=' + placeId : '');
+	  console.log('GM', placeId, title, url);
+	  window.open(url);
+	}
+
+    function button(label, clickHandler) {
+	  const b = element('button', { style: 'width: 100%; font-weight: bold' }, label);
+	  b.addEventListener('click', clickHandler);
+
+	  return b;
+	}
+
+    function savePlace(place, title, description) {
+	  const oldTitle = place.title;
+	  place.title = title;
+	  place.description = description;
+	  let old = map.my.places.findIndex(p => p.title === oldTitle);
+	  if (old == -1) old = map.my.places.length;
+	  console.log('place', place, 'index', old);
+	  map.my.places[old] = place;
+	  putPlaces(map.my.places);
+	  clear('infowindow');
+	  clear('tempMarker');
+	  showPlace(place);
+	}
+
+    function addControl(name, pos, click) {
+      const c = element('div', { class: 'control ' + name });
+      map.controls[google.maps.ControlPosition[pos]].push(c);
+      c.addEventListener('click', click);
+
+      return c;
+    }
+
+    // Add a marker that tracks the user's location
+
+    function trackUser() {
+      const url = 'https://bestanimations.com/Signs&Shapes/Hearts/heart-animation61.gif';
+      const icon = { url, scaledSize: new google.maps.Size(24, 24) };
+      map.my.userMark = new google.maps.Marker({ map, icon, cursor: 'grab' });
+      // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/geolocation
+      // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
+      const onerror = console.log;
+      navigator.geolocation.watchPosition(showUser, onerror, { enableHighAccuracy: true });
+    }
+
+    // Move the user location Mark to the geolocation coordinates
+
+    function showUser({ coords: { latitude, longitude } }) {
+      const position = { lat: latitude, lng: longitude };
+      // console.log(new Date, 'pos', position);
+      map.my.userMark.setPosition(position);
+      if (map.my.locControl) return;
+      // Add crosshair icon control to centre map on user's location
+	  const icon = element('div', { class: 'myLocIcon' });
+      addControl('myLoc', 'RIGHT_BOTTOM', centreOnUser)
+        .appendChild(icon);
+      map.my.locControl = true;
+    }
+
+    function centreOnUser() {
+      const pos = map.my.userMark.getPosition();
+      map.setCenter(pos);
+    }
+
+    // Given the origin and a place, return the place's bearing from
+    // the origin.  Bearing is 0..360 degrees clockwise from North.
+    // https://en.wikipedia.org/wiki/Bearing_(navigation)
+
+    function bearing({ lat: lat1d, lng: lng1d }, { lat: lat2d, lng: lng2d }) {
+
+      // https://www.movable-type.co.uk/scripts/latlong.html
+      // psi = lat (N of equator),  lambda = lng (E of Greenwich)
+
+      const [lat1, lng1, lat2, lng2] = [lat1d, lng1d, lat2d, lng2d].map(rad);
+      const deltaLng = lng2 - lng1 // E-W diff
+      const x = Math.sin(deltaLng) * Math.cos(lat2)
+      const y = Math.cos(lat1) * Math.sin(lat2)
+        - Math.sin(lat1) * Math.cos(lat2) * Math.cos(deltaLng)
+      const angle = Math.atan2(x, y)
+
+      // atan2(x, y) is ±π radians clockwise from +ve y axis
+
+      return (deg(angle) + 360) % 360;
+    }
+
+    // Return {lat=N, lng=E} of a point on bearing from the origin
+
+    function pointOn(origin, bearing) {
+      const bearingRad = rad(bearing);
+
+      const lat1 = rad(origin.lat), lng1 = rad(origin.lng);
+      const m = 2000;               // Metres from origin
+      const dist = 157E-9 * m;      // Angular distance from origin
+      const latDest = Math.asin(Math.sin(lat1) * Math.cos(dist)
+        + Math.cos(lat1) * Math.sin(dist) * Math.cos(bearingRad));
+      const lngDest = lng1 + Math.atan2(Math.sin(bearingRad) * Math.sin(dist) * Math.cos(lat1),
+        Math.cos(dist) - Math.sin(lat1) * Math.sin(latDest));
+      const lat = deg(latDest), lng = deg(lngDest);
+
+      return { lat, lng };
+    }
+
+    // Return the bearing that bisects the two consecutive
+    // bearings with the greatest difference and the middle
+    // bearing of the three with the smallest difference
+
+    function splitDiff(bearings) {
+      bearings.sort((a, b) => a - b);
+      const n = bearings.length;
+      // Rotate first two by 360 degrees and append
+      [0, 1].forEach(i => bearings.push(bearings[i] + 360));
+      let maxDiff = 0, midMax;
+      let minDiff = 9E9, midMin;
+      bearings.forEach((b, i) => {
+        if (i >= n) return;
+		const after = bearings[i + 1]
+		const after2 = bearings[i + 2]
+        const dAfter = after - b;
+        const dAfter2 = after2 - b;
+        if (dAfter > maxDiff) { maxDiff = dAfter; midMax = b; }
+        if (dAfter2 < minDiff) { minDiff = dAfter2; midMin = after; }
+      });
+      midMin = midMin % 360;
+      console.log(`Min diff ${dp(minDiff)} @ ${dp(midMin)}`);
+      midMax += 0.5 * maxDiff;    // Split the biggest difference
+      console.log(`Max diff ${dp(maxDiff)} @ ${dp(midMax)}`);
+
+      return { midMin, midMax };
+    }
+
+    function ymd() { return (new Date).toISOString().slice(0, 10) }
+
+    function element(tag, attributes, ...content) {
+	  const el = document.createElement(tag);
+	  Object.keys(attributes)
+		.forEach(n => el.setAttribute(n, attributes[n]));
+	  content.forEach(c => {
+		if (typeof c === 'string') c = document.createTextNode(c);
+		el.appendChild(c);
+	  });
+	  return el;
+	}
+
+    function rad(d) { return d * Math.PI / 180 }
+    function deg(r) { return r * 180 / Math.PI }
+    function dp(n) {
+      return n.toLocaleString(undefined,
+        { minimumFractionDigits: 5, maximumFractionDigits: 5, minimumIntegerDigits: 3 })
+    }
+
+  </script>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5kT5488ytqIeJUPg6MJgE_NejzGvELRA&libraries=places&callback=initMap"
+    async defer></script>
+</body>
+
+</html>

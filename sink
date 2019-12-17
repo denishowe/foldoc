@@ -1,0 +1,6 @@
+cd ~/Projects/FOLDOC/scaleway
+export UNISON=.
+u='/Users/howed/Applications/Unison.app/Contents/MacOS/unison -ui text -sshcmd=ssh foldoc'
+$u -batch
+ssh denis@foldoc make --directory=/var/www/foldoc.org
+$u -batch || $u
