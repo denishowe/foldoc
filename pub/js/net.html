@@ -30,7 +30,7 @@ const config = {
 	pulseStep: 0.02,
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddLink: Math.random(),                 // 0.05
-	nodePositionNoise: 0.1 * rand(0, 3),
+	nodePositionNoise: 0.2 * rand(0, 1),
 }
 
 const TWO_PI = 2 * Math.PI;
@@ -516,7 +516,8 @@ class Colour {
 	}
 
 	changeColour(newColour) {
-		const cpts = Colour.map(cpt => 0.5 * (this[cpt] + newColour[cpt]));
+		const fracNew = 0.1;
+		const cpts = Colour.map(cpt => (1-fracNew) * (this[cpt] + fracNew * newColour[cpt]));
 
 		return new Colour(cpts);
 	}
