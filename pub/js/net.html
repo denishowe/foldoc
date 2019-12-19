@@ -22,14 +22,12 @@
 const config = {
 	nodesPerRow: rand(20, 50),
 	numColours: rand(1, 20),
-	nodeRadius: 0.05 * rand(8, 12),							// In colWidths
+	nodeRadius: 0.1 * rand(2, 5),					// In colWidths
 	pulseRadiusFrac: 0.1 * rand(4, 7),
-	maxPulses: Number.POSITIVE_INFINITY,
-	addPulseMaxCount: Number.POSITIVE_INFINITY, // Add periodically if < this
-	loopDelay: 20,														  // 10-50
-	pulseStep: 0.02,
+	loopDelay: 20,												// 10-50
+	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
-	probAddLink: Math.random(),                 // 0.05
+	probAddLink: 0.02,
 	nodePositionNoise: 0.2 * rand(0, 1),
 }
 
@@ -184,7 +182,6 @@ class Node extends Disc {
 	}
 
 	static step() {
-		if (Pulse.count() >= config.addPulseMaxCount) return;
 		const node = Node.occupied().any();
 		node.maybeAddLink();
 		node.addPulses();
@@ -393,7 +390,9 @@ class Pulse extends Disc {
 		Pulse.ctx = getContext("pulse");
 		Pulse.radius = Math.floor(config.pulseRadiusFrac * Node.radius);
 		// Initial fraction of distance between centres
-		Pulse.margin = 0.5 * (Node.radius - Pulse.radius) / Grid.colWidth;
+		const { colWidth } = Grid;
+		Pulse.margin = 0.5 * (Node.radius - Pulse.radius) / colWidth;
+		Pulse.fracStep = config.pulseStep / colWidth;
 		Pulse.all = [];
 	}
 
@@ -427,7 +426,7 @@ class Pulse extends Disc {
 		const { x, y } = from;
 		this.x = x + frac * (to.x - x);
 		this.y = y + frac * (to.y - y);
-		this.frac += config.pulseStep;
+		this.frac += Pulse.fracStep;
 		this.draw();
 	}
 
@@ -438,7 +437,7 @@ class Pulse extends Disc {
 
 	draw() {
 		this.colour.setColour(this.ctx);
-		this.setRadialGradient();
+		// this.setRadialGradient();
 		this.circle();
 	}
 
