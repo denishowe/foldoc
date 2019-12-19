@@ -40,6 +40,8 @@ class Clearable {
 		const { canvas: { height, width } } = ctx;
 		ctx.clearRect(0, 0, width, height);
 	}
+
+	setStyles() { this.colour.setStyles(this.ctx) }
 }
 
 
@@ -316,7 +318,7 @@ class Node extends Disc {
 	}
 
 	draw() {
-		this.colour.setColour(this.ctx);
+		this.setStyles();
 		this.circle();
 		this.links.forEach(link => link.draw());
 	}
@@ -366,7 +368,7 @@ class Link extends Clearable {
 
 	draw(extraWidth) {
 		const { ctx, from, to } = this;
-		this.colour.setColour(ctx);
+		this.setStyles();
 		ctx.lineWidth = 2 + (extraWidth || 0);
 		ctx.beginPath();
 		ctx.moveTo(from.x, from.y);
@@ -378,7 +380,7 @@ class Link extends Clearable {
 	erase() {
 		const { ctx } = this;
 		ctx.globalCompositeOperation = "destination-out";
-		this.draw(3);
+		this.draw(2);
     ctx.globalCompositeOperation = "source-over";
 	}
 }
@@ -437,8 +439,8 @@ class Pulse extends Disc {
 	}
 
 	draw() {
-		this.colour.setColour(this.ctx);
-		// this.setRadialGradient();
+		this.setStyles();
+		this.setRadialGradient();
 		this.circle();
 	}
 
@@ -465,23 +467,27 @@ class Colour {
 
 	static init() {
 		const { numColours } = config;
-		this.hueOffset = Math.random();
 		this.palette = this.makePalette(numColours);
-		this.white = "white";
+		this.white = new Colour([255, 255, 255]);
 		this.transparent = "rgba(0,0,0,0)";
 	}
 
 	// Create a palette of numColours equally spaced hues
 
 	static makePalette(numColours) {
+		const hueOffset = Math.random();
 		return zeroTo(numColours)
-			.map(i => new Colour(this.hueRGB(i / numColours)));
+			.map(i => {
+				const hue = i / numColours + hueOffset;
+				const cpts = this.hueRGB(hue);
+				return new Colour(cpts);
+			});
 	}
 
 	// Return [r, g, b] for hue in 0..1 and maximum saturation and luminance
 
 	static hueRGB(hue) {
-		const h = (6 * hue + Colour.hueOffset) % 6;		// n equally spaced hues in [0..6)
+		const h = (6 * hue) % 6;	// n equally spaced hues in [0..6)
 		const x = h % 1;				// x = 0 .. 1
 		const y = 1 - x;				// y = 1 .. 0
 		const c = [							// r, g, b in 0..1
@@ -493,24 +499,24 @@ class Colour {
 			{r: 1, g: 0, b: y}		// magenta .. red
 		][Math.floor(h)];
 
-		return Colour.map(cpt => Math.floor(256 * c[cpt]));
+		return Colour.map(cpt => 255.999999 * c[cpt]);
 	}
 
 	static map(f) { return ["r", "g", "b"].map(f) }
 
 	static random() { return this.palette.any() }
 
-	// Set the new Colour's components and
-	// "rgb(R,G,B)" string, given [r, g, b] in 0..255
+	// Set the new Colour's components and "rgb(R,G,B)"
+	// string, given [r, g, b] where 0 <= r < 256, etc.
 
 	constructor(cpts) {
 		if (!cpts) return;
 		Colour.map((cpt, i) => this[cpt] = cpts[i]);
-		const s = cpts.join(",");
+		const s = cpts.map(cpt => Math.floor(cpt)).join(",");
 		this.rgb = `rgb(${ s })`;
 	}
 
-	setColour(ctx) {
+	setStyles(ctx) {
 		const { rgb } = this;
 		ctx.fillStyle = rgb;
 		ctx.strokeStyle = rgb;
@@ -519,7 +525,7 @@ class Colour {
 	changeColour(newColour) {
 		const fracNew = 0.1;
 		const f = p(0.005) ? (cpt => rand(0, 255)) :
-			(cpt => (1-fracNew) * (this[cpt] + fracNew * newColour[cpt]));
+			(cpt => (1-fracNew) * this[cpt] + fracNew * newColour[cpt]);
 		const cpts = Colour.map(f);
 
 		return new Colour(cpts);
