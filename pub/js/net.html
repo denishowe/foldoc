@@ -22,7 +22,7 @@
 const config = {
 	nodesPerRow: rand(20, 50),
 	numColours: rand(1, 20),
-	nodeRadius: 0.1 * rand(2, 5),					// In colWidths
+	nodeRadius: 0.1 * rand(3, 5),					// In colWidths
 	pulseRadiusFrac: 0.1 * rand(4, 7),
 	loopDelay: 20,												// 10-50
 	pulseStep: 0.5,												// Pixels
@@ -235,7 +235,8 @@ class Node extends Disc {
 	}
 
 	maybeAddLink() {
-		if (p(config.probAddLink)) this.addLink();
+		if (Pulse.count() < 10 || p(config.probAddLink))
+			this.addLink();
 	}
 
 	addLink() {
@@ -499,7 +500,8 @@ class Colour {
 
 	static random() { return this.palette.any() }
 
-	// Set the new Colour's components and "rgb(R,G,B)" string if given [r, g, b]
+	// Set the new Colour's components and
+	// "rgb(R,G,B)" string, given [r, g, b] in 0..255
 
 	constructor(cpts) {
 		if (!cpts) return;
@@ -516,7 +518,9 @@ class Colour {
 
 	changeColour(newColour) {
 		const fracNew = 0.1;
-		const cpts = Colour.map(cpt => (1-fracNew) * (this[cpt] + fracNew * newColour[cpt]));
+		const f = p(0.005) ? (cpt => rand(0, 255)) :
+			(cpt => (1-fracNew) * (this[cpt] + fracNew * newColour[cpt]));
+		const cpts = Colour.map(f);
 
 		return new Colour(cpts);
 	}
