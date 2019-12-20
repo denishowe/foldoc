@@ -24,11 +24,10 @@ const config = {
 	numColours: rand(1, 20),
 	nodeRadius: 0.1 * rand(3, 5),					// In colWidths
 	pulseRadiusFrac: 0.1 * rand(4, 7),
-	loopDelay: 20,												// 10-50
+	loopDelay: 0,													// 10-50
 	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddLink: 0.02,
-	nodePositionNoise: 0.2 * rand(0, 1),
 }
 
 const TWO_PI = 2 * Math.PI;
@@ -141,15 +140,15 @@ class Node extends Disc {
 		this.radius = Math.floor(config.nodeRadius * colWidth);
 		this.ctx = ctx;
 		this.all = [];
+		this.nextRun = now() + 100;
 
 		// Store Nodes in array indexed by row and column.
 		// Column is even in even rows and odd in odd rows.
 
 		const rows = [];
 		Grid.map((rowI, colI) => {
-			const j = config.nodePositionNoise * colWidth;
-			const x = Grid.x + (colI + 1) * colWidth + rand(-j, j);	// Centre node in cell
-			const y = Grid.y + (rowI + 0.5) * rowHeight + rand(-j, j);
+			const x = Grid.x + (colI + 1) * colWidth;	// Centre node in cell
+			const y = Grid.y + (rowI + 0.5) * rowHeight;
 			const node = new Node(x, y);
 			Node.all.push(node);
 			rows[rowI] = rows[rowI] || [];
@@ -180,7 +179,15 @@ class Node extends Disc {
 	static loop() {
 		this.step();
 		Pulse.step();
-		this.timeout = setTimeout(() => this.loop(), config.loopDelay);
+		this.nextRun += config.loopDelay;
+		const t = now();
+		if (this.nextRun < t) {
+			this.nextRun = t;
+			config.loopDelay++;
+		}
+		const delay = this.nextRun - t;
+		// console.log('delay', delay, '/', config.loopDelay);
+		this.timeout = setTimeout(() => this.loop(), delay);
 	}
 
 	static step() {
@@ -622,6 +629,10 @@ function rand(min, max, pow) {
 // Return x rounded to the nearest multiple of m
 
 function quant(x, m) { return Math.floor(x / m + 0.5) * m }
+
+// Current time in ms since epoch
+
+function now() { return (new Date).getTime() }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
