@@ -24,7 +24,7 @@ const config = {
 	numColours: rand(1, 20),
 	nodeRadius: 0.1 * rand(3, 5),					// In colWidths
 	pulseRadiusFrac: 0.1 * rand(4, 7),
-	loopDelay: 0,													// 10-50
+	loopDelay: 20,												// 10-50
 	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddLink: 0.02,
@@ -242,12 +242,10 @@ class Node extends Disc {
 
 	makeSeed() {
 		this.colour = Colour.reallyRandom();
-		this.addLinkAll();
+		// Add and link to neighbours but don't surround myself
+		while (this.occupiedNeighbours().length < 5
+					 && this.addLink()) ;
 	}
-
-	// Return true if all neighbours are occupied
-
-	surrounded() { return this.neighbours.every(neigh => neigh.occupied) }
 
 	// Return a measure for the number of outbound links that
 	// increases from 0 for less than 2 links up to 1 for 5 or 6
@@ -260,12 +258,10 @@ class Node extends Disc {
 	}
 
 	maybeAddLink() {
-		if (Pulse.count() < 10 || this.links.length < 2 || p(config.probAddLink))
-			this.addLink();
-	}
-
-	addLinkAll() {
-		while (this.addLink()) ;
+		const fewPulses = Pulse.count() < 1;
+		const fewLinks = this.links.length < 1;
+		const prob = config.probAddLink * (fewLinks || fewPulses ? 5 : 1);
+		if (p(prob)) this.addLink();
 	}
 
 	// Link to an unlinked neighbour and return true, else false if none
@@ -279,9 +275,18 @@ class Node extends Disc {
 		return true;
 	}
 
-	occupyNeighbour(neigh) {
-		neigh.occupy(this.colour);
+	// Return true if all neighbours are occupied
+
+	surrounded() {
+		const ns = this.neighbours;
+		const oc = this.occupiedNeighbours();
+
+		return oc.length == ns.length;
 	}
+
+	occupiedNeighbours() { return this.neighbours.filter(neigh => neigh.occupied) }
+
+	occupyNeighbour(neigh) { neigh.occupy(this.colour) }
 
 	addLinkTo(neigh) { this.links.push(new Link(this, neigh)) }
 
