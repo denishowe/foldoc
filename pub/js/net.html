@@ -172,22 +172,29 @@ class Node extends Disc {
 	static occupied() { return Node.all.filter(node => node.occupied) }
 
 	static start() {
-		if (config.probNodeOccupied === 0) this.all.any().occupy();
+		this.all.any().occupy();
 		this.loop();
 	}
 
 	static loop() {
 		this.step();
 		Pulse.step();
+		this.timeout = setTimeout(() => this.loop(), this.delay());
+	}
+
+	static delay() {
 		this.nextRun += config.loopDelay;
 		const t = now();
 		if (this.nextRun < t) {
 			this.nextRun = t;
 			config.loopDelay++;
+		} else if (this.nextRun > t + 2) {
+			config.loopDelay -= 0.01;
 		}
-		const delay = this.nextRun - t;
-		// console.log('delay', delay, '/', config.loopDelay);
-		this.timeout = setTimeout(() => this.loop(), delay);
+		const delay = Math.floor(this.nextRun - t);
+		// console.clear();
+		// console.log('delay', delay, '/', Math.floor(config.loopDelay + 0.5));
+		return delay;
 	}
 
 	static step() {
@@ -211,22 +218,31 @@ class Node extends Disc {
 
 	// Ensure node is occupied
 
-	occupy(from) {
+	occupy(colour) {
 		if (this.occupied) return;
 		this.occupied = true;
 		this.ctx = Node.ctx;
 		this.radius = Node.radius;
-		this.colour = from ? from.colour : Colour.random();
+		this.colour = colour || Colour.random();
 		this.links = [];
 		this.draw();
 	}
 
 	pulseIn(from) {
 		if (this.surrounded()) { this.die(); return }
-		this.changeColour(from.colour);
-		this.maybeRemoveLink();
-		this.maybeAddLink();
+		if (p(0.001)) {
+			this.makeSeed();
+		} else {
+			this.changeColour(from.colour);
+			this.maybeAddLink();
+		}
 		this.addPulses();
+		this.draw();
+	}
+
+	makeSeed() {
+		this.colour = Colour.reallyRandom();
+		this.addLinkAll();
 	}
 
 	// Return true if all neighbours are occupied
@@ -244,20 +260,27 @@ class Node extends Disc {
 	}
 
 	maybeAddLink() {
-		if (Pulse.count() < 10 || p(config.probAddLink))
+		if (Pulse.count() < 10 || this.links.length < 2 || p(config.probAddLink))
 			this.addLink();
 	}
 
+	addLinkAll() {
+		while (this.addLink()) ;
+	}
+
+	// Link to an unlinked neighbour and return true, else false if none
+
 	addLink() {
 		const unlinked = this.linkableNeighbours();
-		if (unlinked.length === 0) return;
+		if (unlinked.length === 0) return false;
 		const neigh = unlinked.any();
 		this.occupyNeighbour(neigh);
 		this.addLinkTo(neigh);
+		return true;
 	}
 
 	occupyNeighbour(neigh) {
-		neigh.occupy(this);
+		neigh.occupy(this.colour);
 	}
 
 	addLinkTo(neigh) { this.links.push(new Link(this, neigh)) }
@@ -281,7 +304,8 @@ class Node extends Disc {
 	// Return occupied or unoccupied neighbours that are not linked to or from this node
 
 	linkableNeighbours() {
-		return this.neighbours.filter(neigh => ! neigh.getLinkToOrFrom(this));
+		return this.neighbours
+			.filter(neigh => ! neigh.getLinkToOrFrom(this));
 	}
 
 	incomingLinks() {
@@ -309,6 +333,11 @@ class Node extends Disc {
 		const links = this.links || [];
 
 		return links.filter(link => link.to === to)[0];
+	}
+
+	removeIncomingLinks() {
+		this.incomingLinks()
+			.forEach(link => link.die());
 	}
 
 	stopLinks() {
@@ -447,7 +476,7 @@ class Pulse extends Disc {
 
 	draw() {
 		this.setStyles();
-		this.setRadialGradient();
+		// this.setRadialGradient();
 		this.circle();
 	}
 
@@ -513,6 +542,12 @@ class Colour {
 
 	static random() { return this.palette.any() }
 
+	static reallyRandom() {
+		const cpts = Colour.map(cpt => rand(0, 255));
+
+		return new Colour(cpts);
+	}
+
 	// Set the new Colour's components and "rgb(R,G,B)"
 	// string, given [r, g, b] where 0 <= r < 256, etc.
 
@@ -531,8 +566,7 @@ class Colour {
 
 	changeColour(newColour) {
 		const fracNew = 0.1;
-		const f = p(0.005) ? (cpt => rand(0, 255)) :
-			(cpt => (1-fracNew) * this[cpt] + fracNew * newColour[cpt]);
+		const f = cpt => (1-fracNew) * this[cpt] + fracNew * newColour[cpt];
 		const cpts = Colour.map(f);
 
 		return new Colour(cpts);
