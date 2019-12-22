@@ -24,10 +24,11 @@ const config = {
 	numColours: rand(1, 20),
 	nodeRadius: 0.1 * rand(3, 5),					// In colWidths
 	pulseRadiusFrac: 0.1 * rand(4, 7),
-	loopDelay: 20,												// 10-50
+	minLoopDelay: 15,											// 10-50
 	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddLink: 0.02,
+	pulseCountMin: 3,
 }
 
 const TWO_PI = 2 * Math.PI;
@@ -122,10 +123,10 @@ class Grid extends Clearable {
 // Drawing with destination-out doesn't remove everything so add some extra
 
 class Disc extends Clearable {
-	circle(extra) {
+	circle(radiusMultiplier) {
 		const { ctx, radius, x, y } = this;
 		ctx.beginPath();
-		ctx.arc(x, y, radius + (extra || 0), 0, TWO_PI);
+		ctx.arc(x, y, radius * (radiusMultiplier || 1), 0, TWO_PI);
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -140,6 +141,7 @@ class Node extends Disc {
 		this.radius = Math.floor(config.nodeRadius * colWidth);
 		this.ctx = ctx;
 		this.all = [];
+		this.loopDelay = config.minLoopDelay;
 		this.nextRun = now() + 100;
 
 		// Store Nodes in array indexed by row and column.
@@ -183,24 +185,28 @@ class Node extends Disc {
 	}
 
 	static delay() {
-		this.nextRun += config.loopDelay;
+		this.nextRun += this.loopDelay;
 		const t = now();
 		if (this.nextRun < t) {
 			this.nextRun = t;
-			config.loopDelay++;
-		} else if (this.nextRun > t + 2) {
-			config.loopDelay -= 0.01;
+			if (this.loopDelay < 50) this.loopDelay++;
+		} else if (this.nextRun > t + 2 && this.loopDelay > config.minLoopDelay) {
+			this.loopDelay -= 0.1;
 		}
 		const delay = Math.floor(this.nextRun - t);
-		// console.clear();
-		// console.log('delay', delay, '/', Math.floor(config.loopDelay + 0.5));
+		// console.log('delay', delay, '/', Math.floor(this.loopDelay + 0.5));
 		return delay;
 	}
 
 	static step() {
-		const node = Node.occupied().any();
-		node.maybeAddLink();
-		node.addPulses();
+		if (Pulse.count() < config.pulseCountMin)
+			this.all.any().wake();
+	}
+
+	wake() {
+		this.occupy();
+		this.addLink();
+		this.addPulses();
 	}
 
 	static stop() {
@@ -229,38 +235,29 @@ class Node extends Disc {
 	}
 
 	pulseIn(from) {
-		if (this.surrounded()) { this.die(); return }
+		if (this.boring()) { this.die(); return }
 		if (p(0.001)) {
 			this.makeSeed();
 		} else {
 			this.changeColour(from.colour);
+			this.maybeRemoveLink();
 			this.maybeAddLink();
 		}
 		this.addPulses();
 		this.draw();
 	}
 
+	boring() { return this.colour.colourless() }
+
 	makeSeed() {
 		this.colour = Colour.reallyRandom();
-		// Add and link to neighbours but don't surround myself
-		while (this.occupiedNeighbours().length < 5
-					 && this.addLink()) ;
-	}
-
-	// Return a measure for the number of outbound links that
-	// increases from 0 for less than 2 links up to 1 for 5 or 6
-
-	linkFullness() {
-		const { links } = this;
-		const len = links ? links.length : 0;
-
-		return len < 2 ? 0 : (len - 1) / 4;
+		while (this.addLink()) ;						// Add and link to neighbours
 	}
 
 	maybeAddLink() {
-		const fewPulses = Pulse.count() < 1;
-		const fewLinks = this.links.length < 1;
-		const prob = config.probAddLink * (fewLinks || fewPulses ? 5 : 1);
+		const fewPulses = Pulse.count() < config.pulseCountMin;
+		const fewLinks = this.links.length < 2;
+		const prob = config.probAddLink * (fewLinks || fewPulses ? 2 : 1);
 		if (p(prob)) this.addLink();
 	}
 
@@ -290,8 +287,17 @@ class Node extends Disc {
 
 	addLinkTo(neigh) { this.links.push(new Link(this, neigh)) }
 
+	// Return 0 for < 2 outbound links increasing up to 1 for > 4
+
+	linkFullness() {
+		const { links } = this;
+		const len = links ? links.length : 0;
+
+		return len < 2 ? 0 : (len - 1) / 4;
+	}
+
 	maybeRemoveLink() {
-		if (p(0.5 * this.linkFullness()))
+		if (p(this.linkFullness()))
 			this.links.any().die();
 	}
 
@@ -300,8 +306,8 @@ class Node extends Disc {
 	addPulses() { this.links.forEach(link => link.setPulse()) }
 
 	die() {
-		this.links.forEach(link => link.die());
-		this.incomingLinks().forEach(link => link.die());
+		[...this.links, ...this.incomingLinks()]
+			.forEach(link => link.die());
 		this.occupied = false;
 		this.erase();
 	}
@@ -367,7 +373,7 @@ class Node extends Disc {
 	erase() {
 		const { ctx } = this;
 		ctx.globalCompositeOperation = "destination-out";
-		this.circle(1);
+		this.circle(1.1);
     ctx.globalCompositeOperation = "source-over";
 	}
 }
@@ -432,7 +438,7 @@ class Link extends Clearable {
 class Pulse extends Disc {
 	static init() {
 		Pulse.ctx = getContext("pulse");
-		Pulse.radius = Math.floor(config.pulseRadiusFrac * Node.radius);
+		Pulse.radius = Math.min(Math.floor(config.pulseRadiusFrac * Node.radius), 5);
 		// Initial fraction of distance between centres
 		const { colWidth } = Grid;
 		Pulse.margin = 0.5 * (Node.radius - Pulse.radius) / colWidth;
@@ -481,27 +487,17 @@ class Pulse extends Disc {
 
 	draw() {
 		this.setStyles();
-		// this.setRadialGradient();
-		this.circle();
-	}
-
-	setRadialGradient() {
-		const { ctx, frac, radius, x, y } = this;
-		if (radius < 5) return;
-		const fs = ctx.fillStyle;
-		const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
-		g.addColorStop(0, fs);
-		const a = 0.8 + 0.2 * Math.sin(30 * frac);
-		g.addColorStop(a, fs);
-		g.addColorStop(1, Colour.transparent);
-		ctx.fillStyle = g;
+		const k = 1 / this.radius;
+		this.circle(1 - k + k * Math.sin(20 * this.frac));
 	}
 }
 
 
 // Colour //////////////////////////////////////////////////////////////////////////////////////////
 
-// A Colour has r, g, b = ints 0..255 and rgb = "rgb(R,G,B)"
+// A Colour has:
+// - vec = [R, G, B] containing ints 0..255
+// - string = "rgb(R,G,B)"
 
 class Colour {
 	// Fill the palette with n equally spaced hues as rgb() strings
@@ -518,63 +514,73 @@ class Colour {
 	static makePalette(numColours) {
 		const hueOffset = Math.random();
 		return zeroTo(numColours)
-			.map(i => {
-				const hue = i / numColours + hueOffset;
-				const cpts = this.hueRGB(hue);
-				return new Colour(cpts);
-			});
+			.map(i => Colour.fromHue(hueOffset + i / numColours));
 	}
 
-	// Return [r, g, b] for hue in 0..1 and maximum saturation and luminance
+	// Return a new Colour with hue in 0..1 and maximum saturation and luminance
 
-	static hueRGB(hue) {
+	static fromHue(hue) {
 		const h = (6 * hue) % 6;	// n equally spaced hues in [0..6)
-		const x = h % 1;				// x = 0 .. 1
-		const y = 1 - x;				// y = 1 .. 0
-		const c = [							// r, g, b in 0..1
-			{r: 1, g: x, b: 0},		// red	   .. yellow
-			{r: y, g: 1, b: 0},		// yellow  .. green
-			{r: 0, g: 1, b: x},		// green   .. cyan
-			{r: 0, g: y, b: 1},		// cyan	   .. blue
-			{r: x, g: 0, b: 1},		// blue	   .. magenta
-			{r: 1, g: 0, b: y}		// magenta .. red
+		const x = h % 1;					// x = 0 .. 1
+		const y = 1 - x;					// y = 1 .. 0
+		const c = [								// [R, G, B] in 0..1
+			[1, x, 0],							// red	   .. yellow
+			[y, 1, 0],							// yellow  .. green
+			[0, 1, x],							// green   .. cyan
+			[0, y, 1],							// cyan	   .. blue
+			[x, 0, 1],							// blue	   .. magenta
+			[1, 0, y]								// magenta .. red
 		][Math.floor(h)];
+		const vec = c.map(cpt => 255.999999 * cpt); // -> [R, G, B] in 0..255
 
-		return Colour.map(cpt => 255.999999 * c[cpt]);
+		return new Colour(vec);
 	}
 
-	static map(f) { return ["r", "g", "b"].map(f) }
+	static map(f) { return nResults(3, f) }
 
 	static random() { return this.palette.any() }
 
 	static reallyRandom() {
-		const cpts = Colour.map(cpt => rand(0, 255));
+		const vec = Colour.map(i => rand(0, 255));
 
-		return new Colour(cpts);
+		return new Colour(vec);
 	}
 
-	// Set the new Colour's components and "rgb(R,G,B)"
-	// string, given [r, g, b] where 0 <= r < 256, etc.
+	// Store the given [R, G, B], where 0 <= R < 256, etc.,
+	// as the new Colour's vec and "rgb(R,G,B)" string.
 
-	constructor(cpts) {
-		if (!cpts) return;
-		Colour.map((cpt, i) => this[cpt] = cpts[i]);
-		const s = cpts.map(cpt => Math.floor(cpt)).join(",");
-		this.rgb = `rgb(${ s })`;
+	constructor(vec) {
+		this.vec = vec;
+		const s = vec.map(cpt => Math.floor(cpt)).join(",");
+		this.string = `rgb(${ s })`;
 	}
+
+	// L in 0..1 = (max(RGB) + min(RGB)) / 2; where R, G, B in 0..255
+
+	luminosity() { return (this.vec.min() + this.vec.max()) / (2*256) }
+
+	// S in 0..1 = L == 1 ? 0 : (max(RGB) — min(RGB)) / (1 — |2L - 1|)
+	// where R, G, B in 0..255; L in 0..1
+
+	saturation() {
+		const desat = 1 - Math.abs(2 * this.luminosity() - 1);
+
+		return desat == 0 ? 0 : (this.vec.max() - this.vec.min()) / (256 * desat);
+	}
+
+	colourless() { return this.saturation() < 0.2 }
 
 	setStyles(ctx) {
-		const { rgb } = this;
-		ctx.fillStyle = rgb;
-		ctx.strokeStyle = rgb;
+		const { string } = this;
+		ctx.fillStyle = string;
+		ctx.strokeStyle = string;
 	}
 
 	changeColour(newColour) {
 		const fracNew = 0.1;
-		const f = cpt => (1-fracNew) * this[cpt] + fracNew * newColour[cpt];
-		const cpts = Colour.map(f);
+		const vec = Colour.map(i => (1-fracNew) * this.vec[i] + fracNew  * newColour.vec[i]);
 
-		return new Colour(cpts);
+		return new Colour(vec);
 	}
 }
 
@@ -586,6 +592,9 @@ Array.prototype.any = function () {
 
 	return this[i];
 }
+
+Array.prototype.min = function() { return Math.min.apply(null, this) }
+Array.prototype.max = function() { return Math.max.apply(null, this) }
 
 Array.prototype.shuffle = function () {
 	return this.sort(() => Math.random() < 0.5);
@@ -651,7 +660,7 @@ function zeroTo(n) { return n < 1 ? [] : [...Array(n).keys()] }
 
 // Return the results of calling f(i) for i = 0 .. n-1
 
-function nResults(n, f) { zeroTo(n).map(f) }
+function nResults(n, f) { return zeroTo(n).map(f) }
 
 // Return true with probability x
 
