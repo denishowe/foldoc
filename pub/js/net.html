@@ -214,11 +214,12 @@ class Node extends Disc {
 		if (p(config.probNodeOccupied)) this.occupy();
 	}
 
-	magic() {
-		if (this.occupied) {
-			if (p(0.1)) this.die();
-			return;
-		}
+	magic() { if (this.occupied) { this.maybeDie() } else { this.maybeOccupy() } }
+
+	maybeDie() { if (p(0.05)) this.die() }
+
+	maybeOccupy() {
+		if (p(0.9)) return;
 		this.occupy();
 		this.addLink();
 		this.addPulses();
