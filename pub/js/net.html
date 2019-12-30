@@ -434,7 +434,7 @@ class Pulse extends Disc {
 		this.ctx = Pulse.ctx;
 		this.radius = Pulse.radius;
 		this.link = link;
-		this.frac = Pulse.margin * Math.random(); // Break step
+		this.frac = Pulse.margin * (3 * Math.random() - 1); // Break step
 		this.colour = link.colour;
 		Pulse.all.push(this);
 	}
