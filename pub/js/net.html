@@ -24,10 +24,10 @@ const config = {
 	numColours: rand(1, 20),
 	nodeRadius: 0.1 * rand(3, 5),					// In colWidths
 	pulseRadiusFrac: 0.1 * rand(4, 7),
-	minLoopDelay: 15,											// 10-50
+	minLoopDelay: 0,											// 10-50
 	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
-	probAddLink: 0.02,
+	probAddLink: 0.05,
 	pulseCountMin: 3,
 }
 
@@ -189,7 +189,8 @@ class Node extends Disc {
 		const t = now();
 		if (this.nextRun < t) {
 			this.nextRun = t;
-			if (this.loopDelay < 50) this.loopDelay++;
+			if (this.loopDelay < 50)
+				this.loopDelay++;
 		} else if (this.nextRun > t + 2 && this.loopDelay > config.minLoopDelay) {
 			this.loopDelay -= 0.1;
 		}
@@ -198,16 +199,7 @@ class Node extends Disc {
 		return delay;
 	}
 
-	static step() {
-		if (Pulse.count() < config.pulseCountMin)
-			this.all.any().wake();
-	}
-
-	wake() {
-		this.occupy();
-		this.addLink();
-		this.addPulses();
-	}
+	static step() { this.all.any().magic() }
 
 	static stop() {
 		clearTimeout(this.timeout);
@@ -222,6 +214,24 @@ class Node extends Disc {
 		if (p(config.probNodeOccupied)) this.occupy();
 	}
 
+	magic() {
+		if (this.occupied) {
+			if (p(0.1)) this.die();
+			return;
+		}
+		this.occupy();
+		this.addLink();
+		this.addPulses();
+	}
+
+	pulseIn(from) {
+		this.changeColour(from.colour);
+		this.maybeRemoveLink();
+		this.maybeAddLink();
+		this.addPulses();
+		this.draw();
+	}
+
 	// Ensure node is occupied
 
 	occupy(colour) {
@@ -234,40 +244,22 @@ class Node extends Disc {
 		this.draw();
 	}
 
-	pulseIn(from) {
-		if (this.boring()) { this.die(); return }
-		if (p(0.001)) {
-			this.makeSeed();
-		} else {
-			this.changeColour(from.colour);
-			this.maybeRemoveLink();
-			this.maybeAddLink();
-		}
-		this.addPulses();
-		this.draw();
-	}
-
-	boring() { return this.colour.colourless() }
-
-	makeSeed() {
-		this.colour = Colour.reallyRandom();
-		while (this.addLink()) ;						// Add and link to neighbours
-	}
+	boring() { return this.colour.boring() }
 
 	maybeAddLink() {
 		const fewPulses = Pulse.count() < config.pulseCountMin;
-		const fewLinks = this.links.length < 2;
-		const prob = config.probAddLink * (fewLinks || fewPulses ? 2 : 1);
+		const fewLinks = this.links.length < 1;
+		const prob = fewLinks || fewPulses ? 0.2 : config.probAddLink;
 		if (p(prob)) this.addLink();
 	}
 
-	// Link to an unlinked neighbour and return true, else false if none
+	// Return false if no unlinked neighbour else link to one and return true
 
 	addLink() {
 		const unlinked = this.linkableNeighbours();
 		if (unlinked.length === 0) return false;
 		const neigh = unlinked.any();
-		this.occupyNeighbour(neigh);
+		neigh.occupy(this.colour);
 		this.addLinkTo(neigh);
 		return true;
 	}
@@ -283,22 +275,12 @@ class Node extends Disc {
 
 	occupiedNeighbours() { return this.neighbours.filter(neigh => neigh.occupied) }
 
-	occupyNeighbour(neigh) { neigh.occupy(this.colour) }
-
 	addLinkTo(neigh) { this.links.push(new Link(this, neigh)) }
 
-	// Return 0 for < 2 outbound links increasing up to 1 for > 4
-
-	linkFullness() {
-		const { links } = this;
-		const len = links ? links.length : 0;
-
-		return len < 2 ? 0 : (len - 1) / 4;
-	}
-
 	maybeRemoveLink() {
-		if (p(this.linkFullness()))
-			this.links.any().die();
+		const { links } = this;
+		if (links.length < 3 || p(0.5)) return;
+		links.any().die();
 	}
 
 	findLinkTo(node) { return this.links.find(link => link.to === node) }
@@ -451,7 +433,7 @@ class Pulse extends Disc {
 		this.ctx = Pulse.ctx;
 		this.radius = Pulse.radius;
 		this.link = link;
-		this.frac = Pulse.margin;
+		this.frac = Pulse.margin * Math.random(); // Break step
 		this.colour = link.colour;
 		Pulse.all.push(this);
 	}
@@ -540,18 +522,16 @@ class Colour {
 
 	static random() { return this.palette.any() }
 
-	static reallyRandom() {
-		const vec = Colour.map(i => rand(0, 255));
-
-		return new Colour(vec);
-	}
+	static reallyRandom() { return new Colour(i => rand(0, 255)) }
 
 	// Store the given [R, G, B], where 0 <= R < 256, etc.,
 	// as the new Colour's vec and "rgb(R,G,B)" string.
 
-	constructor(vec) {
-		this.vec = vec;
-		const s = vec.map(cpt => Math.floor(cpt)).join(",");
+	constructor(vecOrFun) {
+		if (typeof vecOrFun == 'function')
+			vecOrFun = Colour.map(vecOrFun);
+		this.vec = vecOrFun;
+		const s = vecOrFun.map(cpt => Math.floor(cpt)).join(",");
 		this.string = `rgb(${ s })`;
 	}
 
@@ -568,7 +548,7 @@ class Colour {
 		return desat == 0 ? 0 : (this.vec.max() - this.vec.min()) / (256 * desat);
 	}
 
-	colourless() { return this.saturation() < 0.2 }
+	boring() { return this.saturation() < 0.2 }
 
 	setStyles(ctx) {
 		const { string } = this;
@@ -576,11 +556,16 @@ class Colour {
 		ctx.strokeStyle = string;
 	}
 
-	changeColour(newColour) {
-		const fracNew = 0.1;
-		const vec = Colour.map(i => (1-fracNew) * this.vec[i] + fracNew  * newColour.vec[i]);
+	// Return a new Colour based on the current one and newColour
 
-		return new Colour(vec);
+	changeColour(newColour) {
+		return p(0.5) ? this : newColour;
+	}
+
+	merge(newColour) {
+		const fracNew = 0.1;
+
+		return new Colour(i => (1-fracNew) * this.vec[i] + fracNew  * newColour.vec[i]);
 	}
 }
 
