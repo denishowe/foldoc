@@ -29,6 +29,7 @@ const config = {
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddLink: 0.05,
 	pulseCountMin: 3,
+	pulseCountMax: 10,
 }
 
 const TWO_PI = 2 * Math.PI;
@@ -216,7 +217,7 @@ class Node extends Disc {
 
 	magic() { if (this.occupied) { this.maybeDie() } else { this.maybeOccupy() } }
 
-	maybeDie() { if (p(0.05)) this.die() }
+	maybeDie() { if (p(0.02)) this.die() }
 
 	maybeOccupy() {
 		if (p(0.9)) return;
@@ -229,7 +230,7 @@ class Node extends Disc {
 		this.changeColour(from.colour);
 		this.maybeRemoveLink();
 		this.maybeAddLink();
-		this.addPulses();
+		if (Pulse.count() < config.pulseCountMax) this.addPulses();
 		this.draw();
 	}
 
@@ -286,7 +287,9 @@ class Node extends Disc {
 
 	findLinkTo(node) { return this.links.find(link => link.to === node) }
 
-	addPulses() { this.links.forEach(link => link.setPulse()) }
+	addPulses() {
+		this.links.forEach(link => link.setPulse());
+	}
 
 	die() {
 		[...this.links, ...this.incomingLinks()]
