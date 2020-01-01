@@ -29,7 +29,7 @@ const config = {
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddLink: 0.05,
 	pulseCountMin: 3,
-	pulseCountMax: 10,
+	pulseCountMax: 100,
 }
 
 const TWO_PI = 2 * Math.PI;
@@ -200,7 +200,7 @@ class Node extends Disc {
 		return delay;
 	}
 
-	static step() { this.all.any().magic() }
+	static step() { this.all.any().seed() }
 
 	static stop() {
 		clearTimeout(this.timeout);
@@ -215,15 +215,15 @@ class Node extends Disc {
 		if (p(config.probNodeOccupied)) this.occupy();
 	}
 
-	magic() { if (this.occupied) { this.maybeDie() } else { this.maybeOccupy() } }
-
-	maybeDie() { if (p(0.02)) this.die() }
-
-	maybeOccupy() {
-		if (p(0.9)) return;
-		this.occupy();
-		this.addLink();
-		this.addPulses();
+	seed() {
+		if (this.occupied) {
+			if (p(0.05)) { this.die(); return }
+		} else {
+			if (p(0.9)) return;
+			this.occupy();
+		}
+		if (p(0.1)) this.addLink();
+		if (p(0.05)) this.addPulses();
 	}
 
 	pulseIn(from) {
