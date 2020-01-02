@@ -230,8 +230,7 @@ class Node extends Disc {
 		this.changeColour(from.colour);
 		this.maybeRemoveLink();
 		this.maybeAddLink();
-		if (Pulse.count() < config.pulseCountMax) this.addPulses();
-		this.draw();
+		this.maybeAddPulses();
 	}
 
 	// Ensure node is occupied
@@ -253,6 +252,11 @@ class Node extends Disc {
 		const fewLinks = this.links.length < 1;
 		const prob = fewLinks || fewPulses ? 0.2 : config.probAddLink;
 		if (p(prob)) this.addLink();
+	}
+
+	maybeAddPulses() {
+		if (Pulse.count() < config.pulseCountMax)
+			this.addPulses();
 	}
 
 	// Return false if no unlinked neighbour else link to one and return true
