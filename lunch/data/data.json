@@ -153,5 +153,6 @@
 {"lat":51.522857502590284,"lng":-0.09763844311237335,"description":"2019-11-08 Lasagna £5.45","title":"People's Choice Cafe","bearing":278.2492365590282},
 {"lat":51.51764321569239,"lng":-0.07447823882102966,"description":"2019-11-13 Gluten-free organic toastie. £8","title":"Farm Shop","bearing":119.74151723514979},
 {"lat":51.518025847902344,"lng":-0.10321542620658875,"description":"2019-12-02 Veggie ciabatta, £6.40","title":"Café de Livio","bearing":250.17670670907842},
-{"lat":51.523283064190345,"lng":-0.09807027876377106,"description":"2019-12-09 Ham & cheese toastie + rocky road.  £6.50.","title":"Costa Coffee"}
+{"lat":51.523283064190345,"lng":-0.09807027876377106,"description":"2019-12-09 Ham & cheese toastie + rocky road.  £6.50.","title":"Costa Coffee","bearing":281.17662487792654},
+{"lat":51.53376314088857,"lng":-0.10499507188796997,"description":"2019-12-20 Chicken & Mushroom pie and a pint","title":"The York"}
 ]

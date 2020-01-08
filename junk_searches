@@ -13,10 +13,13 @@ css/bootstrap-theme.css
 css/bootstrap.css
 css/common.css
 css/slideshow.css
+Denis Howe CV.pdf
 docs/Krakow.doc
 docs/Slovenia.doc
 editing.html
 foldoc.cgi
+foldoc/foldoc.cgi
+foldoc/index.html
 images/malaysia/map-malaysia.jpg
 joomla/robots.txt
 lang=en
@@ -26,9 +29,12 @@ pub/misc/SciDataFormats.html
 pub/misc/automata.html
 pub/misc/sticker-you.png
 random-entry
+sitemap.xml
 site/wp-includes/wlwmanifest.xml
 stalker_portal/server/adm/tv-channels/iptv-list-json
 stalker_portal/server/adm/users/users-list-json
+sticker-you.png
+/sticker-you.png
 templates/system/css/system.css
 tools.html
 w00tw00t.at.blackhats.romanian.anti-sec:)
