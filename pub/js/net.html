@@ -27,7 +27,9 @@ const config = {
 	minLoopDelay: 0,											// 10-50
 	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
-	probAddLink: 0.05,
+	probAddNode: 0.1,
+	probNodeDie: 0.02,
+	probAddLink: 0.2,
 	pulseCountMin: 3,
 	pulseCountMax: 100,
 }
@@ -217,13 +219,11 @@ class Node extends Disc {
 
 	seed() {
 		if (this.occupied) {
-			if (p(0.05)) { this.die(); return }
-		} else {
-			if (p(0.9)) return;
-			this.occupy();
-		}
-		if (p(0.1)) this.addLink();
-		if (p(0.05)) this.addPulses();
+				if (p(config.probNodeDie)) { this.die(); return }
+		} else if (p(config.probAddNode)) { this.occupy() }
+		if (!this.occupied) return;
+		if (p(config.probAddLink)) this.addLink();
+		if (p(0.1)) this.addPulses();
 	}
 
 	pulseIn(from) {
@@ -291,9 +291,7 @@ class Node extends Disc {
 
 	findLinkTo(node) { return this.links.find(link => link.to === node) }
 
-	addPulses() {
-		this.links.forEach(link => link.setPulse());
-	}
+	addPulses() { this.links.forEach(link => link.setPulse()) }
 
 	die() {
 		[...this.links, ...this.incomingLinks()]
@@ -521,7 +519,8 @@ class Colour {
 			[x, 0, 1],							// blue	   .. magenta
 			[1, 0, y]								// magenta .. red
 		][Math.floor(h)];
-		const vec = c.map(cpt => 255.999999 * cpt); // -> [R, G, B] in 0..255
+		// Convert to [R, G, B] in 0..255
+		const vec = c.map(cpt => 255.999999 * cpt + rand(-128, 128));
 
 		return new Colour(vec);
 	}
@@ -538,8 +537,8 @@ class Colour {
 	constructor(vecOrFun) {
 		if (typeof vecOrFun == 'function')
 			vecOrFun = Colour.map(vecOrFun);
-		this.vec = vecOrFun;
-		const s = vecOrFun.map(cpt => Math.floor(cpt)).join(",");
+		this.vec = vecOrFun.map(cpt => Math.min(Math.max(cpt, 0), 255.999999));
+		const s = this.vec.map(cpt => Math.floor(cpt)).join(",");
 		this.string = `rgb(${ s })`;
 	}
 
@@ -566,9 +565,7 @@ class Colour {
 
 	// Return a new Colour based on the current one and newColour
 
-	changeColour(newColour) {
-		return p(0.6) ? newColour : this;
-	}
+	changeColour(newColour) { return newColour }
 
 	merge(newColour) {
 		const fracNew = 0.1;
