@@ -9,6 +9,7 @@ foldoc.tar*
 help.html
 keys
 logs
+lunch/data/*-*
 make.out
 missing.html
 offsets
