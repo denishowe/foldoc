@@ -615,11 +615,18 @@ function click(e) {
 click.moving = false;
 click.old_x = 0;
 
-// Wait until done resizing
+// Wait until resized for a while
 
 window.onresize = function () {
 	if (window.onresize.timeout) clearTimeout(window.onresize.timeout);
-	window.onresize.timeout = setTimeout(() => Grid.init(), 500)
+	window.onresize.timeout = setTimeout(() => {
+		const { innerWidth, innerHeight } = window;
+		const shape = `${innerWidth}x${innerHeight}`;
+		if (shape == (window.onresize.shape || ''))
+			return
+		window.onresize.shape = shape;
+		Grid.init();
+	}, 1000)
 };
 
 // Handle key press
