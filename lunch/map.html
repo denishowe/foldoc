@@ -30,10 +30,7 @@
       font-weight: 500;
     }
 
-    .control.myLoc {
-      width: 40px;
-      height: 40px;
-    }
+    .control.myLoc { width: 40px; height: 40px }
 
     .control.myLoc .myLocIcon {
       width: 36px;
@@ -44,8 +41,16 @@
       background-position: 180px 0;
     }
 
-    .gm-style-iw-c {
-	  width: 600px;
+    .gm-style-iw-c { width: 600px }
+
+		button[title="Close"] img {
+			position: relative;
+			right: 15px;
+			width: 30px !important;
+			height: 30px !important;
+		}
+
+		.gm-style-iw-d input { width: 95% !important }
 	}
 
   </style>
@@ -156,12 +161,15 @@ function showPlace(place) {
 
 function clickBurger(mark, place) { infowin(mark, place) }
 
-function clear(prop) {
+function clearTempMarker() { clear('tempMarker', m => m.setMap(null)) }
+
+function clearInfoWindow() { clear('infoWindow', w => w.close()) }
+
+function clear(prop, f) {
 	const thing = map.my[prop];
-	if (!thing) return;
-	if (prop === 'tempMarker') thing.setMap(null);
-	if (prop === 'infowin') thing.close();
+	if (! thing) return;
 	delete map.my[prop];
+	f(thing);
 }
 
 function marker(place, iconUrl) {
@@ -190,7 +198,7 @@ function clickMap(event) {
 
 function showClick(place, placeId, title) {
 	place.title = title;
-	clear('tempMarker');
+	clearTempMarker();
 	map.my.tempMarker = new google.maps.Marker({ position: place, map, title: place.title });
 	map.my.tempMarker.placeId = placeId; // For showGoogleMap
 	infowin(map.my.tempMarker, place);
@@ -216,7 +224,7 @@ function placeName(placeId, callback) {
 
 function infowin(marker, place) {
 	const { title, description } = place;
-	clear('infowindow');
+	clearInfoWindow();
 	const titleInput = element('input', { type: 'text', value: title, style: 'width: 99%' });
 	const descInput = element('textarea',
 		{ rows: 5, style: 'display: table; width: 99%; margin: 5px 0' }, description);
@@ -251,8 +259,8 @@ function savePlace(place, title, description) {
 	console.log('place', place, 'index', old);
 	map.my.places[old] = place;
 	putPlaces(map.my.places);
-	clear('infowindow');
-	clear('tempMarker');
+	clearInfoWindow();
+	clearTempMarker();
 	showPlace(place);
 }
 

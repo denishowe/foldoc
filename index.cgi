@@ -6,7 +6,7 @@
 # Denis Howe <dbh@doc.ic.ac.uk>
 # 1999-11-10 - 2018-04-08
 
-# SET REQUEST_URI=/+& SET QUERY_STRING=debug& perl index.cgi
+# SET REQUEST_URI=Charles+W.+Bachman& SET QUERY_STRING=debug& perl index.cgi
 # HTTP_HOST=foldoc.org REQUEST_URI=/ABCL%2fc%2b QUERY_STRING=debug perl index.cgi
 
 # ############################################################################################### #

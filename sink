@@ -2,7 +2,8 @@
 
 # sshargs is set in ~/Library/Application Support/Unison/scaleway.prf
 
-u="unison -ui text scaleway"
+export UNISON=~/Documents/Tech/Unison/home
+u="unison -ui text foldoc"
 $u -batch || $u
 ssh -l denis -i ~/.ssh/personal/id_rsa foldoc make --directory=/var/www/foldoc.org
 $u -batch || $u
