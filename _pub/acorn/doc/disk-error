@@ -1,0 +1,32 @@
+From: pcolmer@acorn.co.uk (Philip Colmer)
+Newsgroups: comp.sys.acorn
+Subject: Re: ADFS Disc Errors
+Date: 25 Jun 92 07:30:51 GMT
+Organization: Acorn Computers Ltd, Cambridge, England
+
+As requested, details of the ST506 error codes. Note that not all of the
+possible errors are listed, since they are largely related to driving the
+chip itself. Instead, only those related to disc or data errors are given:
+  
+  Value         Meaning
+  &07           Write fault has been detected on the ST506 interface
+  &08           Drive not ready
+  &09           Seek did not complete before timeout
+  &10           Error correction code (ECC) detected an error
+  &11           CRC error in data area
+  &12           ECC corrected an error (would this be trapped by ADFS?)
+  &13           Fatal ECC error in data area
+  &16           ID not found within timeout
+  &17           ID area started with an improper address mark
+  &18           Missing address mark
+  &19           Drive write protected
+  
+Obviously, some of the above should NEVER appear since they correspond to
+fault hardware or a badly formatted drive.
+
+Hope this helps.
+
+--Fil.
+
+------------------------------------------------------------------------------
+   Recommended reading: Jurassic Park by Michael Crichton (*not* Richard!)

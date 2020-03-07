@@ -1,0 +1,546 @@
+0 @6@ HEAD
+1 SOUR Conveted from Acorn Archimedes !Family format
+2 VERS 1.00
+2 CORP Denis Howe
+3 ADDR <dbh@doc.ic.ac.uk>
+4 CONT 48 Anson Rd., London NW2 3UU, UK
+4 PHON +44 (81) 450 9448
+2 DATA ADFS::HD.$.Misc.Family.Famous
+1 DATE Fri,21 Jan 1994
+1 SUBM @131@
+1 GEDC
+2 VERS 5.3
+0 @131@ SUBM
+1 NAME Denis Howe
+1 ADDR <dbh@doc.ic.ac.uk>
+2 CONT 48 Anson Rd., London NW2 3UU, UK
+2 PHON +44 (81) 450 9448
+0 @186@ INDI
+1 NAME John Collett
+1 SEX M
+1 FAMC @6329@
+0 @220@ INDI
+1 NAME Matthew Collett [1]
+1 SEX M
+1 FAMS @6329@
+1 NOTE Bank of England.  {Source 18}.
+0 @255@ INDI
+1 NAME Matthew Collett [2]
+1 SEX M
+1 FAMC @6329@
+0 @10006@ INDI
+1 NAME Laetitia Foley
+1 SEX F
+1 FAMS @10028@
+1 NOTE Witley Court, Worcestershire.  {Source 18}
+0 @290@ INDI
+1 NAME ? Howe
+1 SEX M
+1 FAMS @6565@
+0 @322@ INDI
+1 NAME Anne Howe
+1 SEX F
+1 FAMC @6489@
+0 @355@ INDI
+1 NAME Caroline Howe
+1 SEX F
+1 FAMS @6371@
+1 FAMC @6531@
+1 NOTE {Source 1} says Caroline d. of Scroop Viscount Howe.
+2 CONT
+2 CONT I assume that should be Scrope as in other sources.
+2 CONT Were John and Caroline related before they married?
+0 @460@ INDI
+1 NAME Charles Howe
+1 SEX M
+1 BIRT
+2 DATE 1661
+1 DEAT
+2 DATE 1742
+1 FAMC @6565@
+1 NOTE {Source 3} says:
+2 CONT
+2 CONT Howe, Charles (1661 - 1742), author of "Devout Meditations" (published
+2 CONT 1751); brother of John Grubham Howe.
+0 @576@ INDI
+1 NAME Earl Richard Howe
+1 SEX M
+1 BIRT
+2 DATE 1726
+1 DEAT
+2 DATE 1799
+1 FAMC @6615@
+1 NOTE English admiral.  Second son of the second Viscount Howe.  See "Life" by
+2 CONT Barrow (1837) {Source 2}
+2 CONT
+2 CONT {Source 3} says:
+2 CONT
+2 CONT Howe, Richard, Earl Howe (1726-1799),
+2 CONT admiral of the fleet.  Grandson of Scrope Howe first Viscount Howe. 
+2 CONT Educated at Eton.  Sailed in the Severn as far as Cape Horn with Anson
+2 CONT 1740.  Present at attack on La Guayra 1743.  Wounded in action with French
+2 CONT frigates off west of Scotland 1746.  By capture of the Alcide off mouth of
+2 CONT St. Lawrence opened Seven Years' War 1755.  MP Dartmouth 1757-82.  Took a
+2 CONT leading part in Rochefort expedition 1757.  Succeeded brother as
+2 CONT fourth Viscount (Irish) Howe 1758.  Commanded covering squadron in attacks
+2 CONT on St. Malo and Cherbourg 1758.  Distinguished at blockade of Brest and
+2 CONT Battle of Quiberon Bay 1759.  A lord of the Admiralty 1762-5.  Treasurer
+2 CONT of the navy 1765-70.  Rear admiral 1770.  Vice admiral 1775.  As
+2 CONT commander-in-chief on North American Station co-operated with his
+2 CONT brother, Sir William Howe.  Forced passage of Delaware 1777 and watched
+2 CONT French fleet under D'Estaing off Sandy Hook 1777.  Resigned command owing
+2 CONT to discontent with ministry 1778, remaining four years in retirement. 
+2 CONT Admiral 1782.  Commander in the channel 1782.  Created a British peer
+2 CONT 1782.  Effected relief of Gibralta against superior forces 1782.  As
+2 CONT first lord of the Admiralty (1783-8) was much attacked in parliament and
+2 CONT the press.  Created Earl Howe 1788.  Commanded channel fleet 1790. 
+2 CONT Vice-admiral of England 1792-6.  With channel fleet won the great victory
+2 CONT of 1 June 1794, capturing six French ships.  Incurred some unpopularity
+2 CONT owing to insufficient mention of distinguished officers.  Admiral of the
+2 CONT fleet and general of marines 1796.  KG 1797.  Presided over court martial
+2 CONT on Vice-admiral Cornwallis 1796.  After retirement passified mutineers at
+2 CONT Portsmouth 1797.  The signalling code was perfected and refined by him.
+2 CONT
+2 CONT {Source 11} says:
+2 CONT Howe, Richard Howe, 1st Earl (1726-99), British admiral, a younger son of
+2 CONT Emanual Scrope Howe, 2nd Viscount Howe (Irish peerage).  He suceeded a
+2 CONT brother as 4th viscount in 1758.  He served with distinction in the Seven
+2 CONT Year's War against the French (1756-63), accompanying Boscawen to North
+2 CONT America, helping to capture the Alcide and the Lys and being present at
+2 CONT Quiberon Bay (1765-70).  In 1776 he returned to North America as
+2 CONT commander-in-chief, and forced the passage of the Delaware, successfully
+2 CONT resisting the French under D'Estaing.  He next won fame by his relief of
+2 CONT Gibraltar (1782), and returning to England became the first lord of the
+2 CONT Admiralty (1783-88).  His most famous achievement was the victory over the
+2 CONT French off Ushant and he it was who recalled the mutinous seamen at
+2 CONT Spithead to their duty in 1797 by rowing from ship to ship bearing the
+2 CONT King's pardon.
+2 CONT
+2 CONT ---
+2 CONT
+2 CONT {Source 3} lists George Augustus Howe, 3rd Viscount Howe (1725?-1758),
+2 CONT grandson of Scrope Howe, first Viscount Howe in Irish peerage.  This
+2 CONT was presumably the brother who {Sources 3 & 11} say Richard succeeded in
+2 CONT 1758.
+2 CONT
+2 CONT Brother William succeeded Richard in 1799 {Source 3}.
+2 CONT
+2 CONT The claim that Richard was "a younger son of Emanual" {Source 11, above}
+2 CONT seem wrong since {Sources 3 & 11} seem to agree that George, Richard and
+2 CONT William were grandsons of Scrope and {Source 3} says Emanual was Scrope's
+2 CONT brother.
+0 @1824@ INDI
+1 NAME Emanuel Scrope Howe
+1 SEX M
+1 DEAT
+2 DATE 1709
+1 FAMC @6565@
+1 NOTE {Source 3} says:
+2 CONT
+2 CONT Howe, Emanuel Scrope (d. 1709), diplomat; brother of Scrope Howe, first
+2 CONT Viscount Howe; groom of the bedchamber to William III; MP, Morpeth,
+2 CONT 1701-5, Wigan 1705-8, envoy-extraordinary to Hanover, 1705-9; lieutenant
+2 CONT general, 1709.
+2 CONT ---
+2 CONT See notes for Viscount Emanual Scrope Howe.
+0 @1995@ INDI
+1 NAME George Augustus Viscount Howe
+1 SEX M
+1 BIRT
+2 DATE 1725?
+1 DEAT
+2 DATE 1758
+1 FAMC @6615@
+1 NOTE {Source 3} says:
+2 CONT
+2 CONT Howe, George Augustus, third Viscount Howe (1725? - 1758), grandson of
+2 CONT Scrope Howe, first Viscount Howe, in Irish peerage; succeeded to title
+2 CONT 1735; MP Nottingham 1747 and 1754 - 65; served in Flanders 1747; colonel
+2 CONT 1757; commanded 60th Foot in Halifax 1757; killed in skirmish with French
+2 CONT at Trout Brook, Lake George.
+0 @2188@ INDI
+1 NAME James Howe [1]
+1 SEX M
+1 BIRT
+2 DATE 1653
+1 DEAT
+2 DATE 1714
+1 FAMC @6397@
+1 NOTE Barrister.  Married Mary Saunders from Derby, granddaughter of Colonel
+2 CONT Saunders, parliamentary officer in the Civil War.  {Source 18}
+1 FAMS @9785@
+0 @2294@ INDI
+1 NAME James Howe [2]
+1 SEX M
+1 FAMC @9785@
+0 @2329@ INDI
+1 NAME James Howe [3]
+1 SEX M
+1 FAMC @6699@
+0 @2364@ INDI
+1 NAME John Grubham Howe
+1 SEX M
+1 BIRT
+2 DATE 1657
+1 DEAT
+2 DATE 1722
+1 FAMC @6565@
+1 NOTE {Source 3} says:
+2 CONT
+2 CONT Howe (or How), John Grubham (1657 - 1722), politician ('Jack How');
+2 CONT forbidden court for slandering duchess of Richmond 1679; a strong Whig
+2 CONT and vice-chamberlain to Queen Mary 1689 - 92; after dismissal a violent
+2 CONT Tory, especially denouncing William III's partition treaty 1698 and Dutch
+2 CONT favourites; MP, Cirencester 1689 - 98, Gloucestershire 1698 - 1701 and
+2 CONT 1702 - 5; privy councillor and joint clerk of Privy Council under Anne.
+0 @2586@ INDI
+1 NAME John Howe [1]
+1 SEX M
+1 FAMS @6699@
+1 FAMC @6397@
+1 BIRT
+2 DATE 1659
+0 @2629@ INDI
+1 NAME John Howe [2]
+1 SEX M
+1 DEAT
+2 DATE before 1719
+1 FAMC @10028@
+1 NOTE No children.  {Source 18}
+0 @2689@ INDI
+1 NAME John Howe [3]
+1 SEX M
+1 FAMC @6699@
+1 NOTE Probably had children.
+0 @2736@ INDI
+1 NAME John Howe [Chaplain]
+1 SEX M
+1 BIRT
+2 DATE 1630
+1 DEAT
+2 DATE 1705
+1 FAMS @6397@
+1 FAMS @6463@
+1 FAMC @6489@
+1 NOTE {Source 2} says:
+2 CONT
+2 CONT Puritan divine, born in Loughborough, Leicestershire.  Domestic chaplain
+2 CONT to Oliver Cromwell until Cromwell's death.  He was vicar of Great
+2 CONT Torrington until he was ejected under the Act of Uniformity (1662).  He
+2 CONT travelled the country preaching and writing.  His best known work was
+2 CONT "The Living Temple".  He went to Antrim Castle in 1670 as chaplain to
+2 CONT Lord Masserene and returned to London in 1676 as pastor of a dissenting
+2 CONT chapel in Staining Lane.  He went abroad with Lord Wharton (1865) but the
+2 CONT Declaration of Liberty of Conscience induced him to return to England in
+2 CONT 1687.  He headed a deputation of dissenting ministers in presenting an
+2 CONT address to William III in 1688.
+2 CONT  
+2 CONT See H. Rogers's "Life of John Howe" (1836), E. Calamy's "Life of
+2 CONT John Howe", R.F. Horton's "John Howe" (1895).
+2 CONT
+2 CONT {Source 3} says:
+2 CONT
+2 CONT Entered Christ's College, Cambridge where he was an intimate of Henry
+2 CONT More (1614-1687).  MA Magdalen College Oxford 1652, fellow and chaplain of
+2 CONT Magdalen College.  Perpetual curate of Great Torrington 1654-62.  As
+2 CONT domestic chaplain to Cromwell he preached against fanaticism.  Befriended
+2 CONT Fuller and Seth Ward.  Chaplain to Richard Cromwell.  Preached at houses
+2 CONT in the west after ejection.  Joint pastor of Haberdasher's Hall, London
+2 CONT 1676.  Began controversy on predestination 1677.  Answered sermon on
+2 CONT schism by Stillingfleet 1680.  Expostulated with Tillotson 1680.  Refused
+2 CONT to support dispensing power.  Advocated mutual forbearance of Conformists
+2 CONT and Dissenters 1689.  Prominent in 'happy union' of Presbyterians and
+2 CONT Congregationalists 1690.  Had controversy with Defoe on occasional
+2 CONT conformity 1700.  Conferred privately with William III before his death.
+2 CONT Visited Richard Cromwell in last illness.  Chief work "The Living Temple
+2 CONT of God" 1675 included in works (collected 1724, enlarged 1810-22, 1862-3).
+2 CONT
+2 CONT {Source 11} says:
+2 CONT
+2 CONT Howe, John (1630-1705), English disenting minister, known as the
+2 CONT 'Platonic Puritan', born at Loughborough.  Educated at Cambridge, he is
+2 CONT notable as an early and sincere advocate of religious toleration.  He was
+2 CONT domestic chaplain to Cromwell the Protector and his son Richard
+2 CONT (1658-59).  The Act of Uniformity, 1662, ejected him from Great
+2 CONT Torrington.  Howe returned to London as minister of Puritan congregation
+2 CONT (1676).  He travelled abroad with Lord Wharton (1685), but returned on
+2 CONT James's 'Declaration for Liberty of Conscience', 1687.  His works
+2 CONT include: "The Blessedness of the Righteous", 1668, "The Redemer's Tears",
+2 CONT 1684 and "The Living Temple", 1675-1702.  Bibliography: Lives by E.
+2 CONT Calmy, new ed. 1848, and R.F. Horton 1895.
+2 CONT
+2 CONT {Source 18} mentions a portrait in the National Portrait Gallery in London
+2 CONT by Kneller.  He is a grave-looking man with a wide forehead, a long
+2 CONT straight nose and sensuous lips.  His contemporary, John Morley wrote that
+2 CONT he would preach and pray from nine in the morning until four in the
+2 CONT afternoon.  He was highly intelligent and willing to suffer for his
+2 CONT beliefs.  He was a Sizar (a poor student who paid lower fees in return for
+2 CONT acting as a servant for other students) at Christ's College, Cambridge.  He
+2 CONT must have married Katherine Hughes around 1654.  Soon after his son George
+2 CONT was born (1655), while John was in London on business, he was invited to
+2 CONT preach at Whitehall and his sermon made such an impression on Cromwell that
+2 CONT John was summoned to Whitehall to become a domestic chaplin.  In 1669 he
+2 CONT was domestic chaplin to Lord Massarene of Antrim, where he stayed for five
+2 CONT years.  While abroad with Wharton, he settled in Utrecht where he preached
+2 CONT to non-conformist sympathisers.  He had several audiences with William of
+2 CONT Orange.  After returning to London he settled in Love Lane, Aldermanbury
+2 CONT and built up a new following in a chapel in Silver Street.  Around this
+2 CONT time he married Margaret who bore him no children.  John died in 1705 and
+2 CONT was buried in the vault of All Hallows Church, Bread Street in the City of
+2 CONT London.  Margaret outlived him by many years, dying in Bath at the age of
+2 CONT eighty-seven.
+0 @3943@ INDI
+1 NAME John Howe [Hanslope]
+1 SEX M
+1 BIRT
+2 DATE c. 1708
+1 DEAT
+2 DATE 1769
+1 FAMS @6371@
+1 FAMC @9785@
+1 NOTE John [Howe] c 1708 - 1769 of Hanslop, Bucks.  {Source 1}
+2 CONT
+2 CONT {Source 12} has no "Hanslop" but Hanslope was a parish in
+2 CONT Buckinghamshire since 1570, 4.5 miles NE of Stony Stratford.
+2 CONT
+2 CONT {Source 18} also says Hanslop, Bucks.
+0 @4095@ INDI
+1 NAME John Howe [Preacher]
+1 SEX M
+1 FAMS @6489@
+1 FAMC @6767@
+0 @4140@ INDI
+1 NAME Obadiah Howe
+1 SEX M
+1 BIRT
+2 DATE 1616
+1 DEAT
+2 DATE 1682
+1 FAMC @6767@
+1 NOTE Divine, contraversialist.  {Source 1}
+2 CONT
+2 CONT 1616? - 1683.  Divine, MA, Magdalen Hall, Oxford 1638, incumbent of
+2 CONT Stickney, Horncastle and Gedney, vicar of Boston 1660 - 83, published
+2 CONT controversial works.  {Source 3}
+0 @4284@ INDI
+1 NAME Obadiah Howe [2]
+1 SEX M
+1 BIRT
+2 DATE 1661
+1 DEAT
+2 DATE infant
+1 FAMC @6397@
+1 NOTE Torrington.  Probably died in infancy.
+0 @4362@ INDI
+1 NAME Philip Howe
+1 SEX M
+1 DEAT
+2 DATE before 1719
+1 FAMC @10028@
+1 NOTE No children.  {Source 18}
+0 @4421@ INDI
+1 NAME Phillipa Howe
+1 SEX F
+1 BIRT
+2 DATE 1664
+1 FAMS @6329@
+1 FAMC @6397@
+0 @4477@ INDI
+1 NAME Samuel Howe
+1 SEX M
+1 FAMC @9785@
+0 @4511@ INDI
+1 NAME Sir William Howe
+1 SEX M
+1 BIRT
+2 DATE 1729
+1 DEAT
+2 DATE 1814
+1 FAMC @6615@
+1 NOTE {Source 3} says:
+2 CONT
+2 CONT Howe, Sir William, fifth Viscount Howe (1729-1814).  General, brother of
+2 CONT Richard Earl Howe.  Educated at Eton.  Commanded 58th (later 1st
+2 CONT Northampton) Regiment at capture of Louisbourg and defence of Quebec
+2 CONT 1759-60.  Led forlorn hope at Heights of Abraham 1759.  Commanded brigade
+2 CONT in Montreal expedition 1760 and at siege of Belleisle 1761. 
+2 CONT Adjutant-general at conquest of Havana 1762.  Major-general 1772.
+2 CONT Lieutenant-general 1775.  MP Nottingham 1758-80.  Commanded at Battle of
+2 CONT Bunker Hill 1775.  KB 1775.  Succeeded Gage as commanded in American
+2 CONT colonies.  Evacuated Boston and took up position at Halifax, Nova Scotia
+2 CONT 1776.  Associated with his brother in American Conciliation Commission
+2 CONT 1776.  Defeated Americans on Long Island 1776.  Captured New York and won
+2 CONT Battle of White Plains and Brandywine 1776.  Repulsed attack on
+2 CONT Germantown 1776.  Failed to draw Washington into further action 1777. 
+2 CONT Resigned command 1778.  Spoke in parliament on American affairs and
+2 CONT obtained (1779) committee of inquiry.  Published "Narrative" 1780. 
+2 CONT Lieutenant-general of ordnance 1782-1803.  General 1793.  Commanded
+2 CONT northern and afterwards eastern district.  Succeeded brother in Irish
+2 CONT viscountcy 1799.
+2 CONT
+2 CONT {Source 11 says:
+2 CONT
+2 CONT Howe, William Howe, 5th Viscount (1729-1814), British soldier, succeeded
+2 CONT his brother, Richard as Viscount Howe in 1799, this peerage becoming
+2 CONT extinct on his death.  He went to America in 1758, helped in the capture
+2 CONT of Louisbourg, and accompanied Wolfe to Quebec.  Howe returned to Europe
+2 CONT in 1760 and became major-general in 1772.  He returned to America as
+2 CONT commander-in-chief in 1775 and defeated the colonists at Bunker Hill the
+2 CONT same year.  But in succeeding years he failed to secure the decisive
+2 CONT victory which could have ended the revolt.  He was an uninspired and
+2 CONT indecisive commander and these deficiencies were compounded by the
+2 CONT British government's inability to think in terms of total war and hence,
+2 CONT to provide him with sufficient support in men and arms.  In 1776 he was
+2 CONT driven from Boston by Washington, but recovered New York.  In 1777 he
+2 CONT defeated Washington at Brandywine and occupied Philadelphia.  He resigned
+2 CONT shortly afterwards.  Bibliography: P. Mackesy, the War for America,
+2 CONT 1775-83, 1964.
+0 @5375@ INDI
+1 NAME Viscount Emanuel Scrope Howe
+1 SEX M
+1 DEAT
+2 DATE 1735
+1 FAMS @6615@
+1 FAMC @6531@
+1 NOTE Viscount Emanual Scrope Howe exists to bridge two inconsistencies.
+2 CONT
+2 CONT First, {Source 11} describes Richard Howe, 1st Earl (1726-99) as "a
+2 CONT younger son of Emanual Scrope Howe, 2nd Viscount Howe (Irish peerage)" and
+2 CONT {Source 2} says he was the second son of the second Viscount Howe.
+2 CONT
+2 CONT However, {Source 3} says Emanual was Scrope's brother and that Richard
+2 CONT was a grandson of Scrope.  We therefore have two Emanuals - one the
+2 CONT brother of Scrope and the other (the Viscount) the father of Richard and
+2 CONT therefore of Richard's brothers, George and William.
+2 CONT
+2 CONT Secondly, {Source 3} lists George Augustus Howe, third Viscount Howe
+2 CONT (1725? - 1758), grandson of Scrope Howe, first Viscount Howe, in Irish
+2 CONT peerage; succeeded to title 1735.  So Viscount Emanual must have died in
+2 CONT 1735 whereas the other Emanual died in 1709.
+0 @5727@ INDI
+1 NAME Viscount Scrope Howe
+1 SEX M
+1 BIRT
+2 DATE 1648
+1 DEAT
+2 DATE 1712
+1 FAMS @6531@
+1 FAMC @6565@
+1 NOTE {Source 1} has Scroop.  {Longman's dictionary} has Scroop, vi., n. (to
+2 CONT make) a grating or rasping sound.
+2 CONT
+2 CONT {Source 3} says
+2 CONT
+2 CONT Howe, Scrope, first Viscount Howe (1648-1712).  Whig politician, brother
+2 CONT of Charles Howe, knighted 1663, MP Nottinghamshire 1673-98 and 1710-12,
+2 CONT active at the Revolution, groom of the bedchamber 1689-1702, comptroller
+2 CONT of the Exchequer, created Irish viscount 1701.
+0 @5949@ INDI
+1 NAME William Howe
+1 SEX M
+1 FAMS @6767@
+0 @5984@ INDI
+1 NAME Anne Howe*
+1 SEX F
+1 FAMS @6489@
+0 @6018@ INDI
+1 NAME Margaret Howe*
+1 SEX F
+1 BIRT
+2 DATE 1655
+1 DEAT
+2 DATE 1743
+1 FAMS @6463@
+0 @6079@ INDI
+1 NAME Katherine Hughes
+1 SEX F
+1 FAMS @6397@
+1 FAMC @6801@
+0 @6123@ INDI
+1 NAME Reverend George Hughes
+1 SEX M
+1 FAMS @6801@
+1 NOTE Plymouth.  {Source 18}
+0 @6172@ INDI
+1 NAME George Howe MD
+1 SEX M
+1 BIRT
+2 DATE 1655
+1 DEAT
+2 DATE 1710
+1 FAMC @6397@
+1 NOTE 1655?-1710.  Physician, son of John Howe [Chaplain] (1630-1705), MD
+2 CONT Leiden, censor, Royal College of Physicians, 1707, the Querpo of Garth's
+2 CONT "Dispensary".  {Source 3}.
+2 CONT
+2 CONT What is a Querpo?  Who was Garth?  What was his "Dispensary"?
+1 FAMS @10028@
+0 @6329@ FAM
+1 HUSB @220@
+1 WIFE @4421@
+1 CHIL @186@
+1 CHIL @255@
+0 @6371@ FAM
+1 HUSB @3943@
+1 WIFE @355@
+0 @6397@ FAM
+1 HUSB @2736@
+1 WIFE @6079@
+1 CHIL @2188@
+1 CHIL @6172@
+1 CHIL @2586@
+1 CHIL @4284@
+1 CHIL @4421@
+0 @6463@ FAM
+1 HUSB @2736@
+1 WIFE @6018@
+0 @6489@ FAM
+1 HUSB @4095@
+1 WIFE @5984@
+1 CHIL @2736@
+1 CHIL @322@
+0 @6531@ FAM
+1 HUSB @5727@
+1 CHIL @355@
+1 CHIL @5375@
+0 @6565@ FAM
+1 HUSB @290@
+1 CHIL @5727@
+1 CHIL @2364@
+1 CHIL @460@
+1 CHIL @1824@
+0 @6615@ FAM
+1 HUSB @5375@
+1 CHIL @1995@
+1 CHIL @576@
+1 CHIL @4511@
+0 @6699@ FAM
+1 HUSB @2586@
+1 CHIL @2689@
+1 CHIL @2329@
+0 @6767@ FAM
+1 HUSB @5949@
+1 CHIL @4095@
+1 CHIL @4140@
+0 @6801@ FAM
+1 HUSB @6123@
+1 CHIL @6079@
+0 @9763@ INDI
+1 NAME Mary Saunders
+1 SEX F
+1 FAMS @9785@
+1 NOTE Derby.  Granddaughter of Colonel Saunders, a notable Parliamentary officer
+2 CONT in the civil war.  {Source 18}.
+0 @9785@ FAM
+1 HUSB @2188@
+1 WIFE @9763@
+1 CHIL @3943@
+1 CHIL @4477@
+1 CHIL @2294@
+0 @10028@ FAM
+1 HUSB @6172@
+1 WIFE @10006@
+1 CHIL @2629@
+1 CHIL @4362@
+0 @10131@ NOTE Person George Howe MD
+0 @10136@ TRLR

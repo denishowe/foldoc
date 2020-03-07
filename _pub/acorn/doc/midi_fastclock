@@ -1,0 +1,97 @@
+From loek@nt.eltn.utwente.nl Mon Jun  1 14:07:25 1992
+Date: Mon, 1 Jun 1992 13:55:14 +0100
+Content-Identifier: Fast clock tr...
+From: " (Loek L. Frederiks)" <loek@nt.eltn.utwente.nl>
+To: dbh@doc.ic.ac.uk
+Subject: Fast clock troubles
+Pp-Warning: Illegal Received field on preceding line
+X-Envelope-To: dbh@doc.imperial.ac.UK
+
+Hi Denis,
+
+In my Acorn MIDI Interface User's Guide the fast clock
+is mentioned as a fourth method for giving a MIDI event
+a time reference. It is recommended by Acorn for using it
+in new applications. It is accessed by means of the following
+SYS call:
+
+SYS "MIDI_FastClock" {,RO,R1}
+
+o with R0 < 0 read current value of fast clock. Result in R0.
+  So after SYS "MIDI_FastClock",-1,0 TO ,R% the variable R%
+  contains the value of fastclock.
+o R0 > 0 resets the value of fastclock to the value in,
+  I believe (the user's guide is at my home), R1 and 
+  starts the fast clock. After this call the MIDI
+  events, which are received by the two calls below,
+  are data stamped by means of fast clock.
+
+The fast clock is updated every millisecond (1/1000 s) !
+It is meant to be used with the calls:
+
+SYS "MIDI_RxCommand" {,R0,R1} Receive command
+SYS "MIDI_TxCommand" {,R0,R1} Transmit command
+
+These two calls are compatible:
+
+o R0 contains the MIDI event:
+   - byte 0 contains byte #1 \
+   - byte 1 contains byte #2  | the MIDI event
+   - byte 2 contains byte #3 /
+   - byte 3 contains the number of bytes of the MIDI event
+     for instance: 144 76 64 (note on, 3 bytes)
+                   192 1      (program change, 2 bytes)
+o R1 contains the time stamp. Thus in this case the value
+  of fast clock.
+
+So if are receiving a MIDI event with
+ SYS "MIDI_RxCommand" TO event%,timing%
+it is transmitted and SCHEDULED with:
+ SYS "MIDI_TxCommand",event%,timing%
+
+This menas that you don't have to use SYS "Sound_QSchedule"
+in order to schedule SYS "MIDI_TxByte" (I believe you
+have used these SYS calls.) The fast clock uses timer 1
+of the IOC chip in your Archimedes. This means that if other
+application are also using this timer, this could lead to
+clashes.
+
+You told me that the fast clock facility is never mentioned
+in your user's guide. Does this mean that you have a very
+old version of Acorn's MIDI podule ? I believe that
+my version of the MIDI firmware (the MIDI software in the ROM
+on the podule PCB) is version 3.14 or something and is dated
+somewhere in 1989. I bought it from my dealer in march 1992.
+But it is stated that the fast clock, which was in the
+previous version not always working correctly, is improved.
+I don't know what type of Archimedes you have, but the
+MIDI User's Guide is the same for both the A3000 and
+A300/310 and A410/420/440 (and perhaps the A5000) machines.
+This means that the MIDI podule is working the same for
+all machines. So according to me your MIDI interface
+should have the fast clock facility or you should have
+a very,very old version of the MIDI podule.
+
+I think you can test whether the fast clock is available
+by running ArcMidi, opening the record window,
+(Show -> Record in the main menu), Creating a pattern by
+pressing the menu button in the record window and use the
+Pattern->Create option. Type in a name for the pattern 
+6 characters long) and click OK. Then click somewhere
+in the record window to remove the menu. Next click on
+the name of the pattern in the pattern list (it will be
+highlighted) and click on the record button in the left
+upper corner of the record window. If you have the fast
+clock facililty built in your MIDI podule, the clock
+(Pos.) in the record window should be running and you
+press a key on your keyboard in the left upper corner
+of the desktop, the received MIDI events are printed.
+The last number is the value of the time stamp (fast clock).
+
+So please let me know if the fast clock facility is working
+with your Archimedes. If not, perhaps I should change my
+program ?? If you find my summary of the MIDI fast clock
+interesting, I think you can sent it to Greg O'Sullivan.
+(or post it to comp.sys.acorn ???).
+
+Loek.

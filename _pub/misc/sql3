@@ -1,0 +1,958 @@
+ftp://speckle.ncsl.nist.gov/isowg3/dbl/BASEdocs/sql3overview.txt
+
+Note:  This paper was prepared in November 1992 for presenation
+       at the ISMM conference on knowledge and information management
+       (CIKM) in Baltimore, MD.  It references  the July 1992
+       SQL3 base document.  It has not been updated since that time.
+
+
+                    Object SQL:  Language Extensions
+                       for Object Data Management 
+
+
+                          Leonard J. Gallagher
+                Information Systems Engineering Division
+             National Institute of Standards and Technology
+                         Gaithersburg, MD  20899
+
+
+
+                                Abstract 
+ 
+Database Language SQL is enjoying success as an effective International
+Standard for the definition and management of relationally structured
+data.  The first SQL standard, in 1986, provided basic language
+constructs for defining and manipulating tables of data; a revision in
+1989 added language extensions for referential integrity and generalized
+integrity constraints; and the most recent revision in 1992 provides new
+facilities for schema manipulation and data administration, as well as
+substantial enhancements for data definition and data manipulation.  A
+companion standard for Remote Database Access (RDA), also completed in
+1992, provides the basic services and protocols for SQL interoperability
+in a client/server environment.  National and international SQL
+standardization committees are now focusing on development of future
+extensions for meeting the stated requirements of managing complex
+objects in engineering and multimedia environments.  These extensions
+include object identifiers, abstract data types, inheritance hierarchies,
+and all of the other features normally associated with object data
+management.  This paper presents the object management features
+contained in the draft specification for the next SQL standard, discusses
+problems and alternatives, and addresses planned future standardization
+activities.
+
+1  Introduction
+
+Data management requirements for many scientific and engineering
+applications often exceed the capabilities of existing database
+management systems.  Such applications often require a logically
+integrated database of diverse data (e.g. documents, graphics,
+alphanumeric records, complex objects, images, voice, video) stored in
+geographically separated data banks under the management and control of
+heterogeneous data management systems.  An over-riding requirement is
+that these various data managers be able to communicate with each other
+and provide shared access to data and data operations and methods under
+appropriate security, integrity, and access control mechanisms.
+
+Database Language SQL [8] and its distributed processing counterpart,
+Remote Database Access (RDA) [10], are important International Standards
+that are able to address a significant portion of the above data
+management requirements.  SQL is particularly appropriate for the
+definition and management of data that is structured into repeated
+occurrences having common data structure definitions.  SQL provides a
+high-level query and update language for set-at-a-time retrieval and
+update operations, as well as required database management functions
+for schema and view definition, integrity constraints, schema
+manipulation, and access control.  SQL provides a data manipulation
+language that is mathematically sound and based on a first-order
+predicate calculus.  SQL is self-describing in the sense that all schema
+information is queryable through a set of catalog tables.  Features of
+the most recent SQL standard are discussed in [4], [5], and [12].
+
+Early in 1991, technical committees for SQL standardization, operating
+under the procedures of the American National Standards Institute (ANSI)
+and the International Organization for Standardization (ISO), committed to
+enhancing SQL into a computationally complete language for the definition
+and management of persistent, complex objects.  This includes the
+specification of abstract data types, object identifiers, methods,
+inheritance, polymorphism, encapsulation, and all of the other facilities
+normally associated with object data management.  Preliminary
+specifications for these facilities are contained in the most recent SQL3
+Working Draft [9].
+
+This article focuses on the new object-oriented facilities proposed for
+inclusion in SQL3.  In particular, Section 2 describes the preliminary
+status of abstract data type (ADT) facilities and object identifiers. 
+Section 3 discusses newly added features for compound SQL statements,
+exception handling, and flow of control.  Section 4 addresses
+parameterized data types, including generator types such as LIST, SET,
+and ARRAY.  Section 5 discusses stored procedures, Section 6 describes
+other supporting features, and Section 7 draws some conclusions.
+
+2  Object Definition
+
+Earlier versions of the SQL3 Working Draft specified object-oriented
+facilities such as User-Defined data types, Assertions, and Triggers to
+support the object notions of abstraction and encapsulation.  They also
+included the generalization and specialization of tables in a table
+hierarchy that supported multiple inheritance.  In each case, these
+object concepts were only partially supported without fully enforcing
+them as a discipline.  There was no notion of object identifiers and no
+notion of class hierarchies for user-defined data types.
+
+The newest SQL3 Working Draft [9] now addresses the requirement for
+true "objects" and "object identifiers" in SQL and also specifies
+supporting features such as encapsulation, subtypes, inheritance, and
+polymorphism.  The following subsections briefly describe the current
+status of these features.  Of course, as with any draft, the
+specifications are subject to revision and improvement as they evolve
+over the next two or three years before final standardization.
+
+2.1  Abstract data type (ADT) 
+
+The abstract data type facility provides the capability to define and
+manage persistent data type definitions, including structures and
+operations on those structures.  A new ADT can be "constructed" from
+any existing data type, including previously defined abstract data types,
+known to the current SQL environment.
+
+An abbreviated version of the current syntax is as follows:
+
+  CREATE TYPE <ADT name>
+      [ <OID options> ]
+      [ <subtype clause> ]
+      [ <member list> ]
+
+The <OID options> are discussed in Section 2.2 and the <subtype clause>
+is discussed in Section 2.5 below.  The <member list> specifies the
+attributes, operations, and other methods applicable to the ADT
+definition.  
+
+Attributes contain an <encapsulation level>; otherwise, an attribute
+definition has the same syntax as a regular relational column definition. 
+An <encapsulation level> is specified as either PUBLIC, PRIVATE, or
+PROTECTED.  Public components form the interface of the ADT and are
+visible to all authorized users of the ADT.  Private components are
+totally encapsulated, and are visible only within the definition of the
+ADT that contains them.  Protected components are partially
+encapsulated, being visible both within their own ADT and within the
+definitions of all subtypes of that ADT.
+
+Operations on an ADT may include EQUALS and LESS THAN.  The EQUALS
+clause identifies a function that specifies conditions under which two
+instances of the defined data type are considered to be equal.  The LESS
+THAN clause identifies a function that specifies a comparison ordering
+over data type instances.  The definitions of equality and ordering,
+taken together, specify the semantics to be used in the SQL comparison
+predicate when applied to ADTs.  If the LESS THAN definition is not
+specified, then the ordering tests of the comparison predicate must
+return an unknown value.
+
+Other methods associated with ADTs include FUNCTION definitions. 
+FUNCTIONs operate on one or more ADT instances and return either
+Boolean, if the result is to be used as a truth value in a Boolean
+predicate, or a single value of a defined data type, if the result is to
+be used as a value specification.  Functions may be SQL functions,
+completely defined in an SQL schema definition, or they may be external
+function calls to functions defined in standard programming languages
+(see 2.4).  
+
+Special "constructor" and "destructor" functions are defined to make or
+remove instances of an abstract data type.  At the present time
+constructor and destructor functions are invoked implicitly through
+Insert or Delete operations on a table (see 2.3).
+
+Special methods, identified as CAST functions, specify how an ADT may be
+mapped to other existing data types.  For example, an IMAGE ADT may be
+mapped to a BIT STRING representation.  With the ability to include CAST
+specifications in any ADT definition, a data type definer can define
+mappings to specific external representations.  In this way the internal
+representation may be kept PRIVATE and not directly accessible, thereby
+allowing efficient implementation.
+
+Abstract data type definitions and SQL or external function declarations
+are treated just like any other SQL objects as far as access control and
+other usage privileges are concerned.  Access control is independent of
+encapsulation since encapsulation defines the structure of what is
+possible to see and access control determines who can see that
+structure.  All names are qualified by the schema name of the containing
+schema and by the catalog name of the containing catalog.  Each such
+object is "owned" by the authorization identifier of the schema in which
+it is defined and all privileges to use the object, to "see" its
+representation, or to modify its definition must be explicitly granted by
+the object owner.  Privileges on existing ADTs may be GRANTed and
+REVOKEd and new ADTs or function declarations may be ADDed or DROPed
+from the schema as part of the SQL schema manipulation language.
+
+2.2  Object identifiers
+
+Object identity is that aspect of an object that never changes and that
+distinguishes the object from all other objects.  Ideally, an object's
+identity is independent of its name, structure, or location.  Object
+identity is therefore a unique identification of an object that is
+independent of the state of that object, and which persists over time. 
+The identity of an object persists even after the object no longer
+exists (e.g. like a timestamp), so that it may never be confused with the
+identity of any other object.  Other objects can use the identity of an
+object as a unique way of referencing it.
+
+The <OID options> clause in an ADT definition allows several alternatives
+for object identifier (OID) specification: 
+
+      WITH OID VISIBLE,
+      WITH OID NOT VISIBLE, or
+      WITHOUT OID
+
+If WITH OID is specified, then an OID value is generated when the object
+is created to give that object an immutable identity.  The OID can be
+referenced by an "object reference" in constraints, queries, and other
+ADT definitions.  If NOT VISIBLE is specified, then the OID value may not
+be passed as a parameter to functions or stored in a host language
+variable.  If WITHOUT OID is specified, then the ADT does not have an
+object identifier; instead, each instance represents itself just like
+values of primitive data types do.
+
+There is a continuing debate in the SQL standardization committees as to
+whether SQL should support all three of the above options, or if every
+new ADT definition should be assumed to carry a unique object identifier. 
+The outcome of this debate will not affect the functionality of the new
+language, but it may influence its appearance and style.
+
+PUBLIC components of an ADT are accessible to authorized users through
+a special "attribute reference" operator (i.e. <ADT reference>.<attribute
+name>).  If the ADT has WITH OID specified, then the <ADT reference> will
+be to an object identifier of a specific ADT; if the ADT has WITHOUT OID
+specified, then the <ADT reference> will be to the ADT value itself.  The
+attribute reference identifies a specific component of the ADT instance
+and permits the user to read or modify its value.
+
+2.3  Object management
+  
+Object ADTs are subject to special "constructor" and "destructor"
+functions that either create a new instance of the ADT and make it part
+of the database or remove an instance of an ADT from the database. 
+Since SQL is a "table-based" language, SQL designers have to address
+issues concerning whether or not SQL object instances may exist outside
+of table occurrences.  If SQL objects are allowed to exist outside of
+tables, then new syntax to manipulate them and new structures to hold
+collections of them must become part of the language.  Although these
+issues are still subject to debate and modification, the current status
+is to require that all object manipulation be achieved through table
+operations.
+
+SQL3 currently allows specification of a "tabular" shell over an ADT
+class.  In this way, constructor and destructor functions are
+automatically invoked when rows are inserted or deleted from the table,
+and the table itself is the collection of all object occurrences.  SQL
+query and update statements may then be applied to the table without
+the need for any special language enhancements.  If a requirement
+surfaces later to allow objects to exist and be managed independently of
+tables, then it can be handled as an upward compatible language
+enhancement.
+
+In order to accommodate this implicit invocation of constructor and
+destructor functions, minor enhancements are needed to the syntax and
+semantics of the CREATE TABLE and INSERT statements (see [3]).  The
+statement "CREATE TABLE T OF <ADT name>" creates a tabular envelope
+around the abstract data type specified by <ADT name> and all attributes
+of the abstract data type become columns of the new table T.  Object
+instances may then be managed by the usual SQL Select, Update, and
+Delete statements.
+
+The statement "INSERT INTO T <insert spec> ALIAS <name>", using the new
+ALIAS option with an Insert statement, returns the object identifier of
+any new object created by the Insert statement to the <name> variable. 
+Syntax rules prohibit specification of an alias when the underlying ADT is
+specified WITHOUT OID.
+
+2.4  Methods and functions
+
+An abstract data type includes not only a collection of attributes but
+also the methods that define the behavior of the ADT.  Some of the
+methods associated with an ADT might be realized by means of data that
+is stored in the database, while others might be realized as executable
+code (functions).  An implementation of an ADT is the stored data
+together with the data structures and code that implement the behavior
+of the ADT.
+
+As seen in Section 2.1, methods may be encapsulated within the ADT
+definition.  Specific methods for determining equality, and ordering when
+appropriate, are then usable in regular SQL comparison predicates.  As
+we have seen, other methods can be defined as special operators on ADTs
+or as predicates that return truth values.  A single value returned from
+a function call can be used any place in the SQL language that a single
+value is allowed.  A truth value returned from a function call can be
+used as one of the terms in a boolean predicate.
+
+Functions may be either SQL functions or external functions.  SQL
+functions are defined completely in SQL, whereas external functions have
+only their interface definition specified in SQL, with the content of the
+function written in some programming language (e.g. Ada, C, or eventually
+C++).  An SQL function may be "defined", or an external function may be
+"declared", as an independent schema element, as part of an ADT
+definition, or as part of a module definition.
+
+The syntax of an SQL function is:
+
+      [CONSTRUCTOR | ACTOR | DESTRUCTOR] FUNCTION <function name>
+      <parameter declaration list>
+      RETURNS <data type>
+      <SQL statement> ;
+      END FUNCTION
+
+Only constructor or destructor functions may create or destroy new ADT
+instances; they have already been discussed above.  An actor function is
+any other function that reads or updates components of an ADT instance
+or accesses any other parameter declared in the <parameter declaration
+list>.  A parameter in the parameter list consists of a parameter name
+and an SQL data type.  The RETURNS clause specifies the SQL data type
+of the result returned.  Since all data types in an SQL function are SQL
+types that must accommodate Null values, it is not necessary to worry
+about "indicator" parameters to convey Nulls.
+
+The <SQL statement> may be any SQL statement, including compound
+statements and control statements (see Section 3).  To accommodate SQL
+functions, SQL3 specifies the following new SQL statements:
+
+ -    A NEW statement that allows creation of a new OBJECT ADT instance;
+      it is only allowed in a CONSTRUCTOR function.
+
+ -    A DESTROY statement that destroys the existence of an OBJECT ADT
+      instance; it is only allowed in a DESTRUCTOR function.
+
+ -    An ASSIGNMENT statement that allows the result of an SQL value
+      expression to be assigned to a free standing local variable, a
+      column, or an attribute of an ADT.
+
+ -    A CALL statement that allows invocation of an SQL procedure.
+
+ -    A RETURN statement that allows the result of an SQL value
+      expression to be returned as the RETURNS value of the SQL
+      function.
+
+The syntax of an external function declaration is:
+
+    DECLARE EXTERNAL <external function name>
+           <formal parameter list>
+           RETURNS <result data type>
+                 [ CAST AS <cast data type> ]
+           LANGUAGE <language name>
+
+The <formal parameter list> is a list of SQL data types.  If a data type
+in the parameter list is supported in the programming language identified
+by the LANGUAGE clause, then the corresponding programming language
+routine has two parameters for that data type; the second parameter is
+the "indicator" parameter to convey Null values.  If a data type in the
+parameter list is an ADT not supported in the programming language
+identified by the LANGUAGE clause, then the corresponding programming
+language routine has two parameters for the base type of each attribute
+in the ADT definition, recursively.  Again, the second parameter in each
+case is an "indicator" parameter.  The actual mapping from the <formal
+parameter list> in the external function declaration to the parameter
+list of the programming language routine can become quite complex, so
+techniques for better management of cross-language calls are under
+active consideration.
+
+The CAST AS clause is a convenience to allow "encapsulated" casting from
+a programming language data type to an SQL data type.  For example, an
+SQL DATETIME data type that appears in the formal parameter list is
+automatically cast to its character string literal representation before
+it is passed to a programming language routine, e.g. FORTRAN.  The CAST
+AS clause could also automatically cause the character string RESULT to
+be re-cast into an SQL DATETIME value.  Since every SQL data type has a
+defined CAST operation to and from character string representations, it
+is possible to pass any SQL data type to any programming language that
+supports character strings.  More sophisticated data type
+correspondence, especially to object programming languages such as C++,
+will likely be the subject of near-term considerations.
+
+2.5  Subtypes and inheritance
+
+Specification of "UNDER <ADT name>" in the <subtype clause> of an ADT
+definition (see 2.1) permits a new ADT to be defined as a subtype of an
+existing ADT.  A type can have more than one subtype and more than one
+supertype.  Thus a subtype is a specialized type of one or more
+supertypes and a supertype is a generalized type of one or more
+subtypes.  A supertype shall not have itself as a proper subtype and a
+subtype family shall have exactly one maximal supertype.
+
+Inheritance is an abstraction mechanism that adds to the power of data
+abstraction by allowing classes of objects to be related hierarchically. 
+Inheritance allows classes to share definitions with other classes,
+thereby supporting newer, more specialized, data definitions without
+losing the existing properties and operations of the superclass.
+
+Through inheritance, new types can be built under older, less specialized
+types rather than having to rewrite properties from scratch. 
+Inheritance makes it possible to build a hierarchy of related ADTs, i.e. a
+"type hierarchy", that share the same interface, and possibly the same
+representation and implementations.  As we move up in the inheritance
+hierarchy, types become more generalized; as we move down types become
+more specialized.  These generalization/specialization capabilities allow
+more accurate and succinct modeling of applications.
+
+The SQL implementation of a type hierarchy (see [3] and [11]) requires
+that an instance of a subtype is also an instance of all of its
+supertypes.  Every instance is associated with a "most specific type"
+that corresponds to the lowest subtype assigned to the instance.  At any
+given time, an instance must have exactly one most specific type.  Note
+that the most specific type of an instance need not correspond to a leaf
+type in the type hierarchy.  For example, a type hierarchy might consist
+of a maximal supertype PERSON that has STUDENT and EMPLOYEE as two
+subtypes, and STUDENT may have two subtypes GRAD and UNDERGRAD.  An
+instance in this hierarchy might be created with a most specific type of
+STUDENT, e.g. a special, non-degree student, even though STUDENT is not
+a leaf in the type hierarchy.
+
+As we saw above, every attribute definition in an ADT has an
+encapsulation level specified as either PUBLIC, PRIVATE, or PROTECTED. 
+Public and protected components are visible to the definitions of all
+subtypes of that ADT, but private components are not.
+
+A subtype can define constructor, actor, and destructor functions just
+like any other ADT.  All operations of the supertype are invocable from
+the subtype, so there is a high potential for name conflicts when the
+subtype defines more specialized operations.  Name resolution rules,
+described in the following section, ameliorate this problem.
+
+Since an instance must have at most one "most specific type" associated
+with it, a given instance cannot have two sibling types simultaneously as
+its most specific type.  For example, in the above student type
+hierarchy, an instance of PERSON may not be an instance of both STUDENT
+and EMPLOYEE simultaneously.  However, real world examples require that
+we have some method for modeling a person as both STUDENT and
+EMPLOYEE, for this can certainly be the case.  To handle these
+situations, SQL provides "multiple inheritance", i.e. a subtype can have
+more than one direct supertype.  With multiple inheritance, we can define
+a new type STUDENT-EMP which is a subtype of both STUDENT and
+EMPLOYEE.  A person who is both a student and an employee can be
+modeled as an instance of the STUDENT-EMP type.  In this way an instance
+will satisfy the requirement to always have a "most specific type".
+
+Multiple inheritance could lead to ambiguous inheritance of components
+from its supertypes, so SQL provides some disambiguity rules as follows:
+
+-     If an attribute in more than one supertype is inherited from a
+      common supertype higher in the hierarchy, then only the one from
+      the common supertype, is inherited.
+
+-     If an attribute with the same name in each of the supertypes are
+      not inherited from a common supertype higher in the hierarchy, then
+      the type definition is invalid unless the type definer renames the
+      inherited components to remove the name clash.
+
+These rules, and other related issues, are subject to improvement and
+evolution as the SQL ADT facility stabilizes over the next two or three
+years.
+
+2.6  Polymorphic functions
+
+Polymorphism is the ability to invoke an operation on any of several
+different objects and have that object determine what to do at run-
+time.  A polymorphic function is one that can be applied in the same way
+to a variety of data objects.  Support for polymorphism involves
+technical decisions concerning early or late binding among objects and
+the procedures that invoke their methods.  To help address some of these
+technical decisions, a number of techniques have evolved (see [1]), such
+as:
+
+Overloading.  The ability to assign the same name to more than one
+function or procedure -- name resolution is then determined by a set of
+rules, thereby allowing a processor to distinguish among different
+functions of the same name by examining the "type" of the input data.
+
+Coercion.  The ability to omit semantically needed type conversions -- we
+have already seen that SQL uses this technique in some of its parameter
+passing to external functions.
+
+Inclusion.  The ability to manipulate objects of a subtype "as if" they
+were objects of a supertype -- possibly with a function of the same name
+that calls different routines.
+
+Generalizing.  The ability to specify that a parameter should "take on"
+the type of some supertype during processing of a specific function call.
+
+The resolution rules to support polymorphism are derived from one basic
+concept, i.e. that for any particular function invocation, there must
+exist a single "best match" from the candidate functions that are "in
+scope".  When a function call is executed, the unique "most specific type"
+of the various input parameters is used to help define the "best match"
+according to the following rules, many of which are derived from those
+used by C++:
+
+-     Begin with the set of all functions that are "in scope" for a
+      particular function call, i.e. those that are defined or declared
+      with the calling function name in the statement, procedure, module,
+      or schema associated with the function call.
+
+-     For each argument, determine the set of functions that
+      is a "best match" for that argument, then take the
+      intersection of these sets.  Unless this intersection has exactly
+      one member, the call is illegal.  That is, the function selected must
+      be a "strictly better match" for at least one argument than every
+      other possible function, but not necessarily the same argument for
+      each function.
+
+-     To decide which functions are the best match for each argument,
+      agree:  an "exact match" is better than one based on type coercion
+      (i.e. CASTing), an implicit conversion to the "closest" supertype is
+      better than SQL or user-defined type coercion, and an implicit SQL-
+      defined CAST is better than an implicit user-defined CAST.
+
+
+3  Control Structures
+
+Support for SQL functions is discussed in Section 2.4 above.  We saw
+there that it was necessary to introduce several "control" statements
+into the SQL language, e.g. ASSIGNMENT, CALL, and RETURN.  The obvious
+next step was to consider if more control statements and other
+"programming language" facilities should be added to SQL.  In particular,
+SQL standardization committees decided that it was appropriate to
+specify SQL syntax and semantics for the following facilities (see [6]):
+
+-     sequences of SQL statements in a procedure instead of the single
+      SQL statement allowed in the current SQL standard, 
+
+-     flow of control statements, such as looping, branching, etc.,
+
+-     exception handling, so that when an exception is raised, the SQL
+      function or procedure can resolve the issue internally, or
+      propagate the exception to the next outermost exception handler,
+      rather than always returning control to the main calling routine.
+
+These 3GL programming language facilities are valuable because they
+allow procedural encapsulation and they allow complete behavior to be
+specified within an ADT definition without the need to escape to a
+procedure written in some other language.  Complex behavior can be made
+available to the host application program via a single call.  This offers
+benefits in both cost and control.  In SQL'92, all procedures are single
+SQL statements so multiple calls must be made to address complex
+problems.  All temporary state and flow of control belong to the host
+language application, thereby adding complexity to the application
+program that could be encapsulated in the SQL procedure.  The facilities
+in the following paragraphs are included in the current SQL3 Working
+Draft [9].
+
+3.1  Compound statement
+
+A compound statement is a statement that allows a collection of SQL
+statements to be grouped together into a "block".  A compound statement
+may declare its own local variables and specify exception handling for an
+exception that occurs during execution of any statement in the group. 
+Its syntax is as follows:
+
+      [ <beginning label>: ]
+      [ <variable declaration list> ]
+      BEGIN
+           [ <SQL statement list> ]
+           [ <exception handler> ]
+      END [ <ending label> ]
+
+      <exception handler> ::=
+           EXCEPTION [ {WHEN <condition> THEN <SQL statement list>}... ]
+
+      <condition> ::= <exception name list> | OTHER
+
+An <exception name> is unique within a <module> and may be declared with
+an exception declaration (see 3.2).
+
+3.2  Exception handling
+
+An exception declaration establishes a one-to-one correspondence
+between an SQLSTATE error condition and a user-defined exception name. 
+It's syntax is as follows: 
+
+      DECLARE <exception name> EXCEPTION FOR SQLSTATE <SQLSTATE
+      literal>
+
+The exception handling mechanism under consideration for SQL3 is based
+very strongly on the mechanism defined in Ada.  Each compound statement
+is assumed to have an exception handler; if one is not explicitly defined,
+then a default handler is provided by the system.  When the execution of
+a statement results in an active exception condition, then the containing
+exception handler is immediately given control.  Ultimately, the exception
+handler terminates with one of the following behaviors:
+
+-     The compound statement terminates with the active exception
+      condition still active, or
+
+-     The compound statement terminates with a new active exception
+      condition, or
+
+-     The compound statement terminates successfully, as though no
+      exception occurred, and there is no outstanding active exception
+      condition.
+
+The exception handler may execute SIGNAL or RESIGNAL statements to
+identify a new exception name or to pass on the existing exception name. 
+If an exception condition occurs in the exception handler itself, then the
+compound statement is terminated and that exception condition becomes
+the "active" exception condition.  
+
+3.3  Flow of control
+
+The following program flow of control statements are currently specified
+in the draft SQL3 document:
+
+-     A CASE statement to allow selection of an execution path based on
+      alternative choices.  A <value expression> is executed and,
+      depending on the result, control is transferred to the appropriate
+      block of statements.
+
+-     An IF statement with THEN, ELSE, and ELSEIF alternatives to allow
+      selection of an execution path based on the truth value of one or
+      more conditions.  
+-     A LOOP statement, with a WHILE clause, to allow repeated execution
+      of a block of SQL statements based on the continued true result of
+      the <search condition> in the WHILE clause.  A LOOP statement is
+      also allowed to have a statement label.
+
+-     A LEAVE statement to provide a graceful exit from a block or loop
+      statement.
+
+4  Parameterized Types
+
+The ability to define abstract data types does not by itself provide the
+capability to define "parameterized" types.  A parameterized type is
+really a "type family" with a new data type generated for each value of
+an input parameter.  For example, an ADT definition for VECTOR(N) can be
+thought of as a family of data types, one for each positive integer value
+of N.
+
+We may think of a "parameter" as any value of a data type known to the
+SQL environment, e.g. an integer value in the example above.  We may also
+think of a "parameter" as a reference to an existing data type, rather
+than as a value of that type.  For example, we may wish to specify that
+VECTOR(N) is really a vector of integers, or reals, or decimals with fixed
+precision and scale.  This can be achieved by passing a data type name to
+the ADT definition instead of just a data type value. 
+
+The syntax for specifying a parameterized type in SQL3 is very similar to
+that for specifying a regular ADT, namely:
+
+  CREATE TYPE TEMPLATE <template name>
+      ( { <template parameter declaration> }... )
+      <abstract data type body>
+
+  <template parameter declaration> ::=
+      <parameter name> { <data type> | TYPE }
+
+The keyword TEMPLATE indicates that the specification is for a
+parameterized ADT rather than a regular ADT.  The keyword TYPE
+indicates that a parameter is a data type name rather than a data type
+value.  The <abstract data type body> is analogous to the body of a
+regular ADT definition.
+           
+A parameterized type is referenced by specifying the type template name
+and an actual parameter list.  Each actual parameter must be a value, or
+a data type, that can be determined at syntax evaluation time, i.e.
+usually a literal or a data type name.  If the actual parameter is a data
+type name, then the formal template parameter must specify TYPE (see
+[2]).
+
+You are allowed to define more than one type template with the same
+name, just as you may define more than one <SQL function> with the same
+name.  The rules for matching a parameterized type reference to a
+parameterized type definition are the same as the rules for matching
+polymorphic functions (see 2.6).
+
+4.1  Generator types
+
+A generator type is a special parameterized type supported in the SQL
+language itself, rather than defined by a user.  Examples of generator
+types are LIST, SET, and ARRAY.
+
+At the present time SQL3 only defines a limited number of base data
+types, including: fixed and variable length character strings, fixed and
+variable length bit strings, fixed and floating point numerics, dates,
+times, timestamps, intervals, Boolean, and enumerations.  The attributes
+of an ADT must therefore be defined as one of these base data types or
+as a previously defined ADT.
+
+There is a need to extend the pre-defined, base data types to include
+"generator" data types such as those specified in the emerging ISO
+common language-independent datatype (CLID) specification [7].  The CLID
+specification includes, among others, the following generator types:
+
+ ARRAY {[<lower>..<upper>]}... OF <base type>
+
+ LIST OF <base type>
+
+ SET OF <base type>
+
+ CHOICE ({<identifier>:<base type>}...)
+
+ RECORD ({<identifier>:<base type>}...)
+
+ARRAY is a parameterized data type consisting of a finite number of
+dimensions, whose input parameters are the upper and lower limits of
+each dimension, and a specification of the base data type of each item in
+the array.  Base operations on an array are very simple, consisting only
+of the ability to select or replace an item from the array and test for
+array equality.  There is no LESS THAN comparison for sequential
+ordering.
+
+LIST creates a new data type whose values are ordered sequences of
+values from the <base type>, including the empty sequence.  Base
+operations on a list are the very simple Head and Tail operations that
+determine an ordering.  Other operations to deal with  "position" within a
+list could be added in subtype specializations.
+
+SET creates a new data type whose values are taken from the power set
+(i.e. the set of all subsets) of the <base type>, with operations
+appropriate to a mathematical set algebra (i.e. Union, Intersection, and
+Complement).  In order to ensure uniqueness of representation, the <base
+type> is required to be discrete, meaning it cannot have a distance
+function defined that yields any limit points that are elements of the
+<base type>.
+
+CHOICE creates a new data type each of whose values is a single value
+from one of a set of alternative data types, logically labelled by the
+name of the alternative selected.  Each alternative data type is labelled
+by a "field name" that is unique within a given Choice-type, but there is
+no requirement that the <base type>s themselves be unique within a
+Choice-type definition.  Operations on instances of a Choice-type
+include: checking for equality, creating new Choice instances, testing the
+field name of a given instance, and casting from a Choice instance to an
+instance of the base data type of the named field.
+
+RECORD creates a new data type whose values are aggregations of named
+values from a collection of named components.  Each component consists
+of a "field name" and an associated <base type>.  Each aggregation has
+value for each named field.  Operations on Record-type allow checks for
+equality, building an aggregate from field values, and selecting the value
+of a given field.
+
+4.2  Distinct types
+
+Sometimes it is desirable to be able to distinguish between table or ADT
+attributes that have the same underlying ADT definition.  For example,
+table T1 might have a column named Cartesian_Coordinate that is defined
+to have the data type POINT and table T2 might have a column named
+Polar_Coordinate that is also defined to have the data type POINT.  The
+POINT data type may have a DISTANCE function defined to calculate the
+distance between any two points, but clearly the calculation
+
+  DISTANCE ( T1.Cartesian_Coordinate,
+                 T2.Polar_Coordinate) 
+
+may not be a meaningful calculation.  
+
+The SQL3 draft provides a facility for the user to declare that two
+otherwise equivalent ADT declarations are to be treated as "distinct"
+data types.  The keyword DISTINCT used in an ADT declaration indicates
+that the resulting type is to be treated as "distinct" from any other
+declaration of the same ADT.
+
+
+
+5  Stored Procedures
+
+In the existing SQL'92 standard, a module is a persistent object created
+by the Module Language.  It is a named package of procedures that can be
+called from an application program, where each procedure consists of
+exactly one SQL statement.  However, there is no requirement that an
+implementation be able to execute Module Language (the alternative is
+Embedded SQL) and the resulting persistent module is not stored as part
+of the SQL schema, is not reflected in the information schema tables, and
+cannot be passed across an RDA connection to a remote site.
+
+In the emerging SQL3 specification, standardization committees have
+recognized the requirement for some "standard" capability to define
+persistent modules that "live" in the SQL schema and whose procedures
+may be called from any SQL statement in the same processing environment. 
+In SQL3 the CREATE MODULE statement has the same status as any other
+schema definition statement.  The result of execution is a module that is
+managed by SQL rather than by the proprietary facilities of the host
+operating environment.  Module definitions are reflected in the
+Information Schema just like any other schema object and they are
+subject to ownership and access control declarations.
+
+A module definition consists of a LANGUAGE clause, to identify the
+programming language to which it is bound, an AUTHORIZATION clause to
+identify a Schema, and a collection of procedures.  Each procedure
+consists of an SQL parameter list and a single SQL statement, which may
+be a compound statement (see 3.1).  An SQL CALL statement can access any
+of the procedures, either locally or remotely, and pass parameters to it.
+
+The primary benefit of persistent, stored procedures is that
+implementations are able to optimize groups of statements rather than
+just individual statements.  Entire packages of SQL procedures can be
+sent across a wire to a remote SQL conforming site, be optimized at that
+site, and then be executed with a single call when needed.  The ISO RDA
+standardization committee is now considering RDA enhancements that
+would support database stored procedures that persist beyond the end
+of an RDA dialogue.  
+
+6  Supporting Features
+
+The features discussed above are not the only SQL enhancements
+specified in the SQL3 Working Draft.  Some of the following features
+offer desirable functional extensions while at the same time support the
+object management goals of abstraction and encapsulation.  These
+features have "preliminary" syntax and semantics specified in SQL3, and
+generic support for some of them may already be included in various
+commercial SQL products.  However, all SQL3 specifications are subject
+to substantial evolution or reconsideration before adoption in any
+future SQL standard, so extreme care must be used before specifying any
+of them as requirements in an SQL procurement.
+
+Dynamic assertions.  Support for integrity constraints that are
+triggered by specific database actions, such as after update or before
+insertion.  Assertions are "dynamic" in that they may reference before
+and after images of the database or may depend upon temporary data
+values that only exist at the time the invoking statement is executed.
+
+Dynamic triggers.  Support for triggering a sequence of database actions
+based on a specific database action, such as after delete, thereby
+supporting the object notion of encapsulation.  Assertions and Triggers
+make it possible for object self-management to be fully specified in a
+database schema, with increased opportunity for performance optimization
+by the underlying database management system.
+
+Recursive expressions.  Support for SQL expressions of indefinite,
+recursive depth, such as those arising out of "bill-of-materials" part's
+hierarchies.  
+
+Existential and universal quantifiers.  Support for more mathematically
+based SQL expressions involving the existential and universal quantifiers
+prevalent in 3-valued predicate logic.
+
+SIMILAR predicate.  A facility for pattern matching in bit strings and
+character strings that allows construction of regular expressions
+equivalent to regular expressions in the POSIX standard, ISO/IEC 9945.
+
+Multiple null states.  A facility that allows user definitions for an
+arbitrary number of application specific Null values, such as "Unknown",
+"Missing", "Not Applicable", "Pending", etc.  Each such Null value would
+have a different representation in the database so that they can be
+distinguished by query expressions during retrieval or update.
+
+Roles and data security.  An enhanced facility for database security
+management that builds upon the existing Grant and Revoke definitions. 
+It extends the security model to include named "roles" in addition to
+schema objects, actions, and users.  With roles defined as a nested
+collection of authorized actions on schema objects, security
+administration becomes more efficient and manageable.
+
+Savepoints and subtransactions.  A subtransaction is a portion of a
+transaction that is marked for potential rollback without affecting the
+other parts of the transaction.  By setting and releasing savepoints, an
+application programmer is able to recover more easily from failed
+subtransactions, thereby leading to more efficient code.
+
+Database export and import.  Database export provides utilities for
+unloading a database definition and the data contents of a database into
+an external form, representable on various media, for the purpose of
+later automated re-generation.  Database import provides utilities for
+loading a database definition and contents from an external source. 
+Standardized specifications would make a database exported from any
+conforming SQL implementation importable into any other conforming SQL
+implementation.
+
+Cursor sensitivity.  The ability to specify a SENSITIVE option on a
+cursor definition, so that the cursor will always "see" concurrent
+modifications, in the same transaction, made to the underlying tables of
+the cursor definition.  This provides a measure of predictability, but
+possibly with performance implications.
+
+Asynchronous DML.  Support for being able to name SQL statements so
+that other work can be done while they are executing.  The names provide
+a mechanism for querying the status of outstanding statements.
+
+SQL multimedia class library (SQL/MM).  With the existence of abstract
+data types (ADTs) and generator types in SQL3, there is a new
+opportunity to consider standardization of the SQL interface to packages
+of high-level data objects for use in various application areas.  It
+makes sense to standardize packages for science and engineering, full-
+text and document processing, or methods for the management of
+multimedia objects such as image, sound, animation, music, and video.  A
+new standardization project has been proposed by ISO/IEC JTC1/SC21/WG3
+to develop a "companion standard" for SQL3 that would specify a class
+library of multimedia and other useful ADT packages.  This SQL/MM
+standard would provide an SQL language binding for multimedia objects
+defined by other standardization bodies (e.g. SC18 for documents, SC24
+for images, and SC29 for photographs and motion pictures).
+
+SQL external repository interface (SQL/ERI).  Not all data repositories
+are managed by SQL conforming processors.  In fact, most data in the real
+world is probably accessible only through non-SQL data managers.  Such
+data may be managed by non-SQL object database systems, library
+information retrieval systems, geographic information systems, or
+special purpose processors.  There is a real user requirement to gain
+access to this data in a standardized, full-function manner.  It makes
+sense to specify a "client" and a "server" interface to external
+repositories so that non-SQL systems can act as servers to SQL
+requests for data.  Non-SQL systems could use SQL3 ADT facilities to
+describe themselves to the external world, and then claim conformance to
+the new standard as an SQL/ERI Server.  They would need only respond to
+very simple SQL statements over a single ADT class at one time.  SQL
+processors could access this simple server interface, as SQL/ERI
+Clients, and then provide full-function SQL views over that data to SQL
+applications.  In this way an application program could use the full power
+and flexibility of the SQL language - with joins, recursive subqueries,
+transaction management, access control, and searched updates and
+deletes - without putting an undo processing burden on specialized data
+repositories.  Proposals to pursue an SQL/ERI standard are under
+discussion in ISO/IEC JTC1/SC21/WG3.
+
+7  Conclusion
+
+Database Language SQL provides standardized facilities for defining,
+managing, and protecting data.  With conforming implementations available
+on all sizes and makes of computing equipment, the SQL standard is
+leading the way toward unprecedented portability of database
+applications.  The emerging SQL3 specification includes object management
+capabilities over abstract, user-defined data types, thereby making SQL3
+a complete language for creating, managing, and querying persistent
+objects.  The new RDA standard promises to complete the link among SQL
+products from different vendors, leading to true open systems
+interconnection and interoperability among conforming SQL systems. 
+Emerging specifications for future revisions of SQL and RDA promise
+enhanced facilities to support intelligent objects and knowledge-based
+applications in a distributed processing environment.
+
+References
+
+[1]   Bauer, Jonathan, et al.  "Polymorphic functions", document ISO/IEC
+      JTC1/SC21/ WG3 DBL KAW-7 (X3H2-91-135), June 1991.
+
+[2]   Bauer, Jonathan, et al.  "Parameterized types", document ISO/IEC
+      JTC1/SC21/WG3 DBL KAW-41 (X3H2-91-274), October 1991.
+
+[3]   Beech, David and Hasan Rizvi.  "Tables and subtables as sets of
+      objects", document ISO/IEC JTC1/SC21/WG3 DBL KAW-8 (X3H2-91-
+      142rev), June 1991.
+
+[4]   Cannan, S.J. and G.A.M. Otten.  SQL - The Standard Handbook, McGraw-
+      Hill Book Co, Berkshire SL6 2QL England, October 1992.
+
+[5]   Date, C.J. with Hugh Darwen.  A Guide to the SQL Standard, Addison-
+      Wesley Publishing, Reading, MA 01867 USA, October 1992.
+
+[6]   Eisenberg, Andrew and B. Johnston.  "Additional control statements
+      for SQL", document ISO DBL KAW-14 (X3H2-91-179), June 1991.
+
+[7]   ISO/IEC CD 11404.  Common Language-Independent Datatypes (CLID),
+      Committee Draft, document ISO/IEC JTC1/SC22/WG11 N319R, September
+      1992.
+
+[8]   ISO/IEC 9075.  Database Language SQL, International Standard ISO/IEC
+      9075:1992, American National Standard X3.135-1992, American
+      National Standards Institute, New York, NY 10036, November 1992.
+
+[9]   ISO/IEC SQL Revision.  ISO-ANSI Working Draft Database Language SQL
+      (SQL3), Jim Melton - Editor, document ISO/IEC JTC1/SC21 N6931,
+      American National Standards Institute, New York, NY 10036, Tel: +1-
+      212-642-4900, July 1992.
+
+[10]  ISO/IEC 9579.  Open Systems Interconnection - Remote Database Access
+      (RDA), Part 1: Generic Model and Part 2: SQL Specialization, U.S.
+      public review text, document ANSI BSR X3.217-199x, Global
+      Engineering Documents, Irvine, CA 92714, November 1991.
+
+[11]  Kulkarni, Krishna, et al.  "Inheritance for ADT's", document ISO/IEC
+      JTC1/SC21/WG3 DBL KAW-6 (X3H2-91-133), June 1991.
+
+[12]  Melton, Jim and Alan Simon.  Understanding the New SQL: A Complete
+      Guide, Morgan Kauffman Publishers, San Mateo, CA 94403, October
+      1992.

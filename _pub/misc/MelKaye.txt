@@ -1,0 +1,32 @@
+Date: Sat, 11 Jun 1994 00:04:07 -0400 (EDT)
+From: Bill_von_Hagen@transarc.com
+To: alt.folklore.computers
+Subject: New Light on the Legend of Mel?
+The legend of Mel, meister programmer, is an occasional topic in this
+group and others.  In the legend, Mel worked for Royal McBee, an early
+computer company.  In the recent Boston Computer Museum Email Auction,
+I bought a set of manuals and a Read Flip Flop (5" square PCB, 4
+tubes, etc.) for an Royal McBee LGP-30.  The docs are dated 1959, and
+have some *great* illustrations of how drums work (all 4096 words of
+storage, on this particular system), what users will look like, etc...
+
+One of our local systems wizards recently posted the legend on one of
+our internal bboards to warm our hearts, which got me interested in
+reading the LGP-30 manuals I'd acquired (I'm funny that way.)  In the
+manual for the LGP-30 ACT 1 (Algebraic Compiler and Translator)
+Compiler, the preface contains the following attribution from Clay S.
+Boswell, Jr. (apparently ACT 1's designer):
+
+>> I wish to acknowledge my appreciation to the many people who
+>> offered suggestions and criticisms of the ACT 1 System.  In
+>> particular... Mel Kaye of Royal McBee who did the bulk of the
+>> programming.
+
+Perhaps Mel Kaye is the one true Mel - how many master programmers
+named Mel could there have been at Royal McBee?  Interesting data to
+ponder, regardless. I thought I should post this here, since the
+legend comes up every so often and the docs for these systems can't be
+all that common.
+
+       Bill von Hagen
+       wvh@transarc.com

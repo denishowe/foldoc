@@ -1,0 +1,50 @@
+From /G=Owen/S=Smith/O=SJ-Research/ADMD=INTERSPAN/C=GB/@mhs-relay.ac.uk Wed Feb 17 12:44:26 1993
+Newsgroups: comp.sys.acorn.tech
+From: /G=Owen/S=Smith/O=SJ-Research/ADMD=INTERSPAN/C=GB/@mhs-relay.ac.uk
+Subject: RMTidy (was Monty Python)
+Organization: Yale CS Mail/News Gateway
+Date: Tue, 16 Feb 1993 14:33:35 GMT
+
+tytgat@esat.kuleuven.ac.be (John Tytgat wrote:
+
+>But this also means that if an *application* claimed an RMA block, this
+>block will probably being overwritten during an RMTidy command (in the case
+>RMTidy would work in Desktop).
+
+Are you sure of this? I thought that RMTidy left allocated blocks alone.
+Indeed if it doesn't then some of my code is in serious trouble. My
+understanding is as follows:
+
+Each module in the module chain is issued a non-fatal finalisation (this is
+in fact the ONLY time modules get a non-fatal finalisation). Modules can
+free various bits of RMA up if they want, and indeed this is desirable. If
+they free their main workspace, then they should set their private word to
+zero rather than leaving it pointing at the freed block (a common bug).
+
+Compaction of the RMA occurs. Two sorts of blocks are regarded as movable:
+modules, and RMA blocks pointed to by the private words of modules. Any
+other allocated RMA blocks are not movable and are left where they are.
+
+Each module in the module chain is initialised. If they left their workspace
+allocated, then their private word will now point at the new location of the
+workspace. A frequent bug at this point is to ignore this and allocate some
+more workspace. Another bug is to assume that the workspace is in the same
+place it used to be. Thus if you have pointers in your workspace that point
+to other bits of your workspace, they must now be relocated. Hence using
+offsets is much easier. Also the fact that you get your workspace contents
+back means you can preserve state across RMTidy, plus of course you could
+leave some state in extra RMA blocks but then the compaction of the RMA
+won't be as good.
+
+Some frequent bugs/misunderstandings come out of all this:
+
+ 1) Non-fatal finalisation of modules is ONLY for RMTidy. RMReinit does a
+    fatal finalisation.
+
+ 2) You must take to care avoid losing RMA blocks across RMTidy. You should
+    either a) free your workspace yourself and set your private word to
+    0 in your finalisation, or b) check your private word in initialisation
+    and if it's contents are none zero don't allocate more workspace.
+
+Owen.
+

@@ -1,0 +1,2720 @@
+From A.K.Block@susx.ac.uk Thu Aug 18 15:33:01 1994
+From: Andrew Block <A.K.Block@susx.ac.uk>
+Subject: Re: Pattern mapped stereograms...
+To: dbh@doc.ic.ac.uk (Denis Howe)
+Date: Thu, 18 Aug 1994 15:28:59 +0100 (BST)
+In-Reply-To: <14476.9408181414@wombat.doc.ic.ac.uk> from "Denis Howe" at Aug 18, 94 03:14:31 pm
+Content-Type: text
+Content-Length: 100038
+
+Denis Howe wrote:
+>
+> > A 640*480 screen is just stored as a 640*480 sprite, each pixel of
+> > which indicates the height of the 'landscape' below.
+>
+> Does that mean your images are black and white or do you have a
+> corresponding sprite with colour info?
+Ooh, no... have you actually seen pattern mapped stereograms? They are very
+different from the random dot ones (though producing the same effect)...
+without focussing correctly, they just look like repeating patterns... the
+pattern itself is quite arbitrary (and can be chosen indepentandtly of the
+'3d' scene).
+
+
+>
+> How do you produce the depth map (or "shift map")?
+At the moment, however you like. This map is just a sprite that is
+screenloaded, for still images, or just a 'screenful' of data which can be
+drawn on like normal screen memory, for animations. Thus the moving square
+just involved writing the code required to draw a moving square normally, plus
+a few calls that render the 3d image of this.
+
+>
+> > when I say a 3d user interface, I mean really 3d.
+>
+> What, using infra-red tracking or a dataglove or something?
+Noooo... not quite that 3d! I mean you would be viewing the scene you are
+editing by focussing on the monitor strangely, and the mouse pointer would
+appear in that 3d scene as a particular shape, and it could be used to
+raise/lower parts of the scene using different tools...
+
+>
+> > there's even a load of ascii stereograms around!  They're quite
+> > impressive, really... if you'd like to see it, I can mail it
+>
+> Yes please.  One or two samples if you could.  TIA.
+>
+> > there are two different faqs SIRDS-FAQ and SIRDS.FAQ
+>
+> Yes please too.
+Okay... the longer one follows, I think the shorter one (about 1/2 size) is a
+contraction of this... Have fun...
+    MooooOooo
+
+
+Stereogram FAQ
+***************
+
+
+Archive-name: Stereogram-FAQ
+Last-modified: July 7th, 1994
+Changes-to: Stuart Inglis (singlis@cs.waikato.ac.nz)
+
+Contents
+========
+
+General questions:
+[1] What is a SIRDS/Stereogram/Hollusion/SIS?
+[2] Terminology
+[3] How do I see them? Everyone else can see them....
+[4] Where can I buy the posters from?
+[5] How can I generate them myself?
+[6] Which books/papers should I read?
+[7] What is a SIRTS/Ascii-Stereogram
+[8] Where is most of the discussion about SIRDS?
+[9] Internet locations for material (lots of pictures!)
+[10] Stereogram History
+
+Stereogram creation:
+[21] How can I write my own programs?
+[22] Creation of SIS
+[23] Multiple stereograms
+[24] Losing the color
+[25] C code for Windows
+[26] Use POV-RAY to build depth images? NEW!
+
+Miscellaneous/problems:
+[41] Stereogram Anecdote
+[42] Buying commercial programs
+[43] The image I see is "inverted" or "sunk-in"!
+[44] Call for stereograms
+
+
+Subject: [1] What is a SIRDS/Stereogram/Hollusion/SIS?
+======================================================
+
+Have you walked through a mall lately? These days, as you wander
+past most of the poster shops, there will be a large group of
+people staring at the same poster with surprisingly weird
+expressions on their faces. Some will be in the initial stages of
+denial or rejection---they will be concentrating, some slowly
+rocking their heads backwards and forwards, searching for an
+image that they have never seen before. Others will be grinning
+>from ear to ear, pointing at the poster, chuckling with their
+friends that a member of their group hasn't seem them yet.
+"Come on Bill, come on!", they cry and as Bill gets increasingly
+more frustrated he concentrates harder and harder, until finally (if
+he's lucky) he sees a true 3D image, without the need for special
+glasses or equipment.
+
+These pictures are known as Single Image Random Dot
+Stereograms (SIRDS), or Single Image Stereograms (SIS) depending
+on whether the picture contains random dots as a base for the 3D
+effect, or a repetitive pattern. Unfortunately, each commercial
+company has labelled them differently. Shop owners generally
+don't know what you mean, unless you say "Hollusion" or one of
+the many other specific names.
+
+Stereogram Mechanism
+====================
+
+-- Cristian Alb (luminita@poincare.mathappl.polymtl.ca)
+
+Disclaimer:
+All the opinions and ideas presented in this [article] are mine and
+are the result of my own reflections on the subject.
+
+Purpose:
+This document wants to provide an easy understanding of the
+mechanism of 3-D perception related to stereograms. Due to the
+fact that it is the result of genuine thinking, I hope that this
+document provides a more intuitive approach to the subject.
+
+What is a stereogram ?
+
+In this document I refer to stereogram (though, single image
+stereogram would be more correct) as being something like the
+image that follows:
+
+/=-- Y+-z-/=-- Y+-z-/=-- Y+-z-/=-- Y+-z-/=-- Y+-z-/=-- Y+-z-/=-- Y+-z-/=-- Y+-z
+ *wm  @m@w *wm  @m@w *wm  @m@w *wm  @m@w *wm  @m@w *wm  @m@w *wm  @m@w *wm  @m@
+O@=*+z @:/O@=*+z @:/O@=*+z @:/O@=*+z @:/O@=*+z @:/O@=*+z @:/O@=*+z @:/O@=*+z @:
+:*/- :m: *:*/- :m: *:*/- :m: *:*/- :m: *:*/- :m: *:*/- :m: *:*/- :m: *:*/- :m:
+)*/O@-Y|- )*/O@-Y)*/O@-Y)*/O@-Y)*/O@zO@)*/O@z zO@)*/O@zO@)*/O O@zO@*/O O@zwO@*/
+*):O*zO((@*):O*zO*):O*zO*):O*zO*):O*mO*z):O*mO(O*z):O*(O*z):+:O*(O*):+:O*()O*):
+m))@z@-+m~m))@z@-m))@z@-m))@z@-m))@z*@z@-m@z*@z@@@-m*@z@@@m@-m*@z@@m@-m*@z @@m@
+z:+*O-mm*Yz:+*O-mz:+*O-=O-mz:+*O-=O-mz:+*O--mz:+***-mz:+*)***-mz:+****-mz:-+***
+m@: @:~+( m@: @:~m@: @: @:~m@: @: @:~m@: @: @m@: @: @m@/@: @: @m@/@ @: @m@+/@ @
+-+(*m- o-)-+(*m- -+(*m-Om- -+(*m-Om- -+(*m-Om-+(*m-Om-+-+(*m-Om-+-+*m-Om-+|-+*m
+m*m  |== *m*m  |=m*m  |=m*m     |=m*m     |=m*m   |=m*m*m   |=m*m*m  |=m*m+*m
++ YY/ + ) + YY/ ++ YY/ ++ YY/*Y/ ++ YY/*Y/ ++ Y*Y/ ++-+ Y*Y/ ++-+ YY/ ++-+* YY/
+zY=) w ~/YzY=) w zY=) w zY=) z) w zY=) z) w zY=z) w zmzY=z) w zmzY=) w zmz|Y=)
++ oY*:+:ow+ oY*:++ oY*:m*:++ oY*:m*:++ oY*:m*:+oY*:m* *:+oY*:m* *:+Y*:m* *z:+Y*
+@ z++ *zo)@ z++ *@ z++ w+ *@ z++ w+ *@ z++ w+ *z++ w+ + *z++ w+ + *++ w+ +* *++
+()=ww+  *O()=ww+ ()=ww+-w+ ()=ww+-w+ ()=ww+-w+ =ww+-w+w+ =ww+-w+w+ ww+-w+w=+ ww
+z     +wO z     +z     +  +z     +  +z     +  +    + =  +    + =  +   + = ( +
+o +@~@= ozo +@~@=o +@~@+~@=o +@~@+~@=o +@~@+~@=+@~@+~@~@=+@~@+~@~@=@~@+~@~z@=@~
+)(w=++ +~z)(w=++ +~z)(w=++ +~z)(w=++ +~z)(w=++ +~z)(w=++ +~z)(w=++ +~z)(w=++ +~
+mz- O @  =mz- O @  =mz- O @  =mz- O @  =mz- O @  =mz- O @  =mz- O @  =mz- O @
+
+If you stare at this image by trying to focus on something behind
+the image, you will be able to see, after some-time, a 3-D scene
+with the letters F Y I detaching from the background. (If you read
+this document on a monitor it is easier to focus on your image
+reflected on the screen in order to get the 3-D illusion. If you
+read this document on paper, try to put a glass in front of it and
+do the same thing.)
+
+To understand the mechanism which allows you to get this
+peculiar effect, we should take a look at the process of vision.
+
+The feeling of "depth" that you get by looking at a statue instead
+of looking at a photo of the same statue, is due to the fact that
+the human body has two eyes.
+
+In the above example with the statue, we need just one eye to get
+the general shape of the statue. A humble photo does the same. It
+is the second eye that provides some "extra" information. This
+extra information is the "depth" of the various parts of the statue.
+In fact a "photo" gives just a bi-dimensional (x,y) representation,
+to get the third dimension (z) you need some "extra".
+
+                y
+                 |       |---------
+                 |    z  | Photo  |
+                 |    /  |        |
+                 |  /    ---------|
+                 |/_______ x
+
+By having two pictures of the same object, taken by two different
+positions, which is the case of the human eyes, you can get the
+"z" coordinate to that object. It is a simple geometrical question.
+
+In fig.1 we assume that there are 2 objects, X and Y which are at
+the same height (y) and different depths (z) and positions (x)
+
+|------------------------------------------------------------|
+|                                                     Fig.1  |
+|                                              z             |
+|                                         y    |             |
+|                    Y                      \  |             |
+|                                             \|_____x       |
+|                                                            |
+|                                                            |
+|                                                            |
+|                                                            |
+|                                                            |
+|                  X                             ^           |
+|                                                |           |
+|                                                |           |
+|                                                |           |
+|                      (o)     (o)                           |
+|                                             watching       |
+|                  left-eye  right-eye        direction      |
+|                                              (depth)       |
+|------------------------------------------------------------|
+
+In fig.2 are shown the kind of "pictures" that each eye gets:
+
+(fig.2L -left eye, fig.2R -right eye; the '+' marks the center of each
+picture)
+
+|------------------------------| |-----------------------------|
+|                       Fig.2L | |                      Fig.2R |
+|                              | |                             |
+|                              | |                             |
+|                              | |                             |
+|        X Y +                 | |    X       Y   +            |
+|                              | |                             |
+|                              | |                             |
+|                              | |                             |
+|                              | |                             |
+|------------------------------| |-----------------------------|
+
+As you can notice the 'X' shifts more than the 'Y' from one
+picture to another. This is an indication that the X object is
+'closer' than Y.
+
+   shift.X = d.hrz.right ( X, '+') - d.hrz.left ( X, '+')
+
+   shift.Y = d.hrz.right ( Y, '+') - d.hrz.left ( Y, '+')
+
+where "dx.hrz.hhh ( A, '+')" means distance (on the horizontal
+axis) in the hhh picture from object A to origin/center.
+
+Furthermore, with good approximation we can say that any
+objects with the same 'shift' are at the same "depth" (z)
+
+In the same way, the eyes forward to the brain two slightly
+different pictures. It is the brain that must "compute" a 3-D
+representation of the scene. The difficulty is to know which pairs
+must be associated to "compute" the z-coordinate. In the example
+above it's easy to assume that the 'X' from each picture is
+associated to one 'X' object. The same goes for the two 'Y'. But
+the images that the brain gets to compute, can be quite
+complicated. What if there are more X-s and Y-s in each picture ?
+How does the brain establish the "couples" for which to calculate
+the shift/depth ? A clue is that each pair must be on the same
+height (y). Which means that the brain should not try to associate
+spots, patterns that are located at different heights. But that is
+not enough !
+
+The 'brain' can make mistakes in this process of designation of
+pairs! It is that which make possible the 3-D feeling that we get
+>from stereograms.
+
+The simplest stereogram that we can get is something like-this:
+
+
+_______________________________________________________________
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|     *         *         *         *         *         *     |
+|-------------------------------------------------------------|
+Column:1        2         3         4         5         6
+
+Using the same procedure as in the beginning of this document
+you should be able to see the same '*' columns but "somewhere
+behind" this document.
+
+In fig.3 (Left/Right) I have represented the kind of pictures that
+the eyes forward to the brain when looking at the preceding
+stereogram. (notice '+', the center)
+
+|-------------------------------| |-----------------------------|
+|   :    :    :    :    :Fig.3L | |:    :    :    :    : Fig.3R |
+|   :    :    :    :    :    :  | |:    :    :    :    :    :   |
+|   :    :    :    :    :    :  | |:    :    :    :    :    :   |
+|   :    :    :    :    :    :  | |:    :    :    :    :    :   |
+|   :    :   +:    :    :    :  | |:    :    :    :    +    :   |
+|   :    :    :    :    :    :  | |:    :    :    :    :    :   |
+|   :    :    :    :    :    :  | |:    :    :    :    :    :   |
+|   :    :    :    :    :    :  | |:    :    :    :    :    :   |
+|   :    :    :    :    :    :  | |:    :    :    :    :    :   |
+|-------------------------------| |-----------------------------|
+column:
+    1L   2L   3L   4L   5L   6L    1R   2R   3R   4R   5R   6R
+
+Normally the brain will associate the columns in the following
+way:
+
+   1L-1R, 2L-2R, 3L-3R, 4L-4R, 5L-5R, 6L-6R
+
+but it can happen that the brain does the following association:
+
+   1L-2R, 2L-3R, 3L-4R, 4L-5R, 5L-6R, ?-1R, 6L-?
+
+Remember: All columns look alike !
+
+Of course it is possible that the brain makes other associations of
+these kinds:
+
+   1L-3R, 2L-4R, 3L-5R,... or 2L-1R, 3L-2R, 4L-3R,... etc.
+
+but in these cases the resulting 3-D representations makes no
+sense, or are very little alike.
+
+It can be noticed that by choosing a diferent association of
+columns the "shift" between the images of the objects changes.
+As a result the "depth" of the perceived objects changes. In the
+association 1L-2R, 2L-3R,... the shift is reduced -> the "depth"
+increases -> the columns seem somewhere behind.
+
+Is it possible to determine exactly the power of the brain in
+matching complicated images ? I thought, some time ago, what
+would happen if we put someone in front of a large panel situated
+at a convenient distance (so that the eyes are relaxed) and the
+panel is full of randomly disposed spots. The spots should be all
+alike and in very great number, very small but big enough to not
+became a uniform gray. The brain should be overwhelmed by the
+great number of matches that it must try. What will happen ? The
+person will get dizzy ? get a headache ? Or will the person be
+forced to see just a gray fog ?
+
+
+Subject: [2] Terminology
+========================
+
+Different types of images:
+   Autostereogram: Original name for a SIRDS
+   RDS: Random Dot Stereogram
+   SIRDS: Single Image Random Dot Stereogram
+   SIRTS: Single Image Random TEXT Stereogram (also known
+   as ascii stereograms)
+   Stereogram: This is a general, simplified term for SIRDS and
+   SIRTS (occasionally stereo-pairs)
+
+Different viewing actions:
+   Wall-eyed: Converging eyes past the actual image
+   Cross-eyed: Converging in front of the image
+   Infinity-focus: Forcing your eyes' lines of sight to be parallel
+   (not necessary for wall-eyeing SIRDS)
+
+
+
+Subject: [3] How do I see them?
+===============================
+
+Most Stereogram pictures are usually generated so that if you look
+at (converge your eyes on) a position twice as far away as the
+picture, and focus on the picture, generally after a few minutes
+you see a surprising 3D image!
+
+Most people find this extremely difficult for the first time. You
+have to focus on a point which is different from where you are
+looking. This is known as "de-coupling" your vision process.
+Instinctively people focus at the same point they are looking at,
+and this is the main obstacle in seeing images of this type.
+
+This is why most posters come with a reflective surface such as
+glass or plastic covering them---if you try to look at your
+reflection you will be looking at a point twice as far away as the
+actual poster. It has been noted by almost everyone that while
+this sometimes helps beginners see the 3D effect for the first
+(and perhaps even the first few) times, experienced viewers to not
+need any help like this, and indeed the reflection is usually very
+distracting and decreases the quality of the 3D effect.
+
+There are many ways to teach this de-coupling to either yourself
+or to others, including (in almost no particular order):
+
+NOTE: It is generally easier to see Stereograms under bright light.
+I have been told this is because you eye relies less on focus under
+harsh conditions. Another point, to see stereo images, you need
+to have "passable" use of both eyes. If you wear glasses try with
+and without them on. Some short-sighted people can see them
+easier without their glasses on (if they get closer to the picture).
+
+The pull-back
+
+Hold the picture (or move your face) so your nose is touching the
+picture. Most people than can not possibly focus with something
+this close to their eyes, and they will be content with their
+inability to focus. With the picture up close, pretend that you are
+looking straight ahead, right through it. Now slowly pull the
+picture (or your face) away while keeping your eyes pointed
+straight ahead. If you do this slow enough, an image usually
+appears when the picture is at the correct distance.
+
+The reflection
+
+As mentioned above, with a reflective surface it is sometimes a lot
+easier to converge your eyes in the correct position. You simply
+focus on your nose or some central reflection in the picture, and
+wait until you focus on the image.
+
+The drunk-eyes
+
+This method is used to describe the feeling of the process of
+deconverging your eyes. It is very much like being drunk or having
+"staring-eyes". Your eyes don't look at the object, but rather
+through it. This state is common to some in the morning before
+the coffee caffine fix.
+
+The wall, or the finger
+
+Hold the picture so that it is half between you and a wall. Look
+*over* the top of the picture towards the wall, and focus on
+something such as a picture hook or mark. While keeping this
+"gaze" either slowly lift the picture or lower your eyes while
+keeping them converged on the wall.
+
+A similar approach (but for cross-eyed viewing) is to stand arm's
+length away from the picture and put your finger on the picture.
+While slowly pulling your finger towards your face, keep looking
+at your finger, you will notice the picture becoming blurry, and at
+an intermediate position you will (eventually) see the 3D image.
+
+The see-through
+
+Photocopy the picture onto a transparency. Then focus through
+the transparency onto something twice as far away. This is similar
+to (The wall, or the finger) above except now you don't need to
+change the position of your gaze.
+
+Wide-Eyes
+
+This method involves building a device to widen your interocular
+distance, as well as allowing the adjustment of the convergence of
+your eyes. It's so simple, you almost don't have to be there!. I
+have had a look through such a device, and the results were very
+good.
+
+(diagram pending...)
+
+Cheating...
+
+To cheat, photocopy the image onto two transparencies, then
+overlay them and carefully shift them horizontally so they are
+about an inch or two out of alignment. Somewhere around this
+position you will see a rendition of the image. Obviously in 2D not
+3D, but you will at last finally believe there is "somethere in
+there."
+
+And if you're still having difficulty, this comment by
+jhakkine@cc.Helsinki.FI (Jukka Hakkine), may apply to you:
+"Richards (1970; Experimental Brain Research 10, 380-388) did a
+survey among 150 MIT students and noticed that "...about 4% of
+the students are unable to use the cue offered by disparity, and
+another 10% have great difficulty and incorrectly report the depth
+of a Julesz figure relative to background." He further concludes
+that inability to use stereopsis is an inherited defect and is related
+to "three-pool"-hypothesis of binocular neurons."
+
+But don't dispair, don't give up until you're tried for at least a
+month!
+
+
+
+Subject: [4] Where can I buy the posters from?
+==============================================
+
+For those who do not have a local SIRDS distributor (i.e., the
+poster cart at the mall), here are a few companies you may be able
+to order from.
+
+------------- Infix Technologies -------------
+++++++++++++++++++++++++++++++++++++++++++++++
+
+$20 Earth (mercator projection of the Earth's altitudes)
+$20 Salt Lake LDS Temple Centennial
+$20 Beethoven (300 DPI! Very smooth.)
+
+These prints are 18x24 inches. Retail price for the 18x24 inch
+prints is $20 plus $3 s/h. Utah residents add 6.25% sales tax.
+Wholesale and distributor discounts are available. Quotes for
+custom work are also available. Cost and minimum order varies,
+based on content.
+
+PO Box 381
+Orem, UT 84057-0381,USA
+Ph: (801) 221-9233
+email: John M. Olsen (jolsen@nyx.cs.du.edu)
+
+------------- Inner Dynamics, Inc. -------------
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+(Distributors)
+Privileged Traveler
+4914 Brook Road
+Lancaster, OH 43130, USA
+(614) 756-7406
+
+Glow in the Dark Poster Series - $22 (size: 18" X 24")
+
+"Knight Vision" - suspended chess board with chess pieces above
+the board in daylight viewing; also an area in the center that has a
+Knight chess piece; random dot pattern glows and is viewable in
+the dark!!
+
+Premium Color Series - $16 (size: 18" X 24")
+
+"Gecko" - twin Gecko lizards
+"I Think Therefore I Am" - well known quote surrounded by
+stunning visuals
+"SoulMate" - hearts, spirals, and other symbols, for that special
+person
+"The Mighty Unicorn" - unicorn, mystical castle, wizard, and
+flying dragon
+"Excalibur" - legendary sword in the stone, castle, knights, etc.
+"Where's Wilbur?" - can you find him in the forest?
+
+Optimum Series - $15 (size: 24" X 36") (black and white)
+
+"Beyond Reality" - hearts, spirals, other cool shapes; extremely
+detailed
+"20/20 Third Sight" - an eye chart done in 3D
+"Illusions" - a labyrinth, try to find your way out!
+"Meditation" - contains an ancient mandala, a real stress buster
+"DreamWeaver" - unusual geometric shapes, `helps' induce lucid
+dreaming and dream remembrance
+"Icons" - the five symbols of life; very stunning visuals
+"Rainbows" - see color on a black and white poster (Not a 3D
+poster)
+
+Retail prices (USA) stated above plus $3 S&H (USA) - call for
+overseas S&H. Ohio residents add 5.5% sales tax.
+
+------------- Altered States -------------
+++++++++++++++++++++++++++++++++++++++++++
+
+92 Turnmill St,
+Farringdon,
+London, EC1, U.K.
++44 (0)71 490 2342
+Paul Dale (P.A.Dale@bath.ac.uk)
+tel: +44 (0)225 826 215
+
+------------- N.E. Thing Enterprises -------------
+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Send a catolog request to:
+N.E. Thing Enterprises
+19C Crosby Drive
+Bedford, MA 01730, USA.
+-- info from: Neal T. Leverenz (at802@yfn.ysu.edu)
+
+
+Subject: [5] How can I generate them myself?
+============================================
+
+There are many fine programs for generating SIRDS out there in
+the Internet. The following programs are available from
+ftp://katz.anu.edu.au/pub/stereograms(IP 150.203.7.91). Here is a
+list of the ones I currently know about:
+
+Acorn
+   mindimg
+PC
+   3DRANDOT
+   ANIM - 3D animation, in 3D
+   DYNAMIC
+   HIDIMG - SIS as well as SIRDS. You can use a pattern, save
+   BMP files
+   MINDIMG - Stereopairs (red/blue, red/green) as well as
+   SIRDS
+   PERSPECT
+   RDSDRAW
+   SHIMMER - making it easier to see SIRDS
+   SIRDSANI
+   SIRDSVU11
+   VUIMG340
+Mac
+   random-dot-autostereograms
+Unix/X
+   xpgs - 3D objects
+   rle2pgm - converts the popular MINDIMG format to PGM
+   RaySIS - SIS raytracer
+
+
+
+Subject: [6] Which books/papers should I read?
+==============================================
+
+Books
+======
+
+"Stereogram"
+(c) 1994, Cadence Books, P.O. Box 77010, San Francisco, CA 94107,
+USA.
+A newly edited version of CG STEREOGRAM and CG STEREOGRAM
+2,
+published by Shogakukan Inc. In Tokyo, Japan"
+ISBN 0-929279-85-9
+US$ 12.95
+I liked it. Much better in my opinion than the other Stereogram
+book I've seen ("Magic Eye"). This one includes much textual
+information, including the origins of stereograms, how to see them,
+precursors such as stereo pairs, and an article by Christopher W.
+Tyler, who invented the SIRDS. Best of all were the stereograms
+themselves. There are roughly 50 SIRDS, most of them full page
+(the book is softcover and about 8" square). The ones I've managed
+to see so far have been quite good, and also included are some of
+the very first ones. In the history department there are stereo pairs,
+stereo photographs, and even some stereo-pair paintings by
+Salvador Dali. All of the stereograms indicate whether they require
+wall-eyed or cross-eyed viewing (or either). Most are true 3d
+designs, not the "cutout" variety. The book is 93 pages and most of
+the plates are full-color. Well worth the money in my opinion.
+-- Michael Moncur (mgm@xmission.com)
+I highly recommend the new book "Stereogram" by Cadence books,
+ISBN #0-929279-85-9 (in Canada). It is a fantastic book that
+includes hundreds of stereograms, stereo pictures, RDS's, lots of
+very interesting writeups on the history of stereograms, a cool
+section on Salvador Dali (stereo pair aritst). The concentration of
+course is on the pictures. The book is just under 100 pages. Much
+better value then Magic Eye. It's even got some cool cross-eyed
+only viewing stereograms, which I'd never seen before this (I'd
+always used the other technique). If you have *any* interest in
+stereograms, buy this book, you won't regret it!! At $17 Cdn, it's
+not that much either, considering the amount of time you'll spend
+revelling in the 3d inside.
+-- Ian Sewell (3386005@queensu.ca)
+
+"Principles of Cyclopean Perception"
+(c) 1972 by Bela Julesz,
+MIT press. Considered by most as the original work oPn Random
+Dot Stereograms:
+-- Charles Eicher (CEicher@Halcyon.com)
+
+"Magic Eye: A New Way of Looking at the World"
+(c) 1993 by N.E. Thing Enterprises.
+Andrews and McMeel, A Universal Press Syndicate Company
+Kansas City, USA. ISBN: 0-8362-7006-1
+First Printing, September 1993 ... Fifth Printing, January 1994
+Introduction contains a history of the technique and phenomena.
+Viewing Techniques are explained. 25 pages of full-color
+STARE-E-O images. (Plus images inside the front and back covers.)
+"Answers" included. 32 pages, hardcover, 8.75x11.5 inches,
+horizontal format, with slipcover.
+US$12.95 ($16.95/Canada)
+
+"Magic Eye II: Three Dimension Trip Vision"
+(c) 1992 by N.E. Thing Enterprises/Tenyo Co., Ltd.
+Korean Translation (c) 1993 by Chungrim Publishing Co.
+All the text is in Korean, so I can't read it. But it has some pretty
+cool pictures. They are all SIRxS where x is various
+patterns/pictures. I paid US$20 for it. Interestingly, this title doesn't
+seem to be mentioned in my N.E. Thing catalog.
+-- Mark Hudson (M_Hudson@delphi.com)
+They've taken the technique a step further by applying the
+pseudo-random patterns as noise superimposed over another
+image. You look at the pages of this book and see one image, then
+cross your eyes and concentrate on the replicated patterns in the
+background noise and see the second image. It's kinda cute.
+-- Robert Reed
+
+"Das magische Auge" (German version of "Magic Eye")
+(c) 1994, arsEdition, Munich
+ISBN 3-7607-8297-3
+DM 29,- (seen at a store for this price)
+
+"Stereo Computer Graphics and Other True 3D Technologies"
+(c) 1993, David F. McAllister, Ed.
+Princeton University Press
+ISBN 0-691-08741-5 US$75.00
+It has several nice color plates, with stereo "triads". The triads
+consist of a left, a right, then another left image. Use the left pair
+for viewing walleyed, or the right pair for viewing crosseyed.
+-- Mike Weiblen (mew@digex.net)
+
+"Random Dot Stereograms"
+(c) 1993, Kinsman Physics, P.O. Box 22682, Rochester, NY
+14692-2682, USA.
+An excellent source of information (sample RDS and source code)
+-- Eric Thompson (E.Thompson@ncl.ac.uk)
+ISBN 0-9630142-1-8
+US$ 13.95
+
+"Human Stereopsis. A psychological Analysis"
+(c) 1976, W.L. Gulick and R.B. Lawson,
+Oxford University Press.
+
+Papers
+=======
+
+B. Julesz and J.E. Miller, (1962) "Automatic stereoscopic
+presentation of functions of two variables" Bell System Technical
+Journal, 41: 663-676; March.
+
+R.I. Land and I.E. Sutherland, (1969) "Realtime, color, stereo,
+computer displays" Applied Optics, 8(3): 721-723; March
+
+D. Marr and T. Poggio, (1976) "Cooperative computation of stereo
+displarity" Science, 194: 283-287; October 15
+
+D. Marr and T. Poggio, (1979) "A computational theory of human
+stereo vision" Proceedings Royal Society of London, B204: 304-328
+Science, 194: 283-287; October 15
+
+G.S. Slinker and R.P. Burton, (1992) Journal of Imaging Science and
+Technology, 36(3): 260-267; May/June
+
+D. G. Stork and C. Rocca, (1989) "Software for generating
+auto-random-dot stereograms", Behavior Research Methods,
+Instruments, and Computers 21(5): 525-534.
+
+H.W. Thimbleby and C. Neesham, (1993) "How to play tricks with
+dots" New Scientist, 140(1894): 26-29; October 9
+
+H.W. Thimbleby, S.J. Inglis, and I.H. Witten, (1994)
+ftp://ftp.cs.waikato.ac.nz/pub/SIRDS (IP 130.217.240.3), in press.
+
+C.W. Tyler and M.B. Clarke, (1990) "The Autostereogram" SPIE
+Stereoscopic Displays and Applications 1258: 182-196
+
+C. Wheatstone, (1838) "Contributions to the physiology of vision.
+Park I. On some remarkable, and hitherto unobserved, phenomena
+of binocular vision" Royal Society of London Philosophical
+Transactions 128: 371-394
+
+C. Wheatstone, (1838) "Contributions to the physiology of vision.
+Park II. On some remarkable, and hitherto unobserved,
+phenomena of binocular vision (continued)" The London,
+Edinburgh, and Dublin Philisophical Magazine and Journal of
+Science, series 4, 3: 504-523
+
+
+
+Subject: [7] SIRTS/Ascii Stereograms
+====================================
+
+For people without graphics displays, or simply like having a 3D
+.signature, you can create a stereo effect using repetitive
+characters.
+
+Text Stereograms (not random)
+
+-- the following by Dave Thomas (dthomas@bbx.basis.com)
+
+                            O   O
+n   n   n   n   n   n   n   n   n   n   n   n   n   n   n  n
+f    f    f    f    f    f    f    f    f    f    f    f   f
+e   e   e   e   e   e   e   e   e   e   e   e   e   e   e  e
+a    a    a    a    a    a    a    a    a    a    a    a   a
+a   a   a   a   a   a   a   a   a   a   a   a   a   a   a  a
+r    r    r    r    r    r    r    r    r    r    r    r   r
+r   r   r   r   r   r   r   r   r   r   r   r   r   r   r  r
+
+
+
+
+ g  g  g  g  g  g  g  g  g  g  g  g  g  g  g  g  g  g  g  g
+   r   r   r   r   r   r   r   r   r   r   r   r   r   r   r
+ e    e    e    e    e    e    e    e    e    e    e    e
+ a     a     a     a     a     a     a     a     a     a
+   t      t      t      t      t      t      t      t      t
+>>><<<<>>>><<<<>>>><<<<>>>><<<<>>>><<<<>>>><<<<>>>><<<<>>>><<
+   d      d      d      d      d      d      d      d      d
+ e     e     e     e     e     e     e     e     e     e
+ p    p    p    p    p    p    p    p    p    p    p    p
+   t   t   t   t   t   t   t   t   t   t   t   t   t   t   t
+ h  h  h  h  h  h  h  h  h  h  h  h  h  h  h  h  h  h  h  h
+
+
+
+-- the next few are by DR J (me90drj@brunel.ac.uk)
+Look for his new upcoming Text Stereogram Guide---out soon!
+
+
+     /^\           /^\           /^\           /^\           /^\
+ ####################################################################
+ ####################################################################
+ _/    ####    _/   ####\    _/  #### \    _/ ####  \    _/####   \
+/       ## \__/      ##  \__/     ##   \__/    ##    \__/   ##     \
+   ____ ##     ____  ##    ____   ##   ____    ##  ____     ## ____
+  /    \##    /    \ ##   /    \  ##  /    \   ## /    \    ##/    \
+ |  2D  |#   |  2D  |##  |  2D  | ## |  2D  |  ##|  2D  |   #|  2D  |
+ |  or  |#   |  or  |##  |  or  | ## |  or  |  ##|  or  |   #|  or  |
+ |  3D  |#   |  3D  |##  |  3D  | ## |  3D  |  ##|  3D  |   #|  3D  |
+ |  ??  |#   |  ??  |##  |  ??  | ## |  ??  |  ##|  ??  |   #|  ??  |
+ |      |    |      |    |      |    |      |    |      |    |      |
+ --------    --------    --------    --------    --------    --------
+  \\\\\\\\    \\\\\\\\    \\\\\\\\    \\\\\\\\    \\\\\\\\    \\\\\\\\
+   \\\\\\\\    \\\\\\\\    \\\\\\\\    \\\\\\\\    \\\\\\\\    \\\\\\\\
+     \\\\\\      \\\\\\      \\\\\\      \\\\\\      \\\\\\      \\\\\\
+
+
+
+         /^\              /^\              /^\              /^\
+     _  /   \        _   /   \       _    /   \      _     /   \     _
+    / \_     \_     / \_/     \_    / \_ /     \_   / \_  /     \_  / \_
+   /    \      \   /    \       \  /    \        \ /    \          /    \
+__/      \      __/      \      __/      \      __/      \      __/      \
+  xx      \    /xx        \   xx  \       \ xx /  \       xx   /  \     xx
+x XX     x \_ x XX \    x   x XX   \   x  x XX     \  x x XX _/    \  x XX
+X XX-x-x-XxX--X XX-x--x-XxX-X XX-x---x-XxXX XX-x----x-XxX XX-x-----x- X XX
+XxXX X XxX    XxXX X  XxX   XxXX X   XxX  XxXX X    XxX XxXX X     Xx XxXX
+  XXxX __X      XXxX  __X     XXxX   __X    XXxX    __X   XXxX     __   XX
+  XX            XX            XX            XX            XX            XX
+__XX      ______XX      ______XX      ______XX      ______XX      ______XX
+
+(Cactii modified from a drawing by Chris Pirillo)
+
+
+
+
+  \ .       \   .     \     .   \       . \        .\         \.
+   \  .      \.   .    \ .    .  \  .     .\   .     \.   .    \  .  .
+   \\    .   \\     .  \\      . \\       .\\        \\        \\
+    \\     .  \\      . \\       .\\        \\        \\        \\.
+     \\.       \\ .      \\  .     \\   .    \\    .   \\     .  \\
+      *  .      *   .     *    .    *     .   *      .  *       . *
+             .          .          .          .          .          .
+        .            .            .            .            .
+        .   .      .    .     .     .    .      .   .       .  .
+          .           .           .           .           .           .
+    . .        .  .       .   .      .    .     .     .    .      .   .
+
+  ___/~\_/\____/~\_/\____/~\_/\____/~\_/\____/~\_/\____/~\_/\____/~\_/\_
+  _/~~\_   _/~~\_   _/~~\_   _/~~\_   _/~~\_   _/~~\_   _/~~\_   _/~~\_
+
+
+
+
+  .                 .                 .                 .
+          .                .                .                .
+      +               +               +               +               +
+     .                 .                 .                 .
+           *                 *                 *                 *
+   .                .                .                .
+       .                 .                 .                 .
+              +                +                +                +
+  *                  *                  *                  *
+              .                 .                 .                 .
+    .                .                .                .
+          .                 .                 .                 .
+         +              +              +              +              +
+               .                .                .                .
+      .                 .                 .                 .
+          *                 *                 *                 *
+  .                .                .                .                .
+           .                 .                 .                 .
+         +              +              +              +              +
+               .                .                .                .
+           *                 *                 *                 *
+       .                 .                 .                 .
+  *                  *                  *                  *
+          .                 .                 .                 .
+    .                .                .                .
+             +               +               +               +
+
+
+
+
+                .           '            .           '
+        .            '   *       .            '   *       .
+              .                        .                        .
+                    .         '              .         '
+          _'   ____________________ '  ____________________  ' _
+          |____|~~         _      |____|~~         _      |____|
+                   _                       _
+                  '          =            '          =
+                                   /                     /
+                .     --      ,.. /     .     --    ,.. /
+                            ,`   ';               ,`   ';
+                 .,.__    _,' /';  .   .,.__    _,' /';  .
+               .:','  ~~~~    '. '~  .:','  ~~~~    '. '~
+               :' (   )   .   ; ):;. :' (   )   .   ; )::;.
+               '. '. .=----=..-~ .;' '. '. .=----=..-~  .;'
+                '  ;' ::    ':. '"    '  ;'  ::   ':.  '"
+          ~~~~~~  (:  ': ~   ;) ~~~~~~~ (:   ':  ~ ;)  ~~~~~~~~~
+          '~       \\  '"   ./  '~       \\   '"  ./   '~
+               ~    '"      '"       ~    '"      '"       ~
+
+
+
+
+Subject: [8] Where is most of the discussion about SIRDS?
+=========================================================
+
+Most of the discussion about SIRDS has taken place in alt.3d . A
+lot of people would like to see the death of SIRDS, both due to the
+overwelming number of people asking FAQ's, and simply because
+there is much *much* better 3D out there than this!
+
+Usually people post requests for information to newsgroups such
+as comp.graphics...unfortunately these people sometimes get
+flamed, get told it is *impossible* to draw them...if this has
+happened to you read alt.3d , viva la difference.
+
+
+
+Subject: [9] Internet locations for material
+============================================
+
+Newsgroups
+   alt.3d newsgroup
+   (most SIRDS discussion is in this group)
+
+Ftp sites
+   ftp://katz.anu.edu.au/pub/stereograms (IP 150.203.7.91)
+   (currently the definitive site)
+
+   ftp://ftp.amu.edu.pl/pub/chemia/steroskopia (IP
+   150.254.65.7)
+
+   ftp://gwaihir.dd.chalmers.se/pub/een/SIS (IP 129.16.117.21)
+   (SIRDS in TIFF graphic format)
+
+   ftp://sunsite.unc.edu/pub/academic/computer-science/virtual-reality/3d
+   (IP 152.2.22.81)
+   (anaglyph programs, older archive of alt.3d)
+
+   ftp://techno.stanford.edu/pub/raves/visuals/graphics/pc/stereogram
+   (IP 36.73.0.71)
+
+Web pages
+   http://www.cs.waikato.ac.nz/~singlis/sirds.html
+   (SIRDS-FAQ location)
+
+   http://acacia.ens.fr:8080/home/massimin/index.ang.html
+   (contains lots of extremely nice pictures)
+
+   http://h2.ph.man.ac.uk/gareth/sirds.html
+   (Picture Gallery, organised by Chang and Richards, home of
+   xpgs and SIRDSANI)
+
+   http://www.cs.uidaho.edu/staff/hart.dir/sirds
+   (Vern's SIRDS Gallery)
+
+
+
+Subject: [10] Stereogram History
+================================
+
+-- Robert Raymond, Mirages -- Moab, Utah
+Last updated: 28-June-1994 with comments from Jukka Hakkinen
+(jhakkine@cc.helsinki.fi)
+
+1960
+   Julesz, B. Binocular depth perception of computer generated
+   patterns. Bell Systems Technical Journal 39, 1125-1162.
+   (First article considering RDSs)
+1962
+   Julesz, B. and Miller, J. E. (1962) Automatic stereoscopic
+   presentation of functions of two variables. Bell System
+   Technical Journal. 41:663-676; March. Thimbleby (1990)
+   refers to this article: "Julesz and Miller were the first to
+   show clearly that a sense of depth could arise purely from
+   stereopsis, without relying on other cues such as
+   perspective or contours. they used random patterns of dots
+   which, although meaningless to single eye viewing,
+   nevertheless created a depth impression when viewed in a
+   stereoscope."
+
+   The following additional information about Julesz seems to
+   be from The Magic Eye, 1993, N.E. Thing Enterprises,
+   Andrews and McMeel. I found it quoted in a newspaper
+   article:
+
+   During the 1960s, a researcher named Bela Julesz was the
+   first to use computer-generated 3-D images made up of
+   randomly placed dots to study depth perception in human
+   beings. Because the dot pictures did not contain any other
+   information, like color or shapes, he could be sure that
+   when his subject saw the picture it was 3-D only.
+
+   In the years that followed, other people continued using
+   random dot pictures in their work; many of them were
+   graduate students who studied with Julesz. With time they
+   found new and better ways to create these interesting
+   illusions.
+1963
+   Julesz, B Stereopsis and binocular rivalry of contours.
+   Journal of Optical Society of America 53, 994-999. (First
+   article which was accepted in a major US journal)
+1964
+   Julesz, B. Binocular depth perception without familiarity
+   cues. Science 145, 356-363. (First paper which was accepted
+   in a major international journal)
+1965
+   Bela Julez, "Textured and Visual Perception," Scientific
+   American, Feb. 1965. An article on stereo dot pictures.
+   [George J Valevicius]
+1966
+   N. A. Valyus. Stereoscopy. Focal Press, London and New
+   York. 426 pp. (I have not seen this book, but Boyer,1990
+   refers to it to say that Stereographic paintings are almost
+   beyond possibility.)
+1968
+   Bela Julez. "Experiment in Perception," Psychology Today,
+   July 1968. Cover story with a full page graphic and a few
+   smaller ones.
+1971
+   Bela Julesz. Foundations of Cyclopean Perception. Chicago:
+   Univ. of Chicago Press. I have not seen this book, but
+   Kinsman,1992 mentions it: "Julesz (1971) describes
+   photographic techniques producing random dot stereograms
+   in use in the early 1950s.... Since Julesz, in 1960, was the
+   first to employ a computer to generate random dot
+   stereograms, many would consider him the person most
+   responsible for their popularity today.... Anaglyphs of
+   random dot stereograms... are presented in the back of
+   Julesz's book, and a pair of the (half-red/half-green) glasses
+   required to view them is tucked inside the back cover."
+1966
+   Julesz, B. Binocular disappearance of monocular symmetry.
+   Science 153, 657-658. (Disparity cues can be more powerful
+   than monocular from cues)
+1971
+   Dr. Bela Julesz in "Reading from Scientific American -
+   Image, Object and Illusion" by W.H. Freeman Publisher ISBN
+   0-7167-0505-2 (1971). [Bob Easterly]
+1976
+   Marr, D. and Poggio, T. (1976), Cooperative computation of
+   stereo disparity, Science, 194:283-287; October 15.
+   Thimbleby (1990) refers to this article: "[They] discuss
+   computational models of the visual processes that are
+   involved in interpreting random dot stereograms."
+1977
+   Bela Julesz. Foundations of Cyclopean Perception. University
+   of Chicago Press, Chicago. xiv, 406 pp. I assume this is the
+   same book as the 1971 book referenced by (Kinsman,1992). I
+   think Boyer gave the wrong publication date. Of the book,
+   Boyer writes:
+
+   "The random-dot stereogram is a very inspiring
+   demonstration of the sophistication and complexity of the
+   information-processing which occurs in everyday human
+   vision.... The first extensive studies of random-dot
+   stereograms were accomplished by Bela Julesz and his
+   colleagues on large and expensive computers, using
+   professional programmers, at the Bell telephone
+   Laboratories." (Boyer,1990)
+1977
+   Tyler & Chang, Vision Research, #17. Referenced by Tyler,
+   1983.
+1979
+   Marr, D. and Poggio, T. (1979), A computational theory of
+   human stereo vision, Proceedings Royal Society of London,
+   B204, 304:328. Thimbleby (1990) refers to this article: "[They]
+   discuss computational models of the visual processes that
+   are involved in interpreting random dot stereograms."
+1983
+   Schor & Cuiffreda, editors. Vergence Eye Movements: Basic &
+   Clinical Aspects. One chapter, by Christopher Tyler
+   including genuine SIRDS. Interestingly, he doesn't say he
+   invented them. He just calls them "a new type of
+   autostereogram designed for free fusion without the need
+   for a stereoscope or anaglyph glasses". Then he says the
+   basis is the repetition of a random pattern and refers to
+   Tyler & Chang, 1977, Vision Res, #17. [Dan Richardson]
+1985
+   Paul S. Boyer. Stereographic technique for illustrating
+   geologic specimens. New Jersey academy of Science, Bulletin,
+   volume 39, no. 2, pp. 83-91. I have not seen this article, but
+   Boyer,1990 refers to it when speaking of the DIN 4531
+   stereogram format.
+1986
+   L. L. Kontsevich. "An Ambiguous Random-Dot Stereogram
+   Which Permits Continuous Changing of Interpretation,"
+   Vision Research, Vol. 26, No. 3, pp. 517-519. I have not seen
+   this article, but Kinsman,1992 mentions it: "Kontsevich
+   (1986) describes a technique for making a series of tiles."
+   Kinsman presents a "similar stereogram" that is a SIRDS. If
+   so, this would be the first SIRDS I am aware of.
+1987
+   Paul S. Boyer. Constructing true stereograms on the
+   Macintosh. The Journal of Computers in Mathematics and
+   Science Teaching, volume 6, no. 2, pp. 15-22. (I have not
+   seen this article, but Boyer,1990 refers to it as a detailed
+   article describing computer stereography.)
+1988
+   Falk, Brill and Stork produce the "Seeing The Light" image
+   that Dyckman referenced in his Stereo World article. [Dan
+   Richardson]
+1988
+   J. Ninio and I. Herlin. "Speed and Accuracy of 3D
+   Interpretation of Linear Stereograms, Vision Research, Vol.
+   28, No. 11, pp. 1223-1233. I have not seen this article, but
+   Kinsman,1992 mentions it: "Ninio and Herlin (1988), and
+   Slinker and Burton (1992), experimented with stereograms
+   containing complex patterns [triangles, lines, blotches, and
+   even images] in their initial noise fields."
+1989
+   Rocca and Stork, Behavior Research Methods, Instruments
+   and Computers, 1989, might be vol 21 number 5.
+   Demonstrats a little Mac program they wrote to generate
+   SIRDS from MacPaint files. [Dan Richardson]
+1990
+   Paul S. Boyer, Professor of Geology, Fairleigh Dickinson
+   University, "Random-Dot Stereograms -- Creating a
+   Psychological Phenomenon," STEREO WORLD, March/April
+   1990. Creating SIRDS on the Mac.
+1990
+   Tyler, C. W. and Clarke, M. B. (1990) The autostereogram.
+   SPIE Stereoscopic Displays and Applications 1258: 182-196.
+   Thimbleby (1990) refers to this article: "Recently, however,
+   Tyler and Clarke realized that a pair of random dot
+   stereograms can be combined together, the result being
+   called a single image random dot stereogram (SIRDS) or,
+   more generally, an autostereogram.... [They] described a
+   simple but asymmetric altorithm, which meant, for example,
+   that some people can only see the intended effect when the
+   picture is held upside-down."
+1990
+   Dan Dyckman, "Single Image Random Dot Stereograms,"
+   STEREO WORLD, May/June 1990. "I was recently surprised
+   when a friend of mine ... showed me a
+   random-dot-stereograph that consisted fo a single image,
+   rather than the usual stereo pair. To view the image, one
+   fused two marks within the image, and would see the words
+   SEEING THE LIGHT."
+
+   "Interested readers might consider creating poster-sized
+   images using this technique, or experimenting with
+   supplementary gray-level or color values for each pixel. And,
+   if any reader knows who invented this technique for single
+   image random dot sstereograms, or who created the SEEING
+   THE LIGHT image, please drop a note to this magazine."
+1991
+   Prior to June 1991 a company named Pentica Systems, Inc
+   (One Kendall Square, Building 200, Cambridge, MA 02139,
+   Tel. 617-577-1101, Tom Baccei - President) published an
+   advertisment, "Pentica Loves Puzzles," with a SIRDS image in
+   it. The magazine may have been EDN--I don't remember.
+1991
+   About June 3, 1991, Pentica mails an information packet to
+   those responding to the add. In the information Pentica sent
+   to those responding to the ad, they say, "We discovered ...
+   the technique for generating it in STEREO WORLD." Four
+   SIRDSs accompany the information, marked "images (c) 1990
+   by Dan Dyckman."
+1991
+   June 13, 1991, N.E. Thing Enterprises, (One Kendall Square,
+   Building 200, Cambridge, MA 02139) also mails a flyer to
+   those responding to the Pentica ad. The N.E.Thing address
+   and the Pentica address are the same, as well as the postal
+   meter number (FMETER 8010560) for the two mailings. The
+   flyer states, "from the people who created the Pentica Loves
+   Puzzles Ad.... Because of the unbelievably enthusiastic
+   response to our random dot stereogram featured in the
+   'Pentica Loves Puzzles' ad, we are rushing you this advance
+   notice of our latest 3D mindbenders." They offered 3
+   posters, World's Hardest Maze, The Third Eye, Training
+   Wheels, and a 1992 Calendar.
+1992
+   Andrew A. Kinsman, Random Dot Stereograms, Kinsman
+   Physics, 1992. First printing October 1992. "This history of
+   the stereogram is a bit elusive. It appears to be intertwined
+   with anaglyphs, lenticular photographs, and stereoscopic
+   photographic techniques. Charles Wheatstone described
+   stereoscopy in 1832. In 1851 the the London Society of Arts
+   held the Crystal Palace Exhibition, which six million people
+   attended and potentially witnessed Sir David Brewster
+   demonstrate the stereoscope. Stereoscopes became popular
+   as a result. Kahn (1967), in The Codebreakers, references an
+   article by Herbert C. McKay, written in the late 1940s, on
+   how to manufacture simple stereograms with a typewriter
+   for encryption purposes.... Julesz (1971) describes
+   photographic techniques producing random dot stereograms
+   in use in the early 1950s. History seems to have recorded no
+   particular inventor of stereograms. It is quite probable that
+   soon after parlor-style stereoscopes became popular
+   someone took a photograph of a camouflaged hunter with a
+   stereo camera. The subject in the resulting picutre might be
+   difficult to identify. Viewed stereoscopically with the rest of
+   their collection, the subject would become obvious."
+1992
+   "This unique synthesis of computer technology and fine art
+   began simply as an idea between two creative individuals in
+   1992. Paul's art background and Mike's computer genious
+   proved to be the perfect combination of talents. Several
+   hundred man hours later, in a remote region of California,
+   came the first public exposure to Holusion(TM) 3D Prints.
+   And so NVision Grafix was born." (NVision Grafix flyer
+   introducing Calypso Reef, 1993.) "Micro Synectic was Mike
+   Bielinski is NVision...NE Thing and Micro Synectics are listed
+   in the StareEO demo, because Mike Bielinski wrote it for NE
+   Thing." (CompuServe messages from Dan Richardson) "The
+   images are the creation of NVision Grafix, a Texas-based
+   firm owned by two former fraternity brothers, Paul Herber
+   and Mike Bielinski. They developed the Holusion technology
+   while making a poster of the B-2 bomber for the company
+   where Herber worked as an engineer. The posters were a
+   huge hit, and soon, Herber and Bielinski had abandoned
+   their jobs to start up NVision: Herber is the artist, and
+   Bielinski is the computer whiz.... As NVision has grown,
+   though so has it's competition. Computer expert Tom Baccei
+   has created his won "high-tech, three-dimensional art form"
+   under the name "Magic Eye" and is marketing the images on
+   books, posters, calendars, puzzles and cards." (Nicole
+   Brodeur, Orange County Register. As reprinted in The Daily
+   Herald, March 22, 1994)
+1993
+   N.E. Thing begins patent process on several RDS algorithms.
+   "Salitsky dot" algorithm and the algorithm to produce an
+   RDS that looses it's colors when viewed in 3D are apparently
+   two algorithms. I have not seen the patent applications, but
+   the law requires that they discuss "prior art." If someone
+   could get copies of these applications, it would not only
+   describe the algorithms in detail, it would present a history
+   of SIRDS, to the degree that N.E. Thing was aware.
+1993
+   Harold W. Thimbleby, Stuart Inglis, and Ian H. Witten,
+   "Displaying 3d Images: Algorithms for Single Image Random
+   Dot Stereograms," University of Waikato, Hamilton, New
+   Zealand, published on the Internet. I believe Stuart
+   mentioned it was being published in an IEEE journal in 1994.
+   I've forgotten which one and when. [IEEE Computer, soon -
+   S.]
+
+-- A few historical comments by jhakkine@cc.helsinki.fi
+There was a good article about the early history of RDSs in Vision
+Research (Julesz (1986), Vision Research vol. 26 no. 9, 1601-1612).
+Julesz who himself was a radar engineer tells that the first RDS
+was accidentally taken by a photographic Spitfire flying over
+Cologne in 1940! (The picture has been published by Smith
+(Perception 1977, vol.6, 233-234)). The picture consists of some
+city blocks, a bridge and the river Rhine which is covered by ice.
+Because the ice is floating downriver and the pictures are taken at
+slightly different times, the ice patterns are slightly different in
+two stereopairs. This results a depth parallax between the
+pictures and when they are stereoscopically fused there seems to
+be a deep valley in the middle of the river. This caused great
+confusion in the wartime RAF but no-one could make up an
+explanation to the phenomenon because at the time there was no
+knowledge about stereoscopic processes working without
+monocular pattern recognition.
+
+Julesz also mentions that there had been some prior attempts to
+make RDSs (Aschenbrenner, C.M. (1954) Problems in getting
+information into and out of air photographs. Photogramm.Engng.
+20, 398-401) but without a noticeable succes because the pictures
+had been hand cut. Because the methods had been so crude there
+was a good possibility that these pre-RDSs contained monocular
+depth cues. Julesz created his stereograms with a computer so
+they were very precise and the possibility of monocular cues was
+nonexistent. Naturally the leading researchers at the time (Ogle &
+Wakefield (1967) Vision Research vol.7, 89-98) did not believe that
+it was possible and the notion of depth perception without
+monocular cues remained controversial for a long time.
+
+Ogle & Wakefield (1967):
+"One obtains the impression from some of Julesz's interesting
+experiments that certain targets yield a stereoscopic depth, but
+contours cannot be perceived monocularly. However, the
+stereoscopic depth experienced in the central portion is that of a
+defined square proximal or distal to the background, determined
+precisely by the "lines" he "cut" in the background patterns of
+random details in each of the stereogram pairs. It is difficult to
+believe that a "cut" and displacement of random patterns - unless
+the details of patterns are exceedingly small - result in a
+randomness on the two sides of the cut. Some of the dots could
+have been split. It may be true that monocularly the contours may
+be difficult to perceive, but still we wonder if they are not
+perceivable."
+
+
+
+Subject: [21] How can I write my own programs?
+==============================================
+
+There are several approaches to take to write a SIRDS program
+(we'll start with SIRDS and move on to SIS in the next section).
+
+We have some facts that will help us write the program:
+
+ o We need two objects (pixels) for stereo vision (ie. 2 eyes)
+ o Eye convergence (where we look) informs us of it's 3D depth
+
+To make a SIRDS we have to make sure (for each 3D point in the
+object) we have two pixels the same colour (say either black or
+white) at a particular distance apart, so that when we "look
+through" each of the pixels, we will see the corresponding pixel in
+3D.
+
+To calculate the relationship between the pixels is the *only*
+complicated stage. We use an array called 'same[]' which simply
+points to a pixel (in the same scan line) that has the same value.
+
+The second "for x" loop does this. At each position in the object,
+calculate the dot separation, calculate where the left and right line
+of sight will intersect the image, and shuffle the array so there is
+a one to one link.
+
+After we have this 'same[]' array we simply iterate over the array,
+picking a colour and propagating it's colour across the bitmap.
+And then the process is finished, the result: a Single Image
+Random Dot Stereogram.
+
+#define round(X) (int)((X)+0.5)
+#define DPI 72
+#define E round(2.5*DPI)
+#define mu (1/3.0)
+#define separation(Z) round((1-mu*Z)*E/(2-mu*Z))
+#define far separation(0)
+#define maxX 256
+#define maxY 256
+
+void DrawAutoStereogram(float Z[][])
+{
+  int x, y;
+  for( y = 0; y < maxY; y++ ) {
+    int pix[maxX];
+    int same[maxX];
+    int s;
+    int left, right;
+
+    /* initialise the links */
+    for( x = 0; x < maxX; x++ )
+      same[x] = x;
+
+    /* calculate the links for the Z[][] object */
+    for( x = 0; x < maxX; x++ ) {
+      s = separation(Z[x][y]);
+      left = x - (s/2);
+      right = left + s;
+      if( 0 <= left && right < maxX ){
+        { int k;
+          for(k=same[left]; k!=left && k!=right; k=same[left])
+            if( k < right )
+              left = k;
+            else {
+              left = right;
+              right = k;
+            }
+          same[left] = right;
+        }
+      }
+    }
+
+    /* assign the colors */
+    for( x = maxX-1; x >= 0; x-- ) {
+      if( same[x] == x ) pix[x] = random()&1;
+      else pix[x] = pix[same[x]];
+      Set_Pixel(x, y, pix[x]);
+    }
+  }
+}
+
+
+
+Subject: [22] Creation of SIS
+=============================
+
+kindly written by Pascal Massimino (massimin@clipper.ens.fr)
+
+(As opposed to Subject21, where the creation of a SIRDS was based
+on a bitmap, here we have a ray-tracing approach. ftp the RaySIS
+program)
+
+The first step in the generation of a SIS (Single Image Stereogram)
+is to transform the scene you want to render into a depth field.
+One interesting method is to scan your screen line by line and
+intersect objects with one ray (say using a ray-tracing assimilated
+method). But you can also slice your scene if it appears more
+convenient. A proper rescaling of your depth may also be useful
+when objects extend to far from (or to close to) the eyes, for this
+could make your SIS hard to be seen when finished.
+
+Once you've got your depth field, this 3D information requires
+been encoded in the SIS using a repetitive pattern. You will need
+to set proper pixels to the same color, this color being taken from
+an initial pattern. The following sketch shows the pixels (marked
+with 'o') on the screen that will need be allocated with the same
+color. The initial ray is the one (passing right in the middle of
+your eyes) that was used to determine h, the depth related to the
+scanned pixel (*). Then, from the point of intersection, two rays
+have been drawn in the direction of the eyes. They determine
+position of the linked pixels 'o', separated by a distance dx.
+
+                             initial
+                               ray
+                                |
+        Eyes:        Left       |      Right
+                       +<-------ES------>+            ES=eye separation
+                        \       |       /
+                         \   dx |      /
+                          \ <---|---> /
+Screen --------------------o----*----o-------------------
+                         ^  \   |   /     ^
+                         |   \  |  /      |
+                        h|    \ | /       |
+                         |     \|/        |H
+                         -    ****        |
+                          ***********     -
+-------------------------*** object **--------- average plane
+                        **************          in your scene
+                      *****************
+
+
+In your scene you must have a virtual average plane: every point
+laying on this plane will produce two pixels separated by a
+distance X on the screen, with X being the width of the initial
+pattern. This method is non-linear: dx/X*(ES-X)/(ES-dx)=h/H. One
+can nevertheless approximate this relation to the linear one:
+dx/X=h/H without your brain getting injured...
+
+This operation needs been repeated for each pixel of the scan line
+to produce a field of distances dx. The hard part still remains
+intact: deform this pattern to match the correlations inherent in
+the formation of the 3D image.
+
+Propagation/deformation:
+
+The initial pattern is drawn, say, on the left of the screen. Then,
+every pixel of this pattern is redrawn at distance dx, on the right,
+and re-use the new pattern it produces as initial pattern, etc...
+
+   initial    new pattern   ....     ......
+   pattern    after 1st
+              deformation
+              (larger)
+            2            2'        2''
+  1          1'           1''
+  +---------*+-----------*+--------*--------------- ...
+  |         /           /
+  |  dx    /|    dx    /
+  +-->----/ +---->>---/
+
+Point 1 goes to 1', which himself is mapped to point 1'', etc...
+
+Problem:
+
+The field dx may present discrepancies, discontinuities, due to
+objects edges, sides, etc... In the point where this occur are
+actually points that, in real vision, are only seen with ONE eye (eg.
+if your directive eye is looking just in the center of a small box,
+one side of this box will be seen by the other eye, only). They
+produce gaps or overlappings in the pattern deformation/
+propagation. But you can ignore this overlapping or fill the gaps
+with what you want (the initial pattern for instance),for this
+points does not take part of the 3D-effect. As a drawback, this
+can cause ghost-objects to appear when you are not focusing on
+the right distance (that is: the angle between your eyes' sight
+direction is *nearly* good, but your lens did not catch the right
+focal distance).
+
+Note:
+
+Because dx is not an integer, but a real number,interpolation of
+colors is required to avoid pixel-level slices of the objects to be
+generated. Scene will then appear smooth.
+
+You can also start the deformation/propagation from the right or
+the middle of your screen...
+
+Animation:
+
+Once you've produced stereograms (SIRDS, SIS, or SIRTS), you may
+create an animation out of the them. But some problems arise:
+
+The pattern of the background is *not* fixed, because it's content
+*heavily* depends on the position of the objects in your scene.
+Each new frame will produce different background. There are
+some methods to damp this: let a part of stereograms untouched
+by deformations, free from objects, so your eyes have a stable part
+to catch in the animation. This work rather well with SIS if your
+using a deformation of pattern that started, for instance, from the
+left: this part of the stereograms will remain the same along the
+animation.
+
+A more biological problem: the brain is not used to see objects
+moving without the textures, that *seem* tied to the object,
+moving with it. Especially with SIS, the objects rather appear to be
+moving under a colored piece of sheet than in front of you, but
+this is just a matter of acclimatization. Do you remember the first
+time you saw a stereogram ?
+
+There still remains a mean to temper this effect: in fact, to gain
+the third dimension in your image, you dropped one degree of
+freedom (colors). But there still remains some latitude in the
+choice of the pattern you use. You can choose any colors you
+want in a pre-definite vertical strip of your stereogram. So, why
+don't you choose a 'pattern' which is, for instance, a classicaly
+ray-traced image of your object, whose horizontal position can be
+adjust to superimpose and match your object when the 3D-effect
+will take place ? The only restriction is that your object does not
+extend to much beyond the strip, for only a part of width less
+than X can be color-controlled by this mean.
+
+
+
+Subject: [23] Multiple stereograms
+==================================
+
+Is it possible to generate a stereogram such that the image is
+dependent on the viewing rotation?
+
+The short answer is YES! In a "normal" stereogram the constraints
+are only in the horizontal direction, but by assigning constraints
+in 2-dimensions instead of linearly across the image, it is
+possible. I believe the first time I saw this was an image by Tyler
+[to be referenced].
+
+--comment by John Olsen to Andrew Steer(follows)
+>Also I think it should be possible to create a stereogram which
+gives
+>TWO images: one when viewed landscape and another when
+looked at
+>portrait. It would however only be possible for certain patterns
+>and NOT in general (your average real image or logo).
+
+Typically, you can only do a small image, entirely contained in the
+first copy of the random buffer (50 pixels wide in your case). The
+"vertical" image is repeated, but it gets more and more distorted
+as you go across the page.
+
+There are, as you say, limited things you can do which cover
+greater areas, but the limitations are rather severe. The quality of
+the results depends on how much error you're willing to put up
+with, as "fog" and uncertainty in the resulting image if you want
+both vertical and horizontal to be full page images.
+
+Can you "tile" or "wallpaper" stereograms?
+
+--from the net
+Some people say YES!, others say NO!
+
+What do I mean? Assume we have an image that looks like
+
++----+
+|    |
+| X  |
+|    |
+|    |
++----+
+
+can the colours be assigned such that copies of the image can be
+placed adjacent to the original image like this:
+
++----+----+----+----+----+
+|    |    |    |    |    |
+| .  | .  | .  | .  | .  |
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+----+----+----+
+|    |    |    |    |    |
+| .  | .  | X  | .  |etc.|
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+----+----+----+
+|    |    |    |    |    |
+| .  | .  | .  |etc.|etc.|
+|    |    |    |    |    |
+|    |    |    |    |    |
++----+----+----+----+----+
+
+so that there appears to be a *continuous* 3D surface?
+
+Is it possible to see two *completely* different images by
+alternating between the "wall-eyed" and "cross-eyed"
+techniques?
+
+Most definately! The problem that is encountered is if we want
+two different images to be seen, each pixel on the stereogram
+corresponds to *two* different positions, this is a form of 3D
+aliasing which people refer to as "fog" -- or more plainly "hard to
+see". Using a method that creates links between corresponding
+pixels in the image (such as the one in Subject 21) the links
+simply need to be updated for each 3D object.
+
+People have tried a simple method to ameliorate this; when
+generating the stereogram alternate using a pixel for the
+wall-eyed or cross-eyed approaches, this will at least half the
+horizontal resolution. [Has anyone tried this alternating
+technique?]
+
+
+
+Subject: [24] Losing the color
+===============================
+
+By using complementary colors for the left and right eye, is it
+possible to create a stereogram in which the 3D image "loses"
+it's color and appears in greyscale?
+
+Yes! It can be done. Would anyone like to elaborate on this
+matter? :-)
+
+
+
+Subject: [25] C code for windows
+=================================
+
+Version I
+=========
+
+From: zcapl31@ucl.ac.uk (William Andrew Steer)
+Newsgroups: alt.3d
+Subject: Constructing SIRDS, Windows source code MK1
+Summary: Most basic program to draw SIRDS, written in C++ for
+Windows
+Date: Tue, 31 May 1994 11:06:20 GMT
+
+This is about the simplest Windows program for drawing SIRDS. It
+is only bare-bones, you'll have to modify the program for
+alternative depth sources, and the SIRDS is reconstructed from
+scratch after every WM_PAINT message ie whenever the window is
+resized or uncovered. Use CTRL+ALT+DEL to exit while it's
+drawing.
+
+If you don't program in C, just look at the TMyWindow::Paint
+function. You should be aware that the random(arg) function
+returns an integer between 0 and arg-1.
+
+If you have Turbo C++ then make a copy of one of the example
+project files in the /tcwin/owl/examples subdirectory, and copy
+the program below to your /examples subdirectory. Open Turbo
+C++, load the new project, and change it's contents to include
+just the program below and OWL.DEF. It should then run ok.
+
+[-- later comments by Andrew Steer
+I would like to stress that it uses the 'lookback' algorithm, which
+has some limitations, namely:
+- it assumes that the right eye looks perpendicular to the screen
+while the left eye looks slightly sideways (so the rays converge),
+when in reality both eyes should look inwards. This causes
+asymmetry in the image (which according to some sources makes
+it more difficult for some people to see) and results in near
+objects appearing marginally further right than far ones.]
+
+// ObjectWindows SIRDS Program  (C) W.A. Steer 1994
+
+// Simplest routine possible
+
+
+// Picture not stored
+// - is completely redrawn for each WM_PAINT
+
+#include <owl.h>
+#include <math.h>
+
+const pattwidth=96;  // the basic repeat distance.
+// On a 14" monitor and 640x512 display, 96 pixels
+// represents about half the distance between the eyes.
+
+const NumColors=4;
+
+
+// Define the colors to use in form 0xbbggrrL
+//  0x  signifies hex notation
+//  bb  blue value, gg  green value, rr  red value
+//  L tells the compiler the constant is Long ie 32bit
+
+COLORREF cols[NumColors]=
+{
+ 0x000000L,
+ 0x800000L,
+ 0xFF0000L,
+ 0x000080L
+};
+
+
+
+// ----------------  TMyWindow  ----------------
+
+class TMyWindow : public TWindow
+{
+public:
+ TMyWindow( PTWindowsObject AParent, LPSTR ATitle);
+
+ virtual void Paint( HDC PaintDC, PAINTSTRUCT& PaintInfo );
+};
+
+
+TMyWindow::TMyWindow( PTWindowsObject AParent, LPSTR ATitle) :
+              TWindow(AParent, ATitle)
+{
+ Attr.W=620;  // Set the default window size to 620x340
+ Attr.H=330;
+}
+
+
+void TMyWindow::Paint(HDC PaintDC, PAINTSTRUCT& )
+{
+ int pixels[700];
+
+ int x,y;
+ int h;    // height of 'features' above the background
+ int l,pl; // lookback and previous lookback distances
+
+ long r,s; // temporary storage for constructing sphere
+
+
+ for (y=0; y < 300; y++)
+ {
+  for (x=0; x < pattwidth; x++)
+  {
+   pixels[x]=random(NumColors);
+  }
+
+  pl=pattwidth;
+
+  for (x=pattwidth; x < 612; x++)
+  {
+   h=0; // by default the image is flush with the background
+
+   // Calculate the height of a point on the sphere
+   if ((y >= 36) && (y <= 164))
+   {
+    r=64*64-(y-100L)*(y-100L);
+    if (r > 0)
+    {
+     s=r-(x-256L)*(x-256L);
+     if (s > 0) h=sqrt(s)+64;
+    }
+   }
+
+   // Calculate the lookback distance
+   l=(int)(pattwidth-h/8.0+0.5);
+
+   // if image has got deeper (new lookback is greater
+   //  than old lookback distance) generate a new pixel,
+   // otherwise repeat an old one
+   if (l > pl)
+    pixels[x]=random(NumColors);
+   else
+    pixels[x]=pixels[x-l];
+
+   pl=l;
+  }
+
+  // Copy the image to screen
+  for (x=0; x < 612; x++)
+  {
+   // use the colors defined at the top in cols[]
+   SetPixel(PaintDC,x,y,cols[pixels[x]]);
+  }
+ }
+}
+
+
+
+// ----------------  TMyApp  ----------------
+
+class TMyApp : public TApplication
+{
+public:
+ TMyApp(LPSTR AName, HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   LPSTR lpCmdLine, int nCmdShow)
+   : TApplication(AName, hInstance, hPrevInstance, lpCmdLine, nCmdShow) {};
+
+ virtual void InitMainWindow();
+};
+
+
+void TMyApp::InitMainWindow()
+{
+ MainWindow = new TMyWindow(NULL, Name);
+}
+
+
+int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+  LPSTR lpCmdLine, int nCmdShow)
+{
+ TMyApp MyApp("Original SIRDS by W.A.Steer", hInstance, hPrevInstance,
+               lpCmdLine, nCmdShow);
+ MyApp.Run();
+ return MyApp.Status;
+}
+
+
+
+Version II
+==========
+
+From: zcapl31@ucl.ac.uk (William Andrew Steer)
+Newsgroups: alt.3d
+Subject: Windows/C++ SIRDS source code Mk.2
+Summary: Minimal code to generate high quality SIRDS in
+Windows
+Date: Thu, 9 Jun 1994 11:06:19 GMT
+
+Windows SIRDS source code MK2 (C) W.A.Steer 1994
+
+Getting the program running
+
+For Borland C++ / Turbo C++ Windows users
+
+Unless you have an complete knowledge of the whereabouts of
+the various include & system files on your hard disk and other
+essential parameters I suggest you do the following:
+
+ o save my program in your owl\examples\ subdirectory as
+   'sirds.cpp'
+ o make a copy of one of the project files in your
+   owl\examples\ directory under the name 'sirds.prj' in the
+   same directory
+ o load up C++, and open the new 'sirds.prj' file
+ o remove from it all the files other than 'owl.def'
+ o select project|add item and add my program, 'sirds.cpp'
+ o Try to run the program!!!
+
+YOU MUST BE RUNNING WINDOWS IN AT LEAST 256 COLORS
+otherwise the oversampling won't work properly, and you may
+only get three color output.
+
+Although the program is not short, it is still the very minimum
+required to do what it does within the Windows environment.
+(One day the .EXE file for an all-singing all-dancing user friendly
+masterpiece *may* appear somewhere deep in cyberspace!)
+
+As supplied, the user interface is non-existent - the program
+itself must be changed to alter key parameters.
+
+The pictured is redrawn from scratch on every WM_PAINT
+message - which takes some time... don't be afraid to use
+CTRL+ALT+DEL to abort a redraw, you'll get a blue background
+and the message 'SIRDS.EXE This program has stopped
+responding to the system...' press enter to accept, and the
+program will be terminated.
+
+The object is defined mathematically within the program -
+currently a sphere surrounded by a ring, 'Saturn-like' and a test
+pattern at the top and linear depth scale - slope and large
+staircase at the bottom.
+
+You can try changing the code which sets the depth for a given
+point for other objects using 2D or 3D math's and/or conditions
+(could be quite horrendous depending on the shape), or adapting
+it to import depth information from some 3D modeling program,
+suitable scientific data, or fractal code. I have created 3D
+Mandelbrots, a SIRDS Scanning Tunneling Microscope (STM)
+picture and have seen Atomic Force Microscope (AFM) images.
+
+As it stands the program does not have features for saving or
+printing the output. You'll have to use the print-screen key to
+copy to clipboard and save from there, or import to some other
+package.
+
+Conversion for other languages / operating systems
+
+If you want to convert the program to run on something other
+than Windows, concern yourself primarily with the
+TMyWindow::Paint procedure as this contains the guts of the
+program; the rest is largely Windows housekeeping. (Note that
+some of the arrays are defined outside the Paint procedure
+(otherwise there is a tendency to run out of stack space), the main
+parameters are at the top of the program, and you will need to
+program a color palette).
+
+
+// ObjectWindows SIRDS Program Mk2  (C) W.A. Steer 1994
+//                              email: w.steer@ucl.ac.uk
+
+// Picture not stored
+// - is completely redrawn for each WM_PAINT
+
+// Has saturn & rings
+
+// Switch 'dohiddenrem' to TRUE to enable (slow) hidden surface removal
+
+#include <owl.h>
+#include <math.h>
+#include <alloc.h>
+
+int bkdepth=-800;       // depth of the background in pixels
+long E=192;             // typical eye separation in pixels
+int o=700;              // observer-screen distance in pixels
+const oversam=6;        // oversampling ratio - set to 1,2,4, or 6
+                        //    1 implies no oversampling
+BOOL dohiddenrem=FALSE; // enable/disable SLOW hidden point removal
+
+const picwidth=620;     // width of the picture in pixels
+const picheight=350;    // height of picture in pixels
+const NumColors=64;
+
+
+// ----------------  TMyWindow  ----------------
+
+class TMyWindow : public TWindow
+{
+private:
+ int pixels[picwidth*oversam];
+ int link[picwidth*oversam];
+ int z[picwidth];
+ HPALETTE hpal;
+
+public:
+ TMyWindow( PTWindowsObject AParent, LPSTR ATitle);
+ ~TMyWindow();
+
+ virtual void Paint( HDC PaintDC, PAINTSTRUCT& PaintInfo );
+};
+
+
+TMyWindow::TMyWindow( PTWindowsObject AParent, LPSTR ATitle) :
+              TWindow(AParent, ATitle)
+{
+ Attr.W=picwidth+8;   // Set the default window size
+ Attr.H=picheight+26;
+
+ // Create and initialise color palette with 64 shades of blue/green
+ LPLOGPALETTE pal;
+
+ pal=(LPLOGPALETTE) farmalloc(sizeof(LOGPALETTE)
+                          + sizeof(PALETTEENTRY) * NumColors );
+ pal->palVersion = 0x300;
+ pal->palNumEntries = NumColors;
+
+ for(int n=0; n < NumColors; n++)
+ {
+  pal->palPalEntry[n].peRed   = 0;
+  pal->palPalEntry[n].peGreen = n*2;
+  pal->palPalEntry[n].peBlue  = n*4;
+  pal->palPalEntry[n].peFlags = PC_RESERVED;
+ }
+
+ hpal = CreatePalette(pal);
+ farfree(pal);
+}
+
+
+void TMyWindow::~TMyWindow()
+{
+ DeleteObject(hpal);   // delete the palette
+}
+
+
+void TMyWindow::Paint(HDC PaintDC, PAINTSTRUCT& )
+{
+ int x,y;
+ int h;    // height of 'features'
+ int u,dx,c,xx;
+ int highest;
+ int separation,left,right;
+ int pp;
+ long xs=260,ys=150,zs=-580;
+ float v;
+ BOOL visible;
+
+ long r,s; // temporary storage for constructing sphere
+
+ HPALETTE oldPalette;
+
+ oldPalette=SelectPalette(PaintDC,hpal,FALSE);
+ UnrealizeObject(hpal);
+ RealizePalette(PaintDC);
+
+
+ for (y=0; y < picheight; y++)
+ {
+  for (x=0; x < picwidth*oversam; x++)
+  {
+   link[x]=x;
+  }
+
+  highest=bkdepth;
+
+  for (x=0; x < picwidth; x++)
+  {
+   h=bkdepth; // by default, image is flush with the background
+
+   // start of scene-generating code
+   if ((y >= ys-64) && (y <= ys+64))
+   {
+    r=64*64-(y-ys)*(y-ys);
+    if (r>0)
+    {
+     s=r-(x-xs)*(x-xs);
+     if (s > 0) h=sqrt(s)+zs;
+    }
+   }
+   s=(3*xs-5*ys+4*zs-3*x+5*y)/4;
+   xx=sqrt((x-xs)*(x-xs)+(y-ys)*(y-ys)+(s-zs)*(s-zs));
+   if ((xx > 80) && (xx < 120) && (s > h)) h=s;
+
+   if ((y >= 8) && (y < 32)) h=((x/32)%2)*32+bkdepth;
+   if ((y >= 256) && (y < 280)) h=(x/32)*16+bkdepth;
+   if ((y >= 296) && (y < 320)) h=x/2+bkdepth;
+   // end of scene-generating code
+
+   z[x]=h;   // store the height in the array
+
+   if (h > highest) highest=h;
+  }
+
+
+  for (x=0; x < picwidth*oversam; x++)
+  {
+   separation=(E*oversam*z[x/oversam])/(z[x/oversam]-o);
+
+   left=x-separation/2;
+   right=left+separation;
+
+   if ((left >= 0) && (right < picwidth*oversam))
+   {
+    visible=TRUE;
+
+    if (dohiddenrem)
+    {
+     v=2.0*(o-z[x/oversam])/E;
+
+     dx=1;
+     do
+     {
+      u=z[x/oversam]+dx*v;
+      if ((z[(x+dx)/oversam]>=u) || (z[(x-dx)/oversam]>=u)) visible=FALSE;
+      dx++;
+     }
+     while ((u <= highest) && (visible==TRUE));
+    }
+
+    if (visible) link[right]=left;
+   }
+  }
+
+  pp=0;
+  for (x=0; x < picwidth*oversam; x++)
+  {
+   if (link[x]==x)
+   {
+    // ensures basic pattern does not change much on a scale
+      // of less than one pixel when oversampling is used
+    if ((pp%oversam)==0) c=random(NumColors);
+    pixels[x]=c;
+    pp++;
+   }
+   else
+    pixels[x]=pixels[link[x]];
+  }
+
+  for (x=0; x < picwidth; x++)
+  {
+   xx=x*oversam;
+
+
+   switch (oversam)  // use different 'filters' depending
+                     // on oversampling ratio
+   {
+    case 1:
+     c=pixels[xx];
+    break;
+
+    case 2:
+     c=(pixels[xx]*42+(pixels[xx-1]+pixels[xx+1])*24
+       +(pixels[xx-2]+pixels[xx+2])*5)/100;
+    break;
+
+    case 4:
+     c=(pixels[xx]*26+(pixels[xx-1]+pixels[xx+1])*18
+       +(pixels[xx-2]+pixels[xx+2])*12
+       +(pixels[xx-3]+pixels[xx+3])*7)/100;
+    break;
+
+    case 6:
+     c=(pixels[xx]*14+(pixels[xx-1]+pixels[xx+1])*14
+       +(pixels[xx-2]+pixels[xx+2])*11
+       +(pixels[xx-3]+pixels[xx+3])*8
+       +(pixels[xx-4]+pixels[xx+4])*5
+       +(pixels[xx-5]+pixels[xx+5])*3
+       +(pixels[xx-6]+pixels[xx+6])*2)/100;
+    break;
+   }
+
+   SetPixel(PaintDC,x,y,PALETTEINDEX(c));
+  }
+ }
+ SelectPalette(PaintDC,oldPalette,FALSE);
+}
+
+
+
+// ----------------  TMyApp  ----------------
+
+class TMyApp : public TApplication
+{
+public:
+ TMyApp(LPSTR AName, HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   LPSTR lpCmdLine, int nCmdShow)
+   : TApplication(AName, hInstance, hPrevInstance, lpCmdLine, nCmdShow) {};
+
+ virtual void InitMainWindow();
+};
+
+
+void TMyApp::InitMainWindow()
+{
+ MainWindow = new TMyWindow(NULL, Name);
+}
+
+
+int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+  LPSTR lpCmdLine, int nCmdShow)
+{
+ TMyApp MyApp("Original SIRDS by W.A.Steer", hInstance, hPrevInstance,
+               lpCmdLine, nCmdShow);
+ MyApp.Run();
+ return MyApp.Status;
+}
+
+
+HOW IT WORKS
+
+Principles of 3D Imagery
+
+---------------------------
+    xxx           xxxx
+      x    xxxxxxxx    object
+      xxxx*x
+          |
+         | |                            BASIC PRINCIPLE for
+      L  | |  R                         3D Imagery
+........*...*.............. image plane
+        |   |
+       |     |
+       |     |
+      |       |
+      |       |
+     |         |
+     o         o
+   L             R
+
+All single-image 3D systems (eg red-green glasses 3D) work on
+the principle that the left and right eyes see different features on
+the image plane which the brain interprets as a 3D object (see
+diagram above). The glasses ensure that each eye sees only one of
+the two images (with red/green specs, the eye with the RED filter
+only sees the GREEN image). Other technologies for the same
+effect include polarized images/glasses (used for a few films), and
+flashing left/right dark/clear LCD specs with corresponding
+alternate left and right images on a computer screen.
+
+BUT with autostereograms any point for the right eye is ALSO
+seen by the left eye as shown below. An interpretation must then
+be made for that, so an extra point X is introduced, as a
+corresponding point for the right eye. This dependence must
+continue and be repeated across the entire display.
+
+---------------------------
+    xxx           xxxx
+      x    xxxxxx*x    object
+      xxxx*x    /|
+          |    / |
+         | |  /  |                      IDEAL / REAL LIFE
+      L  | | /R  | X                    geometry
+........*...*....*......... image plane
+        |  /|   |
+       |  /  |  |
+       | /   |  |
+      | /     | |
+      |/      | |
+     |/        |
+     o         o
+
+   L             R
+
+For the purpose of generating SIRDS it is usual to assume the
+geometry below, where the eyes 'move' along the image.
+
+---------------------------
+    xxx           xxxx
+      x    xxx*xxxx    object
+      xxxx*x  |
+          |   ||
+         | | |  |
+         | | |  |                       SIMPLIFIED geometry
+........*...*....*......... image plane
+        |   |    |
+       |   | |    |
+       |   | |    |
+      |   |   |    |
+      |   |   |    |
+     |   |     |    |
+     o   O     o    O
+
+    L   L       R    R
+
+
+This Program
+
+Simplifications:
+
+ o We assume that the viewer looks STRAIGHT AT all parts of
+   the image (looks along the perpendicular to the screen at all
+   points on the object) as shown above.
+
+   reasons: much simpler math's, no preference for a particular
+   viewing point.
+
+   adverse effect: parallax error: features towards the sides get
+   pulled inwards slightly.
+
+ o In this program, only one value of depth is allowed for given
+   values of x & y.
+
+   reasons: smaller/simpler storage requirements for the object,
+   generally simpler and faster to code.
+
+   adverse effects: imperfect representation of objects behind
+   narrow objects.
+
+            plan views:
+
+
+background  xxxxxxxxxxxxxx    xxxxx      xxxxx   xxxxx!!!!!!xxxxx
+                                                      !!!!!!
+                                                      !!!!!!
+                                                      !!!!!!
+                 xxxx                                 !!!!!!
+ pencil         xxxxxx             x    x             x!!!!x
+                 xxxx               xxxx               xxxx
+
+              real scene         as stored           program's
+                                                  interpretation
+
+   Clearly the data offers no information about what goes on
+   behind any point defined on the scene. The only sensible
+   assumption to make is that the object extends from the
+   given point back to infinity (or the background).
+
+   A scene where the viewer looks through the bars of a prison
+   cell for example, might warrant a fuller depth description.
+
+ o The program is not capable of producing a perspective
+   image, given the above limitations, although there is no
+   reason why more distant parts of the image could be
+   defined smaller.
+
+----------------------------------------------------------------
+
+I have adopted the following coordinate system as it seems logical
+and avoids the use of floating point math which is slow. (On a
+486sx without math co-processor about 100 integer
+multiplications can be performed in the time taken to do ONE
+similar floating point operation (about 30 and 3000 clock cycles
+respectively). When considering speed, it should be borne in mind
+that merely plotting several hundred thousand pixels on the
+screen takes an appreciable amount of time!
+
+     ------------------------------   background
+                                  ^
+                                  |
+                       object     |
+                  xxxxxxxx        |
+              ^      /\           | background depth  bkdepth
+              |     |  |          |
+            d |     |  |          |
+              v     |  |          v
+      .............*....*...........   image plane
+     separation -->|    |<--      ^
+                   |    |         |
+                   |    |         |
+                  |      |        | observer distance  o
+                  |      |        |
+                  |      |        |
+            eyes  o      o        v
+
+                  <------>
+                     E
+
+
+Similar triangles:
+   separation/d = E/(d+o)
+
+   separation = d*E/(d+o)
+
+Now let us introduce an (x,y,z) coordinate system:
+   x - distance across the screen, measured from the left
+   y - distance down the screen, measured from the top
+   (unconventional but Windows and older IBM graphics
+   systems go that way)
+   z - distance from the screen; negative behind the screen,
+   positive in front.
+
+(mathematicians would call this an anticlockwise (unconventional)
+coordinate system. If necessary we could swap the y-direction by
+making the program plot the right way up (+ve upwards) but
+unless the data warrants it it just adds an unnecessary
+complication)
+
+   separation = z[x][y]*E/(o-z[x][y])
+
+----------------------------------------------------------------
+
+Almost invariably we need a continuous background for the scene;
+it is usually chosen to be the same distance behind the screen as
+the observer is in front, enabling the observer to look at his
+reflection in order to aid the correct convergence of his eyes.
+
+In general, it is best not to allow a range of depths which causes
+the separation to vary by a factor of two or more since the image
+can be optically misinterpreted - and difficult to see properly.
+With *caution*, (basically not allowing a direct boundary between
+very near and far objects, and including several slopes to guide
+the eyes) you can get away with deeper pictures.
+
+For scientific images or fractals, it may be convenient to set the
+z[] values as bkdepth+h where h is the height of the data.
+
+It should be noted that as the observer moves further away the
+depth effect becomes stronger and vice-versa. The 'correct' depth
+will only be seen when he is at the distance the image was
+designed for, o - if the image is reproduced at its original size.
+
+----------------------------------------------------------------
+
+Hidden point removal
+
+It is technically incorrect to plot a stereo pair of dots
+corresponding to a point on the object which is visible to only one
+eye - to do so would cause an ambiguity near a change in depth.
+
+--------------------------------   background
+
+                object
+       xxxxxxxxxxxx ______
+        ^      / \x      |
+        |     /   xxxxx  | Dz
+      d |    /  Dx \     v
+        |   /   |-->\ -----
+        v  /         \   ^ u
+..........*...........*..|......   image plane
+         /             \
+        /               \
+       /                 \
+      /                   \
+     o        eyes         o
+
+If any part of the ray to either eye goes behind a point defined as
+being on the surface of the object then the ray is deemed to be
+intercepted, since we defined the object to be continuous in the
+z-dimension.
+
+The depth, u(x), of any point of the ray can be found by similar
+triangles.
+
+   2*Dx/Dz = E/(d+o)
+
+   Dz = (2*(d+o)/E)*Dx
+
+   u(x+Dx) = d-(2*(d+o)/E)*Dx
+
+Amending for the coordinate system where depths into the screen
+are negative (and hence u() is also -ve)
+
+   u(x+Dx) = z[x]+(2*(o-z[x])/E)*Dx
+
+Then if
+
+   z[x+Dx] >= u(x+Dx)
+
+is true for any value Dx up to where u() meets the image plane the
+ray is intercepted - and the point is not visible to both eyes.
+
+For speed, we only need to do the test up to u(x+Dx) = height of
+most prominent point on the current scan line.
+
+----------------------------------------------------------------
+
+Algorithm
+
+This version of my SIRDS program uses a symmetric algorithm
+based on information given in:
+   "Displaying 3D Images: Algorithms for Single Image Random
+   Dot Stereograms", a paper by H.W. Thimbleby, S. Inglis and
+   I.H. Witten (available from
+   ftp://ftp.cs.waikato.ac.nz/pub/SIRDS)
+
+although I have adopted a different coordinate system.
+
+In summary:
+
+for each line (y-coordinate)
+{
+ for each x
+ {
+  link[x]=x        // link each point with itself
+ }
+
+ for each x-coordinate of the object
+ {
+  find the stereo separation corresponding to the depth of the
+    object at this value of x & y, as given in the math's previously
+
+  left=x-separation/2
+  right=left+separation   // to reduce effects of rounding errors
+
+  if the point is visible to both eyes
+   link[right]=left   // link these two points
+ }
+
+ for each x-coordinate
+ {
+  if (link[x]=x)
+   generate a random colored dot
+  else
+   print a dot in the color of the dot at link[x]
+ }
+}
+
+N.B. There is no geometric reason to cause a dot already linked to
+be linked again, although rounding errors could create two links
+to two adjacent points - in this case the latter link wins!
+
+----------------------------------------------------------------
+
+One last problem:
+
+On an ordinary computer monitor (around 70dpi), curved or
+sloped surfaces in stereograms as described appear broken into
+distinct planes parallel to the image plane.
+
+Examination of the geometry reveals that for usual depths, the
+z-resolution is around 7 times worse than the x-resolution of the
+display device.
+
+(Sheer high-definition alone won't solve the problem either: if you
+were to draw for a 600dpi laser, the dots may turn out too small
+to see easily)
+
+Need to introduce Z-RESOLUTION ENHANCEMENT
+
+If the stereogram is calculated at higher x-resolution - say 4
+times the display resolution (I call it oversampling), and then
+properly reduced for display we can lose those distracting
+'staircases'.
+
+Basically each screen point is assigned a color by means of a
+weighted average of several of the calculated points.
+
+eg for 2* oversampling:
+
+calc pts        x    x    x    x    x    x    x
+
+weighting           .05  .24  0.42 .24  .05
+
+ mix together          \    \  |  /    /
+
+screen point                   X
+
+The weightings must add up to one, and a bell-shaped
+distribution works quite well.
+
+The figures given were derived from a Normal (Gaussian)
+distribution:
+
+
+             1          -(dx^2)/(2*S^2)
+   w = --------------  e
+       S * sqrt(2*PI)
+
+dx is the distance from the centre of the distribution
+S is the standard deviation (try S=oversam/2)
+w is the (fractional) weighting factor
+
+The distribution extends to +/- infinity but the weighting factors
+tend to zero, so we only use the first few.
+
+In practice, it is noticeably faster to make the weightings integer
+on a scale from 0 to 100, then divide the sum by 100 (remember
+the speed advantage of integer math).
+
+To accurately reproduce the averaged color a display with more
+than 16 colors is needed. For a simple, with a linear color series
+(eg black through to blue, or red to green) in a palette it is easy to
+find the in-between color reference. With more complicated
+programming and/or a 16.7million color display, in-betweens for
+ANY color combinations could be found.
+
+(Actually you could use fewer colors, even ordinary black and
+white, by using probabilities to paint 'in-between' colors -
+providing there is linear resolution to spare.)
+
+It is important that the bulk of the calculated stereogram pattern
+does not contain detail smaller than one pixel as this would get
+lost as the resolution is reduced for display. Hence for 4*
+oversampling the colors in the basic pattern should not change
+more often than every 4th point.
+
+----------------------------------------------------------------
+
+Conclusion
+
+Stereograms are a rapidly expanding business and there are very
+good posters by NVision and others. Unfortunately there is also
+an increasing amount of rubbish (especially on the Internet).
+
+The program offered is a basis for creating stereograms of a high
+technical quality, but a good deal of artistic ability is needed to
+produce aesthetically pleasing masterpieces.
+
+send all enquiries to:
+   Andrew Steer (w.steer@ucl.ac.uk) )
+
+
+Subject: [26] Use POV-RAY to build depth images?
+================================================
+
+From: jolsen@nyx10.cs.du.edu (John Olsen)
+Newsgroups: alt.3d
+Subject: Re: Using POV-RAY to generate data for SIRDS? (Yes!
+Source included.)
+Date: 29 Jun 1994 21:40:13 -060
+joel@wam.umd.edu (Joel M. Hoffman) writes:
+[Use POV-RAY to build depth images?]
+
+This comes up once eery month or so. Here's how to do it. (I just
+happen to be reading news on the system containing the modified
+source for a change. Stuart or Todd: Can this go in the FAQ?)
+
+You need to change render.c, and should not need to hit any
+other files. Insie the Trace() function, you need to replace where it
+looks up colors with the already available depth information. The
+full diff ("diff render.c.new render.c" assuming POV2.0) contains a
+bit of other tweaking:
+
+----------------------------------------------------
+382c382
+<   /* Make_Colour (Colour, 0.0, 0.0, 0.0); */
+---
+>   Make_Colour (Colour, 0.0, 0.0, 0.0);
+408,414c408
+<     {
+<       Make_Colour ( Colour,
+<                  1-((int)(Best_Intersection.Depth) % 255 ) / 255.0,
+<                  1-((in)(Best_Intersection.Depth) % 255 ) / 255.0,
+<                  1-((int)(Best_Intersection.Depth) % 255 ) / 255.0);
+<       /* Determine_Apparent_Colour (&Best_Intersection, Colour, Ray); */
+<     }
+---
+>     Determine_Apparent_Colour (&Best_Intersection, olour, Ray);
+416,422c410,413
+<     {
+<       /* if (Frame.Fog_Distance > 0.0)
+<        *Colour = Frame.Fog_Colour;
+<        else
+<        *Colour = Frame.Background_Colour; */
+<       Make_Col, 0.0, 0.0, 0.0 );
+<     }
+---
+>     if (Frame.Fog_Distance > 00)
+>       *Colour = Frame.Fog_Colour;
+>     else
+>       *Colour = Frame.Background_Colour;
+-----------------------------------------------------
+
+
+
+Subject: [41] Hope for the hopeless
+===================================
+
+-- William C. Haga (wchaga@vela.acs.oakland.edu)
+
+Being one who has used wide-eyed vision on chain link fences
+ever since I was a kid, I was able to see the images in SIRDS right
+away. But I've had difficulty explaining the technique to friends.
+Today I had the latest Games magazine with me at my parents
+house. Games is running another contest using SIRDS, so there
+are three in the latest issue. This time I thought of the reflection
+idea. So I opened mom's china cabinet, put the magazine against
+the glass in the door, and told mom to keep looking at her own
+reflection in the glass until the image appeared.
+
+It took less than thirty seconds.
+
+When she saw the 3d train engines, I was subjected to a squeal of
+delight that I hadn't heard from her for a long time. "EEK! IT'S
+COMING OUT AT ME! IS THIS EVER NEAT!". Dad tried for about a
+minute but gave up.
+
+About an hour later, mom and I heard a shout. We went to the
+dining area, and there was dad with the magazine against the
+glass in the door. "Isn't that just the most amazing thing!", said
+he.
+
+Later they were making jokes about teaching old dogs new tricks.
+
+
+
+Subject: [42] Buying commercial programs
+========================================
+
+STW_DEMO.EXE: the full package will allow RDS creation
+Approx US$40
+N.E.Thing Enterprises
+P.O. Box 1827
+Cambridge, MA 02139, USA.
+Config: DOS
+
+STEREOLUSIONS: creater/render/print SIRDS
+I/O Software, Inc.
+Ph: (909/483-5700 800/800-7970), USA.
+Config: WINDOWS/Windows NT
+(From William Saito, 3/07/94)
+
+KAI's POWER TOOLS: Photoshop add-on for SIS creation
+Config: MAC
+
+
+
+Subject: [43] The image I see is "inverted" or "sunk-in"!
+=========================================================
+
+To see a stereogram you must converge your eyes in such a
+fashion that each eye is looking at the corresponding pixel/dot
+required to get the 3D effect.
+
+If you are converging your eyes in front of the picture instead of
+behind the picture, you will see the apparent image inverted.
+
+This is what you should be doing:
+
+    right    left
+     (.)      (.)
+      \        /
+       |      |
+       \      /
+        |    |
+.....pixel..pixel......(actual picture/poster)
+        \    /
+         |  |
+         \  /
+         |  |
+          \/
+           |
+          XX (perceived position in 3D--behind the object)
+
+
+You can see that the separation between the two pixels decreases
+as the 3D object moves closer towards you eyes...but if you are
+seeing a "depth-inverted" image, you are probably doing this:
+
+    right    left
+     (.)      (.)
+      \        /
+       \      /
+        \    /
+         \  /
+          \/
+          XX  (perceived position in 3D in front of the object)
+          /\
+         /  \
+        /    \
+       /      \
+      /        \
+     /          \
+..pixel........ pixel......(actual picture/poster)
+
+
+This is where your eyes converge before the object, and we can
+see that the separation increases as the object moves closer to
+your eyes. Thus when a method is made to be viewed a certain
+way, and you do the opposite, you see an inverted image.
+
+
+Subject: [44] Call for stereograms
+==================================
+
+From: jolsen@nyx10.cs.du.edu (John Olsen)
+Newsgroups: alt.3d
+Subject: Call for stereograms
+Date: 26 May 1994 22:16:33 -0600
+
+A stereogram distributor has asked me to post the following info.
+Please don't contact me about it. Call or write (snail mail) to him.
+Tell him you saw my message on the Internet.
+
+----
+David Sterling, president of Sterling Crescent International, Inc. is
+looking for commercial-grade stereograms to be included in books
+and as postcards. He prefers groups of images to singles, and you
+must be the original designer (owner of the copyright on the
+image).
+
+Payment on accepted designs will be on a royalty basis. For an
+upcoming book deal, he is trying to get all images submitted in
+final form by the end of June. The postcard work is ongoing.
+
+I'd suggest calling him once you have a list of titles together, and
+then working out how to get preview copies to him (disk, paper,
+fax...). He's been distributing stereogram materials for a long time
+(long for the stereogram business, anyway :^), so he's picky about
+high quality, good detail, and eye-catching patterns.
+
+He is:
+
+   David Sterling
+   Sterling Crescent International, Inc
+   PO Box 690253
+   San Antonio, TX 78269, USA
+   voice (210) 558-7143
+   fax (210) 558-7144
+
+
+This version of the SIRDS-FAQ was compiled by Stuart Inglis and
+attempts to continue the previous excellent version maintained by
+Todd Hale (todd_hale@novell.com). The latest version of the FAQ
+is located at http://www.cs.waikato.ac.nz/~singlis/sirds.html.
+Please send all modifications and/or comments to
+singlis@cs.waikato.ac.nz .
+
+

@@ -1,0 +1,204 @@
+From merlin@maths.tcd.ie Fri Feb 19 11:08:55 1993
+Newsgroups: comp.sys.acorn.tech
+From: merlin@maths.tcd.ie (Merlin Hughes)
+Subject: Re: Arc Audio file formats
+Organization: Dept. of Maths, Trinity College, Dublin, Ireland.
+Date: Thu, 18 Feb 1993 13:14:36 GMT
+
+banksie@khantazi.welly.gen.nz (Philip R. Banks) writes:
+
+>Hamish_Hubbard@kcbbs.gen.nz (Hamish Hubbard) writes:
+
+>> The Audio Formats Guide (2.6) says that the native Arc digitised audio
+>> format is a variant of u-law encoding, but doesn't give much other
+>> detail. Could someone please post the specs to this newsgroup?
+
+>   The Arc uses a logarthimic format which is a variant of m-law companding.
+>The data format is :-
+
+>   Bit 7 6 5 4 | 3 2 1  | 0
+>       --------+--------+-----
+>       Chord   | Offset | Sign
+
+Range is the range of output levels (inclusive at the lower end,
+exclusive at the upper end (ie 0<=range<1).
+
+Chord	Range
+0	0-1
+1	1-3
+2	3-7
+3	7-15
+4	15-31
+5	31-63
+6	63-127
+7	127-255
+
+The range spans 1, 2, 4, 8, 16 points etc.
+
+Offset is the point within the range span; for example, in chord 0,
+the output is 0+((1-0)/16*ofs); in chord 7, 127+((255-128)/16*ofs)
+giving a maximum of 127+8*15 = 247.
+
+You'll have to work out exact formulae for doing this yourself. It
+involves sums and stuff; I have some ganky basic functions to
+convert to and from this format if needed.
+
+Output = (1<<chord)-1 + (1<<chord)*ofs/16 at a guess.
+
+M.
+--SICK--Merlin Hughes--    /|            This is only the beginning.
+  merlin@maths.tcd.ie     //|         We will regroup. We will prepare.
+                         //_|   When the time comes, we will emerge and take
+Acorn.. Deus et machina. /  | our place as the supreme masters of the universe.
+
+From alan@cycle.demon.co.uk (Alan Fitch) Thu Dec  1 10:44:12 1994
+Newsgroups: comp.sys.acorn.tech
+Path: doc.ic.ac.uk!sunsite.doc.ic.ac.uk!pipex!demon!betanews.demon.co.uk!cycle.demon.co.uk!alan
+From: alan@cycle.demon.co.uk (Alan Fitch)
+Subject: Re: log audio samples
+Message-ID: <19941201.012058.11@cycle.demon.co.uk>
+Sender: news@demon.co.uk (Usenet Administration)
+Nntp-Posting-Host: cycle.demon.co.uk
+Reply-To: alan@cycle.demon.co.uk
+Organization: Home
+X-Newsreader: Archimedes TTFN Version 0.36
+References: <14929.9411241038@sol.sees.bangor.ac.uk> <Pine.SV4.3.91.941129133331.18723C-100000@lily>
+Date: Thu, 1 Dec 1994 01:20:58 GMT
+Lines: 64
+
+
+> On Thu, 24 Nov 1994, Mr P C Smith wrote:
+> 
+> [snip]
+>  
+> >         PS. BTW, does anyone know the exact format of 8 bit arc 
+> > logarithmic sound, because I want to convert 16bit CD Audio to 
+> > something a little more understandable, but my results with 8 bit 
+> > linear are a little poor, and 8 bit log samples are supposed to be 
+> > better.
+> > 
+
+The format of log samples is as follows
+
+MSB                         LSB
+D7  D6  D5  D4  D3  D2  D1  D0
+CS2 CS1 CS0 P3  P2  P1  P0  S
+
+where 
+
+CS2-0 identify one of eight chords as follows
+
+            range 
+chord 0     0   x
+chord 1     x   3x
+chord 2     3x  7x
+chord 3     7x  15x
+chord 4    15x  31x
+chord 5    31x  63x
+chord 6    63x  127x
+chord 7    127x 247x
+
+Each chord is split into 16 segments, indicated by P3-P0.
+The steps in each segment are twice the size of the steps
+in the previous segment.
+
+The sign bit is in D0.
+
+There's an example of converting linear to log on page 4-72
+of the RiscOS3 PRMs, which looks something like this...
+
+MOV R0,#0
+MOV R1,#0
+MOV R2,#0
+MOV R3,#0
+MOV R4,#0
+SWI "XSound_Configure"
+BVS error_return
+LDR R8, [R3,#8]
+
+This results in a pointer to a lin-to-log ROM table appearing in R8. 
+To use this, use
+
+LDRB R0,[R8,R0,LSR #19]
+
+with the result appearing in R0.
+
+               regards,
+                       Alan
+                        
+-- 
+Alan Fitch
+Tel.:           +44 (0)1703 472342 (voice)
+E-mail:         alan@cycle.demon.co.uk
+
+From adh1003@hermes.cam.ac.uk (A.D. Hodgkinson) Thu Dec  1 10:45:29 1994
+Path: doc.ic.ac.uk!sunsite.doc.ic.ac.uk!lyra.csx.cam.ac.uk!pc2013.nmus.pwf.cam.ac.uk!adh1003
+From: adh1003@hermes.cam.ac.uk (A.D. Hodgkinson)
+Newsgroups: comp.sys.acorn.tech
+Subject: Re: log audio samples
+Date: Thu, 1 Dec 1994 09:37:08
+Organization: University of Cambridge
+Lines: 58
+Message-ID: <adh1003.72.2EDD9945@hermes.cam.ac.uk>
+References: <14929.9411241038@sol.sees.bangor.ac.uk> <Pine.SV4.3.91.941129133331.18723C-100000@lily> <19941201.012058.11@cycle.demon.co.uk>
+NNTP-Posting-Host: pc2013.nmus.pwf.cam.ac.uk
+
+In article <19941201.012058.11@cycle.demon.co.uk> 
+alan@cycle.demon.co.uk (Alan Fitch) writes:
+
+>From: alan@cycle.demon.co.uk (Alan Fitch)
+>Subject: Re: log audio samples
+>Date: Thu, 1 Dec 1994 01:20:58 GMT
+
+>> On Thu, 24 Nov 1994, Mr P C Smith wrote:
+>> 
+>> [snip]
+>>  
+>> >         PS. BTW, does anyone know the exact format of 8 bit arc 
+>> > logarithmic sound, because I want to convert 16bit CD Audio to 
+>> > something a little more understandable, but my results with 8 bit 
+>> > linear are a little poor, and 8 bit log samples are supposed to be 
+>> > better.
+>> > 
+
+As they say, "[snip]"
+
+>This results in a pointer to a lin-to-log ROM table appearing in R8. 
+>To use this, use
+
+>LDRB R0,[R8,R0,LSR #19]
+
+>with the result appearing in R0.
+
+
+Er, you really should be aware that the table in ROM is extremely 
+approximate. If you graph the thing, it becomes a 'spot the straight line 
+segment' competition before long...
+
+Jason Tribbeck / Vertical Twist or VTI or whatever it is now have just 
+released !Sonor; I've 'beta'd' this and I can recommend it to convert your 
+data quickly and reliably. It is a generally useful package, and one of the 
+few sample editors that does everything internally with 8 bit log rather 
+than linear.
+
+The trouble with using the ROM table is that you'll introduce enough 
+distortion in the conversion to offset using log samples in the first place, 
+IMHO...
+
+Sonor's curve still has straight lines in it, though not as many. Perhaps
+I've misunderstood how the sound system works and those straight lines 
+SHOULD be there; in any case, myself and John Sullivan developed a table 
+that will convert between 13-bit linear signed and log data, which required 
+an approximation to the log function. We just messed around with constants 
+in the end, until it fitted the ROM curve as closely as possible, but 
+without the straight lines. You could quite easily adapt this function for 
+your purposes. So if you don't want to shell out on Sonor - which I really 
+do recommend - contact me before about 4:00-ish tomorrow (I'll be on holiday 
+after that - yippee! But no net access - booo...) and I'll send you the 
+details.
+
+TTFN, Andrew
+
+"Hold on tight lad, and think of Lancashire Hotpot!"
+                                                     - A Grand Day Out
+

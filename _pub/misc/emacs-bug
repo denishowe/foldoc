@@ -1,0 +1,54 @@
+From kfogel@phylo.life.uiuc.edu (Karl Fogel) Fri Jul  8 21:50:05 1994
+Path: doc.ic.ac.uk!aixssc.uk.ibm.com!ibm.de!Munich.Germany.EU.net!Germany.EU.net!EU.net!howland.reston.ans.net!math.ohio-state.edu!cis.ohio-state.edu!phylo.life.uiuc.edu!kfogel
+From: kfogel@phylo.life.uiuc.edu (Karl Fogel)
+Newsgroups: gnu.emacs.bug
+Subject: Incorrect value of pi
+Date: 7 Jul 1994 18:32:45 -0400
+Organization: GNUs Not Usenet
+Lines: 14
+Sender: daemon@cis.ohio-state.edu
+Approved: bug-gnu-emacs@prep.ai.mit.edu
+Distribution: gnu
+Message-ID: <199407071708.AA04797@phylo.life.uiuc.edu>
+
+In GNU Emacs 19.25.8 of Mon Jul  4 1994 on phylo (sparc-sun-sunos4.1.3)
+
+        pi's value is reported as 3.1415926535897931, the correct
+value is 3.1415926535897932.  The next digit would be a 3; in any
+case, though, there is no reason to round the 2 down to a 1.
+
+        Thanks to Bryan O'Sullivan for pointing this out.
+
+        People cannot use Emacs to reliably calculate the
+circumference of the universe until this is fixed.
+
+Thank you,
+Karl Fogel
+
+
+From ethanb@ptolemy.astro.washington.edu (Ethan Bradford) Fri Jul  8 21:50:20 1994
+Path: doc.ic.ac.uk!aixssc.uk.ibm.com!ibm.de!Munich.Germany.EU.net!Germany.EU.net!EU.net!howland.reston.ans.net!cs.utexas.edu!convex!news.duke.edu!eff!news.umbc.edu!haven.umd.edu!purdue!lerc.nasa.gov!magnus.acs.ohio-state.edu!cis.ohio-state.edu!ptolemy.astro.washington.edu!ethanb
+From: ethanb@ptolemy.astro.washington.edu (Ethan Bradford)
+Newsgroups: gnu.emacs.bug
+Subject: Re: Incorrect value of pi
+Date: 8 Jul 1994 13:30:24 -0400
+Organization: University of Washington
+Lines: 10
+Sender: daemon@cis.ohio-state.edu
+Approved: bug-gnu-emacs@prep.ai.mit.edu
+Distribution: gnu
+Message-ID: <ETHANB.94Jul7170837@ptolemy.phys.washington.edu>
+References: <199407071708.AA04797@phylo.life.uiuc.edu>
+Reply-To: ethanb@u.washington.edu
+
+In article <199407071708.AA04797@phylo.life.uiuc.edu> kfogel@phylo.life.uiuc.edu (Karl Fogel) writes:
+
+>         pi's value is reported as 3.1415926535897931, the correct
+> value is 3.1415926535897932.  The next digit would be a 3; in any
+> case, though, there is no reason to round the 2 down to a 1.
+
+The rounding down is due to machine precision.  Type ESC ESC and enter
+the more precise value; it will be echoed to you as the less precise
+one.
+
+
