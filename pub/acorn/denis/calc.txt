@@ -1,9 +1,0 @@
-SYS "Wimp_CommandWindow",-1
-MODE 12
-ON ERROR PRINT REPORT$
-REPEAT
-  INPUT A$
-  IF A$="" QUIT
-  A=EVAL(A$)
-  PRINT;"&";~A;" = ";A
-UNTIL FALSE
