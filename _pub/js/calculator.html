@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- https://foldoc.org/s/c -->
+<html>
+<head>
+<title>Calculator</title>
+<meta charset="UTF-8">
+<style type="text/css">
+
+html {
+    background-color: #003;
+}
+
+body {
+    width: 80%;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 10px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;
+    background-color: #eff;
+}
+
+body, input {
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+p.input, #result {
+    width: 95%;
+    padding: 10px;
+}
+
+input {
+    width: 100%;
+}
+
+</style>
+</head>
+<body>
+<p class="input">
+    <input id="input" type="text" onkeyup="calc()" onblur="calc()"/>
+</p>
+<p><span id="result"></span></p>
+
+<script>
+
+function calc() {
+    var input = document.getElementById('input');
+    var expression = input.value;
+    expression = expression
+        .replace(/\^/g, '**')
+        .replace(/(cos|exp|rand|sin|sqrt)/gi, 'Math.$1')
+        .replace(/e/gi, 'Math.E')
+        .replace(/pi/gi, 'Math.PI');
+    var value, error = '';
+    if (! expression) {
+        value = 'Enter expression above';
+    } else {
+        try { value = '= ' + eval(expression); }
+        catch(err) { error = err; }
+    }
+    var r = document.getElementById('result');
+    r.innerHTML = value || error;
+    r.style = error ? 'color: red' : '';
+}
+
+calc();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head onload="head_loaded()">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>JavaScript Playground</title>
+<script>
+// http://foldoc.org/pub/js/index.html
+
+// Script elements run synchronously in the order they are parsed.
+// External scripts are normally loaded and run synchronously
+// at the point where the referring script element is parsed.
+
+// The exception is external scripts with the "async" or "defer"
+// attribute.  "async" scripts run in the order they complete
+// loading.  Chrome and Firefox run those in the head first, followed
+// by those in the body.  IE doesn't care where the elements are.
+
+// "defer" scripts run in the order they are parsed
+// but not until after the body has been parsed.
+
+// A script that is inserted dynamically runs as soon as you
+// insert it except that Firefox runs dynamically inserted
+// external scripts after earlier-parsed async scripts.
+
+var t0 = (new Date).getTime();
+
+function log(mess)
+{
+	console.log(Math.floor(((new Date).getTime()-t0)/1000) + ": " + mess);
+}
+
+// Return a script element containing CODE or, if given, attribute SRC
+
+function sc(code, src)
+{
+	var s = document.createElement('script');
+	s.textContent = code;		// No innerText in FF
+	if (src) s.src = src;
+
+	return s;
+}
+</script>
+<script src="slow.cgi?01 Head defer&2" defer="defer"></script>
+<script src="slow.cgi?02 Head defer&1" defer="defer"></script>
+<script>
+log('03 Head in-line');
+var t = document.head;
+
+t.appendChild(sc("log('04 Head end dynamic in-line')"));
+t.insertBefore(sc("log('05 Head start dynamic in-line')"), t.childNodes[0]);
+t.appendChild(sc('', "slow.cgi?06 Head end dynamic external&1"));
+
+// There is no head onload
+
+function head_loaded() { log('20 Head onload'); }
+
+function body_loaded()
+{
+	log('30 Body onload');
+	t = document.body;
+	t.appendChild(sc("log('31 Body end dynamic in-line');"));
+	t.insertBefore(sc("log('32 Body start dynamic in-line');"), t.childNodes[0]);
+	t.appendChild(sc('', "slow.cgi?33 Body end dynamic external&1"));
+}
+</script>
+<script src="slow.cgi?07 Head async&6" async="async"></script>
+<script src="slow.cgi?08 Head async&1" async="async"></script>
+<script src="slow.cgi?09 Head external&4"></script>
+<script>log('10 Head in-line')</script>
+<script src="slow.cgi?11 Head external&3"></script>
+<script>log('12 Head in-line')</script>
+</head>
+
+<body onload="body_loaded()">
+<script>log('13 Body in-line');</script>
+<script src="slow.cgi?14 Body async&3" async="async"></script>
+<script>log('15 Body in-line');</script>
+<script src="slow.cgi?16 Body external&2"></script>
+<script>log('17 Body in-line');</script>
+<script src="slow.cgi?18 Body external&1"></script>
+<script>log('19 Body in-line');</script>
+</body>
+
+</html>
