@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html style="overflow: hidden">
 <head>
-  <meta charset="utf-8" />
-  <title>Hairball</title>
+	<meta charset="utf-8" />
+	<title>Hairball</title>
 </head>
 <body>
 <canvas id="canvas">No canvas :-(</canvas>
@@ -22,17 +22,17 @@ function point() { return { ...randomPos(), t: randAngle() } }
 function clone(p) { return { ...p } }
 
 function reset() {
-  step = 1;
-  pointAngleChange = 0.2 * Math.random();
-  nClone = Math.floor(20 * Math.random());
-  ps = [point()];
-  colour = randomColour(0);
-  colourChange = 1 + 10 * Math.pow(Math.random(), 2);
-  set_gt();
+	step = 1;
+	pointAngleChange = 0.2 * Math.random();
+	nClone = Math.floor(20 * Math.random());
+	ps = [point()];
+	colour = randomColour(0);
+	colourChange = 1 + 10 * Math.pow(Math.random(), 2);
+	set_gt();
 }
 
 function draw() {
-  ps.forEach(p => {
+	ps.forEach(p => {
 	ctx.beginPath();
 	ctx.moveTo(size.x + p.x, size.y + p.y);
 	const t = p.t + gt;
@@ -42,36 +42,36 @@ function draw() {
 	ctx.lineTo(size.x + p.x, size.y + p.y);
 	ctx.stroke();
 	if (Math.abs(p.x) > size.x || Math.abs(p.y) > size.y) {
-	  const r = randomPoint();
-	  xy(z => p[z] = r[z]);
+		const r = randomPoint();
+		xy(z => p[z] = r[z]);
 	}
-  });
+	});
 
-  gt += pom(dgt);
-  if (pr(0.02)) set_gt();
+	gt += pom(dgt);
+	if (pr(0.02)) set_gt();
 
-  const m = 30;
-  rgb(z => {
+	const m = 30;
+	rgb(z => {
 	colour[z] += pom(colourChange);
 	if (colour[z] > 255) colour[z] = 255-m; else if (colour[z] < 0) colour[z] = m;
-  });
+	});
 
-  for (let n = nClone; n-- > 0; ) ps.push(clone(randomPoint()));
+	for (let n = nClone; n-- > 0; ) ps.push(clone(randomPoint()));
 
-  if (pr(probResetPerPoint * ps.length)) {
-	if (pr(0.1)) clear();
-	if (pr(0.5)) reset(); else ps.length = Math.floor(0.2 * ps.length);
-  }
+	if (pr(probResetPerPoint * ps.length)) {
+		if (pr(0.2)) clear();
+		if (pr(0.5)) reset(); else ps.length = Math.floor(0.2 * ps.length);
+	}
 
-  setTimeout(draw, 0);
+	setTimeout(draw, 0);
 }
 
 function dimFun(dims, f) { return dims.map(f) }
 
 function dimObjectFun(dims, f) {
-  const obj = {};
-  dims.forEach(z => obj[z] = f(z));
-  return obj;
+	const obj = {};
+	dims.forEach(z => obj[z] = f(z));
+	return obj;
 }
 
 function xy(f) { return dimFun(XY, f) }
@@ -97,20 +97,20 @@ function set_gt() { gt = 0; dgt = 1.5 * Math.pow(Math.random(), 2) }
 function randAngle() { return 2*pi*Math.random() }
 
 function init() {
-  can = document.getElementById("canvas");
-  can.onclick = fullscreen;
-  const windowSize = {x: window.innerWidth, y: window.innerHeight };
-  size = xyObject(z => 0.5*windowSize[z] - 8);
-  can.width = 2*size.x; can.height = 2*size.y;
-  ctx = can.getContext('2d');
-  clear();
-  reset();
+	can = document.getElementById("canvas");
+	can.onclick = fullscreen;
+	const windowSize = {x: window.innerWidth, y: window.innerHeight };
+	size = xyObject(z => 0.5*windowSize[z] - 8);
+	can.width = 2*size.x; can.height = 2*size.y;
+	ctx = can.getContext('2d');
+	clear();
+	reset();
 }
 
 function clear() {
-  ctx.fillStyle = rgbString(randomColour(225));
-  ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-  ctx.stroke();
+	ctx.fillStyle = rgbString(randomColour(225));
+	ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+	ctx.stroke();
 }
 
 // Request for full screen must be initiated by user action in Chrome or Firefox
@@ -118,13 +118,13 @@ function clear() {
 // about:config > full-screen-api.allow-trusted-requests-only: false
 
 function fullscreen() {
-  if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
-  const d = document.documentElement;
-  const f = d.requestFullscreen || d.webkitRequestFullscreen ||
+	if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
+	const d = document.documentElement;
+	const f = d.requestFullscreen || d.webkitRequestFullscreen ||
 		d.msRequestFullscreen || d.mozRequestFullScreen;
-  if (! f) return console.log('No full screen API');
-  d.requestFullscreen();
-  init();
+	if (! f) return console.log('No full screen API');
+	d.requestFullscreen();
+	init();
 }
 
 // Wait until done resizing
@@ -132,8 +132,8 @@ function fullscreen() {
 let resize_timeout;
 window.onresize = function ()
 {
-  clearTimeout(resize_timeout);
-  resize_timeout = setTimeout(() => init(), 300);
+	clearTimeout(resize_timeout);
+	resize_timeout = setTimeout(() => init(), 300);
 };
 
 init();
