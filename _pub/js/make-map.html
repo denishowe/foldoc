@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<!--
-	Create a map
--->
+<!-- Create a map -->
 
 <html>
 <head>
@@ -18,16 +16,12 @@ body {
 <body>
 <canvas id="canvas">No canvas</canvas>
 <script>
-
-"use strict";
-
 const config = {
-	margin: 2,
+	margin: 3,
 	numColours: 4,
-}
+};
 
-// const TWO_PI = 2 * Math.PI;
-
+// Clearable ///////////////////////////////////////////////////////////////////////////////////////
 
 class Clearable {
 	clear() {
@@ -39,51 +33,117 @@ class Clearable {
 	setStyles() { this.colour.setStyles(this.ctx) }
 }
 
-
 // Box  ///////////////////////////////////////////////////////////////////////////////////////////
 
 // A rectangular area that almost fills the window
 
 class Box extends Clearable {
-	resize() {
-		const canvas = document.getElementById("canvas");
-		const ctx = this.ctx = canvas.getContext('2d');
+	static resize() {
+		const canvas = document.getElementById('canvas');
+		this.ctx = canvas.getContext('2d');
 		const { innerWidth, innerHeight } = window;
 		const { margin } = config;
 		this.height = canvas.height = innerHeight - 2 * margin;
 		this.width = canvas.width = innerWidth - 2 * margin;
 		// Centre in window
-		canvas.style.marginLeft = margin + "px";
-		canvas.style.marginTop	= margin + "px";
+		canvas.style.marginLeft = `${margin}px`;
+		canvas.style.marginTop	= `${margin}px`;
 
 		this.init();
 	}
 
-	// Request for full screen must be initiated by user action in Chrome or Firefox
-	// Firefox fix - https://stackoverflow.com/a/27078920/285129
-	// about:config > full-screen-api.allow-trusted-requests-only: false
+	static handleClick(x, y) { this.clicked = { x, y } }
 
-	static fullscreen() {
-		if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
-		const d = document.documentElement;
-		const f = d.webkitRequestFullscreen || d.requestFullscreen ||
-			d.msRequestFullscreen || d.mozRequestFullScreen;
-		if (! f) { console.log('No full screen API'); return }
-		f.call(d);
+	static handleKey(k) { console.log('Key event', k) }
+
+	static init() {
+		Colour.init();
+
+		const { width, height } = this;
+		this.ctx.strokeStyle = Colour.black.string;
+
+		// this.ctx.fillStyle = Colour.random().string;
+		// this.ctx.fillRect(0, 0, width, height);
+
+		const topLeft = this.point(0, 0);
+		console.log('TL', topLeft);
+		const topRight = this.point(width, 0);
+		const bottomLeft = this.point(0, height);
+		const bottomRight = this.point(width, height);
+		this.points = [topLeft, topRight, bottomLeft, bottomRight];
+		console.log(this.points);
+
+		this.lines = [
+			new Line(this, topLeft, topRight),
+			new Line(this, topRight, bottomRight),
+			new Line(this, bottomRight, bottomLeft),
+			new Line(this, bottomLeft, topLeft),
+		];
+
+		this.regions = [new Region(this, this.lines, Colour.random())];
+
+		this.regions.forEach(region => region.draw());
 	}
 
-	static handle_click(x, y) { this.clicked = {x, y} }
+	// Return a new edge point
 
-	static handle_key(k) { console.log("Key event", k) }
-
-	init() {
-		Colour.init();
-		this.colour = Colour.random();
-		this.setStyles();
-		this.ctx.fillRect(0, 0, this.width, this.height);
+	static point(x, y) {
+		const p = new Point(this, x, y, true);
+		console.log('p', p);
+		return p;
 	}
 }
 
+// Point ///////////////////////////////////////////////////////////////////////////////////////////
+
+class Point {
+	constructor(box, x, y, isEdge) {
+		this.box = box;
+		this.x = x;
+		this.y = y;
+		this.isEdge = isEdge;
+	}
+}
+
+// Line ////////////////////////////////////////////////////////////////////////////////////////////
+
+class Line {
+	constructor(box, p1, p2) {
+		this.box = box;
+		this.p1 = p1;
+		this.p2 = p2;
+	}
+
+	isEdge() { return this.p1.isEdge && this.p2.isEdge }
+
+	draw() {
+		const { box: { ctx }, p1, p2 } = this;
+		console.log(p1.x, p1.y, '-', p2.x, p2.y);
+		ctx.moveTo(p1.x, p1.y);
+		ctx.lineTo(p2.x, p2.y);
+	}
+}
+
+// Region //////////////////////////////////////////////////////////////////////////////////////////
+
+class Region {
+	constructor(box, lines, colour) {
+		this.box = box;
+		this.lines = lines;
+		this.colour = colour;
+	}
+
+	draw() {
+		const { box, lines } = this;
+		const { ctx } = box;
+		ctx.beginPath();
+		lines.forEach(line => line.draw());
+		ctx.closePath();
+		ctx.stroke();
+		ctx.fillStyle = 'pink'; // colour.string;
+		ctx.fill();
+	}
+}
 
 // Colour //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -96,11 +156,10 @@ class Colour {
 	// as the new Colour's vec and "rgb(R,G,B)" string.
 
 	constructor(vecOrFun) {
-		if (typeof vecOrFun == 'function')
-			vecOrFun = Colour.map(vecOrFun);
-		this.vec = vecOrFun.map(cpt => Math.min(Math.max(cpt, 0), 255.999999));
-		const s = this.vec.map(cpt => Math.floor(cpt)).join(",");
-		this.string = `rgb(${ s })`;
+		const v = typeof vecOrFun === 'function' ? Colour.map(vecOrFun) : vecOrFun;
+		this.vec = v.map(cpt => Math.min(Math.max(cpt, 0), 255.999999));
+		const s = this.vec.map(cpt => Math.floor(cpt)).join(',');
+		this.string = `rgb(${s})`;
 	}
 
 	// Fill the palette with n equally spaced hues as rgb() strings
@@ -108,8 +167,9 @@ class Colour {
 	static init() {
 		const { numColours } = config;
 		this.palette = this.makePalette(numColours);
+		this.black = new Colour([0, 0, 0]);
 		this.white = new Colour([255, 255, 255]);
-		this.transparent = "rgba(0,0,0,0)";
+		this.transparent = 'rgba(0,0,0,0)';
 	}
 
 	// Create a palette of numColours equally spaced hues
@@ -132,7 +192,7 @@ class Colour {
 			[0, 1, x],							// green   .. cyan
 			[0, y, 1],							// cyan	   .. blue
 			[x, 0, 1],							// blue	   .. magenta
-			[1, 0, y]								// magenta .. red
+			[1, 0, y],								// magenta .. red
 		][Math.floor(h)];
 		// Convert to [R, G, B] in 0..255
 		const vec = c.map(cpt => 255.999999 * cpt + rand(-128, 128));
@@ -144,11 +204,11 @@ class Colour {
 
 	static random() { return this.palette.any() }
 
-	static reallyRandom() { return new Colour(i => rand(0, 255)) }
+	static reallyRandom() { return new Colour(_ => rand(0, 255)) }
 
 	// L in 0..1 = (max(RGB) + min(RGB)) / 2; where R, G, B in 0..255
 
-	luminosity() { return (this.vec.min() + this.vec.max()) / (2*256) }
+	luminosity() { return (this.vec.min() + this.vec.max()) / (2 * 256) }
 
 	// S in 0..1 = L == 1 ? 0 : (max(RGB) — min(RGB)) / (1 — |2L - 1|)
 	// where R, G, B in 0..255; L in 0..1
@@ -156,7 +216,7 @@ class Colour {
 	saturation() {
 		const desat = 1 - Math.abs(2 * this.luminosity() - 1);
 
-		return desat == 0 ? 0 : (this.vec.max() - this.vec.min()) / (256 * desat);
+		return desat === 0 ? 0 : (this.vec.max() - this.vec.min()) / (256 * desat);
 	}
 
 	boring() { return this.saturation() < 0.2 }
@@ -171,18 +231,18 @@ class Colour {
 
 // Array  //////////////////////////////////////////////////////////////////////////////////////////
 
-Array.prototype.any = function () {
+Array.prototype.any = function any() {
 	const i = Math.floor(this.length * Math.random());
 
 	return this[i];
-}
+};
 
-Array.prototype.min = function() { return Math.min.apply(null, this) }
-Array.prototype.max = function() { return Math.max.apply(null, this) }
+Array.prototype.min = function min() { return Math.min.apply(null, this) };
+Array.prototype.max = function max() { return Math.max.apply(null, this) };
 
-Array.prototype.shuffle = function () {
+Array.prototype.shuffle = function shuffle() {
 	return this.sort(() => Math.random() < 0.5);
-}
+};
 
 
 // Events & Window ////////////////////////////////////////////////////////////////////////////////
@@ -191,47 +251,58 @@ document.onclick = click;
 document.onmousemove = click;
 
 function click(e) {
-	if (e.buttons == 2) return;			// Ignore right-click
+	if (e.buttons === 2) return;			// Ignore right-click
 	// Stationary click -> type 'click'.  Drag -> mousemove.
 	// Ignore first "click" after movement.
-	const clickEvent = e.type == 'click' && ! click.moving;
-	if (clickEvent) Box.fullscreen();
+	const clickEvent = e.type === 'click' && !click.moving;
+	if (clickEvent) fullScreen();
 	// Ignore mouse move unless button pressed and moved > 1 pixel
-	click.moving = e.type == 'mousemove' && e.buttons && click.old_x
-	  && Math.abs(e.clientX - click.old_x) + Math.abs(e.clientY - click.old_y) > 1;
+	click.moving = e.type === 'mousemove' && e.buttons && click.old_x
+		&& Math.abs(e.clientX - click.old_x) + Math.abs(e.clientY - click.old_y) > 1;
 	click.old_x = e.clientX;
 	click.old_y = e.clientY;
-	if (! clickEvent && ! click.moving) return;
-	Box.handle_click(e.offsetX, e.offsetY);
-};
+	if (!clickEvent && !click.moving) return;
+	Box.handleClick(e.offsetX, e.offsetY);
+}
 
 click.moving = false;
 click.old_x = 0;
 
-// Call Box resize() a while after resizing stops
+// Request for full screen must be initiated by user action in Chrome or Firefox
+// Firefox fix - https://stackoverflow.com/a/27078920/285129
+// about:config > full-screen-api.allow-trusted-requests-only: false
 
-window.onresize = function () {
+function fullScreen() {
+	if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
+	const d = document.documentElement;
+	const f = d.webkitRequestFullscreen || d.requestFullscreen
+		|| d.msRequestFullscreen || d.mozRequestFullScreen;
+	if (!f) { console.log('No full screen API'); return }
+	f.call(d);
+}
+
+// Call Box.resize() a while after resizing stops
+
+window.onresize = function onResize() {
 	if (window.onresize.timeout) clearTimeout(window.onresize.timeout);
 	window.onresize.timeout = setTimeout(() => {
 		const { innerWidth, innerHeight } = window;
 		const shape = `${innerWidth}x${innerHeight}`;
-		if (shape == (window.onresize.shape || ''))
-			return
+		if (shape === (window.onresize.shape || '')) return;
 		window.onresize.shape = shape;
-		window.box = new Box;
-		window.box.resize();
-	}, 1000)
+		Box.resize();
+	}, 1000);
 };
 
 // Handle key press
 
 // onkeypress doesn't get ESC
 
-window.onkeydown = function (e) {
+window.onkeydown = function onKeyDown(e) {
 	let k = e.keyCode;
-	k = k == 27 ? "Esc" : String.fromCharCode(k);
-	Box.handle_key(k);
-}
+	k = k === 27 ? 'Esc' : String.fromCharCode(k);
+	Box.handleKey(k);
+};
 
 // Utilities //////////////////////////////////////////////////////////////////////////////////////
 
@@ -243,33 +314,20 @@ function zeroTo(n) { return n < 1 ? [] : [...Array(n).keys()] }
 
 function nResults(n, f) { return zeroTo(n).map(f) }
 
-// Return true with probability x
-
-function p(x) { return Math.random() < x }
-
 // Return a random int, min <= r <= max
 
 function rand(min, max, pow) {
 	let r = Math.random();
-	if (pow) r = Math.pow(r, pow);
-	return Math.floor(min + (max+1 - min) * r);
+	if (pow) r **= pow;
+	return Math.floor(min + (max + 1 - min) * r);
 }
 
-// Return x rounded to the nearest multiple of m
-
-function quant(x, m) { return Math.floor(x / m + 0.5) * m }
-
-// Current time in ms since epoch
-
-function now() { return (new Date).getTime() }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Some browsers call resize on load, Firefox doesn't
 // Firefox get the window.innerHeight 1px too big when dev console visible
 
 window.onresize();
-
 </script>
 </body>
 </html>
