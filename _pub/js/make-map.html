@@ -5,49 +5,35 @@
 <head>
 <title>Make a Map</title>
 <meta charset="UTF-8">
-<link rel="canonical" href="http://foldoc.org/_pub/js/make-map.html">
-<style type="text/css">
-body {
-	overflow: hidden;
-	margin: 0;
-}
-</style>
+<link rel="canonical" href="http://foldoc.org/pub/js/make-map.html">
+<style type="text/css">body { overflow: hidden; margin: 0 }</style>
 </head>
 <body>
 <canvas id="canvas">No canvas</canvas>
 <script>
+
 const config = {
+	lineWidth: 2,
+	loopDelay: 0,
 	margin: 3,
-	numColours: 4,
+	numColours: 12,
+	splitableRadius: 30,
 };
-
-// Clearable ///////////////////////////////////////////////////////////////////////////////////////
-
-class Clearable {
-	clear() {
-		const { ctx } = this;
-		const { canvas: { height, width } } = ctx;
-		ctx.clearRect(0, 0, width, height);
-	}
-
-	setStyles() { this.colour.setStyles(this.ctx) }
-}
 
 // Box  ///////////////////////////////////////////////////////////////////////////////////////////
 
 // A rectangular area that almost fills the window
 
-class Box extends Clearable {
+class Box {
 	static resize() {
 		const canvas = document.getElementById('canvas');
-		this.ctx = canvas.getContext('2d');
 		const { innerWidth, innerHeight } = window;
 		const { margin } = config;
-		this.height = canvas.height = innerHeight - 2 * margin;
-		this.width = canvas.width = innerWidth - 2 * margin;
-		// Centre in window
-		canvas.style.marginLeft = `${margin}px`;
+		canvas.height = innerHeight - 2 * margin;
+		canvas.width = innerWidth - 2 * margin;
+		canvas.style.marginLeft = `${margin}px`;	// Centre in window
 		canvas.style.marginTop	= `${margin}px`;
+		this.ctx = canvas.getContext('2d');
 
 		this.init();
 	}
@@ -59,89 +45,151 @@ class Box extends Clearable {
 	static init() {
 		Colour.init();
 
-		const { width, height } = this;
-		this.ctx.strokeStyle = Colour.black.string;
+		const { ctx } = this;
+		const { canvas: { height, width } } = ctx;
+		ctx.strokeStyle = Colour.black.string;
+		ctx.lineWidth = config.lineWidth;
+		const points = [[0, 0], [width, 0], [width, height], [0, height]]
+			.map(xy => new Point(this, ...xy));
+		this.regions = [new Region(this, points, Colour.random())];
 
-		// this.ctx.fillStyle = Colour.random().string;
-		// this.ctx.fillRect(0, 0, width, height);
-
-		const topLeft = this.point(0, 0);
-		console.log('TL', topLeft);
-		const topRight = this.point(width, 0);
-		const bottomLeft = this.point(0, height);
-		const bottomRight = this.point(width, height);
-		this.points = [topLeft, topRight, bottomLeft, bottomRight];
-		console.log(this.points);
-
-		this.lines = [
-			new Line(this, topLeft, topRight),
-			new Line(this, topRight, bottomRight),
-			new Line(this, bottomRight, bottomLeft),
-			new Line(this, bottomLeft, topLeft),
-		];
-
-		this.regions = [new Region(this, this.lines, Colour.random())];
-
-		this.regions.forEach(region => region.draw());
+		this.run();
 	}
 
-	// Return a new edge point
+	static run() { loopWhile(() => this.step(), config.loopDelay) }
 
-	static point(x, y) {
-		const p = new Point(this, x, y, true);
-		console.log('p', p);
-		return p;
+	static step() { this.draw(); return this.split() }
+
+	static split() {
+		const { regions } = this;
+		const ir = regions.withMax(region => region.splitability);
+		const newRegions = regions[ir].split();
+
+		if (! newRegions) return false;
+
+		this.regions.splice(ir, 1, ...newRegions);
+
+		return true;
 	}
+
+	static draw() { this.regions.forEach(region => region.draw()) }
 }
 
 // Point ///////////////////////////////////////////////////////////////////////////////////////////
 
 class Point {
-	constructor(box, x, y, isEdge) {
+	constructor(box, x, y) {
 		this.box = box;
 		this.x = x;
 		this.y = y;
-		this.isEdge = isEdge;
-	}
-}
-
-// Line ////////////////////////////////////////////////////////////////////////////////////////////
-
-class Line {
-	constructor(box, p1, p2) {
-		this.box = box;
-		this.p1 = p1;
-		this.p2 = p2;
 	}
 
-	isEdge() { return this.p1.isEdge && this.p2.isEdge }
+	// The centrum of a set of points is (mean x, mean y)
 
-	draw() {
-		const { box: { ctx }, p1, p2 } = this;
-		console.log(p1.x, p1.y, '-', p2.x, p2.y);
-		ctx.moveTo(p1.x, p1.y);
-		ctx.lineTo(p2.x, p2.y);
+	static centrum(ps) {
+		const n = ps.length;
+		if (! n) throw('');
+		let xt = 0, yt = 0;
+		ps.forEach(({ x, y}) => { xt += x; yt += y });
+
+		return new Point(undefined, xt/n, yt/n);
+	}
+
+	// Return the distance from this point to { x, y }
+
+	distance({ x, y }) { return Math.sqrt((this.x - x) ** 2 + (this.y - y) ** 2) }
+
+	lineTo() {
+		const { box: { ctx }, x, y } = this;
+		ctx.lineTo(x, y);
+	}
+
+	moveTo() {
+		const { box: { ctx }, x, y } = this;
+		ctx.moveTo(x, y);
+	}
+
+	partWayTo(that, f = 0.4 + 0.2 * Math.random()) {
+		const g = 1 - f;
+		return new Point(
+			this.box,
+			Math.floor(f * this.x + g * that.x),
+			Math.floor(f * this.y + g * that.y),
+		);
 	}
 }
 
 // Region //////////////////////////////////////////////////////////////////////////////////////////
 
 class Region {
-	constructor(box, lines, colour) {
+	constructor(box, points, colour) {
 		this.box = box;
-		this.lines = lines;
+		this.points = points;								// The ring of points defining the region
 		this.colour = colour;
+		// Store the distance from each point to the next point round the ring
+		this.edgeLengths = points.map((p, i) => p.distance(points.modEl(i + 1)));
+		this.splitability = this.findSplitability();
+	}
+
+	// The region's splitability is the minimum radius of its sides
+	// minus the splitableRadius.  A side's "radius" is the distance
+	// from its midpoint to the centrum.  splitability > 0 => splitable.
+
+	findSplitability() {
+		const { points } = this;
+
+		// return this.edgeLengths.min()**2 * this.edgeLengths.max() - 1E6;
+
+		const c = Point.centrum(points);
+		const minRadius = points .map((p, i) => {
+			const j = points.modIndex(i + 1);
+			const mid = p.partWayTo(points[j], 0.5);
+			return c.distance(mid);
+		}).min();
+
+		return minRadius - config.splitableRadius;
 	}
 
 	draw() {
-		const { box, lines } = this;
+		const { box, colour: { string }, points } = this;
 		const { ctx } = box;
 		ctx.beginPath();
-		lines.forEach(line => line.draw());
+		points[0].moveTo();
+		points.slice(1).forEach(p => p.lineTo());
 		ctx.closePath();
-		ctx.stroke();
-		ctx.fillStyle = 'pink'; // colour.string;
+		ctx.fillStyle = string;
 		ctx.fill();
+		ctx.stroke();												// On top of fill
+	}
+
+	// If the region is unsplitable, return null.  Otherwise, return two
+	// new regions created by splitting the region along a line from a
+	// point on its longest edge to an existing point not on that edge
+
+	split() {
+		if (this.splitability < 0) return null;
+
+		const { edgeLengths, points } = this;
+		// Find longest edge, points i -> j
+		const i = edgeLengths.withMax(x => x);
+		const j = points.modIndex(i + 1);
+		const mid = points[i].partWayTo(points[j]);
+		const otherIndexes = [...points.keys()].filter(k => k !== i && k !== j);
+		const k = otherIndexes.any();
+
+		return [this.regionWith(i, mid, k), this.regionWith(k, mid, j)];
+	}
+
+	// Return a new region starting with [i] -> mid -> [j]
+	// and continuing round this region
+
+	regionWith(i, mid, j) {
+		const { points } = this;
+		const newPoints = [points[i], mid];
+		for (; j !== i; j = points.modIndex(j + 1)) {
+			newPoints.push(points[j]);
+		}
+		return new Region(this.box, newPoints, Colour.random());
 	}
 }
 
@@ -231,17 +279,41 @@ class Colour {
 
 // Array  //////////////////////////////////////////////////////////////////////////////////////////
 
-Array.prototype.any = function any() {
-	const i = Math.floor(this.length * Math.random());
+Array.prototype.any = function any() { return this[Math.floor(this.length * Math.random())] };
 
-	return this[i];
-};
+Array.prototype.last = function last() { return this[this.length - 1] };
 
 Array.prototype.min = function min() { return Math.min.apply(null, this) };
 Array.prototype.max = function max() { return Math.max.apply(null, this) };
 
+// Return the index i for which f(a[i]) is biggest
+
+Array.prototype.withMax = function withMax(f) {
+	let iMax, fMax;
+	this.forEach((el, i) => {
+		const fi = f(el);
+		if (iMax === undefined || fi > fMax) { iMax = i; fMax = fi }
+	});
+	return iMax;
+};
+
+// Return i modulo the length of the array
+
+Array.prototype.modIndex = function modIndex(i) { return i % this.length };
+
+Array.prototype.modEl = function modIndex(i) { return this[this.modIndex(i)] };
+
+// Return the array indexes in order of increasing f(a[i])
+
+Array.prototype.sortWith = function sortWith(f) {
+	return [...this.keys()]
+		.sort((a, b) => f(this[a]) - f(this[b]));
+};
+
+Array.prototype.sum = function sum() { return this.reduce((el, acc) => acc + el, 0) };
+
 Array.prototype.shuffle = function shuffle() {
-	return this.sort(() => Math.random() < 0.5);
+	return this.sort(() => prob(0.5));
 };
 
 
@@ -273,26 +345,26 @@ click.old_x = 0;
 // about:config > full-screen-api.allow-trusted-requests-only: false
 
 function fullScreen() {
-	if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
 	const d = document.documentElement;
-	const f = d.webkitRequestFullscreen || d.requestFullscreen
-		|| d.msRequestFullscreen || d.mozRequestFullScreen;
+	const f = d.requestFullscreen || d.webkitRequestFullscreen || d.msRequestFullscreen;
 	if (!f) { console.log('No full screen API'); return }
 	f.call(d);
 }
 
-// Call Box.resize() a while after resizing stops
+// Wait until a while after resizing stops
 
-window.onresize = function onResize() {
-	if (window.onresize.timeout) clearTimeout(window.onresize.timeout);
-	window.onresize.timeout = setTimeout(() => {
-		const { innerWidth, innerHeight } = window;
-		const shape = `${innerWidth}x${innerHeight}`;
-		if (shape === (window.onresize.shape || '')) return;
-		window.onresize.shape = shape;
-		Box.resize();
-	}, 1000);
-};
+window.onresize = function onresize() { debounce(maybeResize, 1000) }
+
+// Resize the box if the window has changed shape
+// Assumes a single use in the program
+
+function maybeResize() {
+	const { innerWidth, innerHeight } = window;
+	const shape = `${innerWidth}x${innerHeight}`;
+	if (shape === (maybeResize.shape || '')) return;
+	maybeResize.shape = shape;
+	Box.resize();
+}
 
 // Handle key press
 
@@ -306,6 +378,18 @@ window.onkeydown = function onKeyDown(e) {
 
 // Utilities //////////////////////////////////////////////////////////////////////////////////////
 
+// Schedule a call to f after t ms, cancelling any previous scheduled call
+// Assumes a single use in the program
+
+function debounce(f, t) {
+	if (debounce.timeout) clearTimeout(debounce.timeout);
+	debounce.timeout = setTimeout(f, t);
+};
+
+function loopWhile(f, t) {
+	if (f()) { setTimeout(() => loopWhile(f, t), t) }
+}
+
 // Return ints 0 .. n-1
 
 function zeroTo(n) { return n < 1 ? [] : [...Array(n).keys()] }
@@ -313,6 +397,8 @@ function zeroTo(n) { return n < 1 ? [] : [...Array(n).keys()] }
 // Return the results of calling f(i) for i = 0 .. n-1
 
 function nResults(n, f) { return zeroTo(n).map(f) }
+
+function prob(p) { return Math.random() < p }
 
 // Return a random int, min <= r <= max
 
@@ -325,7 +411,7 @@ function rand(min, max, pow) {
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Some browsers call resize on load, Firefox doesn't
-// Firefox get the window.innerHeight 1px too big when dev console visible
+// Firefox's window.innerHeight is 1px too big when dev console visible
 
 window.onresize();
 </script>
