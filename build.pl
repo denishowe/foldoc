@@ -288,7 +288,7 @@ sub missing
 	while (my ($k, $q) = each %$key_query)
 	{
 		delete $key_clients->{$k}
-			if ($q =~ /\/$|\?|%[0-9A-F]{2}/ || -e "./$q");
+			if ($q =~ /\/$|\?|%[0-9A-F]{2}/ || query_is_file($q));
 	}
 
 	# Delete uninteresting clients with too many hits
@@ -346,6 +346,15 @@ Feel free to <a href="help.html">send new definitions</a>.
 
 	print STDERR "old junk:\n", map "  $_\n", sort keys %junk;
 	print STDERR "done.\n";
+}
+
+sub query_is_file
+{
+	local ($_) = @_;
+
+	# return -e "./_";					# Why "./"?
+	return -e $_
+		|| s/^pub/_pub/ && -e $_;		# /pub is served from _pub
 }
 
 # Pre-process any unprocessed web logs.
