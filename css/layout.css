@@ -79,7 +79,7 @@ dt { font-weight: bold }
 #left
 {
     min-width: 75%;
-    max-width: 100%;
+    max-width: 95%;
 }
 
 #right
@@ -164,7 +164,7 @@ input[type='text']
 {
     float: left;
     width: 43.5em;
-    max-width: 95%;
+    max-width: 88%;
     height: 40px;
     padding: 0 10px !important;
     font-family: 'Belgrano',serif;
