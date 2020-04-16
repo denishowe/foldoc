@@ -1,6 +1,11 @@
 #!/bin/sh
 
-# sshargs is set in ~/Library/Application Support/Unison/scaleway.prf
+# 'doze
+# c:/Bin/sink.cmd
+
+# Mac
+# u="$HOME/Applications/Unison.app/Contents/MacOS/Unison-gui" --> Symlink on PATH?
+# sshargs for Unison is set in ~/Library/Application Support/Unison/foldoc.prf
 
 export UNISON=~/Documents/Tech/Unison/home
 u="unison -ui text foldoc"
