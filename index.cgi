@@ -47,7 +47,7 @@ if ($ENV{HTTP_HOST} && $ENV{HTTP_HOST} ne $server_name || check_redirect($_))
 # $_ is now decoded query term
 debug "Query ($_)";
 
-home() if ($_ eq "home-page");			# Special case
+home() if ($_ eq "home-page");			# Special case - exits
 
 my $query = $_;
 
