@@ -3,7 +3,7 @@ about.html
 contents.html
 contents/
 contributors.html
-Dictionary.*
+Dictionary*
 .eslintcache
 foldoc.tar*
 help.html
@@ -13,6 +13,7 @@ lunch/data/*-*
 make.out
 missing.html
 new.html
+node_modules
 offsets
 private
 rss.xml
