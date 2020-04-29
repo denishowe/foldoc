@@ -23,6 +23,7 @@ module.exports = {
 		"no-extend-native": "off",
 		"no-mixed-operators": "off",
 		"no-multi-assign": "off",
+		"no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
     "no-nested-ternary": "off",
 		"no-param-reassign": "off",
 	  "no-plusplus": "off",
@@ -33,6 +34,10 @@ module.exports = {
     "object-curly-newline": "off",
 		"one-var": "off",
 		"one-var-declaration-per-line": "off",
-		"semi": ["error", "always", { "omitLastInOneLineBlock": true}],
+		"prefer-const": ["error", { "destructuring": "all" }],
+		"prefer-template": "off",
+		"semi": ["error", "always", { "omitLastInOneLineBlock": true }],
+		"space-unary-ops": ["error", { "overrides": { "!": true } }],
+		"space-infix-ops": "off",
   }
 };
