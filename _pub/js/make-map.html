@@ -13,66 +13,271 @@
 
 const config = {
 	lineWidth: 3,
-	loopDelay: 0,
+	loopDelay: 1000,
 	margin: 3,
+	minRadius: 30,
 	numColours: 6,
-	minSplitability: 5E4,
+	pointsPerRegion: 20,
 };
 
 // Box  ///////////////////////////////////////////////////////////////////////////////////////////
 
-// A rectangular area that almost fills the window
+// A rectangular area
 
 class Box {
-	static resize() {
-		this.setContext();
-		const { ctx } = this;
-		const { canvas } = ctx;
-		// Firefox's window.innerHeight is 1px too big when dev console visible
-		const { innerWidth, innerHeight } = window;
-		const { lineWidth, margin } = config;
-		const height = canvas.height = innerHeight - 2 * margin;
-		const width = canvas.width = innerWidth - 2 * margin;
-		canvas.style.marginLeft = `${margin}px`;	// Centre in window
-		canvas.style.marginTop	= `${margin}px`;
-
-		// After resizing canvas:
-		ctx.lineWidth = lineWidth;
-		ctx.strokeStyle = Colour.black.string;
-
-		const points = [[0, 0], [width, 0], [width, height], [0, height]]
-			.map(xy => new Point(this, ...xy));
-		this.regions = [new Region(this, points, Colour.random())];
-
-		loopWhile(() => this.step(), config.loopDelay);
-	}
-
-	static setContext() {
-		if (this.ctx) return;
+	static init() {
 		const canvas = document.createElement('canvas');
 		document.body.append(canvas);
 		this.ctx = canvas.getContext('2d');
+		this.resize();
+	}
+
+	// Set the canvas size to almost fill the window
+
+	static resize() {
+		const { ctx: { canvas } } = this;
+		// Firefox's window.innerHeight is 1px too big when dev console visible
+		const { innerWidth, innerHeight } = window;
+		const { margin } = config;
+		this.height = canvas.height = innerHeight - 2 * margin;
+		this.width = canvas.width = innerWidth - 2 * margin;
+		canvas.style.marginLeft = `${margin}px`;	// Centre in window
+		canvas.style.marginTop	= `${margin}px`;
+
+		const points = [[0, 0], [this.width, 0], [this.width, this.height], [0, this.height]]
+			.map(xy => new Point(this, ...xy));
+		this.regions = [new Region(this, points, Colour.random())];
+
+		// loopWhile(() => this.step(), config.loopDelay);
 	}
 
 	static handleClick(x, y) { this.clicked = { x, y } }
 
-	static handleKey(k) { console.log('Key event', k) }
+	static handleKey(_k) { }
 
-	static step() { this.draw(); return this.split() }
+	// Return false when done
 
-	static split() {
-		const { regions } = this;
-		const ir = regions.withMax(region => region.splitability);
-		const newRegions = regions[ir].split();
+	static step() {
+		this.splitEdge();
+		this.clear();
+		this.draw();
 
-		if (!newRegions) return false;
-
-		this.regions.splice(ir, 1, ...newRegions);
-
-		return true;
+		return this.splitRegion();
 	}
 
-	static draw() { this.regions.forEach(region => region.draw()) }
+	// Return indexes of splitable region, most splitable first
+
+	static mostSplitableRegions() {
+		return (this.regions
+			.filter(r => r.splitability > 0)
+			.sortIndexesBy(r => -r.splitability));
+	}
+
+	static regionWithFewestPoints() {
+		return this.regions.withMax(r => -r.points.length);
+	}
+
+	// Split the most splitable region that can be split
+	// into two good regions.  Return true if one found.
+
+	static splitRegion() {
+		const { regions } = this;
+		const indexes = this.mostSplitableRegions(); // Most splitable first
+		console.log('regions', regions.map(r => r.toString()).join(' '));
+		console.log(`indexes [${indexes}]`);
+
+		return indexes.some(i => {
+			const newRegions = regions[i].split();
+			console.log(`${regions[i]} -> ${newRegions[0]}  ${newRegions[1]}`);
+			if (! newRegions || newRegions.some(r => ! r.good())) return false;
+			this.regions.splice(i, 1, ...newRegions);
+			return true;
+		});
+	}
+
+	// Add a point to the region with the fewest
+
+	static splitEdge() { this.regionWithFewestPoints().splitEdge() }
+
+	static clear() {
+		const { ctx, height, width } = this;
+		ctx.clearRect(0, 0, width, height);
+	}
+
+	static draw() { this.regions.forEach(r => r.draw()) }
+}
+
+// Region //////////////////////////////////////////////////////////////////////////////////////////
+
+class Region {
+	constructor(box, points, colour) {
+		this.box = box;
+		this.points = points;							 // The ring of points defining the region
+		this.colour = colour;
+		this.radius = this.findRadius();
+		this.update();
+	}
+
+	update() {
+		this.setSplitability();
+		this.setEdgeLengths();
+	}
+
+	// edgeLengths[i] = distance point [i] to [i+1]
+
+	setEdgeLengths() {
+		const { points } = this;
+		this.edgeLengths = points.map((p, i) => p.distance(points.modEl(i + 1)));
+	}
+
+	// The splitability is zero for a triangle, the radius for other shapes
+
+	setSplitability() { this.splitability = this.triangular() ? 0 : this.radius }
+
+	// A region's centrum is (mean x, mean y)
+
+	centrum() {
+		const { box, points } = this;
+		const n = points.length;
+		if (! n) return undefined;
+		let xt = 0, yt = 0;
+		points.forEach(({ x, y }) => { xt += x; yt += y });
+
+		return new Point(box, xt / n, yt / n);
+	}
+
+	edgeMidPoints() {
+		const { points } = this;
+
+		return points.map((p, i) => p.halfWayTo(points.modEl(i + 1)));
+	}
+
+	// Can't split triangular region by joining two of its points
+
+	triangular() { return this.points.length === 3 }
+
+	good() { return this.radius > config.minRadius }
+
+	perimeterByMinMax() {
+		let [min, ...rest] = this.edgeLengths;
+		let max = min;
+		let sum = 0;
+		rest.forEach(x => {
+			sum += x;
+			if (x < min) min = x;
+			if (x > max) max = x;
+		});
+		return sum * min ** 2 / (max + 1);
+	}
+
+	// Return the minimum distance from the region's centrum to the midpoint of any of its edges
+
+	findRadius() {
+		const c = this.centrum();
+		const eps = this.edgeMidPoints();
+		c.drawStar(eps);
+
+		return eps.map(p => c.distance(p)).min();
+	}
+
+	// Return two new regions created by splitting the region
+	// along a line joining points not on the same edge
+
+	split() {
+		const { points } = this;
+		const i = points.anyIndex();
+		// Find points not on edges i-1 -> i -> i+1
+		const js = points.modRange(i+2, i-1); // [i+2] ... [i-2] inclusive
+		if (! js.length) throw Error(`Can't split ${points}`);
+		const j = js.any();
+
+		return [this.newRegionWith(i, j), this.newRegionWith(j, i)];
+	}
+
+	// Return a new region starting with edge [i]->[j]
+	// and continuing round this one back to [i]
+
+	newRegionWith(i, j) {
+		const { points } = this;
+		const newPoints = [i, ...points.modRange(j, i)]
+			.map(k => points[k]);
+
+		return new Region(this.box, newPoints, Colour.random());
+	}
+
+	// Add a point on the longest edge of this
+	// region and any region that shares that edge
+
+	splitEdge() {
+		const { points } = this;
+		const i = this.longestEdgeIndex();	// Points [i] -> [j = i+1]
+		const j = points.modIndex(i + 1);
+		const pi = points[i];
+		const pj = points[j];
+		const newPoint = pi.partWayTo(pj);
+		newPoint.move();
+		this.addPointAfter(i, newPoint);
+		console.log(`Added ${newPoint} after ${pi} -> ${this}`, );
+
+		// Does another region include pj -> pi?
+
+		const otherRegion = this.findRegionWithEdge(pj, pi);
+		if (! otherRegion) return;
+		const { region, iStart } = otherRegion;
+		region.addPointAfter(iStart, newPoint);
+	}
+
+	// Return another region that has edge p->q at index iStart
+
+	findRegionWithEdge(p, q) {
+		const { box: { regions } } = this;
+		regions.some(region => {
+			if (region === this) return false;
+			const iStart = region.edgeStartIndex(p, q);
+			console.log(`region ${region} with ${p}->${q} @ ${iStart}`);
+			return iStart && { region, iStart };
+		});
+		return undefined;
+	}
+
+	// Return the index in the region where edge p->q starts, else undefined
+
+	edgeStartIndex(p, q) {
+		const { points } = this;
+
+		return points.indexes()
+			.find(k => points[k] === p && points.modEl(k+1) === q);
+	}
+
+	// Return index i of region's longest edge, points [i] -> [i+1]
+
+	longestEdgeIndex() { return this.edgeLengths.indexWithMax() }
+
+	// Add a new point p to the region, just after point [i]
+
+	addPointAfter(i, p) {
+		this.points.splice(i + 1, 0, p);
+		this.setEdgeLengths();
+	}
+
+	draw() {
+		const { box: { ctx }, colour: { string }, points } = this;
+		ctx.lineWidth = config.lineWidth;
+		ctx.strokeStyle = 'black';
+		ctx.beginPath();
+		points[0].moveTo();
+		points.slice(1).forEach(p => p.lineTo());
+		ctx.closePath();
+		ctx.fillStyle = string;
+		ctx.fill();
+		ctx.stroke();												// On top of fill
+		points.forEach(p => p.drawCircle(5));
+	}
+
+	toString() {
+		const ps = this.points.map(p => p.toString()).join('  ');
+		return `[${ps}](${this.splitability})`;
+	}
 }
 
 // Point ///////////////////////////////////////////////////////////////////////////////////////////
@@ -84,20 +289,30 @@ class Point {
 		this.y = y;
 	}
 
-	// The centrum of a set of points is (mean x, mean y)
-
-	static centrum(ps) {
-		const n = ps.length;
-		if (!n) return undefined;
-		let xt = 0, yt = 0;
-		ps.forEach(({ x, y }) => { xt += x; yt += y });
-
-		return new Point(undefined, xt / n, yt / n);
-	}
-
 	// Return the distance from this point to { x, y }
 
-	distance({ x, y }) { return Math.sqrt((this.x - x) ** 2 + (this.y - y) ** 2) }
+	distance({ x, y }) { return Math.floor(Math.sqrt((this.x - x)**2 + (this.y - y)**2) + 0.5) }
+
+	partWayTo(that, f = 0.4 + 0.2 * Math.random()) {
+		const { box, x, y } = this;
+		const g = 1 - f;
+
+		return new Point(
+			box,
+			Math.floor(f * x + g * that.x),
+			Math.floor(f * y + g * that.y),
+		);
+	}
+
+	halfWayTo(that) { return this.partWayTo(that, 0.5) }
+
+	move() {
+		const { box: { width, height } } = this;
+		const d = 50;
+		const r = () => rand(-d, d);
+		this.x = limit(this.x + r(), 0, width);
+		this.y = limit(this.y + r(), 0, height);
+	}
 
 	lineTo() {
 		const { box: { ctx }, x, y } = this;
@@ -109,87 +324,28 @@ class Point {
 		ctx.moveTo(x, y);
 	}
 
-	partWayTo(that, f = 0.4 + 0.2 * Math.random()) {
-		const g = 1 - f;
-		return new Point(
-			this.box,
-			Math.floor(f * this.x + g * that.x),
-			Math.floor(f * this.y + g * that.y),
-		);
-	}
-}
-
-// Region //////////////////////////////////////////////////////////////////////////////////////////
-
-class Region {
-	constructor(box, points, colour) {
-		this.box = box;
-		this.points = points;								// The ring of points defining the region
-		this.colour = colour;
-		// edgeLengths[i] = distance point i to point i+1
-		this.edgeLengths = points.map((p, i) => p.distance(points.modEl(i + 1)));
-		this.splitability = this.findSplitability();
-	}
-
-	findSplitability() {
-		let [min, ...rest] = this.edgeLengths;
-		let max = min;
-		let sum = 0;
-		rest.forEach(x => {
-			sum += x;
-			if (x < min) min = x;
-			if (x > max) max = x;
-		});
-		return sum * min**2 / (max + 1);
-	}
-
-	// findsplitableRadius() {
-	// 	const { points } = this;
-	// 	const c = Point.centrum(points);
-	// 	const mids = points.map((p, i) => p.partWayTo(points[points.modIndex(i + 1)], 0.5));
-	// 	return [...points, ...mids].map(p => c.distance(p)).min();
-	// }
-
-	// If the region is unsplitable, return null.  Otherwise, return two
-	// new regions created by splitting the region along a line from a
-	// point on its longest edge to an existing point not on that edge
-
-	split() {
-		if (this.splitability < config.minSplitability) return null;
-
-		const { edgeLengths, points } = this;
-		// Find longest edge, points i -> j
-		const i = edgeLengths.withMax(x => x);
-		const j = points.modIndex(i + 1);
-		const mid = points[i].partWayTo(points[j]);
-		const otherIndexes = [...points.keys()].filter(k => k !== i && k !== j);
-		const k = otherIndexes.any();
-
-		return [this.regionWith(i, mid, k), this.regionWith(k, mid, j)];
-	}
-
-	// Return a new region starting with [i] -> mid -> [j]
-	// and continuing round this region
-
-	regionWith(i, mid, j) {
-		const { points } = this;
-		const newPoints = [points[i], mid];
-		for (; j !== i; j = points.modIndex(j + 1)) {
-			newPoints.push(points[j]);
-		}
-		return new Region(this.box, newPoints, Colour.random());
-	}
-
-	draw() {
-		const { box, colour: { string }, points } = this;
-		const { ctx } = box;
+	drawCircle(radius, colour = 'white') {
+		const { box: { ctx }, x, y } = this;
+		ctx.strokeStyle = colour;
 		ctx.beginPath();
-		points[0].moveTo();
-		points.slice(1).forEach(p => p.lineTo());
-		ctx.closePath();
-		ctx.fillStyle = string;
-		ctx.fill();
-		ctx.stroke();												// On top of fill
+		ctx.arc(x, y, radius, 0, 2 * Math.PI);
+		ctx.stroke();
+	}
+
+	drawStar(ps) {
+		const { box: { ctx } } = this;
+		this.drawCircle(config.minRadius);
+		ps.forEach(p => {
+			this.moveTo();
+			p.lineTo();
+			ctx.stroke();
+		});
+	}
+
+	toString() {
+		const { x, y } = this;
+
+		return x + ',' + y;
 	}
 }
 
@@ -215,9 +371,9 @@ class Colour {
 	static init() {
 		const { numColours } = config;
 		this.palette = this.makePalette(numColours);
-		this.black = new Colour([0, 0, 0]);
-		this.white = new Colour([255, 255, 255]);
-		this.transparent = 'rgba(0,0,0,0)';
+		// this.black = new Colour([0, 0, 0]);
+		// this.white = new Colour([255, 255, 255]);
+		// this.transparent = 'rgba(0,0,0,0)';
 	}
 
 	// Create a palette of numColours equally spaced hues
@@ -276,19 +432,23 @@ class Colour {
 	}
 }
 
-
 // Array  //////////////////////////////////////////////////////////////////////////////////////////
 
-Array.prototype.any = function any() { return this[Math.floor(this.length * Math.random())] };
+Array.prototype.anyIndex = function anyIndex() { return Math.floor(this.length * Math.random()) };
+
+Array.prototype.any = function any() { return this[this.anyIndex()] };
+
+Array.prototype.indexes = function indexes() { return [...this.keys()] };
 
 Array.prototype.last = function last() { return this[this.length - 1] };
 
 Array.prototype.min = function min() { return Math.min.apply(null, this) };
+
 Array.prototype.max = function max() { return Math.max.apply(null, this) };
 
 // Return the index i for which f(a[i]) is biggest
 
-Array.prototype.withMax = function withMax(f) {
+Array.prototype.indexWithMax = function indexWithMax(f = x => x) {
 	let iMax, fMax;
 	this.forEach((el, i) => {
 		const fi = f(el);
@@ -297,15 +457,34 @@ Array.prototype.withMax = function withMax(f) {
 	return iMax;
 };
 
+Array.prototype.withMax = function withMax(f) { return this[this.indexWithMax(f)] };
+
 // Return i modulo the length of the array
+// Note: x % n is broken for x < 0
 
-Array.prototype.modIndex = function modIndex(i) { return i % this.length };
+Array.prototype.modIndex = function modIndex(i) { return mod(i, this.length) };
 
-Array.prototype.modEl = function modIndex(i) { return this[this.modIndex(i)] };
+Array.prototype.modEl = function modEl(i) { return this[this.modIndex(i)] };
+
+// Return modulo indexes from i to just before j
+// E.g. [a, b, c, d, e].modRange(3, 1) ==> [3, 4, 0]
+
+Array.prototype.modRange = function modRange(i, j) {
+	j = this.modIndex(j);
+	const r = [];
+	for (i = this.modIndex(i); i !== j; i = this.modIndex(i + 1)) {
+		r.push(i);
+	}
+	return r;
+};
+
+// Return the elements in order of increasing f(x) where f returns a number
+
+Array.prototype.sortBy = function sortBy(f) { return this.sort((a, b) => f(a) - f(b)) };
 
 // Return the array indexes in order of increasing f(a[i])
 
-Array.prototype.sortWith = function sortWith(f) {
+Array.prototype.sortIndexesBy = function sortIndexesBy(f) {
 	return [...this.keys()]
 		.sort((a, b) => f(this[a]) - f(this[b]));
 };
@@ -316,7 +495,6 @@ Array.prototype.shuffle = function shuffle() {
 	return this.sort(() => prob(0.5));
 };
 
-
 // Events & Window ////////////////////////////////////////////////////////////////////////////////
 
 document.onclick = click;
@@ -326,15 +504,16 @@ function click(e) {
 	if (e.buttons === 2) return;			// Ignore right-click
 	// Stationary click -> type 'click'.  Drag -> mousemove.
 	// Ignore first "click" after movement.
-	const clickEvent = e.type === 'click' && !click.moving;
+	const clickEvent = e.type === 'click' && ! click.moving;
 	if (clickEvent) fullScreen();
 	// Ignore mouse move unless button pressed and moved > 1 pixel
 	click.moving = e.type === 'mousemove' && e.buttons && click.old_x
 		&& Math.abs(e.clientX - click.old_x) + Math.abs(e.clientY - click.old_y) > 1;
 	click.old_x = e.clientX;
 	click.old_y = e.clientY;
-	if (!clickEvent && !click.moving) return;
-	Box.handleClick(e.offsetX, e.offsetY);
+	if (! clickEvent && ! click.moving) return;
+	// Box.handleClick(e.offsetX, e.offsetY);
+	click.clicked = true;
 }
 
 click.moving = false;
@@ -347,11 +526,12 @@ click.old_x = 0;
 function fullScreen() {
 	const d = document.documentElement;
 	const f = d.requestFullscreen || d.webkitRequestFullscreen || d.msRequestFullscreen;
-	if (!f) { console.log('No full screen API'); return }
+	if (! f) { console.log('No full screen API'); return }
 	f.call(d);
 }
 
 // Wait until a while after resizing stops
+// Some browsers call onresize on load, Firefox doesn't
 
 window.onresize = function onresize() { debounce(maybeResize, 1000) };
 
@@ -386,13 +566,24 @@ function debounce(f, t) {
 	debounce.timeout = setTimeout(f, t);
 }
 
+function limit(x, min, max) { return Math.min(Math.max(x, min), max) }
+
+// If f returns false, return, else wait t ms then loop.
+// With no f, stop any existing loop.  One use per program.
+
 function loopWhile(f, t) {
-	if (f()) { setTimeout(() => loopWhile(f, t), t) }
+	clearTimeout(loopWhile.timeout);
+	if (! f || ! f()) return;
+	loopWhile.timeout = setTimeout(() => loopWhile(f, t), t);
 }
+
+// mod(x, n) is like x % n but correct for x < 0, i.e. 0 <= mod(x, n) < n
+
+function mod(x, n) { const r = x % n; return r < 0 ? n + r : r }
 
 // Return ints 0 .. n-1
 
-function zeroTo(n) { return n < 1 ? [] : [...Array(n).keys()] }
+function zeroTo(n) { return Array(n).indexes() }
 
 // Return the results of calling f(i) for i = 0 .. n-1
 
@@ -402,16 +593,15 @@ function prob(p) { return Math.random() < p }
 
 // Return a random int, min <= r <= max
 
-function rand(min, max, pow) {
-	let r = Math.random();
-	if (pow) r **= pow;
-	return Math.floor(min + (max + 1 - min) * r);
+function rand(min, max, pow = 1) {
+	return Math.floor(min + (max + 1 - min) * Math.random() ** pow);
 }
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////
+// Start Program ///////////////////////////////////////////////////////////////////////////////////
 
 Colour.init();
-window.onresize();				 // Some browsers call onresize on load, Firefox doesn't
+Box.init();
+
 </script>
 </body>
 </html>
