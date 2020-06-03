@@ -136,7 +136,15 @@ window.onresize = function ()
 	resize_timeout = setTimeout(() => init(), 300);
 };
 
+function capture() {
+	setTimeout(() => {
+		window.open(ctx.canvas.toDataURL());
+		capture();
+	}, 60E3);
+}
+
 init();
+capture();
 draw();
 
 </script>
