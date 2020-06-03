@@ -16,6 +16,7 @@ module.exports = {
   },
   "rules": {
 		"arrow-parens": ["error", "as-needed"],
+		"implicit-arrow-linebreak": "off",
 		"indent": ["error", "tab"],
 		"max-classes-per-file": "off",
 		"no-console": "off",
@@ -28,6 +29,7 @@ module.exports = {
 		"no-param-reassign": "off",
 	  "no-plusplus": "off",
 		"no-tabs": "off",
+		"no-restricted-syntax": "off",
 	  "no-return-assign": "off",
 		"no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
 		"no-use-before-define": "off",
