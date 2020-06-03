@@ -8,7 +8,7 @@ use Test::Web;
 $ENV{RUN}++ or TAP::Harness->new->runtests(<*.t>);
 
 
-my $t = Test::Web->new(url => "http://foldoc.org/");
+my $t = Test::Web->new(url => "http://foldoc.org");
 
 # Home
 
