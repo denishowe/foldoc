@@ -154,6 +154,7 @@ sub url
 	if (@values)
 	{
 		local $_ = $values[0];
+		die "Bad trailing slash on $_" if (m|/$|);
 		$_ = "https://$_" unless (/^http/);
 		$self->{url} = $_;
 	}
@@ -218,6 +219,7 @@ sub get_ok
 	$test_name ||= "GET $url";
 	$code ||= 200;
 	my $r = $self->get($url);
+	print STDERR "Response: ", Dumper($r) if ($self->{verbose});
 	$self->response($r);
 
 	is $r->code, $code, $test_name;
