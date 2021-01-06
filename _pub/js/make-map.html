@@ -79,18 +79,22 @@ class Box {
 
 	point([x, y]) { return new Point(this, x, y, true) }
 
-	// Move a point and either add a point to an edge or split a region or return false
+	// Move a point, split an edge and cleave a region
 
 	step() {
-		this.moveSomePoint();
-		this.withLongestEdge().splitEdge(); // Add point to region with fewest
+		// this.moveSomePoint();
+		this.splitSomeEdge();
 		this.draw();
-		this.splitSomeRegion();
+		this.cleaveSomeRegion();
 		this.draw();
 		return true;
 	}
 
 	moveSomePoint() { this.regions.any().moveSomePoint() }
+
+	// Add point to some edge of some region
+
+	splitSomeEdge() { this.withLongestEdge().splitLongestEdge() }
 
 	// If some region has edge, add edge's new mid-point
 
@@ -100,43 +104,34 @@ class Box {
 
 	withFewestPoints() { return this.regions.withMax(r => -r.points.length) }
 
-	withLongestEdge() { return this.regions.withMax(r => r.longestEdge) }
+	withLongestEdge() { return this.regions.withMax(r => r.longestEdgeLength) }
 
-	// Return indexes of splitable regions, most splitable first
+	// Return indexes of cleavable regions, most cleavable first
 
-	splitableRegions() {
+	mostCleavableRegions() {
 		const { regions } = this;
 		return (
 			regions.indexes()
-				.filter(i => regions[i].splitability > 0)
-				.sort((i, j) => regions[j].splitability - regions[i].splitability)
+				.filter(i => regions[i].cleavability > 0)
+				.sort((i, j) => regions[j].cleavability - regions[i].cleavability)
 		);
 	}
 
-	// Split the most splitable region that can be split
-	// into two good regions.  Return true if one found.
+	// Cleave the most cleavable region.  Return true if found.
 
-	splitSomeRegion() {
-		return this.splitableRegions().some(k => this.splitRegion(k));
-	}
+	cleaveSomeRegion() { return this.mostCleavableRegions().some(k => this.cleaveRegion(k)) }
 
-	// Split region [k] into two new regions by joining two of its
-	// unlinked points.  If the new regions are both good, replace
+	// Find the best cleavage of region [k] into two new regions, replace
 	// [k] with them and return true.  If none found, return false.
 
-	splitRegion(k) {
+	cleaveRegion(k) {
 		const rk = this.regions[k];
-		// Try indexes of potential split points in rk
-		return rk.unlinked.some(([i, j]) => {
-			const newRegions = [rk.newRegionWith(i, j), rk.newRegionWith(j, i)];
-			console.log(`split ${rk} -> ${newRegions.spaced(' & ')}`);
-			if (newRegions.some(nr => nr.small())) { return false }
-
-			this.regions.splice(k, 1, ...newRegions);
-			rk.pointsLinked([i, j]);					// Update degree
-
-			return true;
-		});
+		const c = rk.bestCleavage??();			// cleavability??
+		if (! c) return false;
+		const { points, regions } = c;
+		this.regions.splice(k, 1, ...regions);
+		rk.pointsLinked(points);						// Increment degree of newly linked points
+		return true;
 	}
 
 	clear() {
@@ -161,48 +156,62 @@ class Region {
 
 	// Recalculate derived properties after region's points change
 
+	// Calculation of cleavability shouldn't be recursive??
+
 	update() {
 		this.setEdgeLengths();
-		this.setRadiusAndSplitability();
+		this.setRadiusAndCleavability();
 	}
 
-	// Set the index and length of the region's longest edge
+	// Set the region's edgeLengths and the index and length of the region's longest edge
 
 	setEdgeLengths() {
 		const { points } = this;
 		const edgeLengths = points.map((p, i) => p.distance(points.modEl(i + 1)));
 		const iMax = edgeLengths.indexWithMax();
 		this.longestEdgeIndex = iMax;
-		this.longestEdge = edgeLengths[iMax];
-	}
-
-	// Set pairs of indexes of all the region's linkable points that are not yet linked
-
-	setUnlinked() {
-		const indexes = this.linkables();
-		this.unlinked = [];
-		indexes.forEach(i => {
-			const js = indexes.modRange(i+2, i-2);	// Not adjacent to i
-			js.forEach(j => {
-				// Only add pairs one way round: i < j
-				if (i < j && indexes.includes(j)) {
-					this.unlinked.push([i, j]);
-				}
-			});
-		});
+		this.longestEdgeLength = edgeLengths[iMax];
 	}
 
 	// Set the region's radius to the minimum distance from
 	// its centrum to the midpoint of any of its edges
 
-	setRadiusAndSplitability() {
-		this.setUnlinked();
+	setRadiusAndCleavability() {
 		const c = this.centrum();
 		const eps = this.edgeMidPoints();
 		c.drawStar(eps);
 		this.radius = eps.map(p => c.distance(p)).min();
-		// splitability = radius, or = 0 if no potential links
-		this.splitability = this.unlinked.length ? this.radius : 0;
+		this.setCleavages();
+		this.cleavability = ?? // this.cleavages.length ? this.radius : 0;
+	}
+
+	// Set this.cleavages to a list of all this region's possible Cleavages
+
+	setCleavages() {
+		??
+			new Cleavage(??);
+	}
+
+	// Return the best cleavage of the region or undefined if there is none
+
+	// cleavability??
+
+	bestCleavage??() {
+		const indexes = this.linkables();
+		const cleavages = [];
+		indexes.forEach(i => {
+			const js = indexes.modRange(i+2, i-2);	// Not adjacent to i
+			js.forEach(j => {
+				// Only add ordered pairs and only if j is linkable
+				if (i < j && indexes.includes(j)) {
+					cleavages.push(new Cleavage(this, i, j));
+				}
+			});
+		});
+		const best = cleavages.withMax(c => c.merit);
+		console.log(`cleaved ${this} -> ${best}`);
+
+		return best;
 	}
 
 	// Points with indexes have been joined by a new edge
@@ -241,22 +250,10 @@ class Region {
 
 	moveSomePoint() { this.points.any().move() }
 
-	// Return a new region with last edge [i]->[j],
-	// going round this one from [j] back to [i]
-
-	newRegionWith(i, j) {
-		const { box, points } = this;
-		const newPoints = points.modRange(j, i)
-			.map(k => points[k]);
-		console.log(`${this} split with ${points[i]}->${points[j]} -> new [${newPoints.spaced()}]`);
-
-		return new Region(box, newPoints);
-	}
-
 	// Add a point on the longest edge of this
 	// region and any region that shares that edge
 
-	splitEdge() {
+	splitLongestEdge() {
 		const { box, points, longestEdgeIndex: i } = this;
 		const j = points.modIndex(i + 1);		// Edge [i] -> [j]
 		const pi = points[i];
@@ -266,17 +263,28 @@ class Region {
 		box.regionWithEdge([pj, mid, pi]); // Also add new point to region with pj -> pi
 	}
 
-	// If region has edge [i]=p->q, add new mid point to it and return true, else false
+	// Return a new region with last edge [i]->[j],
+	// going round this one from [j] back to [i]
+
+	newRegionWith(i, j) {
+		const { box, points } = this;
+		const newPoints = points.modRange(j, i)
+			.map(k => points[k]);
+		console.log(`${this} / ${points[i]}->${points[j]} -> new [${newPoints.spaced()}]`);
+
+		return new Region(box, newPoints);
+	}
+
+	// If region has edge p->q, add new mid point to it and return true, else false
 
 	addEdge([p, mid, q]) {
 		const { points } = this;
 
-		const ret = points.indexes().some(k =>
-			points[k] === p && points.modEl(k+1) === q
-				&& (this.addPointAfter(mid, k), true));
-		console.log(`addEdge ${p}->${q} to ${this}? ${ret}`);
-
-		return ret;
+		const k = points.findIndex((pI, i) => pI === p && points.modEl(i+1) === q);
+		if (k < 0) return false;
+		this.addPointAfter(mid, k);
+		console.log(`addEdge ${p}->${q} to ${this}`);
+		return true;
 	}
 
 	// Add a new point p to the region at [i+1]
@@ -297,14 +305,45 @@ class Region {
 		ctx.fillStyle = string;
 		ctx.fill();
 		ctx.stroke();												// On top of fill
-		points.forEach(p => p.drawCircle(5));
+		points.forEach(p => p.drawCircle(4));
 	}
 
 	toString() {
 		const ps = this.points.map(p => p.toString()).join('  ');
-		return `[${ps}]/${this.splitability}`;
+		return `[${ps}]/${this.cleavability}`;
 	}
 }
+
+// Cleavage ////////////////////////////////////////////////////////////////////////////////////////
+
+// A Cleavage is an edge between two points of a region that can divide the region in two
+
+class Cleavage {
+  constructor(region, points) {
+		this.region = region;
+		this.points = points;
+		this.regions = this.getRegions();
+		this.merit = this.getMerit();
+	}
+
+	// Return the two new regions that the cleavage would create
+
+	getRegions() {
+		const { region, points: [i, j] } = this;
+
+		return [region.newRegionWith(i, j), region.newRegionWith(j, i)];
+	}
+
+	// The more equal the radii of the two regions, the higher the cleavage's merit
+
+	getMerit() {
+		const { regions } = this;
+		const [r1, r2] = regions.map(r => r.radius);
+
+		return 1/(Math.abs(r1 - r2) + 1);
+	}
+}
+
 
 // Point ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -497,16 +536,18 @@ Array.prototype.min = function min() { return Math.min.apply(null, this) };
 
 Array.prototype.max = function max() { return Math.max.apply(null, this) };
 
-// Return the index i for which f(a[i]) is biggest
+// Return the index i for which f(a[i]) is biggest or -1 if no elements
 
 Array.prototype.indexWithMax = function indexWithMax(f = x => x) {
-	let iMax, fMax;
+	let iMax = -1, fMax;
 	this.forEach((el, i) => {
 		const fEl = f(el);
 		if (iMax === undefined || fEl > fMax) { iMax = i; fMax = fEl }
 	});
 	return iMax;
 };
+
+// Return the element e for which f(e) is biggest or undefined if no elements
 
 Array.prototype.withMax = function withMax(f) { return this[this.indexWithMax(f)] };
 

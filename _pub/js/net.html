@@ -28,7 +28,7 @@ const config = {
 	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddNode: 0.05,
-	probNodeDie: 0.05,										// 0.02
+	probNodeDie: 0.1,											// 0.05
 	probAddLink: 0.2,
 	pulseCountMin: 3,
 	pulseCountMax: 1E3,										// 100 - Infinity
@@ -220,11 +220,12 @@ class Node extends Disc {
 	seed() {
 		if (this.occupied) {
 				if (p(config.probNodeDie)) { this.die(); return }
-		} else if (p(config.probAddNode)) {
-			this.occupy();
-		} else return;
-		if (p(config.probAddLink)) this.addLink();
-		if (p(0.1)) this.addPulses();
+		} else if (! p(config.probAddNode)) {
+			return;
+		}
+		this.occupy();
+		this.maybeAddLink();
+		this.maybeAddPulses();
 	}
 
 	pulseIn(from) {

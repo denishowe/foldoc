@@ -106,6 +106,7 @@ class Timer {
 
 		// chrome://flags/#autoplay-policy
 		this.audio = new Audio('ding.wav');
+		this.dingsTotal = 3;
 
 		this.start(parseFloat(this.queryString()));
 	}
@@ -165,7 +166,7 @@ class Timer {
 		this.animateOptionsButton(on);
 		this.notify(on);
 		this.toggleTitle(true);
-		this.dings = on ? 10 : 0;
+		this.dings = on ? this.dingsTotal : 0;
 		if (on) this.alert();
 	}
 

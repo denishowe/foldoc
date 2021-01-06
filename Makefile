@@ -11,7 +11,7 @@ default: $(HOSTNAME)
 logged:
 	$(MAKE) > make.out 2>&1
 
-foldoc-paris-1: unix
+foldoc: unix
 
 unix: date keys offsets foldoc.tar.gz
 	-date
@@ -22,7 +22,7 @@ date:
 # List built HTML explicitly
 
 DISTFILES = Dictionary Makefile *.gif *.png *.jpg \
-	index.cgi build.pl Foldoc.pm *.html \
+	index.pl build.pl Foldoc.pm *.html \
 	about.html contents.html contributors.html help.html \
 	home.html missing.html sitemap.txt source.html
 
@@ -51,7 +51,7 @@ missing.html: Dictionary build.pl Foldoc.pm template.html $(LOGS)
 	./build.pl missing
 
 cgi-test:
-	REQUEST_METHOD=1 QUERY_STRING='query=database' index.cgi
+	REQUEST_METHOD=1 QUERY_STRING='query=database' index.pl
 
 Windows_NT:
 	$(MAKE) -f Makefile.windows

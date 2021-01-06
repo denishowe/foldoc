@@ -514,7 +514,8 @@ sub list_fans
 		}
 		$_++;
 	}
-	print STDERR "\nfans:\n", map "  $_: $client_hits->{$_}\n", @hosts[0..9];
+	$#hosts = 9 if ($#hosts > 9);
+	print STDERR "\nfans:\n", map "  $_: $client_hits->{$_}\n", @hosts;
 }
 
 ###############################################################################

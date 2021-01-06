@@ -13,6 +13,8 @@ body
 
 a { text-decoration: none }
 
+p a { border: 1px solid white }
+
 p a:hover { border: 1px dotted #8CF }
 
 h2, h3 { clear: both }
@@ -159,6 +161,8 @@ input[type='text']
 }
 
 #content { clear: left; max-width: 47em }
+
+#content p { line-height: 150% }
 
 #query, #query:hover, #cse-search-box input[type='text']
 {
