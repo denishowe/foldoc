@@ -145,8 +145,7 @@ else				# One or more hits
 		seeknth($dic_fh, $off_fh, $index); # Position dictionary at hit
 		$ENV{CONTENT}
 			.= (defined($via) && "<h3>$via &#8669;</h3>\n")
-			. foldoctohtml($dic_fh)		# Entry as HTML
-    		. sticker_you();
+			. foldoctohtml($dic_fh);		# Entry as HTML
 	}
 }
 $ENV{CONTENT}
@@ -162,21 +161,6 @@ print template();
 exit 0;
 
 ##################################################################
-
-# Sticker-you ads per query
-
-sub sticker_you
-{
-	return unless (open my $SY, "<", "sticker-you.csv");
-
-	while (<$SY>)
-	{
-		my ($term, $ad) = split /,/, $_, 2;
-		return $term ne $query ? "" : qq{<p class="vertical-space"></p>\n<div>SPONSOR: $ad</div>}
-			if ($term ge $query);
-	}
-	return "";
-}
 
 # Return some headings before and after INDEX
 
