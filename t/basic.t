@@ -3,10 +3,9 @@ use Test::More tests => 8;
 use lib "../lib";
 use Test::Web;
 
-# cpan Test::Web
+# cd foldoc && prove
 
 $ENV{RUN}++ or TAP::Harness->new->runtests(<*.t>);
-
 
 my $t = Test::Web->new(url => "http://foldoc.org");
 

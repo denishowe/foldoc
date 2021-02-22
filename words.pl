@@ -10,7 +10,7 @@ use strict;
 use warnings;
 
 my $file = "words.txt";
-my $google = "http://google.co.uk/#q=";	# Note #, not ?
+my $google = "https://www.google.co.uk/search?q=";
 
 # ############################################################################ #
 

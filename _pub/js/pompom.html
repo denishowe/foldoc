@@ -371,15 +371,15 @@ class Field extends Object
 	{
 		var f =
 		{
-			Esc: close_window,
 			C: () => this.clear(),
 			F: this.fullscreen,
+			Q: close_window,
 			R: reload,
 			S: () => this.change_speed(),
 		}[k];
 		if (f) return f();
 		Message.show("Key:", k, "\n\nKeys:\n",
-					 "Esc: close\nC: clear\nF: fullscreen\nR: reload\nS: change speed");
+			"Q: close\nC: clear\nF: fullscreen\nR: reload\nS: change speed");
 	}
 }
 
