@@ -1,32 +1,36 @@
-use Mojo::Base -strict;
+use TAP::Harness;
+use Test::More tests => 8;
+use lib "../lib";
+use Test::Web;
 
-use Test::More;
-use Test::Mojo;
+# cd foldoc && prove
 
-my $t = Test::Mojo->new('Foldoc');
+$ENV{RUN}++ or TAP::Harness->new->runtests(<*.t>);
+
+my $t = Test::Web->new(url => "http://foldoc.org");
 
 # Home
+
+$t->get_ok("/")
+	->contains(title => "FOLDOC - Computing Dictionary", "Home title");
 
 # Dangling cross-reference
 
 $t->get_ok("/precedence")
-	->text_is(h2 => "", "Dangling cross-ref");
-
-$t->get_ok("/")
-	->text_is(title => "FOLDOC - Computing Dictionary", "Home title");
+	->contains(h2 => "", "Dangling cross-ref");
 
 # Contents
 
 $t->get_ok("/contents/D.html")
-	->text_is("a[href=/DWIM]" => "DWIM", "D entry label");
+	->contains("a[href=/DWIM]" => "DWIM", "D entry label");
 
 $t->get_ok("/contents/subject.html", "subject index")
 	->content_like(qr/entries by subject/i)
-	->text_is("a[href=/contents/job.html]" => "job", "subject index link");
+	->contains("a[href=/contents/job.html]" => "job", "subject index link");
 
 $t->get_ok("/contents/music.html", "music subject")
-	->text_is(h2 => "Entries for subject music")
-	->text_is("a[href=/mod]" => "mod", "music mod link");
+	->contains(h2 => "Entries for subject music")
+	->contains("a[href=/mod]" => "mod", "music mod link");
 
 # Search
 
@@ -47,7 +51,7 @@ $t->get_ok("/cpus", "Case, stem")
 # Follow cross-ref
 
 $t->get_ok("/Classic C")
-	->text_is(h2 => "K&R C", "Follow cross-ref");
+	->contains(h2 => "K&R C", "Follow cross-ref");
 
 # Word-search
 
@@ -61,7 +65,3 @@ done_testing();
 # life
 # Missing entries
 # Other search engines
-
-# Local variables:
-# compile-command: "cd .. & run-tests"
-# End:

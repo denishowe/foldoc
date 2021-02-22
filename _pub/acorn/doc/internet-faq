@@ -1,0 +1,1228 @@
+From: aifaq@banana.demon.co.uk
+Newsgroups: comp.sys.acorn.announce,comp.sys.acorn.networking,comp.sys.acorn.misc,comp.sys.acorn
+Subject: FAQ: Using Acorns for Internet Access, Issue 7
+Followup-To: comp.sys.acorn.networking
+Date: 4 Apr 1995 10:19:31 +0100
+Organization: Acorn Computers Ltd, Cambridge, England
+NNTP-Posting-Host: acorn.acorn.co.uk
+
+
+FAQ: Using Acorns for Internet Access
+=====================================
+
+Issue 7, 1st March 1995
+
+This FAQ brings together information and hints on using Acorn computers
+(Archimedes, Risc PC etc) on the Internet.  It is posted monthly to
+comp.sys.announce, comp.sys.acorn and demon.ip.support.archimedes, and
+is archived on ftp.demon.co.uk in directory /pub/archimedes as
+FAQ-Using-Acorns-For-Internet-Access.txt.  It may be retrieved
+via email by sending a message to maillist@banana.demon.co.uk with the
+"Subject:" field set to "GET Documents.AIFAQ" (the body of the message
+is ignored).
+
+It is maintained by Kevin Quinn - please send any comments, suggestions,
+corrections etc. to aifaq@banana.demon.co.uk.  There are several things
+I would particularly like further information on for inclusion in the
+FAQ; I have added a paragraph at the bottom of the FAQ listing these.
+
+Copyright 1994,1995 Kevin Quinn.  Freely distributable in unmodified form.
+
+
+#include <std/disclaimer.h>
+
+I take no responsibility for the accuracy or otherwise of information
+contained in this FAQ.  It is provided "as is" without express or implied
+warranty.  All information contained in this FAQ is subject to change
+without notice.
+
+
+
+============================================================================
+
+
+Introduction and FAQ structure
+
+This FAQ contains quite a lot of information.  As a result I have
+instigated a glossary at the end of the FAQ to explain various points
+in an ordered fashion.  Many of these points come up in the main body
+of the FAQ, and this avoids repeating detailed explanations.  If you
+find anything in the FAQ that is unclear or confusing, please drop me
+a line (send email to aifaq@banana.demon.co.uk) and I will attempt to
+clarify things.
+
+Throughout the FAQ I refer to "Acorn machines" which, unless otherwise
+stated, includes the Archimedes range, the A30x0, A4000, A5000 and
+Risc PC.  Similarly when I mention "Arc" (for example "Arc software")
+I mean all machines.
+
+The main body of the FAQ is separated into the following sections:
+
+         1) What do I need to connect to the Internet?
+         2) Who can supply direct IP access?
+         3) Who can supply indirect access?
+         4) What software do I need for direct access services?
+         5) What software do I need for indirect access?
+         6) What newsreaders are there for the Acorn range?
+         7) Can I use WWW, Gopher etc. on my Acorn?
+         8) Serial ports, serial modules, transfer rates and other mysteries.
+         9) Use of TCP/IP over packet radio.
+        10) Other software utilities
+        11) Products "on the way"
+
+To make it easy to get to the start of a section, you can search for the
+number with the bracket, for example to get to the section on suppliers
+of indirect access, you would search for "3)" (without the quotes, of
+course!).  To this end all other lists use letters or roman numerals.
+Sections are also separated by lines of "-".
+
+There are several appendices at the end of the FAQ, collating information
+that is distributed through the FAQ into single points of reference.
+
+         Appendix A: List of Software including where to find it
+         Appendix B: Contact Addresses mentioned elsewhere in this FAQ
+         Appendix C: Glossary of terms
+         Appendix D: Things I'd like to know :-)
+
+
+============================================================================
+
+
+1) What do I need to connect to the Internet?
+
+   First, you need a service provider.  These come essentially in two
+   flavours; those providing direct IP access, and those providing access
+   to a machine they have on the Internet.  Second, you need the relevant
+   software.  The software you need depends on the type of service
+   provider.
+
+   To elaborate, service providers like Demon Internet Services provide
+   dial-up access to low-level Internet.  This means that your machine is
+   actually a machine on the Internet, albeit intermittently.  To
+   use this kind of service you need to run complex software on your
+   machine (known as TCP/IP software).  You cannot use simple comms
+   software (Arcterm, Hearsay etc) to use this kind of service.  You can
+   use any facilities of the Internet for which you have the relevant
+   software.
+
+   Services like CIX (Compulink Information eXchange) provide a facility
+   whereby their machine runs the TCP/IP software, and you get an account
+   on their machine.  Essentially this means that your machine is used
+   as a terminal onto their machine.  For this kind of service, you use
+   normal comms software (Arcterm, Hearsay etc).  You can only run the
+   facilities that are available on the service provider's machine.
+
+   Increasingly, bulletin boards are providing "gateways" to the Internet,
+   usually for EMail and Network News (also known as Usenet).  This is a
+   much more limited form of Internet access, but is much cheaper for
+   the user.
+
+   If you only have email access to the Internet (for example you might
+   have email at work but no more, perhaps behind a "firewall"), it is
+   surprising how much you can do with simple email, including Gopher
+   and believe it or not, WWW!  There is an excellent document available
+   by sending mail to MAILBASE@mailbase.ac.uk with the subject field left
+   blank and the following in the body:
+   
+       send lis-iis e-access-inet.txt
+
+   and you will receive the document by return-of-email :-)  Also available
+   via anonymous ftp from mailbase.ac.uk in /pub/lists/lis-iis/files.
+
+----------------------------------------------------------------------------
+
+
+2) Who can supply direct IP access?
+
+   At the moment there appears to be an explosion in the number of service
+   providers for the individual user.  The BBC service is currently
+   suffering from "contractual difficulties" with the Arc software,
+   however it is up and running for other platforms, and will be supporting
+   Acorn machines.
+   
+   However, here are a few services that are available now.  I have limited
+   this list to those providers who have subscribers using Acorn machines,
+   and the list is in alphabetic order to avoid favouritism :)  Several
+   phrases I use may be unfamiliar - take a look at the glossary at the
+   end of this FAQ.
+
+   a) Demon Internet Services (UK)
+
+      A UK-wide provider, cheap and effective.  Mail internet@demon.net for
+      information.  Or download ftp.demon.co.uk:/pub/doc/Demon.txt.  Points
+      of presence in many areas, supplying local-call access to a large
+      number of subscribers.  Tel: (0181) 371 1234
+      Support available in the newsgroup demon.ip.support.archimedes.
+      Fixed IP address service.
+
+   b) Geko (AUS)
+
+      Internet Provider in Sydney, Australia.  Email to accounts@geko.com.au
+      for information.  Provides SLIP, PPP and CLI accounts for the same
+      rates.  riscman@geko.com.au handles the Acorn-related side of things.
+      !TCPIP, Slipdial work with this service.  Web support for Acorns
+      is also available.
+      Information can be obtained from http://www.geko.com.au/,
+                                       ftp://ftp.geko.com.au/pub/
+      Tel : +61-2-968-4333, Fax +61-2-968-4334,
+      PO BOX 473, Crows Nest, NSE 2065, Australia.
+
+   c) Pavilion Internet (UK)
+
+      A Brighton-based supplier.  Email info@pavilion.co.uk for more info.
+      Dynamic IP address service.
+
+   d) Stichting Hack-Tic Network (NL)
+   
+      Supplies service to the Netherlands.  Email to helpdesk@xs4all.nl
+      for further information.  Supplies both UUCP-style and direct
+      SLIP/PPP access to the Internet.
+      
+   e) Stichting Knoware (NL)
+
+      Supplies service to the Netherlands.  Email to knoware@knoware.nl for
+      information.  !TCPIP works with this service, as does !ReadNews.
+      Michiel Koolen (mkoolen@trickbox.knoware.nl) runs their Arc support,
+      and provides a starter-pack preconfigured for Knoware.
+      
+   f) Zynet (UK)
+   
+      This service is provided by a sister-company to Minerva Software,
+      who have been in the Acorn arena for many years now, and are well
+      placed to talk Acorn-speak to Acorn users :-), so I'm going to say
+      a bit more about Zynet than I have about the others.
+      
+      Email zynet@zynet.co.uk, or telephone (01392) 426160 (fax 421762).
+      Fixed IP address service.  Rates are 12UKP+VAT pcm for 15 hours pcm
+      or 18UKP +VAT for unlimited time (discounts available for quarterly
+      and yearly payment).  They also provide a specially designed schools
+      service.
+
+      Zynet can provide customers with a collection of PD/Shareware
+      software which is tailored for Zynet, and pre-configured for easy
+      setup.
+
+
+
+   There are a couple of lists available that are more comprehensive; a list
+   of UK providers can be found via ftp from ftp.demon.co.uk as
+   /pub/archives/uk-internet-list/inetuk.lng.  There is an international
+   list distributed from <info-deli-server@netcom.com> - send email with
+   "Send PDIAL" as the text body to get the latest version.
+
+
+----------------------------------------------------------------------------
+
+
+3) Who can supply indirect access?
+
+   There are many of these.  They can usually be used with normal comms
+   software, eg. Arcterm, Hearsay etc.
+
+   a) CIX - Compulink Information eXchange
+
+      A London-based conferencing system, also providing email, ftp, telnet,
+      irc, gopher, www etc.  Email: cixadmin@cix.compulink.co.uk,
+      Tel: 081 390 8446 (voice), 081 390 1244/1255 (modem).
+      Join conferences "archimedes" or "bbc" to find other Acorn users.
+      
+      CIX are soon to launch a direct SLIP/PPP connection as well.
+
+   b) Compuserve
+
+      A large international conferencing system (albeit with a heavy US
+      bias).  Currently provides an EMail interface and access to the Usenet
+      News (GO INTERNET).  More comprehensive internet access is planned,
+      including FTP and TELNET.  Forum UKCOMP topic Acorn/Z88 is the place
+      to find other Acorn users.
+      Tel: London (0181) 801 2001, Birmingham (0121) 632 4858,
+           Reading (01734) 391 064 or 569 025, Bristol (0117) 925 5111
+
+   c) Many bulletin boards provide EMail and limited newsgroup access.
+      The following is a list of the more popular ones - all are 24hour
+      boards and support most modem speeds:
+
+         Arcade BBS (0181 654 2212)
+         Archiboard Central BBS (01603) 744231
+         Rich in Paradise BBS (01442) 255199
+         The Digital Databank (01707) 329306)
+         The World Of Cryton (01749 670030)
+
+      These also hold lists of other Acorn-relevant bulletin boards.
+
+
+----------------------------------------------------------------------------
+
+
+4) What software do I need for direct access services?
+
+   There are several options.  Under RISC OS, there is !TCPIP, also known as
+   KA9Q (the call-sign of the radio ham who first wrote it for the PC), and
+   Acorn's TCP/IP Suite, although you need a suitable driver for dial-up use
+   (Gnome Software market a SLIP driver).  Most software that makes use of
+   the serial port will need !SerialDev, the serial device drivers.  These
+   are written by Hugo Fiennes (altman@cryton.demon.co.uk) and are available
+   from most sources of Acorn software.
+
+   Under RISCiX, everything you need should already be there.  You should
+   find that most UNIX sofware compiles without too much trouble (see
+   below).  Running X-Windows (and hence using graphical WWW clients
+   like X-Mosaic) is possible, if a little slow.
+
+
+4.1) Issues relating to !TCPIP - the port of KA9Q
+
+   Some of these are somewhat oriented towards use with Demon's dial-up
+   service; however most if not all points are relevant to all dial-up
+   SLIP services.
+
+   a) Where can I find it?
+
+   A "Starter-pack" has been assembled by Dr. Alan Hassey
+   (alan@midwife.demon.co.uk), of a selection of various pieces PD
+   software that provides an easy way to set yourself up for Demon
+   Internet.  Available via ftp from ftp.demon.co.uk in directory
+   /pub/archimedes/acorn-starter-pak.  Instructions for download and
+   de-archiving the software are given when you "cd" to that directory.
+   This sets up enough to use EMail, Usenet News and the basic Internet
+   protocols (FTP, TELNET etc).  This is by far the easiest way to set up
+   initially.  You can always try different newsreaders etc. later on.
+   The pack also includes files for use with Zynet.
+
+   Latest versions of the software can be found via ftp from ftp.demon.co.uk
+   in /pub/archimedes.  Other popular sites that carry copies include Hensa
+   (micros.hensa.ac.uk), Stuttgart (ftp.uni-stuttgart.de).  Can also be
+   found on Compuserve (GO UKCOMP), and bulletin boards (eg. Arcade, The
+   Digital Databank).
+
+   Make sure you have all of the following:
+   
+      !TCPIP
+      !SlipDial or !CallDemon
+      !TCPIPUser
+      !SerialDev
+      A newsreader (see below)
+
+   It is probably best to put all the above in one directory - some of them
+   assume that the Filer has "seen" some of the others.
+
+   b) Who develops/developed it?
+
+   Currently maintained by Anthony Frost (vulch@kernow.demon.co.uk, G8UDV)
+   and Adam Goodfellow (email to tcpip2@comptech.demon.co.uk for
+   TCPIP-related stuff).
+   Original software for DOS by Phil Karn (KA9Q), first ported to the
+   Archimedes by Jonathan Naylor (G4KLX).
+
+   c) Does it work on the Risc PC?
+
+   As of version 2.01, it works well.
+
+   d) News is taking ages - how can I speed it up?
+
+   This often happens if you don't connect for a week - the retrieval of
+   messages over a day or two old seems to take forever.  The solution is
+   to edit the "DemLast" file to a more recent date.  The problem will
+   probably vary in severity depending on the speed of (and load on) your
+   local news server.  The DemLast file is found inside ...!TCPIP.nntp
+   on versions of !TCPIP up to 2.00f, from 2.01 onwards it is found
+   in !TCPIPUser.NNTP.  On configurations other than Demon, the file
+   may be called something else, but it will be <something>Last.
+
+   e) !TCPIP (KA9Q) crashes with "Bad Memory Access".
+
+   Several possible causes, none of which should occur with v2.03...
+   i)   long lines in the "DemGroup" file - split into two or more lines.
+   ii)  Forgetting to surroung numeric addresses with square brackets -
+        use "[127.0.0.1]" not "127.0.0.1".  From version 2.01 this is not
+        a problem - both forms of address are accepted.
+   iii) "DemHist" file over ~20K.  Quick solution is to delete the file,
+        the problem will then go away (until DemHist grows too big again!)
+        DemHist should be "trimmed" regularly, by deleting some lines
+        from the beginning of the file (it doesn't matter how many, as
+        long as you delete whole lines and the resulting file is
+        a fair bit under 20K).
+        The best way to do this is to use the likes of !SlipDial, which
+        can automatically trim the file each time you connect.
+        This should also not be a problem from version 2.01 onwards,
+        although it is still a good idea to trim the DemHist file regularly
+        for speed.
+        Note that when configured for systems other than Demon the
+        "DemHist" file might be called <somethingelse>Hist.
+
+   f) !TCPIP (KA9Q) can't find a site.
+
+   If the machine that "resolve" uses to resolve hostnames is down, then
+   the site will not be found.  Unfortunately, this information is "cached",
+   i.e. the resolver remembers that the site is unavailable and next time
+   you can't get to it even if the resolve server is back up.  Type
+   "resolve purge" to clear the cache, and try again.
+
+   Resolve as implemented in !TCPIP currently can only resolve one hostname
+   at a time - if a second request is made before the first is completed then
+   the site comes back as unknown.  This has the same effect on the resolve
+   cache as above; solution is to type "resolve purge" in the same way.
+
+   g) How do I configure !TCPIP (KA9Q) for setups other than Demon?
+
+   Knoware works with a similar setup to Demon's - contact Michiel Koolen
+   for details (mkoolen@trickbox.knoware.nl).
+
+   The main differences on other systems are the connection sequence (for
+   which a suitable !SlipDial script is required) and the host names of
+   the relevant mail and news servers.  Some of the smaller providers
+   use dynamic IP addresses (i.e. you're IP address is different every
+   time you log on) which is where !SlipDial comes into its own.  Look
+   at the script "default" for an example of how to cope with this.
+   
+   h) I keep getting "resolve timeout" errors when first connecting - what
+   is wrong?
+
+   Nothing is wrong.  With Demon's system, it takes time to set up the
+   routing tables at their end so that packets get sent down your serial
+   line.  Until these tables are set up nothing can find it's way to
+   you, including the response to resolver requests.  The timeout message
+   just indicates that a fresh request is being sent as a response has
+   not been received.
+
+   To stop the messages, you can add all the hosts mentioned in the
+   AutoExec file to the resolve.hosts file - to do this you will need
+   to know the IP addresses of the relevant hosts.  For example, my
+   resolve.hosts file looks like:
+
+        {ip_addr} {host} local
+        158.152.1.193    ns.demon.co.uk         
+        158.152.1.72     post.demon.co.uk
+        158.152.1.76     ntp.demon.co.uk
+        158.152.1.83     betanews.demon.co.uk
+        158.152.1.44     ftp.demon.co.uk
+
+   However, doing this means that if the IP address changes (some of
+   these sites are aliases for other sites and the alias may change
+   from time to time) then the resolve.hosts file will need to be
+   updated to reflect the changes.  If you can live with the messages,
+   you can just have the first line in your resolve.hosts file and
+   you won't have to worry about changing IP addresses.
+   
+   i) When I try using !TCPIP, it doesn't seem to get the modem to
+   dial up.  What am I doing wrong?
+   
+   This is a common mistake, often made by people used to the DIS software
+   provided by Demon for PC users.  DIS incorporates a "dialler", whereas
+   the current version of !TCPIP does not.  A "dialler" of some sort is
+   required to make the initial connection and log on - !TCPIP assumes that
+   it can start talking SLIP to the serial port as soon as it is launched.
+   
+   There are several ways to dial the modem; you can use the likes of
+   !ArcTerm7, !Hearsay etc. or you can use a special dialler application.
+   There are two "diallers" on ftp.demon.co.uk, !CallDemon and !SlipDial.
+   !CallDemon is a simple dialler, and !SlipDial provides a scripting
+   language and can do clever things, like dial alternate numbers and
+   re-configure !TCPIP for dynamic IP situations on-the-fly etc.
+   
+   j) The last email I send doesn't get deleted properly, and gets sent
+   out every time I connect.
+   
+   This is due to the faulty SMTP implementation on some email gateways.
+   In English, this means that although !TCPIP is working correctly,
+   sometimes the machine that email goes to has duff software on it.
+   
+   As of version 2.03 of !TCPIP, there is a new command
+   "smtp delay yes|no" which disables and enables respectively the
+   use by !TCPIP of the (standard) SMTP facility to close the connection
+   with the last message.  In other words, if you suffer from this problem
+   try putting "smtp delay yes" into the Config file inside !TCPIPUser.
+   
+   Here are a few other ways to combat the problem:
+								
+   i)   After sending your E-mail delete the last message manually.
+        (hmm..)
+
+   ii)  Write a widget to do it for you, and run that after succesful
+        mailing.
+        
+        For example, put the following two lines in an "Obey" file (i.e.
+        create a normal textfile and use the filer menu to set the type to
+        obey) - strip off the leading spaces (if you want!):
+        
+
+        Wipe <Mail$Dir>.spool.mqueue.text.* ~CF~R~V
+        Wipe <Mail$Dir>.spool.mqueue.work.* ~CF~R~V
+
+
+   iii) Put a message in <TCPIP$Dir>.MailDir.spool.mqueue.text (phew)
+        and a message header in <TCPIP$Dir>.MailDir.spool.mqueue.work
+        with name '9999' (or any other high number) and send it do a
+        null E-mail address.  The message will always remain in the
+        queue, but it is sent to the great electronic garbage can.
+        Ask your service provider if they have such a thing (often
+        something like "dev/null@<site>).
+   
+   k) Can !TCPIP be used with providers of dynamic-IP systems?
+
+   Usually, yes.  This can be achieved using !SlipDial to read the
+   IP address allocated at login and to stuff it into the !TCPIP
+   Config file.  !SlipDial comes with an example of a script to
+   do this (see the file "default" in the !SlipDial.Scripts directory).
+   A new feature of !TCPIP (v2.03) allows the configuration of the
+   IP address without resorting to slightly dirty tricks like modifying
+   the config file; !TCPIP can now be set up to read the IP address from
+   an OS variable.
+   
+   This only works however if the IP address is sent during the login
+   sequence (usually as part of a welcome banner).  Most (probably all)
+   dynamic-IP providers do this.
+
+
+4.2) Issues relating to the TCP/IP suite (Acorn)
+
+   Contains a good VT220 emulation, and a basic TCP/IP stack.  Does not
+   provide SMTP (email) or NNTP (network news) at the moment.  The suite
+   provides a Berkeley socket look-alike interface, which should enable
+   software to be ported without too much difficulty, however I am unaware
+   of any such available software.
+
+   A SLIP driver (IP-SLIP) is available fromn Gnome Computers, Cambridge,
+   which is needed for dial-up connections.  Gnome can also supply a
+   DOMAIN module which provides domain-name lookup.
+
+   Acorn are working on major additions to the suite to include support
+   for more protocols, in particular they are working on a Web browser.
+   Current ETA for the Web Browser is very roughly the middle of 1995.
+
+
+4.3) Issues relating to RiscIX and the TCP/IP stack.
+
+   As said above, this is not a problem for those who know UNIX.
+   Some things worth noting, however.  Get the kernel kit from Acorn or
+   Granada MicroCare, and build a kernel with PPP support built-in, then
+   compile PPPD.  Use ifconfig etc. to configure the routeing.  This is too
+   complex a process to describe in detail here, and you should only do this
+   sort of thing if you know what you are doing anyway!  There is also a
+   "BIND" patch, which reduces dependency on the local hosts databases.
+   The BIND patch is available via anonymous FTP from ftp.acorn.co.uk
+   in directory /pub/riscix/named.
+
+   Granada MicroCare are on Harrogate (01423) 525412.
+
+----------------------------------------------------------------------------
+
+
+5) What software do I need for indirect access?
+
+   All that is needed here is normal comms software, like !Arcterm 7 from
+   The Serial Port and !Hearsay from Beebug.  Both are perfectly competent;
+   both have many satisfied users.  There is a little public domain
+   software, !ZAnsi includes ZModem file transfer which is the most
+   efficient commonly used transfer protocol in the BBS world.
+
+   As with indirect access, message reading and composing can usually be
+   done on-line; however this can get expensive as you end up spending a lot
+   of money on your 'phone bill.  To alleviate this problem, OLRs (Off-Line
+   Readers) are available.  !ReaderS from Anthony Frost supports several
+   BBS formats, including those used by most Acorn-related bulletin boards.
+   For CompuServe, a package is available from Richard Proctor called
+   !Arctic.  See below for further information.
+
+   Arcterm 7 and Hearsay both provide scripting facilities which allow
+   automation of sessions.  Scripts are available for several bulletin
+   boards, and also for CIX.
+   
+   If you are or would like to be an Arc bulletin board operator,
+   the Archiboard software package from Supreme Software Systems Ltd
+   supports transfer of news and email to/from the Internet via a
+   Demon Internet account.  This software also supports mailing lists.
+   Send email to info@supreme.demon.co.uk for further information.
+
+----------------------------------------------------------------------------
+
+
+6) What newsreaders are there for the Acorn range?
+
+   There are no commercial newsreaders available (yet).  However there
+   are several PD and Shareware/Careware newsreaders around.  A few months
+   ago there were only two real contenders here (!ReadNews and !ReaderS),
+   but all of a sudden we are spoilt for choice!  I could say something
+   about public transport and buses here...
+   
+   In an attempt at not appearing biased, I have listed them in alphabetic
+   order.  I hope that any comments I have made are fair - people get very
+   touchy about their favourite newsreader, source of many a flame war!.
+
+
+   a) !Arctic
+
+      This is dedicated to CompuServe, currently supports conference
+      messaging, mail, and file transfers amongst other things.  Available
+      from the UKCOMP forum (Acorn/Z88 topic) and from good bulletin boards.
+      It is shareware, registration currently costs 10 UKP.  It automates
+      reading, posting, file upload and downloads amongst other things.  For
+      further information contact Richard Proctor on Compuserve (user ID
+      100031.604) or as rjp@waveney.demon.co.uk on the Internet.
+
+      Current hints:
+
+        None really.  Make sure you have the latest version (well over 2.4
+        now) as Compuserve have recently upgraded their system.  Note that
+        it only works with Compuserve at the moment.
+
+
+   b) !EasyMail
+   
+      This news/email reader also handles message downloads from BBS
+      systems running ArcBBS (including Arcade, The Digital Databank,
+      Rich In Paradise and The World of Cryton).  Written by Marc L.Veary,
+      marc@mlveary.demon.co.uk.
+
+
+   c) !News
+
+      This is available via ftp from ftp.demon.co.uk in /pub/archimedes.
+      Still haven't had time to try it out yet...
+      Written by Timothy Kimber (ceetnk@caledonia.hw.ac.uk term time,
+         tim@mobius.demon.co.uk other times)
+
+
+   d) !News-o-saurus
+
+      This is a single-tasking newsreader (i.e. doesn't use any nice
+      windows!) and needs a large amount of RAM (2Mb+), as it is written
+      in Perl.
+      However, it doesn't crash, and handles threads very well.  Similar
+      in style to "rn" et. al. on UNIX systems.
+      In my opinion it has the best threading capability of the available
+      newsreaders that I've seen.
+      Available via FTP from ftp.demon.co.uk in /pub/archimedes
+      Written by Martin Portman, "Freeware".
+
+      Current hints:
+
+        None really.  Does what it does without much difficulty.  If it fails
+        to run, this is invariably due to lack of memory.  Increase the
+        wimpslot (edit the !Run file) and try again.
+
+
+   e) !ReaderS
+
+      This is a general-purpose reader that caters for Bulletin Boards
+      as well as interfacing with !TCPIP.  It provides good navigation
+      of threads, but doesn't follow this through when posting messages.
+      Also a little unstable for Internet access at the time of writing.
+      Easy to set up.  Good option if you already use it for BBS use.
+      Written by Anthony Frost (vulch@kernow.demon.co.uk).
+      "Careware".
+
+      Current hints:
+
+        a) !ReaderS locks up when I try to start it
+
+           The !MailDir application MUST have been seen by the filer
+           before !ReaderS is used for News and Email.  !MailDir is the
+           repository for incoming and outgoing mail with !TCPIP (KA9Q).
+           As of version 2.01 of !TCPIP, a new application !TCPIPUser
+           replaces !MailDir, and in this case !TCPIPUser must be seen
+           by the filer.
+
+        b) When !ReaderS crashes, just try again.  The only reliable way to
+           get !ReaderS working when it repeatedly crashes is to delete the
+           message database (unfortunately).  Delete the file "DemMail" from
+           the !ReadBack application.  Reliability seems to vary quite
+           considerably - some people find it crashes all the time when
+           used for Usenet News access while others find it is relatively
+           stable.
+           
+        c) !ReaderS doesn't work on my nice new Risc PC
+        
+           Yes it does :-)  Load the !Run file inside the !ReaderS
+           application into an editor (!Edit is fine).  Change the
+           line that sets the WimpSlot to
+           
+               Wimpslot -min 300K -max 300K
+           
+           and it'll work again.
+
+
+   f) !ReadNews
+
+      A competent newsreader.  Many facilities; easy to add your own.
+      Unfortunately suffers from a limit of 77 article per newsgroup,
+      and doesn't provide any neat threading facilities.  A little daunting
+      to set up initially as it was written to interface with !RUCP, not
+      !TCPIP.  Read the help files supplied with (at least) the versions
+      on ftp.demon.co.uk for step-by-step instructions.
+      New version (0.31) imminent, which will solve the 77-arcticle limit,
+      the spurious CTRL-A that appears between postings and the signature,
+      and it should also simplify the setting up procedure.
+      Written by Julian Wright (jwright@comp.vuw.ac.nz)
+      "Freeware".
+
+      Current hints:
+
+        i)   To solve the CTRL-A problem (see above), select
+             Options->Signature->Script from the main menu.
+
+        ii)  Article limit.  No real reliable solution here (that I know of)
+             You can try using the likes of !Memphis to support more than
+             77 files in the News subdirectory structure, but this is slow
+             and unreliable.
+
+        iii) Having trouble setting up?
+
+           a) You need to set up !RUCP - however only bits of it are
+              relevant.  The files you need are !Boot, !Run, Passwd,
+              SystemRC, Systems, the directory trees UserHome and uucp.
+              In the "Systems" file, the actual details are ignored by
+              !ReadNews, the important thing is to write one line for
+              "news" and one for "post" on a Demon setup, so that !ReadNews
+              knows about the NNTP server and mail server respectively.
+              In the "SystemRC" file, set "MailServ=post", leave the rest
+              alone.  In the "!Boot" file, set RUCP$NodeName to your node
+              name (the first word in your hostname, for example my hostname
+              is banana.demon.co.uk, so my node name is banana).  Set
+              RUCP$Domain to the domain name (in my case demon.co.uk) and
+              RUCP$User to your normal username.  That should complete
+              the setting up required for !Rucp.
+
+           b) With the latest version of !Incorp, the debatcher that goes
+              with !ReadNews no longer needs the filters needed for previous
+              versions.  However to work properly with !TCPIP (KA9Q)  you
+              need to ensure that the mail separator is ^A - to do this
+              change the "Config" file in !TCPIP so that it reads:
+
+                  smtp separator ^A
+
+              Although "smtp separator rnews" would be quicker, it fails
+              because !TCPIP (KA9Q) adds an extra line between mail messages
+              for some reason.  Future versions of either !TCPIP or !Incorp
+              may cure this, which would speed up debatching considerably.
+              The default setup of !TCPIP (KA9Q) comes configured with
+              "smtp separator from", which causes the machine to crash
+              needing a CTRL-Break when used with !Incorp.
+
+           c) !ReadNews itself is simple, just copy it along with !Incorp
+              into your internet directory.
+
+
+   g) !TTFN and !NewsBase
+
+      Together these form an excellent pair.  TTFN is a news/email reader,
+      NewsBase is a news database thingy.  TTFN looks somewhat like
+      !ReadNews, but is far superior (IMHO).  A lot of effort appears to
+      have been made to make them easy to configure, automatically picking
+      information up from !TCPIP (KA9Q).
+      Currently !NewsBase supports !TCPIP (KA9Q), Taylor UUCP and !UUCP.
+      !TTFN supports whatever !NewsBase supports...
+      Latest versions available from ftp.demon.co.uk in the Archimedes
+      section.
+      TTFN written by Robert Orwin (ttfn@wong.demon.co.uk)
+      Newsbase written by Graham Allan (allan@mnhep1.hep.umn.edu)
+
+      Current hints:
+      
+        None, really.  Note that threading is by article title only.
+
+
+----------------------------------------------------------------------------
+
+
+7) Can I use WWW, Gopher etc. on my Acorn?
+
+   There is a Gopher client, written by Anthony Frost, available for
+   ftp from ftp.demon.co.uk which interfaces with !TCPIP (KA9Q) v2.01.
+   The gopher client allows access to Veronica, which is a search utility
+   linked to gopher.
+   
+   
+   There are two Web clients available in the public domain.
+   ArcWeb, written by Stewart Brodie is available from ftp.demon.co.uk
+   /pub/archimedes/www.  Currently lacking "Forms", but this is on the
+   way.
+   Webster, written by Andrew Pullan (a.j.pullan.uk03@oasis.icl.co.uk)
+   is also available from ftp.demon.co.uk, in /pub/archimedes/developers.
+   Other products are on their way - Doggysoft are hoping that !Termite
+   will support WWW etc. fairly soon.
+
+
+   There are also public access clients available via TELNET which
+   provide access to the facilities without the need for local
+   client software.  There is a trade off in speed and often
+   functionality, but it's better than nothing.  For most of these
+   types of facility you need a telnet client capable of supporting
+   VT100 terminal emulation (or above).  !TCPIP (KA9Q) supports this, as
+   does Acorn's TCP/IP suite, which includes a VT220 emulator.
+
+   Here is a list of a few sites for various TELNET facilities:
+
+   a) WWW (World Wide Web)
+      The following public-access Lynx clients are available (Lynx is a text
+      based WWW browser; no pictures and sound but it's better than nothing):
+          telnet www.tecc.co.uk 9001        (The "9001" is very important)
+          telnet telnet.w3.org
+          telnet panda.uiowa.edu
+
+   b) Gopher
+      The following public-access gopher clients are available via telnet:
+          telnet gopher.brad.ac.uk
+          telnet panda.uiowa.edu
+          
+      You can also access gopher through the World Wide Web.  In other
+      words you can get at it via public-access Lynx clients (see (a)
+      above).  Press "g" to perform a "goto", then type in:
+
+          gopher://<whereever>
+                    
+
+   c) IRC
+      telnet to irc.demon.co.uk, for a public access IRC client.  Be
+      prepared to be on-line for a long time...
+
+
+   As far as indirect access is concerned, the above public access
+   clients are of course still available to those services supplying
+   telnet access.  CIX supplies its own facilties for the above,
+   again running text-only versions for VT100-capable terminals.
+
+----------------------------------------------------------------------------
+
+
+8) Serial ports, serial modules, transfer rates and other mysteries.
+
+   a) Serial ports and SerialDev.
+
+   The various different models of Acorn Archimedes et. seq. computers have
+   different capabilities with respect to their in-built serial ports.  The
+   older machines often have difficulty above 9600bps.  There are two
+   modules available via ftp from ftp.acorn.co.uk in /pub/riscos/patches
+   which alleviate problems (Risc OS 3.11 does not need these as they are
+   already on ROM).  This should enable reliable communication at 9600bps
+   and possibly at 19.2Kbps
+   The other solution is to purchase one of the serial port cards available.
+   These give high-speed capability, and recoup their cost rapidly.  Go for
+   one that can support 115200bps - this may seem excessive but the V34
+   standard has now been ratified which gives a modem-modem speed
+   of 28800bps; with V42bis compression this can theoretically come though
+   to the computer at up to 4x28800=115200bps.
+
+   In order to assist software to communicate with the various serial port
+   systems, Hugo Fiennes developed the "Serial Block Drivers", which are
+   needed for most comms software.  They are available as an application
+   called !SerialDev from most sources.
+
+   Acorn have issued a detailed application note that includes lots of
+   useful information on serial ports, AppNote234.  Available from Acorn's
+   FTP site (ftp.acorn.co.uk), a copy can also be found on ftp.demon.co.uk
+   and various bulletin boards.
+
+   b) Serial modules - SerialDev, SerialUtil, SerialBuff, SerPatch
+   
+   There various "features" of the multitude of serial port implementations
+   on the various machines in the Acorn range.  As far as I know, the
+   implementation in the Risc PC works well.  On older machines some of the
+   modules may be necessary to drive the internal serial port reliably.
+   
+   SerialDev is required on older machines (A3000, A3x0, A4x0) if
+   reliable communication is required with Risc OS 3.10.
+   
+   SerialBuff provides an extended serial buffer for the internal port,
+   which reduces character loss.  Should be RMLoaded before the serial
+   port is used.
+   
+   SerialUtil is a patch to enable older Risc OS 2 software to run with
+   Risc OS 3.1.  Probably not needed with recent software.
+   
+   SerPatch is an application which patches the module SerialDeviceDriver
+   to improve interrupt handling.  Load the patched module on boot-up if
+   you have problems after loading SerialDev.
+   
+
+   c) Transfer rates.
+
+   With a 14.4Kbps V32bis modem, you should be able to get up to 1400 bytes
+   per second when transferring binary files (i.e. files that are compressed)
+   with FTP, and up to 2500 bytes per second and above when transferring
+   text files.  Note however that transfer rates also depend on the speed of
+   the route between your service provider and the machine at the other end.
+   Often this can reduce flow considerably.
+   In this case, find out if your service provider supplies a "BatchFTP"
+   service, where you can send mail to one of their machines which will then
+   transfer the required file to their own machine, from which you can
+   download the file at full speed later on.  Both Demon and CIX supply this
+   service at no extra charge.
+
+   d) UUencoding, Tar, Zip etc.
+
+   When a binary file is sent over the Network News system, it has to be
+   coded in ASCII as the news system does not generally support 8-bit
+   transfer.  In this case the most common form of encoding is called
+   "UUEncoding".  The results are distinguishable by long files of gibberish
+   where the first letter of each line is "M".  To decode these files, you
+   need "UUDecode", a version of which is available from all the usual
+   places.
+
+   If a file is very long, it is often split into several parts.  To decode
+   these files, they need to be recombined before decoding.  Often, due to
+   the way the news system operates, the parts can become jumbled.  They
+   should be labelled "part 2 of 3" etc to enable reliable recombination.
+   There are several utilities which can do this for you automatically; for
+   example !UUExplode, which is available from the usual sources.  This
+   enables you to double-click on a file of type UUEncode (7FE) and watch it
+   explode into the decoded files automatically.  Some newsreaders will
+   cope with this, automatically glueing multi-part uuencoded files together
+   for easy decode (the only available one that does at the moment is
+   !ReadNews).
+
+   Once you have the decoded file, it will often be an archive of some sort,
+   probably compressed.  Most software repositories which deal with
+   Arc software use "!Spark" from David Pilling to archive and compress the
+   software.  !SparkPlug is available in the public domain to decompress
+   such archives.  The other utility commonly used is !ArcFS, as used by
+   the various Acorn magazines for their cover discs.  This is read-only;
+   !ArcFSR/W is the read/write version, and is available commercially from
+   most outlets.
+
+   In the PC world, the most common utility is "PKZIP", these files can be
+   noted by their ".zip" suffix.  !SparkFS supports the PKZIP format.  And
+   of course you could use PKZIP itself with a PC Emulator if you have one.
+
+   In the UNIX world, a combination of "tar" and "compress" are used,
+   versions of which are available for the Acorn machines.  "tar" takes a
+   set of files and combines them into one file, and "compress" compresses
+   files.  Usually such "tarchives" are noticeable by the ".tar.Z" suffix.
+   Sometimes "GNUZip" is used instead of "compress", in which case the
+   suffix is ".tar.gz".  A port of GNUZip is also available from the usual
+   sources.
+   
+   SparkFS from David Pilling also handles uuencoded and ".tar.Z" stuff.
+   However it doesn't cope with multi-part uuencoded postings if they
+   arrive out of order.  As far as ".tar" and ".Z" are concerned it is
+   complete.
+
+----------------------------------------------------------------------------
+
+
+9) Use of TCP/IP over packet radio.
+
+   !TCPIP (KA9Q) is well suited to running TCP/IP over packet radio; after
+   all that is what it was written for in the first place.  However there
+   are strict (global) regulations regarding what can and cannot be
+   transmitted over the amateur bands.  This technically outlaws copying
+   stuff to and from the Internet without taking care to vet all material.
+
+----------------------------------------------------------------------------
+
+
+10) Other Software Utilities
+
+   This section discusses briefly other utilities that are relevant to
+   using the Internet.
+
+   a) !MailList
+
+   This utility provides mailing list and mail server functions alongside
+   !NewsBase (see section 6g above).  A mailing list is an automatic
+   facility that takes incoming email to a user account, and copies that
+   email to all subscribers to the mailing list.  A mail server is a
+   facility for retrieving files via email.
+
+   To obtain a copy send email to MailList@cray-3.xs4all.nl with the
+   subject field set to "SEND INDEX" to find out the filename of the
+   latest version, and send another message to retrieve the software
+   itself with the subject field set to "SEND <filename> <size>",
+   where <size> is optional and places an upper limit in Kb of the
+   messages sent back.
+   
+
+   b) !MailBot
+
+   This is a general purpose automatic email "robot".  It relies on
+   <Mail$Dir>, which is part of the !TCPIP/KA9Q distribution.  It can
+   be used to process incoming mail to an account automatically.
+
+   It can be obtained via FTP from ftp.demon.co.uk in directory
+   /pub/archimedes, or from HENSA.  For full information, send
+   a blank email to mailbot@xargle.demon.co.uk.
+
+----------------------------------------------------------------------------
+
+
+11) Products "on the way"
+
+   This new section contains brief overviews of products that are soon to
+   be released.  I wasn't going to do this originally, but there is a
+   veritable swarm of software on the way from various quarters and people
+   considering connecting their Arc to the Internet will find this
+   information useful.  Please let me know if you think this section is
+   a good or a bad idea.
+   
+   Please bear in mind that information provided here is done so in good
+   faith; please contact the relevant supplier for full details.
+
+   a) ANT Ltd
+
+   The ANT Internet Tools Suite, scheduled for release in Q2 1995, provides
+   all the software neccessary to take advantage of the Internet from the
+   RISC OS Desktop.  Components of the suite include; easy to use desktop
+   configuration, Marcel (EMail & News) supporting MIME/IMAP/SMTP/NNTP and
+   offline mail/news, Fresco (WWW browser with FORMs!), OmniClient (remote
+   file server connectivity) NFS (AUN Econet/WindowsNT/OS2/AppleTalk/Novell
+   etc. available separately), desktop FTP filer for drag & drop file
+   transfers, terminal emulation, RISC OS servers (WWW, FTP, Telnet,
+   Finger, etc), Archie, Finger, Host, WhoIs, Ethernet packet monitor,
+   remote time, DNS resolver ...
+
+   The supplied Internet stack allows access via standard Ethernet cards,
+   or dial-up accounts using SLIP or PPP.
+
+   Contact: sales@ant.co.uk for more details, or see www.ant.co.uk
+
+
+
+============================================================================
+
+
+Appendix A: List of Software including where to find it
+
+
+  Archiboard
+    From Supreme Software Systems Limited.
+
+  Arcterm7
+    Most Acorn retailers, or direct from The Serial Port.
+
+  Arctic
+    Compuserve (UKFORM Acorn/Z88), Arcade, The Digital Databank.
+    
+  ArcWeb
+    FTP from ftp.demon.co.uk /pub/archimedes/www
+
+  CallDemon
+    FTP from ftp.demon.co.uk /pub/archimedes
+
+  Gopher
+    FTP from ftp.demon.co.uk /pub/archimedes
+
+  Hearsay
+    Most Acorn retailers, or direct from Beebug
+
+  Newsbase and TTFN
+    FTP from ftp.demon.co.uk /pub/archimedes
+
+  News-o-saurus
+    FTP from ftp.demon.co.uk /pub/archimedes (soon!)
+
+  ReaderS
+    Direct from Anthony Frost (vulch@kernow.demon.co.uk)
+
+  ReadNews, Incorp, RUCP and filters
+    FTP from ftp.demon.co.uk /pub/archimedes
+
+  RiscIX related software
+    Granada Microcare
+
+  SerialDev
+    FTP from ftp.demon.co.uk /pub/archimedes
+  
+  SlipDial
+    FTP from ftp.demon.co.uk /pub/archimedes
+
+  Spark, SparkFS, Sparkplug
+    Sparkplug can be found in most public places.  Spark and SparkFS are
+    available direct from David Pilling, email david@pilling.demon.co.uk
+
+  TCPIP (KA9Q)
+    FTP from ftp.demon.co.uk /pub/archimedes
+
+  TCP/IP Suite
+    Most Acorn retailers.  SLIP driver and DOMAIN module available from
+    Gnome Computers.
+
+  Unix utilities, tar, compress, gzip etc.
+    Try Hensa (micros.hensa.ac.uk) or the Acorn-related bulletin boards,
+    e.g. Arcade and The Digital Databank.  David Pilling has ported many
+    unix utilities, email david@pilling.demon.co.uk.
+    
+  Webster
+    FTP from ftp.demon.co.uk /pub/archimedes/developers
+  
+  Zansi
+    Available on good Acorn-related BBS systems
+
+============================================================================
+
+
+Appendix B: Contact Addresses mentioned elsewhere in this FAQ
+
+  ANT Ltd:
+    Email: sales@ant.co.uk
+    Tel: (01223) 567 808
+    Web: http://www.ant.co.uk/
+
+  Anthony Frost:
+    Email vulch@kernow.demon.co.uk
+  
+  Adam Goodfellow:
+    Email tcpip2@comptech.demon.co.uk for !TCPIP (KA9Q) related stuff,
+    otherwise email adam@comptech.demon.co.uk for
+
+  Arcade BBS:
+    Tel: Modem London (0181) 654 2212, (0181) 655 4412 most speeds.
+
+  Beebug:
+    Tel: St. Albans (01727) 860 263
+
+  CIX (Compulink Information eXchange):
+    Tel: London (0181) 390 8446 or email cixadmin@cix.compulink.co.uk
+         Modem (0181) 390 1255/1244 most speeds (on-line registration
+         is available).
+
+  CompuServe:
+    Tel: London (0181) 801 2001, Birmingham (0121) 632 4858,
+         Reading (01734) 391 064 or 569 025, Bristol (0117) 925 5111
+
+  David Pilling:
+    Email david@pilling.demon.co.uk
+
+  Demon Internet Services:
+    Email: internet@demon.net
+    Tel: London (0181) 371 1234
+    Web: http://www.demon.co.uk/
+    FTP: ftp://ftp.demon.co.uk/
+    
+
+  The Digital Databank BBS:
+    Tel: (Modem) Welwyn Garden (01707) 329306 most speeds
+
+  Gnome Computers:
+    Tel: Huntingdon (01480) 406 164
+
+  Graham Allan:
+    Email 
+    allan@mnhep1.hep.umn.edu.
+
+  Granada Microcare:
+    Tel: Harrogate (01423) 525 412
+
+  Hugo Fiennes:
+    Email: altman@cryton.demon.co.uk (see also The Serial Port)
+
+  The Internet Account (AUS)
+    Email: accounts@geko.com.au
+    Tel: +61-2-968-4333, Fax: +61-2-968-4334
+    Web: http://www.geko.com.au/
+    FTP: ftp://ftp.geko.com.uk/pub/
+
+  Julian Wright:
+    Email jwright@comp.vuw.ac.nz
+
+  Rich in Paradise BBS:
+    Tel: (Modem) Hemel Hempstead (01442) 255 199 most speeds
+
+  Risc Developments:
+    Have gone into receivership.  Direct any queries to Beebug (see above)
+  
+  Robert Orwin:
+    Email ttfn@wong.demon.co.uk for !TTFN related stuff, otherwise
+    email rob@wong.demon.co.uk.
+
+  Stichting Hack-Tic Netwerk/XS4ALL (NL)
+    Email helpdesk@xs4all.nl
+
+  Stichting Knoware (NL)
+    Email knoware@knoware.nl
+    
+  Supreme Software Systems Ltd
+    Tel: (01603) 745077 (voice) and (01603) 744231 (data/BBS)
+    Email: info@supreme.demon.co.uk
+
+  The Serial Port:
+    Tel: Wells (01749) 670058
+         The World Of Cryton BBS - (Modem) Wells (01749) 670030 most speeds
+
+  Zynet:
+    Email: zynet@zynet.co.uk
+    Tel: (01392) 426160, fax (01392) 421762
+    Web: http://www.zynet.co.uk/
+    FTP: ftp://ftp.zynet.co.uk/
+
+============================================================================
+
+
+Appendix C: Glossary
+
+This is a new section.  If you spot any term or phrase used in the FAQ
+which would benefit from elaboration here in the glossary, please let
+me know.
+
+
+Dynamic IP Services
+    Services whereby your Internet address is assigned when you dial in,
+    so that the address changes each time you connect.
+
+Fixed IP Services
+    Services whereby your Internet address is permanently assigned.
+    Enables incoming FTP, TELNET etc.
+
+Protocol
+    A standardised method of communication understood by both ends of
+    a connection.  For the Internet, these include TCP, UDP, IP, ICMP,
+    IGMP, SLIP, PPP, NNTP, FTP, TELNET etc. etc.
+
+Resolving
+    This is the term given to the process of converting a numeric Internet
+    address (e.g. 123.132.1.2) to a host name (e.g. fred.co.uk) and vice
+    versa.
+
+TCP/IP (stack).
+    Generic term used to describe the "protocols" used across the Internet.
+    The TCP/IP stack is a collection of the various protocols that use
+    each other in a stack-like formation, for example FTP uses TCP which
+    uses IP which uses SLIP.
+
+URLs
+    "Uniform Resource Locators" appear all the way through the FAQ.
+    They are generally of the form: <protocol>://<site>/<directory>,
+    for example ftp://ftp.src.doc.ic.ac.uk/pub/systems/ means access
+    using the FTP protocol, to site "src.doc.ic.ac.uk" in directory
+    "/pub/systems".  URLs are used by Web browsers to locate resources.
+
+
+
+============================================================================
+
+
+
+Appendix D: Things I'd like to know :-)
+
+If you have further information on the following that I could include in
+this FAQ, please drop me an email.  If you have further information that
+you think could be relevant that isn't on the list please send it anyway!
+
+Information on configuring and using KA9Q (and any other TCP/IP software
+for that matter) with IP suppliers other than Demon, especially the Pipex
+resellers who use dynamic IP address allocation (DynaSLIP etc).
+
+Information on software that is available and of use on the Internet,
+commercial or otherwise.
+
+Acorn-related bulletin boards with Internet gateways.
+
+Anything about the relative merits of the various newsreaders - I don't
+have time to use them all in anger.  Especially !EasyMail and !News.
+
+
+============================================================================
+
+Credits:
+
+Many people have contributed to this FAQ, however to list everybody
+would double the size of the FAQ!  Contributions are much appreciated,
+without them the FAQ would be a fraction of the size it is now, so
+please keep them flowing in.
+
+Comments, suggestions etc. to aifaq@banana.demon.co.uk (Kevin F. Quinn).
+
+
+_______________________________________________________________________________
+
+aglover@acorn.co.uk, moderator of comp.sys.acorn.announce. Submissions to
+announce-request@acorn.co.uk, other related mail to announcer@acorn.co.uk.

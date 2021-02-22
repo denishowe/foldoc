@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<author>Denis Howe</author>
+<date>2019-08-03 - 2019-08-03</date>
+<title>Grow</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/grow.html">
+<style type="text/css">
+
+body {
+  overflow: hidden; /* Prevent scrollbars with no margin */
+  background-color: black;
+}
+
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+'use strict';
+
+const size = 4 * rand(1, 5);
+console.log('size', size);
+
+const radius = Math.floor(100 / size);
+const nAngle = 2 * radius;
+const numCopies = Math.floor(1000 / (size*size));
+
+const can = document.getElementById("canvas");
+const w = window.innerWidth;
+const h = window.innerHeight;
+const xMax = Math.floor(w / size);
+const yMax = Math.floor(h / size);
+can.width = size * xMax;
+can.height = size * yMax;
+can.style.marginLeft = (w - can.width) / 2 - 8 + 'px';
+can.style.marginTop = (h - can.height) / 2 - 8 + 'px';
+document.body.appendChild(can);
+const ctx = can.getContext('2d');
+
+const screen = nOf(yMax, () => nOf(xMax, rndColour));
+
+const velocity = [
+  [0, 0],
+  [1,0], [0,1], [-1,0], [0,-1],
+  [1,1], [1,-1], [-1,1], [-1,-1],
+  // [2,0], [0,2], [-2,0], [0,-2]
+].map( vxy => ({ x: vxy[0], y: vxy[1] }) );
+
+const sin = [], cos = [];
+for (let i = 0; i < nAngle; i++) {
+  const t = 2*Math.PI*i/nAngle;
+  sin[i] = Math.sin(t);
+  cos[i] = Math.cos(t);
+}
+
+// Return a random integer, min <= x <= max
+
+function rand(min, max) { return Math.floor(min + (max - min + 1) * Math.random()); }
+
+function hex(x) { return "#" + ((0x1000000 + x).toString(16)).substr(-6) }
+
+function rndCpt() { return 0x11 * rand(0, 15) }
+
+function rndColour() { return 0x10000 * rndCpt() + 0x100 * rndCpt() + rndCpt() }
+
+function nOf(n, f) {
+  const result = [];
+  while (n-- > 0)
+	result.push(f());
+  return result;
+}
+
+function growFocus(focus) {
+  for (let i = numCopies; i--; ) {
+	const a = rand(0, nAngle-1);
+	const r = radius * Math.random();
+	const x = (focus.x + r * cos[a] + xMax) % xMax;
+	const y = (focus.y + r * sin[a] + yMax) % yMax;
+    grow(x, y);
+  }
+  const v = velocity[rand(0, velocity.length - 1)];
+  focus.x += (v.x + xMax) % xMax;
+  focus.y += (v.y + yMax) % yMax;
+}
+
+function growPoint() {
+  for (let i = 1000; i--; )
+    grow(rand(0, xMax - 1), rand(0, yMax - 1));
+}
+
+function grow(x, y) {
+  const c = screen[Math.floor(y)][Math.floor(x)];
+  ctx.fillStyle = hex(c);
+  velocity.forEach( function(v) {
+	const xx = Math.floor((x + v.x + xMax) % xMax);
+	const yy = Math.floor((y + v.y + yMax) % yMax);
+	screen[yy][xx] = c;
+    const drawSize = size - (size < 3 ? 0 : 1);
+	ctx.fillRect(size*xx, size*yy, drawSize, drawSize);
+  });
+}
+
+function loop(f) { f(); setTimeout(() => loop(f), 0); }
+
+loop(growPoint);
+
+</script>
+</body>
+</html>

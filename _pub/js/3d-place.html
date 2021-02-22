@@ -1,0 +1,2610 @@
+<!DOCTYPE HTML>
+<!-- saved from url=(0040)http://foldoc.org/pub/js/3d-place.html -->
+<html>
+<head>
+<title>3D Places</title>
+<meta charset="UTF-8">
+</head>
+<body>
+	<a></a>
+	<br/>
+	<a href = "?wait">Wait</a>
+	<script>
+const places = `
+
+A Coruña, Spain
+Aachen, Germany
+Aalborg, Denmark
+Aarhus, Denmark
+Abiko
+Abilene, Texas
+Acadia National Park
+Acapulco, Mexico
+Acireale
+Addington
+Adelaide, Australia
+Adrian, Michigan
+Afonsoeiro
+Agios Nikolaos, Greece
+Agrigento, Italy
+Aguadilla, Puerto Rico
+Aiken, South Carolina
+Airdrie
+Aix-en-Provence, France
+Aizuwakamatsu, Japan
+Ajaccio, France
+Ajax, Canada
+Åkersberga
+Akita, Japan
+Akron, Ohio
+Alabaster, Alabama
+Alachua
+Albacete, Spain
+Albany, Georgia
+Albany, New York
+Alberton
+Albertville, Alabama
+Albi, France
+Albufeira, Portugal
+Albuquerque, New Mexico
+Alcalá de Henares, Spain
+Alcolea, Spain
+Alderley
+Alès, France
+Alessandria, Italy
+Alesund, Norway
+Alexandria, Louisiana
+Algeciras, Spain
+Alicante, Spain
+Allegan, Michigan
+Allen, Texas
+Allentown, Pennsylvania
+Almere, Netherlands
+Almería, Spain
+Altamura, Italy
+Altoona, Pennsylvania
+Alverca, Portugal
+Alzira, Spain
+Amarillo, Texas
+Amboise, France
+American Canyon
+American Fork, Utah
+Amersfoort, Netherlands
+Ames, Iowa
+Amesbury, England, UK
+Amherst Center, Massachusetts
+Amherstburg, Ontario, Canada
+Amiens, France
+Amityville
+Amsterdam, Netherlands
+Anaheim, California
+Anchorage, Alaska
+Ancona, Italy
+Anderson, Indiana
+Anderson, South Carolina
+Andover, Kansas
+Andria, Italy
+Angers, France
+Angleton
+Angoulême, France
+Angwin, California
+Ankeny, Iowa
+Ann Arbor, Michigan
+Ann Arbour, Michigan
+Annapolis, MD
+Annecy, France
+Anniston, Alabama
+Antibes, France
+Antioch, California
+Antwerp, Belgium
+Anzio
+Aomori, Japan
+Aosta, Italy
+Apache Junction
+Apashe Junction, Arizona
+Apeldoorn, Netherlands
+Apex, North Carolina
+Apopka, Florida
+Appleton, Wisconsin
+April
+Aranjuez, Spain
+Arcata, California
+Arecibo, Puerto Rico
+Arezzo, Italy
+Argostolion, Greece
+Arles, France
+Arlington, Texas
+Arnhem, Netherlands
+Arnold, Missouri
+Arroyo Grande, California
+Arzachena, Italy
+Arzignano, Italy
+As, Norway
+Asahikawa, Japan
+Asakita, Japan
+Asakura, Japan
+Ascoli Piceno, Italy
+Asheville, North Carolina
+Ashigarashimo
+Ashland, Milton Keynes
+Asti, Italy
+Atami, Japan
+Atascadero
+Athens, Alabama
+Athens, Georgia
+Athens, Greece
+Athens, Texas
+Athlone, Ireland
+Atlanta, Georgia
+Atlantic Beach, Florida
+Atlantic City, New Jersey
+Auburn, Alabama
+Auburn, California
+Auburn, New York
+Auckland, New Zealand
+Augsburg, Germany
+Augusta, Georgia
+Augusta, Maine
+Aurora
+Austin, Texas
+Auxerre, France
+Avebury, England, United Kingdom
+Avignon, France
+Ávila‎, Spain
+Avondale
+Aylmer, Canada
+Azay-le-Rideau, France
+Bad Ischl, Austria
+Bad Schandau, Germany
+Badajoz, Spain
+Bailen, Spain
+Bainbridge Island, Washington
+Baiona, Spain
+Bakersfield, California
+Balch Springs, TX
+Baldwinsville, New York
+Ballardvale
+Baltimore, Maryland
+Bamberg, Germany
+Bangor, Maine
+Banning, California
+Barcelona, Spain
+Bari, Italy
+Barking
+Barletta, Italy
+Barrie, Canada
+Barro, California
+Barstow, California
+Bartow
+Basel, Switzerland
+Basingstoke, United Kingdom
+Bassano del Grappa, Italy
+Bastia, France
+Bastrop, Texas
+Batavia
+Bath, England, UK
+Baton Rouge, Louisiana
+Battipaglia, Italy
+Battle Creek, Michigan
+Bay City, Michigan
+Bay Lake, Florida
+Bay St Louis, Mississippi
+Bay St. Louis
+Bayonne, France
+Bayonne, New Jersey
+Bayreuth, Germany
+Baytown, Texas
+Beachcomber Bay, Canada
+Bears Ears, Utah
+Beaufort, South Carolina
+Beaumont, Texas
+Beauvais, France
+Beaver Dam, Wisconsin
+Beaverton, Oregon
+Beckley, West Virginia
+Bedford, New York
+Bedford, Ohio
+Bedford, United Kingdom
+Beja, Portugal
+Bel Air
+Belem
+Belém, Brazil
+Belfast, Ireland
+Belfort, France
+Belgrade, Serbia
+Belleview, Florida
+Bellingham, Washington
+Belo Horizonte, Brazil
+Belvidere, Illinois
+Bend, Oregon
+Benevento, Italy
+Benicia
+Benidorm, Spain
+Bensalem, Pennsylvania
+Benton, Arkansas
+Bentonville
+Berchtesgaden, Germany
+Berea, Kentucky
+Bergamo, Italy
+Bergen, Norway
+Bergheim, Germany
+Bergisch Gladbach, Germany
+Berkeley, California
+Berlin, Germany
+Bern, Switzerland
+Besançon, France
+Bessemer, Alabama
+Bétera, Spain
+Bethel Park, Pennsylvania
+Béziers, France
+Bibb City
+Biddeford, Maine
+Biel / Bienne, Switzerland
+Bielefeld, Germany
+Big Bear Lake, California
+Bilbao, Spain
+Billings, Montana
+Biloxi, Mississippi
+Binghampton, New York
+Birmenstorf
+Birmingham, Alabama
+Birmingham, United Kingdom
+Bisceglie, Italy
+Bismarck, North Dakota
+Bitonto, Italy
+Black Canyon of the Gunnison National Park, Colorado
+Black Forest
+Black Rock City, Nevada
+Blackburn, United Kingdom
+Blacklick
+Blackpool, United Kingdom
+Blacksburg
+Blagoevgrad, Bulgaria
+Blainville, Quebec, Canada
+Blanes, Spain
+Blankenberge
+Bloemfontein, South Africa
+Blois, France
+Bloomfield, California
+Bloomington, Illinois
+Bloomington, Indiana
+Bloomington, Minnesota
+Bloomsburg, Pennsylvania
+Blount Island
+Blue Springs, Arkansas
+Bluefield, West Virginia
+Boca Del Mar, Florida
+Boca Grande, Florida
+Bodo
+Bodø, Norway
+Boise, Idaho
+Bokeelia, Florida
+Boksburg, South Africa
+Bolingbrook
+Bologna, Italy
+Bolton, England
+Bolzano, Italy
+Bon Secour
+Bonen
+Bonifacio, France
+Bonita Cove , California
+Bonita Cove Rodeo Cove
+Bonita Springs, Florida
+Bonn, Germany
+Bonsall, California
+Boras
+Borås, Sweden
+Bordeaux, France
+Boston, Massachusetts
+Bouges-le-Château, France
+Boulder City, Nevada
+Boulder, Colorado
+Bountiful, Utah
+Bourges, France
+Bournemouth, United Kingdom
+Bowie
+Bowling Green, Kentucky
+Boynton Beach, Florida
+Bozeman, Montana
+Braden River
+Bradenton
+Bradford, Canada
+Bradford, United Kingdom
+Braga, Portugal
+Brainerd, Minnesota
+Brampton, Canada
+Brandon, Florida
+Brandon, Mississippi
+Branson, Missouri
+Brantford, Canada
+Brasília, Brazil
+Brasov, Romania
+Brașov, Romania
+Bratislava, Slovakia
+Braunschweig, Germany
+Bray, Ireland
+Breclav
+Breda, Netherlands
+Bregenz, Austria
+Bremen, Germany
+Bremerhaven, Germany
+Bremerton, Washington
+Brescia, Italy
+Brevik, Norway
+Bridgeport, Connecticut
+Brighton and Hove, United Kingdom
+Brighton, Michigan
+Brindisi, Italy
+Brisbane, Australia
+Bristol, Connecticut
+Bristol, England, United Kingdom
+Bristol, UK
+Brive-la-Gaillarde, France
+Brno, Czech Republic
+Brockton, Massachusetts
+Brockwell
+Bromley
+Brooklyn Park, Minnesota
+Broomfield, Colorado
+Brownsburg
+Brownsville, Texas
+Bruges, Belgium
+Brumunddal, Norway
+Brunswick, Georgia
+Brussels, Belgium
+Bryce Canyon National Park, Utah
+Bucharest, Romania
+Buckeye, Arizona
+Budapest, Hungary
+Buenos Aires, Argentina
+Buffalo Grove
+Buffalo, New York
+Buford
+Burdell
+Burgas, Bulgaria
+Burghausen, Germany
+Burgos, Spain
+Burlington, North Carolina
+Burlington, Ontario
+Burlington, Vermont
+Burnt Store Marina, Florida
+Burstwick
+Busto Arizio
+Busto Arsizio, Italy
+Butler, Pennsylvania
+Bydgoszcz, Poland
+Byram, Mississippi
+Cabo San Lucas, Mexico
+Cabot, Arkansas
+Cáceres‎
+Cáceres, Spain
+Cadder, United Kingdom
+Cádiz, Spain
+Caen, France
+Caernarfon
+Cagliari, Italy
+Calais, France
+Caldas da Rainha, Portugal
+Caldwell, Idaho
+Calgary, Canada
+Calhoun, Georgia
+Calistoga, California
+Callaway, FL
+Callendar, California
+Calp, Spain
+Caltanissetta, Italy
+Calvi, France
+Cambados, Spain
+Cambridge, Ontario
+Cambridge, United Kingdom
+Camden, South Carolina
+Câmpina, Romania
+Campobasso, Italy
+Canberra, Australia
+Cannes, France
+Canterbury, England, United Kingdom
+Canton, Georgia
+Canton, Mississippi
+Canton, Ohio
+Canyon Lake, Texas
+Canyon, Texas
+Canyonlands National Park, Utah
+Cape Canaveral, Florida
+Cape Coral, Florida
+Cape Girardeau, Missouri
+Cape St Vicent
+Cape Town, South Africa
+Capitol Reef National Park
+Capri, Italy
+Carbondale, Illinois
+Carcassonne, France
+Cardiff, United Kingdom
+Carpinteria
+Carrollton, Georgia
+Carrollton, Texas
+Carson City, Nevada
+Cartagena, Spain
+Cascais, Portugal
+Casper, Wyoming
+Castellaccio
+Castellammare di Stabia, Italy
+Castellar del Vallès
+Castellón de la Plana, Spain
+Castres, France
+Castro Heights
+Catania, Italy
+Catanzaro, Italy
+Cathedral City, California
+Cave Creek, Arizona
+Cebu City, Philippines
+Cedar Falls, Iowa
+Cedar Grove
+Cedar Park, Texas
+Cedar Rapids, Iowa
+Cedarburg, Wisconsin
+Centenial
+Centennial, Colorado
+Center Point, Alabama
+Central Washington
+Ceres
+Cerignola, Italy
+Cesena, Italy
+České Budějovice, Czech Republic
+Český Krumlov, Czech Republic
+Chaleroi, Belgium
+Chalon-sur-Saône, France
+Chambord, France
+Chamonix-Mont-Blanc, France
+Champaign, Illinois
+Champion Heights, Ohio
+Chandler, Arizona
+Chania, Greece
+Chantilly
+Chapel Hill, North Carolina
+Charlemagne, Canada
+Charleroi, Belgium
+Charleston, South Carolina
+Charleston, West Virginia
+Charleville-Mézières
+Charleville-Mezieres, France
+Charlotte, North Carolina
+Charlottesville, Virginia
+Châteaudun, France
+Châteauroux, France
+Chatsworth, Georgia
+Chattanooga, Tennessee
+Chelmsford, United Kingdom
+Cheltenham, United Kingdom
+Chemnitz, Germany
+Chenonceaux, France
+Chesterfield, United Kingdom
+Cheyenne, Wyoming
+Chiavari, Italy
+Chiba, Japan
+Chicago, Illinois
+Chico, California
+Chikugo
+Chino Valley, Arizona
+Chinon, France
+Chioggia, Italy
+Cholet, France
+Christchurch, New Zealand
+Chuluota, Florida
+Chur, Switzerland
+Cincinnati, Ohio
+Cinco Ranch
+Circle Pines
+Ciudad Juárez, Mexico
+Ciudad Real, Spain
+Civitavecchia, Italy
+Claremont
+Clarksville, Tennessee
+Clearwater, Florida
+Clemson, South Carolina
+Clermont, Florida
+Clermont-Ferrand, France
+Cleveland, Ohio
+Cleveland, Tennessee
+Clinton, Mississippi
+Clinton, Tennessee
+Cluj-Napoca, Romania
+Clydebank
+Coburg, Germany
+Cochem
+Cocoa Beach
+Cocoa, Florida
+Coeur d'Alene, Idaho
+Coimbra, Portugal
+Colchester, United Kingdom
+College Station, Texas
+Colmar, France
+Cologne, Germany
+Colorado Springs, Colorado
+Columbia, Missouri
+Columbia, South Carolina
+Columbia, Tennessee
+Columbus, Georgia
+Columbus, Indiana
+Columbus, Ohio
+Comb Ridge, Utah
+Comiso, Italy
+Como, Italy
+Concepcion
+Concepción, Chile
+Concord, California
+Concord, New Hampshire
+Concord, North Carolina
+Conroe, Texas
+Constanta
+Constanța, Romania
+Contermanskloof Farm
+Conway, South Carolina
+Conyers, Georgia
+Cookeville, Tennessee
+Coon Rapids, Minnesota
+Copenhagen, Denmark
+Coral Springs, Florida
+Corato, Italy
+Córdoba, Argentina
+Córdoba, Spain
+Corinth
+Cork, Ireland
+Corona, California
+Corpus Christi, Texas
+Corvallis, Oregon
+Cosenza, Italy
+Cottage Grove
+Cottbus, Germany
+Council Bluffs
+Coventry, United Kingdom
+Coyote Valley Preserve
+Crabb
+Craiova, Romania
+Crater Lake, Oregon
+Cremona, Italy
+Crestline, California
+Crestview, Florida
+Crotone, Italy
+Crystal River, Florida
+Cuenca, Spain
+Cuiabá - MT
+Cuiabá, Brazil
+Cullera, Spain
+Cullman, Alabama
+Cumberland, Maryland
+Cumming, Georgia
+Cuneo, Italy
+Cupertino
+Curitiba, Brazil
+Cushing, Oklahoma
+Cutler Bay, Florida
+Częstochowa, Poland
+Dallas, Georgia
+Dallas, Oregon
+Dallas, Texas
+Dalton, Georgia
+Danbury
+Danville, Illinois
+Danville, Virginia
+Daphne, Alabama
+Davao, Philippines
+Davenport, Iowa
+Davis, California
+Dayton, Ohio
+Daytona Beach, Florida
+Deauville
+Debrecen, Hungary
+Decatur, Alabama
+Decatur, Illinois
+December
+Deer Park, California
+Deer Valley
+DeLand, Florida
+Delano, California
+Delft, Netherlands
+Delta, Canada
+Deltona, Florida
+Denia, Spain
+Dentsville, South Carolina
+Denver, Colorado
+Derby, Kansas
+Derby, United Kingdom
+Derry
+Des Moines, Iowa
+Desert Hot Springs, California
+Detroit, Michigan
+Devils Tower, Wyoming
+Diamondhead, Mississippi
+Diana, Texas
+Diboll, TX
+Dijon, France
+Dinslaken, Germany
+Discovery Bay, California
+Disneyland Paris
+Dobrich, Bulgaria
+Doctor Phillips, Florida
+Doncaster, England
+Doral, Florida
+Dordrecht, Netherlands
+Dormagen, Germany
+Dornbirn, Austria
+Dortmund, Germany
+Dothan, Alabama
+Douglas, Arizona
+Douglasville, Georgia
+Dover, Delaware, USA
+Dover, New Hampshire
+Dragør
+Dresden, Germany
+Dublin, Ireland
+DuBois, Pennsylvania
+Dubuque, Iowa
+Duisburg
+Dulles, Virginia
+Duluth, Minnesota
+Dunaújváros, Hungary
+Duncanville
+Dundalk, Ireland
+Dundee, Scotland, UK
+Dunedin, Florida
+Dunkirk, France
+Dunn, North Carolina
+Dupo
+Durban, South Africa
+Durbanville
+Durham, North Carolina
+Düsseldorf, Germany
+Duvall
+East Aurora
+East Credit
+East Greenwich
+East Hampton, Massachusetts
+East Hampton, New York
+East Kilbride, United Kingdom
+East London, South Africa
+East Patchogue, New York
+East St. Louis, Illinois
+East Windsor, New Jersey
+Easton
+Eau Claire, Wisconsin
+Eden Prairie, Minnesota
+Edinburgh, United Kingdom
+Edison, New Jersey
+Edmond, Oklahoma
+Edmonton, Canada
+Eikstrand, Norway
+Eindhoven, Netherlands
+El Cajon, California
+El Centro, California
+El Dorado Hills
+El Ejido, Spain
+El Monte, California
+El Morell
+El Paso, Texas
+El Puerto de Santa Maria, Spain
+El Rey, Mexico
+El Rosal
+Elche, Spain
+Elfrida
+Elizabethtown, Kentucky
+Elk Grove, California
+Ellensburg, Washington
+Ellenton
+Ellesmere Port
+Elyria
+Enfield
+Engerwitzdorf, Austria
+Enid, Oklahoma
+Enschede, Netherlands
+Ensenada, Mexico
+Enterprise, Alabama
+Enterprise, Nevada
+Enterprise, NV
+Enumclaw, Washington
+Erftstadt, Germany
+Erfurt, Germany
+Erie, Pennsylvania
+Esbjerg, Denmark
+Escatawpa, Mississippi
+Escondido, California
+Eskilstuna, Sweden
+Essen
+Estepona, Spain
+Estero, Florida
+Etobicoke, Canada
+Euclid
+Eudora, Kansas
+Eugene, Oregon
+Euless, Texas
+Eunice, Louisiana
+Eureka, California
+Eustis, Florida
+Evansville, Indiana
+Everett, Washington
+Évora, Portugal
+Évreux, France
+Évry, France
+Exeter, United Kingdom
+Faenza, Italy
+Fairbanks, Alaska
+Fairborn
+Fairfax, California
+Fairfax, Virginia
+Fairfield, California
+Fairland, South Africa
+Fairview Heights, Illinois
+Fall River, Massachusetts
+Fallbrook, California
+Fanling
+Fargo, North Dakota
+Farmington, Arkansas
+Farmington, Michigan
+Farmington, New Mexico
+Faro, Portugal
+Farrel, Pennsylvania
+Fayetteville, North Carolina
+February
+Felida
+Ferrara, Italy
+Ferrol, Spain
+Ferry Village
+Fetters Hot Springs-Agua Caliente, California
+Fields Landing
+Fishers
+Flagler Beach
+Flagstaff, Arizona
+Flensburg, Germany
+Flint, Michigan
+Florence, Alabama
+Florence, Italy
+Florence, South Carolina
+Florianópolis, Brazil
+Floris
+Floyd Bennett Field, NY
+Flushing
+Foggia, Italy
+Foley
+Foligno, Italy
+Folsom, California
+Fond du Lac, Wisconsin
+Fontana, California
+Fontevraud-l’Abbaye, France
+Forest Hill, Texas
+Forest Lake, Minnesota
+Forli, Italy
+Formby, United Kingdom
+Fort Atkinson, Wisconsin
+Fort Collins, Colorado
+Fort Erie
+Fort Lauderdale
+Fort Mitchell
+Fort Oglethorpe, Georgia
+Fort Pierce
+Fort Smith, Arkansas
+Fort Wayne, Indiana
+Fort Worth, Texas
+Fortaleza, Brazil
+Fortuna Foothills, Arizona
+Fortuna Hills
+Fougères-sur-Bievre, France
+Fountain Hills, Arizona
+Four Corners Monument
+Four Corners, Florida
+Foxborough, Massachusetts
+Framingham, Massachusetts
+Frankfort
+Frankfurt, Germany
+Franklin, Indiana
+Franklin, Tennessee
+Fredrikstad, Norway
+Freeport, Texas
+Freiburg, Germany
+Freising, Germany
+Fréjus, France
+Fremont, California
+Fresno, California
+Fribourg, Switzerland
+Friedberg, Germany
+Friedrichshafen
+Frisco, Texas
+Ft. Lauderdale, Florida
+Fuengirola, Spain
+Fuenlabrada, Spain
+Fujinomiya
+Fujiyoshida, Japan
+Fukui, Japan
+Fukuoka, Japan
+Fukuyama, Japan
+Füssen, Germany
+Gadsden, Alabama
+Gainesville, Florida
+Gainesville, Texas
+Gaithersburg, Maryland
+Galați, Romania
+Galveston, Texas
+Gardendale, Alabama
+Gardiner, Montana
+Garland, Texas
+Garmisch-Partenkirchen, Germany
+Gary, Indiana
+Gastonia, North Carolina
+Gateway, Florida
+Gatineau, Canada
+Gdańsk
+Gdansk, Poland
+Gdynia
+GE-3D.kmz
+Gela, Italy
+General Pacheco, Argentina
+Geneva, Switzerland
+Genoa, Italy
+Gera, Germany
+Germantown, Tennessee
+Getafe, Spain
+Gettysburg, Pennsylvania
+Ghent, Belgium
+Gifu, Japan
+Gig Harbor, Washington
+Gijón, Spain
+Gilford Beach, ON
+Gilroy, California
+Girona, Spain
+Giurgiu, Romania
+Gjøvik, Norway
+Glacier National Park, Montana
+Gladewater, Texas
+Glasgow, Scotland
+Glassboro
+Glastonbury, England, United Kingdom
+Glen Ellen, California
+Glens Falls
+Gliwice, Poland
+Gloucester Township, New Jersey
+Gobō, Japan
+Goiânia, Brazil
+Gold Canyon, Arizona
+Gold Coast, Australia
+Golden
+Goldsboro, North Carolina
+Golvo Aranci, Italy
+Göppingen, Germany
+Gothenburg, Sweden
+Göttingen, Germany
+Granada, Spain
+Granby, CT
+Grand Bay, Alabama
+Grand Canyon Skywalk, Arizona
+Grand Forks, North Dakota
+Grand Island
+Grand Junction, Colorado
+Grand Rapids, Michigan
+Granite City
+Granollers
+Grants Pass, Oregon
+Grant-Valkaria
+Grapevine, Texas
+Grass Valley, California
+Grasse, France
+Graton, California
+Gravina in Puglia, Italy
+Grayslake, IL
+Graz, Austria
+Great Falls, Montana
+Great Yarmouth, UK
+Greater Sudbury, Canada
+Greeley, Colorado
+Green Bay, Wisconsin
+Greenacres, Florida
+Greensboro, North Carolina
+Greenville, North Carolina
+Greenville, SC
+Greenville, South Carolina
+Greenwood, IL
+Greenwood, Texas
+Grenada Hills North
+Grenoble, France
+Gretna, Nebraska
+Groningen, Netherlands
+Guadalajara, Mexico
+Guadiaro
+Guelph, Canada
+Guildford, England, United Kingdom
+Gujan-Mestras, France
+Gulfport, Mississippi
+Gütersloh, Germany
+Győr, Hungary
+Hachinohe, Japan
+Hachioji
+Hagen, Germany
+Hagen-Hohenlimburg, Germany
+Hagerstown, Maryland
+Haines City, Florida
+Hakodate, Japan
+Hakone, Japan
+Halden, Norway
+Half Moon Bay, California
+Halfway
+Halifax, Nova Scotia, Canada
+Halle
+Hallsville, Texas
+Hamamatsu, Japan
+Hamar, Norway
+Hamburg, Germany
+Hamilton, Canada
+Hamilton, Scotland, United Kingdom
+Hamm, Germany
+Hammond, Louisiana
+Hampton, New Brunswick, Canada
+Ham-sur-Sambre
+Hanamaki, Iwate, Japan
+Hanau
+Hanford, California
+Hanover, Germany
+Hanson Ranch
+Harbour Heights, Florida
+Harrisburg, Pennsylvania
+Harrison Charter Township, Michigan
+Harrisonburg, Virginia
+Harstad, Norway
+Hartford, Connecticut
+Harveng
+Harvey, Illinois
+Haskovo, Bulgaria
+Hastings, England
+Hatsukaichi
+Hattiesburg, Mississippi
+Hattingen, Germany
+Haugesund, Norway
+Havasalu Lake, California
+Haverhill, Massachusetts
+Hawaii Kai
+Hawthorne Meadows
+Hayward, California
+Healdsburg, California
+Heerhugowaard, Netherlands
+Heidelberg, Germany
+Heilbronn, Germany
+Helendale, California
+Helsingborg, Sweden
+Helsinki, Finland
+Hempstead, New York
+Henderson, Nevada
+Hendersonville, Tennessee
+Heraklion, Greece
+Hermiston, Oregon
+Herne, Germany
+Hershey, Pennsylvania
+Hertogenbosch, Netherlands
+Hickory, North Carolina
+Higashihiroshima, Japan
+High Point, North Carolina
+Highlands Ranch, Colorado
+Hikone
+Hildesheim, Germany
+Hillsboro, Oregon
+Hilo, Hawaii
+Hilton Head Island, South Carolina
+Himeji, Japan
+Hinda
+Hinesville, Georgia
+Hirato
+Hiratsuka
+Hiroshima, Japan
+Hoboken, New Jersey
+Hocking
+Holland, Michigan
+Hollister, California
+Holly Springs
+Holyoke, Massachusetts
+Honfleur, France
+Hong Kong, China
+Honolulu, Hawaii
+Hoover Dam, Nevada
+Hopkins, Minnesota
+Horrel Hill, South Carolina
+Horten, Norway
+Hortens kommun, Norway
+Hot Springs, Arkansas
+Houma, LA
+Houma, Louisiana
+Houston, Texas
+Howell, Michigan
+Huachipato
+Hudson, Wisconsin
+Huelva, Spain
+Huesca, Spain
+Humble, Texas
+Huntersville, NC
+Huntersville, North Carolina
+Huntington, New York
+Huntington, West Virginia
+Huntley
+Huntsville, Alabama
+Hyannis, Massachusetts
+Hyde
+Hyères, France
+Iași, Romania
+Ibiza, Spain
+Ibo, Japan
+Idaho Falls, Idaho
+Iida, Japan
+Iizuka, Japan
+IJsselstein
+Imabari, Ehime, Japan
+Imola, Italy
+Indian Harbour Beach
+Indianapolis, Indiana
+Indio, California
+Ingolstadt, Germany
+Innisfil, Canada
+Innsbruck, Austria
+Inuyama
+Ioannina, Greece
+Iowa City, Iowa
+Ipoh, Malaysia
+Ipswich, England
+Ipswich, United Kingdom
+Ipswisch
+Irvine
+Irving, Texas
+Isahaya, Japan
+Ischia, Italy
+Ise, Japan
+Iserlohn
+Ishinomaki, Japan
+Ishioka, Japan
+Isla Mujeres, Mexico
+Isola de Elba, Italy
+Issaquah, Washington
+Ithaca, New York
+Itō, Shizuoka, Japan
+Iwade, Japan
+Iwaki, Japan
+Izumi
+Izumo, Japan
+Jackass Key
+Jackson, Michigan
+Jackson, Mississippi
+Jackson, Tennessee
+Jacksonville, Arkansas
+Jacksonville, Florida
+Jacksonville, North Carolina
+Jaén, Spain
+Janesville, Wisconsin
+January
+Jefferson City, Missouri
+Jefferson, Wisconsin
+Jena, Germany
+Jerez, Spain
+Jersey City, New Jersey
+Jersey Village, Texas
+Jessup, MD
+João Pessoa, Brazil
+Johannesburg, South Africa
+Johnson City, Tennessee
+Johnson City, TN
+Johnson Creek, Wisconsin
+Johnstown, Pennsylvania
+Joinville, Brazil
+Joliet, Illinois
+Jonesboro, Arkansas
+Jönköping, Sweden
+Joplin, Missouri
+Joso, Japan
+Jourdanton, Texas
+July
+June
+Jyväskylä, Finland
+Kagoshima, Japan
+Kahului, Hawaii
+Kailua-Kona, Hawaii
+Kaiserslautern, Germany
+Kakamigahara
+Kakegawa, Japan
+Kako, Japan
+Kakogawa
+Kalabaka, Greece
+Kalamazoo, Michigan
+Kalispell, Montana
+Kalisz, Poland
+Kamen
+Kanagawa Prefecture, Japan
+Kanata
+Kanazawa, Japan
+Kaneohe, Hawaii
+Kaneohe, HI
+Kankakee, Illinois
+Kansas City, Missouri
+Kariwa
+Karlsruhe, Germany
+Karlstad, Sweden
+Kashima, Japan
+Kassel, Germany
+Katowice, Poland
+Kawachinagano, Japan
+Kawagoe, Japan
+Kecskemét, Hungary
+Kelowna, Canada
+Kempton Park, South Africa
+Kendall, Florida
+Kennewick, Washington
+Kent, Washington
+Kenwood, California
+Kerava, Finland
+Kerkira, Greece
+Kernersville, North Carolina
+Keswick, Canada
+Key Biscayne
+Key West, Florida
+Keystone, Florida
+Kiel, Germany
+Kihei, Hawaii
+Kilkenny, Ireland
+Killeen, Texas
+Kingsport, Tennessee
+Kingston upon Hull, United Kingdom
+Kingston, Canada
+Kingston, New York
+Kinugawaonsentaki, Japan
+Kirchhellen, Germany
+Kirishima, Kagoshima, Japan
+Kitakyushu
+Kitami, Japan
+Kitchener, Canada
+Klagenfurt, Austria
+Klang, Malaysia
+Knoxville, Tennessee
+Kobe, Japan
+Koblenz, Germany
+Kochi, Japan
+Kofu, Japan
+Kokomo, Indiana
+Kongsberg, Norway
+Koriyama, Japan
+Korneuburg
+Korpela
+Koszalin, Poland
+Kowloon
+Kōya, Japan
+Kraków, Poland
+Kristiansand, Norway
+Krugersdorp
+Kumamoto, Japan
+Kuopio, Finland
+Kurashiki, Japan
+Kure, Hiroshima, Japan
+Kurume, Japan
+Kushiro, Hokkaido, Japan
+Kuwana
+Kyoto, Japan
+La Chaux-de-Fonds, Switzerland
+La Crescenta-Montrose
+La Crosse, Wisconsin
+La Hande
+La Maddalena, Italy
+La Manga, Spain
+La Paz, Mexico
+La Plata, Argentina
+La Rochelle, France
+La Roche-sur-Yon, France
+La Spezia, Italy
+Lafayette, Indiana
+Lafayette, Louisiana
+Lagoa de Albufeira, Portugal
+Lahaina, Hawaii
+Lake Charles, Louisiana
+Lake Country, Canada
+Lake Forest, Illinois
+Lake Geneva
+Lake Havasu City, Arizona
+Lake Jackson
+Lake Wales, Florida
+Lake Wylie, South Carolina
+Lakehurst
+Lakeland
+Lakeside, Florida
+Lakewood, Washington
+L'Alcúdia
+Lamezia Terme, Italy
+Lancaster, California
+Lancaster, Pennsylvania
+Lancaster, South Carolina
+Landshut, Germany
+L'Ange-Gardien, Quebec
+Langley, Canada
+Lansing, Michigan
+Laplace, Louisiana
+L'Aquila, Italy
+Laredo, Texas
+Larissa, Greece
+Larkfield-Wikiup, California
+Larvik, Norway
+Las Cruces, New Mexico
+Las Cruces, NM
+Las Palmas de Gran Canaria, Spain
+Las Rozas, Spain
+Las Vegas, Nevada
+Lassay-sur-Croisne, France
+Lassen Peak, California
+Latimer, Mississippi
+Latina, Italy
+Laurel, Mississippi
+Lausanne, Switzerland
+Laval, France
+Lawrence, Kansas
+Lawrence, Massachusetts
+Lawrenceville, Georgia
+Lawton, Oklahoma
+Le Coudray, Lémeré, France
+Le Havre, France
+Le Mans, France
+League City, Texas
+League City, TX
+Lebanon, Oregon
+Lebanon, Pennsylvania
+Lecce, Italy
+Lecco, Italy
+Leeds, United Kingdom
+Leesburg, Florida
+Leeuwarden, Netherlands
+Lehigh Acres, Florida
+Leicester, United Kingdom
+Leipzig, Germany
+Leiria, Portugal
+Lenoir, North Carolina
+Leominster, Massachusetts
+Leon Springs
+León, Mexico
+León, Spain
+Leuven, Belgium
+Levittown, New York
+Lewiston, Idaho
+Lewiston, Maine
+Lewiston, New York
+Lexington, Kentucky
+Lexington, North Carolina
+Lexington, South Carolina
+Liberec, Czech Republic
+Liège, Belgium
+Lignano Sabbiadoro, Italy
+Lille, France
+Lillehammer, Norway
+Lillestrøm
+Lima, Ohio
+Limoges, France
+Linares, Spain
+Lincoln, California
+Lincoln, Nebraska
+Lincoln, United Kingdom
+Lincolnton, North Carolina
+Lindale
+Linkoping, Sweden
+Linz, Austria
+Lisbon, Portugal
+Little Rock, Arkansas
+Live Oak
+Livermore, California
+Liverpool, United Kingdom
+Livonia, Michigan
+Livorno, Italy
+Ljubljana, Slovenia
+Lleida, Spain
+Llíria, Spain
+Lloret del Mar
+Lochbuie
+Loches, France
+Lockport, New York
+Lodi, California
+Łódź, Poland
+Logan, Utah
+Logroño, Spain
+Lomas de Polo-Pinomar
+London, Canada
+London, Ontario, Canada
+London, United Kingdom
+Londonderry, United Kingdom
+Lone Hill, South Africa
+Long Beach, California
+Long Island
+Longueil
+Longview, Texas
+Longview, Washington
+Los Angeles, California
+Los Banos, California
+Los Gatos
+Los Palacios y Villafranca, Spain
+Loudon, Tennessee
+Loughman, Florida
+Louisville, Kentucky
+Lourdes, France
+Loveland, Colorado
+Lowel, Arkansas
+Lowell, Massachusetts
+Lowestoft, England, United Kingdom
+Luanco
+Lubbock, Texas
+Lübeck, Germany
+Lublin, Poland
+Lucca, Italy
+Lucerne, Switzerland
+Lufkin, Texas
+Lugano, Switzerland
+Lugo, Spain
+Lugoff, South Carolina
+Luling, Louisiana
+Lumberton, North Carolina
+Lünen
+Luton, England
+Luxembourg (city), Luxembourg
+Lynchburg, Virginia
+Lyon, France
+Maastricht, Netherlands
+Mabelvale, Arkansas
+Macau
+Maceió, Brazil
+Macon, Georgia
+Madera, California
+Madison, Alabama
+Madison, Wisconsin
+Madisonville, Tennessee
+Madrid, Spain
+Maebashi, Japan
+Magdeburg, Germany
+Magenta, Italy
+Maghull, United Kingdom
+Magna
+Magnolia Springs
+Magog, Quebec, Canada
+Mahtomedi
+Maidstone, United Kingdom
+Mainz
+Maize
+Málaga, Spain
+Malbork, Poland
+Malibu, California
+Malmö, Sweden
+Manaus Stadium, Brazil
+Manaus, Amazonas
+Manaus, Brazil
+Manchester, Connecticut
+Manchester, New Hampshire
+Manchester, Tennessee
+Manchester, United Kingdom
+Mandaue City
+Manhattan, Kansas
+Manitowoc (town), Wisconsin
+Mankato, Minnesota
+Mannheim, Germany
+Manresa, Spain
+Mansfield, Ohio
+Mantouki
+Mantova, Italy
+Maple Ridge, Canada
+Maple Valley, Washington
+Mar del Plata, Argentina
+Marbella, Spain
+March
+Marco Island, Florida
+Mariemont, Ohio
+Markham, Canada
+Marsala, Italy
+Marseille, France
+Martinez
+Martinsburg, West Virginia
+Maryville, Tennessee
+Massa, Italy
+Mataró, Spain
+Matera, Italy
+Matsue, Japan
+Matsumoto, Japan
+Matsusaka, Japan
+Matsuyama, Japan
+Matthews, North Carolina
+Mattituck, New York
+Mayagüez, Puerto Rico
+Maysville
+Mazatlan
+Mazatlán, Mexico
+Mazzo, Itally
+McAllen, Texas
+McFarland, California
+McKinleyville, California
+Meden Rudnik
+Medford, Oregon
+Mehlville, Missouri
+Meiringen
+Melbourne, Australia
+Memphis, Tennessee
+Menifee, California
+Menomonee Falls, Wisconsin
+Merced, California
+Mérida, Mexico
+Mérida, Spain
+Meriden, Connecticut
+Meridian, Idaho
+Meridian, Mississippi
+Meridianville, Alabama
+Merrick, New York
+Merrill Ranch
+Merritt Island, Florida
+Mesa Verde National Park, Colorado
+Mesa, Arizona
+Mesquite, Texas
+Messina, Italy
+Metz, France
+Meung-sur-Loire, France
+Mexicali, Mexico
+Mexico City, Mexico
+Miami, Florida
+Michigan City, Indiana
+Middleborough
+Middleburg
+Middlesbrough, United Kingdom
+Middletown, Connecticut
+Middletown, New Jersey
+Middletown, Ohio
+Midland, Michigan
+Midland, Texas
+Midrand
+Midwest City
+Mikonos, Greece
+Milan, Italy
+Milano
+Milton Keynes, United Kingdom
+Milton, Florida
+Milwaukee, Wisconsin
+Minden, Louisiana
+Minneapolis, Minnesota
+Mint Spring
+Mishima, Japan
+Miskolc, Hungary
+Mission Bend, Texas
+Mission Viejo, California
+Mississauga, Canada
+Missoula, Montana
+Mito, Japan
+Mittelberg, Austria
+Miyazaki, Japan
+Miyazu, Japan
+Moab, Utah
+Mobile, Alabama
+Modena, Italy
+Modesto, California
+Modica
+Moelv, Norway
+Mogul
+Mohammedia, Tunisia
+Moita, Portugal
+Molde, Norway
+Molfetta, Italy
+Monaca, Pennsylvania
+Monaco
+Monasterio de Montserrat, Spain
+Mönchengladbach, Germany
+Moncton, New Brunswick
+Monreale
+Monroe Township, New Jersey
+Monroe, Louisiana
+Monroe, Michigan
+Monroe, North Carolina
+Monroe, Washington
+Monrovia
+Mons, Belgium
+Mont Saint-Michel
+Montana, Bulgaria
+Montauban, France
+Montauk, New York
+Montbéliard, France
+Montepulciano, Italy
+Monterey
+Monterrey, Mexico
+Montgomery, Alabama
+Montigny-le-Bretonneux, France
+Montpellier, France
+Montpoupon, France
+Montreal, Canada
+Montreux, Switzerland
+Monument Valley, Arizona
+Monza, Italy
+Moon
+Mooresville, North Carolina
+Morganton, North Carolina
+Morgantown, West Virginia
+Moriarty
+Morioka, Japan
+Morón
+Morristown, Tennessee
+Morrisville, North Carolina
+Moses Lake, Washington
+Mosman
+Moss Beach, California
+Moss, Norway
+Mount Desert Island, Maine
+Mount Fuji, Japan
+Mount Rushmore, South Dakota
+Mount St. Helens, Washington
+Mount Vernon, Washington
+Mountbatten
+Mt. Holly
+Mt. Laurel
+Mt. Prospect, Illinois
+Mt. Washington
+Mukwonago, Wisconsin
+Mulhouse, France
+Munakata, Japan
+Muncie, Indiana
+Munich, Germany
+Munster
+Münster, Germany
+Murcia, Spain
+Murfreesboro, Tennessee
+Murrieta, California
+Muskegon, Michigan
+Musselburgh, Scotland, United Kingdom
+Myrtle Beach, South Carolina
+Nacogdoches, Texas
+Nagano, Japan
+Nagasaki, Japan
+Nagoya, Japan
+Naha, Japan
+Nahant, Massachusetts
+Nakatsu, Japan
+Nampa, Idaho
+Nanaimo, British Columbia, Canada
+Nancy, France
+Nantes, France
+Napa, California
+Naperville
+Naples, Florida
+Naples, Italy
+Nara
+Narbonne, France
+Narvik, Norway
+Nashua, New Hampshire
+Nashville, Tennessee
+Nassau, Bahamas
+Nasushiobara, Japan
+Natal, Brazil
+Navarre
+Naxos, Greece
+Nelson Mandela Bay
+Neponsit
+Neuchâtel, Switzerland
+Neuss
+New Baltimore, Michigan
+New Bedford, Massachusetts
+New Braunfels, Texas
+New Britain, Connecticut
+New Canaan
+New Carlisle, Ohio
+New City, New York
+New Haven, Connecticut
+New Kensington
+New London, Connecticut
+New Orleans, Louisiana
+New Philadelphia, Ohio
+New Port Richey, Florida
+New Smyrna Beach, Florida
+New Tulsa
+New York City, New York
+Newark, New Jersey
+Newburgh
+Newcastle upon Tyne, United Kingdom
+Newcastle, Australia
+Newcastle, South Africa
+Newcastle-upon-Tyne
+Newman Lake, Washington
+Newmarket, Ontario, Canada
+Newport News, Virginia
+Newtownards, United Kingdom
+Niagara Falls, New York
+Nice, France
+Niigata, Japan
+Nijmegen, Netherlands
+Nijmegen, The Netherlands
+Nikko
+Nilsiä, Finland
+Nîmes, France
+Niort, France
+Nipomo
+Nishi, Japan
+Nishinomiya
+Niwa, Japan
+Noblesville, Indiana
+Nocatee, Florida
+Nocera Inferiore
+Noda
+Norfolk, Massachusetts
+Norfolk, Virginia
+Norman, Oklahoma
+Norristown
+Norrköping, Sweden
+North Chicago, Illinois
+North Jackson
+North Myrtle Beach, South Carolina
+North Port, Florida
+North Scottsdale
+North St. Paul, Minnesota
+North Woodlands
+North York, Canada
+Northamton, United Kingdom
+Northport
+Norwalk
+Norwich, Connecticut
+Norwich, United Kingdom
+Norwood, Massachusetts
+Norwood, Ohio
+Notre-Dame-de-l’Île-Perrot
+Nottingham, England, United Kingdom
+Novara, Italy
+Novato, California
+November
+Nuoro, Italy
+Nuremberg, Germany
+Nyíregyháza, Hungary
+Nyon, Switzerland
+O Salnés
+Oak Harbor, Washington
+Oak Island, North Carolina
+Oak Knoll, California
+Oak Ridge
+Oakdale, California
+Oakhurst, Oklahoma
+Oakland, California
+Oakville, California
+Obidos, Portugal
+Ocala, Florida
+Ocean City, Maryland
+Oceanside, California
+Ocoee, Florida
+Odense, Denmark
+Odessa, Texas
+Oeiras
+O'Fallon, Missouri
+Ogden, Utah
+Oita, Japan
+Ojai, California
+Okayama, Japan
+Okazaki, Japan
+Oklahoma City, Oklahoma
+Olathe, Kansas
+Olbia, Italy
+Old Bridge Township, New Jersey
+Old Kilpatrick, United Kingdom
+Oldenburg, Germany
+Olga, Florida
+Olomouc, Czech Republic
+Olsztyn, Poland
+Olympia, Washington
+Omaha Beach, France
+Omaha, Nebraska
+Omuta, Japan
+Onda
+Opelika, Alabama
+Opelousas, Louisiana
+Oquirrh
+Orange, Texas
+Orangeburg, South Carolina
+Orangevale
+Orchard Hills
+Orchard Park, New York
+Örebro, Sweden
+Oregon
+Oristano, Italy
+Orlando, Florida
+Orléans, France
+Oropesa de mar, Spain
+Oropesa del Mar
+Oroville, California
+Orting
+Ortisei, Italy
+Osaka, Japan
+Oshawa, Canada
+Oshima Island, Japan
+Oshkosh, Wisconsin
+Ōshū, Japan
+Osijek, Croatia
+Oslo, Norway
+Osnabrück, Germany
+Osøyro, Norway
+Ospitaletto
+Osteen, Florida
+Ostrava, Czech Republic
+Oświęcim, Poland
+Otsu, Japan
+Ottawa, Canada
+Ottawa, Illinois
+Oulo, Finland
+Oulu, Finland
+Ourense, Spain
+Overland Park, Kansas
+Oviedo, Spain
+Owasso, Oklahoma
+Owensboro, Kentucky
+Oxford, England, UK
+Oxford, Mississippi
+Oxnard, California
+Oyama, Japan
+Ozark, Alabama
+Paderborn, Nordrhein-Westfalen
+Padua, Italy
+Paducah, Kentucky
+Page, Arizona
+Paignton, United Kingdom
+Palamós, Spain
+Palermo, Italy
+Palm Bay, Florida
+Palm Coast, Florida
+Palm Springs, California
+Palma de Mallorca, Spain
+Palo Alto
+Palo Cedro
+Pamplona, Spain
+Panama City, Florida
+Pardubice, Czech Republic
+Paris, France
+Parker, Colorado
+Parkersburg, West Virginia
+Parma, Italy
+Parsippany-Troy Hills, New York
+Pasadena, California
+Pascagoula, Mississippi
+Paso Robles, California
+Passau, Germany
+Paterson, New Jersey
+Patras, Greece
+Pau, France
+Pavia, Italy
+Peachtree City
+Pécs, Hungary
+Pedreguer, Spain
+Peekskill, New York
+Pekin, Illinois
+Pembroke Pines
+Pendleton, Oregon
+Peniche, Portugal
+Pensacola, Florida
+Peoria, Illinois
+Pernik, Bulgaria
+Peroulades
+Perpignan, France
+Perris, California
+Perth, Australia
+Peru, Illinois
+Perugia, Italy
+Pesaro, Italy
+Pescara, Italy
+Petaluma, California
+Peterborough, Canada
+Peterborough, England
+Petersburg, Virginia
+Pforzheim, Germany
+Philadelphia, Pennsylvania
+Philomath
+Phoenix, Arizona
+Piacenza, Italy
+Picassent, Spain
+Picture Rocks, Arizona
+Pigeon Forge
+Pine Bluff, Arkansas
+Pinehurst, North Carolina
+Pinetop-Lakeside, Arizona
+Pinnacles National Park, California
+Pinole, California
+Piombino, Italy
+Pisa, Italy
+Pistoia, Italy
+Pitt Meadows, British Columbia, Canada
+Pittsburgh, Pennsylvania
+Pittsfield, Massachusetts
+Placerville, California
+Plainfield, Indiana
+Plainfiled, New Jersey
+Plano, Texas
+Plant City
+Plattsburgh, New York
+Pleasant Hill, Missouri
+Pleasant Plains, New York
+Pleasant Valley
+Pleasanton, Texas
+Pleven, Bulgaria
+Plovdiv, Bulgaria
+Plymouth, England, United Kingdom
+Plymouth, Minnesota
+Plzen, Czech Republic
+Pocatello, Idaho
+Podgorica, Montenegro
+Poinca
+Poinciana, Florida
+Point Piper, Sydney, Australia
+Poitiers, France
+Pomona, California
+Pompano Beach
+Ponce, Puerto Rico, United States
+Ponderosa East
+Ponferrada, Spain
+Ponte Vedra Beach, Florida
+Pontevedra, Spain
+Pordenone, Italy
+Pori, Finland
+Porsgrunn, Norway
+Port Alberni, Canada
+Port Arthur
+Port Charlotte, Florida
+Port Chester, New York
+Port Colborne, Canada
+Port Elizabeth, South Africa
+Port St Lucie
+Port Washington, New York
+Port Washington, Wisconsin
+Porterville, California
+Portimão, Portugal
+Portland, Maine
+Portland, Oregon
+Portland, Texas
+Porto Alegre, Brazil
+Porto Alegre, Rio Grande do Sul
+Porto Cervo, Italy
+Porto, Portugal
+Porto-Vecchio, France
+Portsmouth, New Hampshire
+Portsmouth, Ohio
+Portsmouth, United Kingdom
+Portsmouth, Virginia
+Potenza, Italy
+Pottsville, Pennsylvania
+Poughkeepsie, New York
+Poznań, Poland
+Pozzuoli, Italy
+Prague, Czech Republic
+Prato, Italy
+Prattville
+Predeal, Romania
+Predeal-Campina
+Prescott, Arizona
+Preston
+Pretoria, South Africa
+Princeton, West Virginia
+Prishtina, Kosovo
+Providence, Rhode Island
+Provo, Utah
+Puebla, Mexico
+Pueblo, Colorado
+Puerto de la Cruz, Tenerife, Spain
+Puerto Real
+Puerto Vallarta, Mexico
+Puertollano, Spain
+Pula, Croatia
+Puławy, Poland
+Punta Langosteira
+Puntallana, La Palma, Spain
+Putney, Georgia
+Puyallup, Washington
+Queanbeyan
+Quebec City, Canada
+Queens, New York
+Queensbury, New York
+Queensferry
+Queretaro, Mexico
+Quimper, France
+Quincy, Massachusetts
+Quispamsis
+Racine, Wisconsin
+Ragusa, Italy
+Raleigh, North Carolina
+Ramsey, Minnesota
+Ramsgate, England, United Kingdom
+Rancho Cucamong, California
+Rancho Cucamong, Fontana, California
+Rancho Cucamonga
+Rancho Mirage
+Randfontein, South Africa
+Randolph, Massachusetts
+Rapallo, Italy
+Rapid City, South Dakota
+Rathdrum
+Raufoss, Gjovik
+Raufoss, Norway
+Ravenna, Italy
+Raymond, Mississippi
+Reading, Pennsylvania
+Reading, United Kingdom
+Recife, Brazil
+Red Deer, Alberta, Canada
+Red Rock State Park / Sedona, Arizona
+Redding, California
+Regensburg, Germany
+Reggio Calabria, Italy
+Reggio Emilia, Italy
+Regina, Canada
+Reims, France
+Remagen, Germany
+Removed
+Rennes, France
+Reno, Nevada
+Repentigny, Canada
+Rethimno, Greece
+Reutlingen, Germany
+Rezzato, Italy
+Rhodes, Greece
+Ribeira
+Richland, Washington
+Richmond Hill, Canada
+Richmond, Kentucky
+Richmond, Virginia
+Rijeka, Croatia
+Rimini, Italy
+Rio de Janeiro, Brazil
+Rio Rico, Arizona
+Ripon, California
+Riva del Garda
+River Bluff
+Riverside
+Roanne, France
+Roanoke, VA
+Roanoke, Virginia
+Robstown
+Rochester, Minnesota
+Rochester, New York
+Rochester, NY
+Rochester, Wisconsin
+Rock Hill, South Carolina
+Rockaway
+Rockbridge, Georgia
+Rockford, Illinois
+Rockville
+Rocky Mount, North Carolina
+Rodeo Cove, California
+Rohnert Park, California
+Rolling Hills
+Rome, Georgia
+Rome, Italy
+Romulus
+Ronda, Spain
+Roodeport
+Roquetas de Mar, Spain
+Rosario, Argentina
+Rose Bay
+Roseburg, Oregon
+Rosedale
+Rosellen
+Rosemary Beach, Florida
+Rosenheim, Germany
+Roseville, California
+Rostock, Germany
+Roswell, Georgia
+Rothenburg ob der Tauber, Germany
+Rotherham, United Kingdom
+Rotterdam, Netherlands
+Rottnest Island, Perth, Australia
+Rouen, France
+Round Rock
+Rovigo, Italy
+Royal Oak, Michigan
+Ruse, Bulgaria
+Russellville, Arkansas
+Rustenburg, South Africa
+Rutherford, California
+Rzeszów, Poland
+Saarbrücken, Germany
+Sabadell, Spain
+Sacramento Airport, California
+Sacramento, California
+Safety Harbour
+Saga, Japan
+Sagamihara, Japan
+Saginaw, Michigan
+Sagunt, Spain
+Saint Charles, Missouri
+Saint Gallen, Switzerland
+Saint John, New Brunswick
+Saint Petersburg, Florida
+Saint-Cyr-sur-Mer, France
+Sainte-Catherine, Canada
+Sainte-Maxime, France
+Saint-Étienne, France
+Saint-Malo, France
+Saint-Nazaire, France
+Saint-Quentin, France
+Saitama, Japan
+Sakado, Japan
+Sakaiminato, Japan
+Sakata, Japan
+Sakura
+Salamanca, Spain
+Salem, Massachusetts
+Salem, Oregon
+Salerno, Italy
+Salinas, California
+Salisbury, Maryland
+Salisbury, North Carolina
+Salt Lake City, Utah
+Salta, Argentina
+Salvador, Brazil
+Salvador, California
+Salzburg, Austria
+Salzgitter, Germany
+San Angelo, Texas
+San Antonio, Texas
+San Benedetto del Tronto, Italy
+San Bruno
+San Clemente, California
+San Diego, California
+San Fernando, California
+San Francisco, California
+San Giovanni Rotondo, Italy
+San Isidro, Argentina
+San Jose, California
+San José, Spain
+San Juan, Argentina
+San Juan, Puerto Rico
+San Leandro
+San Lorenzo de El Escorial, Spain
+San Luis Obispo, California
+San Luis Potosí, Mexico
+San Marcos, Texas
+San Marino
+San Martín, Argentina
+San Mateo
+San Miguel de Tucumán, Argentina
+San Miguel, Argentina
+San Nicolo, Italy
+San Rafael, California
+San Ramon
+San Roque, Spain
+San Sebastian de Los Reyes
+San Sebastián, Spain
+San Tan Valley, Arizona
+San Tan Valley, AZ
+Sanary-sur-Mer
+Sanborn, New York
+Sandefjord, Norway
+Sandford, United Kingdom
+Sandusky, Ohio
+Sanger, California
+Sanremo, Italy
+Sant Carles de Peralta, Spain
+Sant Feliu de Guíxols, Spain
+Sant Vicent del Raspeig
+Santa Ana, California
+Santa Barbara, California
+Santa Clarita, California
+Santa Cruz de Tenerife, Canary Islands, Spain
+Santa Cruz, California
+Santa Fe, Argentina
+Santa Fe, New York
+Santa Maria, California
+Santa Rosa, California
+Santander, Spain
+Santarem, Portugal
+Santiago de Compostela, Spain
+Santiago, Chile
+Santorini, Greece part 4
+Santorini, Greece part 9
+Santos, Brazil
+São Luís, Brazil
+São Paulo, Brazil
+Sapporo, Japan
+Sarasota, Florida
+Saratoga Springs, New York
+Sarnia, Ontario, Canada
+Sarpsborg, Norway
+Sasebo, Japan
+Saskatoon, Canada
+Sassari, Italy
+Sassolungo Mountain Group, Italy
+Sault Ste. Marie, ON, Canada
+Savannah, Georgia
+Savona, Italy
+Scafati, Italy
+Scarborough
+Schaffhausen, Switzerland
+Schenectady
+Schertz, Texas
+Schuylerville
+Schweinfurt, Germany
+Schwerin, Germany
+Schwyz, Switzerland
+Scotts Valley, California
+Scranton, Pennsylvania
+Seaford, Delaware
+Searcy, Arkansas
+Seattle, Washington
+Sebastopol, California
+Sebring, Florida
+Sedona, Arizona
+Segovia, Spain
+Seguin, Texas
+Selma, California
+Sendai, Japan
+Seneca
+September
+Sequoyah,
+Sète, France
+Setúbal, Portugal
+Severna Park
+Sevierville, Tennessee
+Seville, Spain
+Sfax, Tunisia
+Sha Tin, Hong Kong, China
+Shakopee, Minnesota
+Sharonville, Ohio
+Sheboygan, Wisconsin
+Sheffield, United Kingdom
+Shelby, North Carolina
+Shelter Island
+Sherbrooke, Canada
+Sherman, Texas
+Shimonoseki, Japan
+Shizuoka, Japan
+Shoreland
+Shorewood, IL
+Show Low, Arizona
+Shreveport, Louisiana
+Shumen, Bulgaria
+Sibiu, Romania
+Sidcup, United Kingdom
+Siegen, Germany
+Siena, Italy
+Siesta Valley Estates
+Sighișoara, Romania
+Sigriswil
+Silsbee, Texas
+Simi Valley, California
+Sinaia, Romania
+Sindelfingen
+Sines, Portugal
+Singapore, Singapore
+Sion, Switzerland
+Sioux City, Iowa
+Sioux Falls, South Dakota
+Siracusa, Italy
+Six-Shooter Peaks, Utah
+Skelmersdale
+Ski, Norway
+Skiatook
+Skien, Norway
+Slavonski Brod, Croatia
+Sleepy Hollow
+Slimsbury
+Sliven, Bulgaria
+Smyrna, Tennessee
+Soddy-Daisy, Tennessee
+Södertäjle
+Södertälje
+Sofia, Bulgaria
+Sogne, Norway
+Solaro, Italy
+Solingen, Germany
+Sollentuna
+Solon
+Somerville, New Jersey
+Søndre Nordstrand
+Sonoma, California
+Sorrento
+Soto del Barco
+South Bend, Indiana
+South Hill, Washington
+South Palmetto Bay
+Southampton, England, United Kingdom
+Southampton, New York
+Southend-on-Sea, United Kingdom
+Southern part of Vestfold fylke
+Southfield
+Southhold, New York
+Soweto
+Spanish Springs, Nevada
+Spartanburg, South Carolina
+Sperry
+Speyer, Germany
+Split, Croatia
+Spokane, Washington
+Spring Hill, Florida
+Spring Valley
+Spring, Texas
+Springfield, Illinois
+Springfield, Massachusetts
+Springfield, Missouri
+Springfield, Ohio
+Springs
+St Albans, United Kingdom
+St Andrews, Scotland
+St Antony de Portmany, Spain
+St Cloud, Florida
+St Cloud, Minnesota
+St Gallenkappel
+St Louis, Missouri
+St. Augustine, Florida
+St. Catharines
+St. Catherines, Canada
+St. Charles, Illinois
+St. Clair Shores, Michigan
+St. George, Utah
+St. Helena, California
+St. Johns
+St. Joseph, Missouri
+St. Louis, Missouri
+St. Petersburg
+St. Thomas, Canada
+Stadio
+Stara Zagora, Bulgaria
+Starkville, Mississippi
+State College, Pennsylvania
+Staten Island, New York
+Statesboro, Georgia
+Statesville, North Carolina
+Staunton, Virginia
+Stavanger, Norway
+Stephenville, Texas
+Steubenville, Ohio
+Steyr, Austria
+Stillwater, Minnesota
+Stillwater, Oklahoma
+Stockholm, Sweden
+Stockton, California
+Stoke-on-Trent, United Kingdom
+Stoughton, Massachusetts
+Stow
+Strasbourg, France
+Streator, Illinois
+Stuttgart, Germany
+Sudbury
+Suffolk, Virginia
+Sugarmill Woods
+Sully-sur-Loire, France
+Summerville, South Carolina
+Sumter, South Carolina
+Sunbury, Pennsylvania
+Sungai Petani, Malaysia
+Sunrise Manor, NV
+Surprise, Arizona
+Susono
+Sutton, Massachusetts
+Swansea, South Carolina
+Swansea, United Kingdom
+Sweet Home
+Swindon, England, UK
+Sydney, New South Wales
+Sylacauga, Alabama
+Sylling, Norway
+Syracuse, Italy
+Syracuse, New York
+Szczecin, Poland
+Szeged, Hungary
+Székesfehérvár, Hungary
+Szolnok, Hungary
+Szombathely, Hungary
+Tacoma, Washington
+Tacoronte
+Taft
+Tai Po
+Taipei, Taiwan
+Takamatsu, Japan
+Takarazuka
+Takasaki, Japan
+Takatsuki, Japan
+Takeo, Japan
+Talcy, France
+Talladega, Alabama
+Tallahassee, Florida
+Tallahassee, Forida
+Tamano, Okayama, Japan
+Tampa, Florida
+Tampere, Finland
+Taormina, Italy
+Taranto, Italy
+Tarbes, France
+Tarragona, Spain
+Tarumi, Japan
+Taunton, Massachusetts
+Telde
+Telford, United Kingdom
+Temecula
+Tempe, Arizona
+Temple, Texas
+Temuco, Chile
+Teramo, Italy
+Terlizzi, Italy
+Terni, Italy
+Terre Haute, Indiana
+Texarkana, Texas
+Texas City
+The Bronx
+The Colony, Texas
+The Hague
+The Hamptons, New York
+The Villages, Florida
+Thessaloniki, Greece
+Thousand Oaks, California
+Thun, Switzerland
+Thunder Bay, Ontario, Canada
+Tijuana, Mexico
+Tilburg, Netherlands
+Timberwood Park, Texas
+Timișoara, Romania
+Titusville, Florida
+Tiverton
+TODO
+Togane, Japan
+Tokai
+Tokushima, Japan
+Tokyo, Japan
+Toledo, Ohio
+Toledo, Spain
+Toluca, Mexico
+Tomioka, Gunma, Japan
+Toms River
+Tonawanda
+Tønsberg, Norway
+Topeka, Kansas
+Torbay
+Toronto, Canada
+Torquay, United Kingdom
+Torrejón de Ardoz
+Torrelavega
+Torremolinos, Spain
+Torreón, Mexico
+Torres Vedras, Portugal
+Torrevieja, Spain
+Toulon, France
+Toulouse, France
+Tours, France
+Towson, Maryland
+Toyama, Japan
+Toyohashi, Japan
+Toyota, Japan
+Tralee, Ireland
+Tranby, Norway
+Trapani, Italy
+Traun, Austria
+Traverse City, Michigan
+Trento, Italy
+Trenton, Michigan
+Trenton, New Jersey
+Tres Rios Wetlands
+Treviso, Italy
+Trier, Germany
+Trieste, Italy
+Trois Rivières
+Trois-Rivieres, Canada
+Tromsø, Norway
+Trondheim, Norway
+Troy, Alabama
+Troy, Ohio
+Troyes, France
+Truckee, California
+Trussville
+Tsu, Japan
+Tsukuba
+Tübingen, Germany
+Tucson, Arizona
+Tuen Mun, Hong Kong, China
+Tulare, California
+Tulcea, Romania
+Tullahoma, Manchester
+Tullahoma, Tennessee
+Tulsa, Oklahoma
+Tunis, Tunisia
+Tupelo, Mississippi
+Turin, Italy
+Turku, Finland
+Turlock, California
+Tuscaloosa, Alabama
+Tuusula, Finland
+Twentynine Palms, California
+Twin Falls (Idaho), Idaho
+Tychy, Poland
+Tyler, Texas
+Udine, Italy
+Ueda, Nagano, Japan
+Uitenhage, South Africa
+Ukiah, California
+Ulm, Germany
+Union City, New Jersey
+Union, California
+Upper Hutt
+Uppsala, Sweden
+Urbana, Illinois
+Urbino, Italy
+Utica, New York
+Uticia
+Utrecht, Netherlands
+Utrera, Spain
+Utsunomiya, Japan
+Valdosta, Georgia
+Valence, France
+Valencia, Spain
+Valladolid, Spain
+Vallejo, California
+Valletta, Malta
+Valley Center, Kansas
+Valparaiso
+Vancleave, Mississippi
+Vancouver, Canada
+Vandalia
+Vannes, France
+Varces
+Varese, Italy
+Varna, Bulgaria
+Västerås, Sweden
+Vatican City, Vatican City
+Vaughan, Canada
+Växjö, Sweden
+Vejle, Denmark
+Venice, Florida
+Venice, Italy
+Venlo, Netherlands
+Verderio, Italy
+Verdon Gorge, France
+Vero Beach, Florida
+Verona, Italy
+Viana do Castelo, Portugal
+Viareggio, Italy
+Vicenza, Italy
+Victoria, Canada
+Victoria, Texas
+Victorville, California
+Vienna, Austria
+Vigegano, Italy
+Vigo, Spain
+Vila Velha, Brazil
+Villa San Giovanni
+Villandry, France
+Vineland, New Jersey
+Virginia Beach, Virginia
+Visalia, California
+Viterbo, Italy
+Vitória, Brazil
+Vitoria-Gasteiz, Spain
+Vittoria, Italy
+Vlissingen
+Waco, Texas
+Wahiawa, Hawaii
+Wailea-Makena, Hawaii
+Waipahu, Hawaii
+Wakayama, Japan
+Wakefield
+Walsall
+Walt Disney World Resort, Florida
+Waltham, Massachusetts
+Waltrop
+Warminster, Pennsylvania
+Warner Robins, Georgia
+Warren, Michigan
+Warrington, United Kingdom
+Warsaw, Poland
+Washington, D.C.
+Waterbury, Connecticut
+Waterford
+Waterloo, Iowa
+Watertown (city), New York
+Watertown, Wisconsin
+Watford, United Kingdom
+Waukegan
+Waukesha
+Waynesboro, Virginia
+Webster, Massachusetts
+Weinheim, Germany
+Wekiwa Springs
+Welland, Canada
+Welland, ON
+Wellington, New Zealand
+Wells, England, United Kingdom
+Wels, Austria
+Wenatchee, Washington
+West Bend, Wisconsin
+West Bradenton, Florida
+West Covina, California
+West Palm Beach, Florida
+Western part of Suffolk County, New York
+Westervile, Ohio
+Westerville, Ohio
+Westfield, Indiana
+Westfield, Massachusetts
+Weston, Florida
+Weymouth, England, United Kingdom
+Wheaton, Illinois
+White Center, Washington
+White Plains, New York
+Whitehouse
+Whittier, California
+Wichita Falls, Texas
+Wichita, Kansas
+Wiener Neustadt
+Wiesbaden, Germany
+Wigan
+Wilda
+Wildwood Valley
+Wildwood, Georgia
+Wilhelmshaven, Germany
+Wilkes-Barre, Pennsylvania
+Williamsburg, Virginia
+Williamsdale, Ohio
+Williamsport, Pennsylvania
+Willimantic, Connecticut
+Willow Spring, North Carolina
+Wilmington, Delaware
+Wilmington, North Carolina
+Wilmot, WI
+Wilson, North Carolina
+Wilsonville, Oregon
+Winchester, Virginia
+Windsor Locks, Connecticut
+Windsor, Canada
+Winnipeg, Canada
+Winston-Salem, North Carolina
+Winter Garden
+Winter Haven, Florida
+Winter Park, Florida
+Winterthur, Switzerland)
+Wisconsin Dells, Wisconsin
+Wolfsburg, Germany
+Wolverhampton, United Kingdom
+Woodbury, Minnesota
+Woodland Hills, California
+Woodside
+Worcester, Massachusetts
+Worcester, UK
+Worle, United Kingdom
+Worthing, United Kingdom
+Wrocław, Poland
+Wuppertal, Germany
+Würzburg, Germany
+Wylie, Texas
+Wyoming
+Yakima, Washington
+Yamagata, Japan
+Yamaguchi, Japan
+Yambol, Bulgaria
+Yellowstone National Park, Wyoming
+Yokkaichi, Japan
+Yokohama, Japan
+Yokosuka South, Japan
+Yokosuka, Japan
+Yokote, Japan
+Yonezawa, Japan
+Yonkers
+York, England
+York, Pennsylvania
+Yosemite Valley, California
+Youngstown, Ohio
+Yuba City, California
+Yucaipa
+Yukon, Oklahoma
+Yuma and Fortuna Foothills
+Yuma, Arizona
+Zachary, Louisiana
+Zadar, Croatia
+Zagreb, Croatia
+Zakynthos, Greece
+Zamora, Spain
+Zanesville, Ohio
+Zaoonsen, Japan
+Zaragoza, Spain
+Zell am See
+Zielona Gora, Poland
+Zinfandel, California
+Zion National Park, Utah
+Zion, Illinois
+Zlín, Czech Republic
+Zug, Switzerland
+Zürich, Switzerland
+Zwickau, Germany
+Zwolle, Netherlands
+
+`.match(/.+/g);
+console.log(places);
+const place = places[Math.floor(places.length * Math.random())];
+const query = encodeURIComponent(place);
+const url = 'https://www.google.com/maps?t=k&q=' + query;
+
+// https://developers.google.com/maps/documentation/urls/guide
+// AIzaSyC8nDbdIw5Tx7u_j-gy3YtZrI53kMPUXt8
+
+console.log(url);
+const a = document.body.childNodes[1]; a.href = url; a.innerText = place;
+if (! document.location.search) location = url;
+
+  </script>
+</body>
+</html>

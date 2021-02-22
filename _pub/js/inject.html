@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+
+Denis Howe 2018-08-09
+
+https://foldoc.org/pub/js/inject.html
+
+Display data from https://api.github.com/users/unipartdigital
+using HTML elements injected via native JavaScript.
+If no data is returned display, "No data found".
+
+Handle the API being down or returning an error (bad subdomain, bad host, bad user).
+
+-->
+
+<html>
+<head>
+<title>Inject</title>
+<meta charset="UTF-8">
+<style type="text/css">
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid;
+    padding: 3px;
+}
+</style>
+</head>
+<body>
+<script>
+
+(function () {
+
+    function showProps(obj) {
+		if (typeof obj == 'string') return obj
+        const ks = Object.keys(obj);
+        return element('table', ks, k => tableRow([k, obj[k]]));
+    }
+
+    function tableRow(args) {
+        return element('tr', args, x => element('td', [x]));
+    }
+
+    function element(tag, kids, f) {
+        if (f) kids = kids.map(f);
+        return '<' + tag + '>' + kids.join('') + '</' + tag + '>';
+    }
+
+    function fail(mess) { return `No data found<br>\n(${mess})` }
+
+    window.fetch('https://api.github.com/users/unipartdigital')
+        .then(res => res.status == 200 ? res.json() : fail('fetch: ' + res.statusText))
+        .catch(fail)
+        .then(obj => document.body.innerHTML = showProps(obj.message ? fail(obj.message) : obj))
+
+})();
+
+</script>
+</body>
+</html>

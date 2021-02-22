@@ -1,0 +1,4193 @@
+From jik@athena.mit.edu Mon Aug 10 12:02:09 1992
+From: jik@athena.mit.edu (Jonathan I. Kamens)
+Newsgroups: news.lists,news.announce.newusers,news.answers
+Subject: List of Periodic Informational Postings, Part I
+Date: 8 Aug 92 05:09:04 GMT
+Followup-To: poster
+Organization: Massachusetts Institute of Technology
+Supersedes: <periodic-postings_710658475@athena.mit.edu>
+Nntp-Posting-Host: pit-manager.mit.edu
+
+Archive-name: periodic-postings/part1
+Version: $Id: periodic-postings,v 1.10 1992/03/16 02:21:34 jik Exp $
+
+
+Many newsgroups contain articles which are posted on a periodic basis.
+These articles tend to be useful for both novice and experienced
+users, as they usually fall into one of these categories:
+
+    1. How-to articles explaining some of the basics and fine
+    points of network usage, etiquette, standards, etc.
+
+    2. Introductory notes about one or more newsgroups, covering
+    policies (if any) for submissions to that group, usage, etc.
+    Common questions and answers pertinent to a newsgroup(s).
+
+    3. Indexes of archives, or pointers to archives for various
+    groups.  Periodic newsletters, calendars, pointers to
+    publications.
+
+    4. Statistical information and reports about Usenet; tables of
+    Usenet hosts, links, etc.
+
+    5. Miscellany, including small useful sources, "fun" lists, and so
+    on.
+
+This is a list of the periodic postings known at this time; each
+posting is listed in an entry that includes who posts the article,
+which newsgroup(s) it appears in, what "Subject" line is used, and how
+often the article is posted.  The list is sorted by the "Newsgroups"
+line.  The character '*' is used as a wildcard, e.g. "v*INF1" matches
+"v01INF1", "v02INF1", etc.
+
+The "Date" line of a posting's entry indicates, where given, when the
+posting last appeared.  However, it may be inaccurate if (a) the
+maintainer of the posting has changed the "Subject" line, or (b) the
+most recent version has not reached my site, or (c) the entry actually
+corresponds to multiple postings because of wildcarding.
+
+The "Archive-name" line of a posting's entry indicates, where given,
+the archive name that appeared in the posting when it was last posted.
+Note that if one entry matches multiple postings because of
+wildcarding, then only one archive name will appear.
+
+Corrections and additions (via MAIL) are most welcome.  New entries
+for the list should be submitted in the same form as the entries
+below, with From, Newsgroups, Subject, Frequency, and (optionally)
+Comments lines, in that order.
+
+>From the summer of 1989, when this list was created, until February,
+1992, it was maintained by Rich Kulawiec <rsk@gynko.circ.upenn.edu>.
+He has handed it over to me because my position as moderator of
+news.answers makes it easier for me to keep track of periodic
+informational postings, and because he would like to devote more time
+and energy to other efforts.
+
+Several archives of USENET periodic informational postings exist.  To
+find out more about them and how to access them, see the posting
+entitled "Introduction to news.answers" in the news.answers newsgroup.
+If you do not know how to get that newsgroup and/or your site does not
+receive it and/or that article has expired in it, you can retrieve it
+via anonymous ftp from pit-manager.mit.edu [18.172.1.27] in the file
+/pub/usenet/news.answers/news-answers-intro.  If you do not have
+access to anonymous ftp, you can retrieve it by sending a mail message
+to mail-server@pit-manager.mit.edu with the command "send
+usenet/news.answers/news-answers-intro" in the message.
+
+----------------------------------------------------------------------
+
+[List generated at Sat Aug  8 01:05:53 EDT 1992]
+
+ From: pisces@binkley.cs.mcgill.ca
+ Newsgroups: alt.astrology
+ Subject: Alt.astrology Frequently Asked Questions
+ Frequency: monthly
+ Comments: Available at the ftp site hilbert.maths.utas.edu.au, in
+           pub/astrology directory, filename "faq"
+
+ From: mathew@mantis.co.uk (mathew)
+ Newsgroups: alt.atheism,news.answers
+ Subject: Alt.Atheism Frequently Asked Questions (FAQ)
+ Frequency: monthly
+ Date: 29 May 92 14:35:16 GMT
+ Archive-name: atheism-faq
+
+ From: phil@bts.com (Phil Eschallier)
+ Newsgroups: alt.bbs
+ Subject: Nixpub Posting (Short)
+ Frequency: monthly
+ Date: 28 Jun 92 15:05:02 GMT
+
+ From: phil@bts.com (Phil Eschallier)
+ Newsgroups: alt.bbs,alt.bbs.lists,comp.misc
+ Subject: Nixpub Posting (Long)
+ Frequency: monthly
+ Date: 28 Jun 92 15:03:16 GMT
+
+ From: tak2@Isis.MsState.Edu (Thomas A. Kreeger)
+ Newsgroups: alt.bbs.internet
+ Subject: Zamfield's Internet BBS List
+ Frequency: biweekly
+ Date: Tue, 31 Mar 1992 05:40:27 GMT
+
+ From: edguer@ces.cwru.edu (Aydin Edguer)
+ Newsgroups: alt.bbs.internet
+ Subject: alt.bbs.internet Frequently Asked Questions [FAQ] (with answers)
+ Frequency: weekly
+
+ From: pyro@casbah.acns.nwu.edu (Leedell Miller)
+ Newsgroups: alt.bbs.lists,soc.motss,soc.bi
+ Subject: Gay and Lesbian BBS List - * *
+ Frequency: monthly
+ Reply-To: 76057.3140@compuserve.com (Ephraim Dickstein)
+ Comments: List's home is at BBS `Coconut Club', 1+312-281-6887
+
+ From: jimmy_t@verifone.com
+ Newsgroups: alt.bbs.waffle,comp.mail.uucp,news.software.readers,vmsnet.uucp
+ Subject: FAQ - UUCP Mail, News, and Gateway Software for PCs and MACs
+ Frequency: unknown
+ Date: 9 May 92 09:03:36 GMT
+
+ From: deej@cadence.com (Jim Howard)
+ Newsgroups: alt.binaries.pictures.misc,alt.binaries.pictures.tasteless,alt.binaries.pictures.fractals,alt.binaries.pictures.erotica,alt.sex.pictures,alt.sex.pictures.d,alt.binaries.pictures,alt.binaries.pictures.d,alt.binaries.pictures.erotica.d,news.answers
+ Subject: alt.binaries.pictures FAQ - General info
+ Frequency: every two weeks
+ Archive-name: pictures-faq/part1
+ Date: 3 Aug 92 08:56:06 GMT
+
+ From: deej@cadence.com (Jim Howard)
+ Newsgroups: alt.binaries.pictures.misc,alt.binaries.pictures.tasteless,alt.binaries.pictures.fractals,alt.binaries.pictures.erotica,alt.sex.pictures,alt.sex.pictures.d,alt.binaries.pictures,alt.binaries.pictures.d,alt.binaries.pictures.erotica.d,news.answers
+ Subject: alt.binaries.pictures FAQ - OS specific info
+ Frequency: every two weeks
+ Archive-name: pictures-faq/part2
+ Date: Mon, 3 Aug 1992 08:56:33 GMT
+
+ From: guido@cwi.nl (Guido van Rossum)
+ Newsgroups: alt.binaries.sounds.misc,alt.binaries.sounds.d,comp.dsp,news.answers
+ Subject: Changes to: FAQ: Audio File Formats (version *.*)
+ Frequency: monthly
+ Date: 4 Jun 92 08:30:57 GMT
+ Archive-name: audio-fmts/diff
+
+ From: guido@cwi.nl (Guido van Rossum)
+ Newsgroups: alt.binaries.sounds.misc,alt.binaries.sounds.d,comp.dsp,news.answers
+ Subject: FAQ: Audio File Formats (version *.*)
+ Frequency: monthly
+ Date: 20 May 92 12:27:03 GMT
+ Archive-name: audio-fmts/part1
+
+ From: rice@groupw.rtp.dg.com (Brian Rice)
+ Newsgroups: alt.buddha.short.fat.guy,news.answers
+ Subject: alt.buddha.short.fat.guy Frequently Asked Questions List
+ Frequency: irregular
+
+ From: news@becker.gts.org (Usenet News)
+ Newsgroups: alt.config,alt.newgroup,news.admin,news.groups
+ Subject: Another listing of newsgroups in the "alt" Usenet hierarchy
+ Frequency: monthly
+
+ From: ccs@aber.ac.uk (Christopher Samuel)
+ Newsgroups: alt.config,news.groups,news.answers
+ Subject: Creating a new "alt" group -- guidelines
+ Frequency: every other week
+ Archive-name: alt-config-guide
+ Date: 6 Aug 92 10:47:43 GMT
+
+ From: cavasin@MUSE.CONVEX.COM (Vince Cavasin)
+ Newsgroups: alt.drugs
+ Subject: FTP INSTRUCTIONS (biweekly post)
+ Frequency: fortnightly
+ Date: 1 Aug 92 06:00:05 GMT
+
+ From: David A Honig <honig@thalia.ICS.UCI.EDU>
+ Newsgroups: alt.drugs
+ Subject: LSD-FAQ
+ Frequency: irregular
+
+ From: dcook@npal.rn.com
+ Newsgroups: alt.drugs
+ Subject: Legal High Of The Month - *
+ Frequency: monthly
+ Date: 6 Feb 92 09:49:11 GMT
+
+ From: David A Honig <honig@thalia.ICS.UCI.EDU>
+ Newsgroups: alt.drugs
+ Subject: MDA-FAQ
+ Frequency: irregular
+
+ From: David A Honig <honig@thalia.ICS.UCI.EDU>
+ Newsgroups: alt.drugs
+ Subject: XTC-FAQ
+ Frequency: irregular
+
+ From: cavasin@MUSE.CONVEX.COM (Vince Cavasin)
+ Newsgroups: alt.drugs
+ Subject: [l/m */*/*] ADDRESSES FAQ (biweekly post)
+ Frequency: fortnightly
+ Date: 1 Aug 92 07:00:05 GMT
+
+ From: cavasin@MUSE.CONVEX.COM (Vince Cavasin)
+ Newsgroups: alt.drugs
+ Subject: [l/m */*/*] NATURAL HIGHS FAQ (biweekly post)
+ Frequency: fortnightly
+ Date: 1 Aug 92 05:00:08 GMT
+
+ From: zane@ddsw1.MCS.COM (Sameer Parekh)
+ Newsgroups: alt.drugs,talk.politics.drugs
+ Subject: Free Journal Volume *, Issue *
+ Frequency: unknown
+ Date: 9 Feb 92 06:08:34 GMT
+
+ From: dci@cs.washington.edu (Donald Chinn)
+ Newsgroups: alt.drumcorps,news.answers
+ Subject: alt.drumcorps Frequently Asked Questions (FAQ)
+ Frequency: monthly
+ Date: 17 Jul 92 18:00:33 GMT
+ Archive-name: drumcorps-faq
+
+ From: gnat@kauri.vuw.ac.nz (Nathan Torkington)
+ Newsgroups: alt.fan.douglas-adams,news.answers
+ Subject: alt.fan.douglas-adams FAQ
+ Frequency: every two weeks
+ Archive-name: douglas-adams-FAQ
+ Date: 31 Jul 92 12:00:16 GMT
+
+ From: gnat@kauri.vuw.ac.nz (Nathan Torkington)
+ Newsgroups: alt.fan.pratchett,news.answers
+ Subject: alt.fan.pratchett FAQ
+ Frequency: fortnightly
+ Date: Sun, 5 Jul 1992 01:37:30 GMT
+ Archive-name: terry-pratchett-FAQ
+
+ From: mdchaney@bronze.ucs.indiana.edu (M Darrin Chaney)
+ Newsgroups: alt.folklore.urban
+ Subject: Monthly Posting
+ Frequency: monthly
+
+ From: ingram@milton.u.washington.edu (Doug Ingram)
+ Newsgroups: alt.games.gb,news.answers
+ Subject: Alt.games.gb (Galactic Bloodshed) FAQ  [Part 1 of 2]
+ Frequency: unknown
+ Archive-name: alt-games-gb/part1
+ Date: 20 Jun 92 16:26:01 GMT
+
+ From: ingram@milton.u.washington.edu (Doug Ingram)
+ Newsgroups: alt.games.gb,news.answers
+ Subject: Alt.games.gb (Galactic Bloodshed) FAQ  [Part 2 of 2]
+ Frequency: unknown
+ Archive-name: alt-games-gb/part2
+ Date: 20 Jun 92 16:26:42 GMT
+
+ From: gopher@boombox.micro.umn.edu (UofMN Gopher Team)
+ Newsgroups: alt.gopher,news.answers
+ Subject: Internet Gopher (alt.gopher) Frequently Asked Questions (FAQ)
+ Frequency: fortnightly
+ Archive-name: gopher-faq
+ Date: 4 Aug 92 05:22:20 GMT
+
+ From: jef@netcom.com (Jef Poskanzer)
+ Newsgroups: alt.hackers,news.answers
+ Subject: (*) Welcome to alt.hackers - automated posting.
+ Frequency: weekly
+ Archive-name: hackers-faq
+ Date: 2 Aug 92 17:17:55 GMT
+
+ From: oracle-request@iuvax.cs.indiana.edu
+ Newsgroups: alt.humor.oracle,news.answers,rec.humor.oracle
+ Subject: [rec.humor.oracle] Intro to the Usenet Oracle (Monthly Posting)
+ Frequency: monthly
+ Date: 2 Apr 92 04:50:11 GMT
+ Archive-name: usenet-oracle-intro
+
+ From: yanoff@csd4.csd.uwm.edu (Scott A. Yanoff)
+ Newsgroups: alt.internet.services,comp.misc,biz.comp.services,alt.bbs.internet
+ Subject: Updated Internet Services List
+ Frequency: Weekly.
+ Date: Tue, 4 Aug 1992 16:37:22 GMT
+
+ From: cos@chaos.cs.brandeis.edu (Ofer Inbar)
+ Newsgroups: alt.lang.basic,news.answers
+ Subject: FAQ for alt.lang.basic, * (*)
+ Frequency: monthly
+
+ From: hes@ncsu.edu (Henry E. Schaffer)
+ Newsgroups: alt.locksmithing
+ Subject: FAQ File for alt.locksmithing
+ Frequency: unknown
+
+ From: joshua@COOMBS.ANU.EDU.AU (Joshua Geller)
+ Newsgroups: alt.magick
+ Subject: alt.magick FAQ ... automatic posting
+ Frequency: every two weeks
+ Date: 22 Apr 92 23:45:47 GMT
+
+ From: mcmahan@cs.unca.edu (automated FAQ posting)
+ Newsgroups: alt.music.progressive
+ Subject: Welcome to alt.music.progressive (automatic,bi-weekly)
+ Frequency: fortnightly
+ Date: 1 Jun 92 15:53:29 GMT
+
+ From: kmcvay@oneb.almanac.bc.ca
+ Newsgroups: alt.revisionism,talk.politics.mideast,talk.politics.misc
+ Subject: B-CPU FAQ
+ Frequency: monthly
+
+ From: aem@aber.ac.uk (Alec David Muffett)
+ Newsgroups: alt.security,news.answers
+ Subject: Alt.Security Frequently Asked Questions - read this before posting
+ Frequency: monthly
+
+ From: superdj@binkley.cs.mcgill.ca
+ Newsgroups: alt.sex,news.answers
+ Subject: [ALT.SEX] FAQ (*/*)
+ Frequency: monthly
+ Date: Mon, 6 Jul 1992 20:29:51 GMT
+ Archive-name: alt-sex-faq/part1
+
+ From: robertj@Autodesk.COM (Young Rob Jellinghaus)
+ Newsgroups: alt.sex.bondage
+ Subject: The alt.sex.bondage FAQ list
+ Frequency: monthly
+ Date: 1 Aug 92 07:03:01 GMT
+
+ From: superdj@binkley.cs.mcgill.ca
+ Newsgroups: alt.sex.wizards
+ Subject: ALT.SEX.WIZARDS FAQ (*/*)
+ Frequency: monthly
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: alt.sources,alt.sources.d,news.answers
+ Subject: Welcome to alt.sources! (biweekly posting)
+ Frequency: biweekly
+ Archive-name: alt-sources-intro
+ Date: Wed, 5 Aug 1992 05:01:00 GMT
+
+ From: case@diku.dk (Saint Ool)
+ Newsgroups: alt.tasteless,news.answers
+ Subject: Welcome to alt.tasteless! (Monthly Posting)
+ Frequency: monthly
+ Date: 17 May 92 14:44:51 GMT
+ Archive-name: tasteless-faq
+
+ From: barrett@aminet.uucp
+ Newsgroups: alt.tv.prisoner,news.answers
+ Subject: WEEKLY POSTING: The Prisoner FAQ
+ Frequency: monthly
+ Date: 5 Apr 92 05:01:02 GMT
+
+ From: mrapple@quack.sac.ca.us (Nick Sayer)
+ Newsgroups: alt.tv.ren-n-stimpy,alt.fan.ren-and-stimpy,news.answers
+ Subject: The Ren & Stimpy Show: Frequently Asked Questions (FAQ)
+ Frequency: every two weeks
+ Archive-name: ren-n-stimpy.faq
+ Date: 1 Aug 92 12:30:05 GMT
+
+ From: brendan@cs.widener.edu (Brendan Kehoe)
+ Newsgroups: alt.tv.simpsons,news.answers
+ Subject: alt.tv.simpsons Changes to Frequently Asked Questions
+ Frequency: monthly
+ Date: 5 May 92 17:46:02 GMT
+ Archive-name: simpsons/diff
+
+ From: brendan@cs.widener.edu (Brendan Kehoe)
+ Newsgroups: alt.tv.simpsons,news.answers
+ Subject: alt.tv.simpsons Frequently Asked Questions
+ Frequency: monthly
+ Date: 5 May 92 17:45:59 GMT
+ Archive-name: simpsons/faq
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: alt.tv.simpsons,rec.arts.tv
+ Subject: "The Simpsons" Air Dates (*)
+ Frequency: Twice a month (monthly July/August)
+ Date: 4 Apr 92 02:27:14 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: alt.tv.simpsons,rec.arts.tv
+ Subject: "The Simpsons" Episode Guide (*)
+ Frequency: Twice a month (monthly July/August)
+ Date: Sat, 4 Apr 92 02:29:46 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: alt.tv.simpsons,rec.arts.tv
+ Subject: DIFFs - "The Simpsons" Air Dates
+ Frequency: Twice a month (monthly July/August)
+ Date: 19 Feb 92 06:40:38 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: alt.tv.simpsons,rec.arts.tv
+ Subject: DIFFs - "The Simpsons" Episode Guide
+ Frequency: Twice a month (monthly July/August)
+ Date: 19 Feb 92 06:41:48 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: alt.tv.simpsons,rec.arts.tv
+ Subject: Simpsons Lists in ZOO format [*/*] (*)
+ Frequency: Twice a month (monthly July/August)
+ Date: 19 Feb 92 06:39:43 GMT
+
+ From: synth@yenta.alb.nm.us (Synth F. Oberheim)
+ Newsgroups: alt.tv.tiny-toon
+ Subject: alt.tv.tiny-toon Frequently Asked Questions (updated)
+ Frequency: unknown
+ Date: 20 May 92 06:39:26 GMT
+
+ From: jkp@cs.HUT.FI (Jyrki Kuoppala)
+ Newsgroups: alt.uu.announce,alt.config,alt.education.distance,news.answers,misc.education,comp.edu,alt.education.disabled,sci.edu,alt.culture.usenet
+ Subject: ADMIN: What's Usenet University; the current list of UU groups
+ Frequency: unknown
+
+ From: Jim McIntosh <jim@american.edu>
+ Newsgroups: bit.admin
+ Subject: bit.** Moderator List
+ Frequency: Monthly
+
+ From: Jim McIntosh <jim@american.edu>
+ Newsgroups: bit.admin,news.answers
+ Subject: Mailing Lists Available in Usenet
+ Frequency: Monthly
+
+ From: Jim McIntosh <jim@american.edu>
+ Newsgroups: bit.admin,news.answers
+ Subject: NetNews/Listserv Gateway Policy
+ Frequency: Monthly
+
+ From: Jim McIntosh <jim@american.edu>
+ Newsgroups: bit.admin,news.answers
+ Subject: bit.** Newsgroup List
+ Frequency: Monthly
+
+ From: DOUG@ysub.ysu.edu (Doug Sewell)
+ Newsgroups: bit.admin,news.misc
+ Subject: Introduction to bit.*
+ Frequency: monthly
+ Date: 1 Feb 92 01:43:53 GMT
+
+ From: gerland@ubvmsb.cc.buffalo.edu (Jim Gerland)
+ Newsgroups: bit.listserv.wpcorp-l,news.answers
+ Subject: bit.listserv.wpcorp-l & wpcorp-l faq
+ Frequency: monthly
+
+ From: scott@phlpa.pha.pa.us (Scott Scheingold)
+ Newsgroups: biz.sco.general,news.newusers.questions
+ Subject: BIZ.SCO.GENERAL FAQ
+ Frequency: fortnightly
+ Date: Sat, 02 May 1992 16:33:46 GMT
+
+ From: eugene@nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: ca.earthquakes,misc.emerg-services
+ Subject: [lm */*] Frequently asked earthquake references (where to find)
+ Frequency: biweekly
+ Date: 27 Jul 91 11:30:55 GMT
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: ca.general,ba.general
+ Subject: [l/m */*] A short note on Distribution:
+ Frequency: biweekly
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: ca.general,ba.general
+ Subject: [l/m */*] A short note on posting, cross-posting
+ Frequency: biweekly
+ Date: 21 May 92 11:00:42 GMT
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: ca.general,ba.general
+ Subject: [l/m */*] How to cancel news articles
+ Frequency: biweekly
+ Date: 22 May 92 11:30:49 GMT
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: ca.general,ba.general
+ Subject: [l/m */*] Kill files . . . with extreme prejudice
+ Frequency: biweekly
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: ca.general,ba.general
+ Subject: [l/m */*] Reminders for old hands and new readers ([b|c]a.general)
+ Frequency: biweekly
+ Date: Thu, 14 May 92 11:30:47 GMT
+
+ From: prechelt@i41s14.ira.uka.de (Lutz Prechelt)
+ Newsgroups: comp.ai.neural-nets
+ Subject: changes to "FAQ in comp.ai.neural-nets" -- monthly posting
+ Frequency: monthly
+ Date: 28 Jan 1992 03:17:13 GMT
+
+ From: prechelt@i41s14.ira.uka.de (Lutz Prechelt)
+ Newsgroups: comp.ai.neural-nets,news.answers
+ Subject: FAQ in comp.ai.neural-nets -- monthly posting
+ Frequency: monthly
+ Date: 28 Jul 1992 02:17:30 GMT
+ Archive-name: neural-net-faq
+
+ From: alvitar@xavax.com (Phillip Harbison)
+ Newsgroups: comp.arch
+ Subject: A reminder about posting to comp.arch (last mod */*/*)
+ Frequency: monthly
+ Date: 1 Aug 92 07:00:04 GMT
+
+ From: vds7789@aw2.fsl.ca.boeing.com (Vince Skahan)
+ Newsgroups: comp.bbs.waffle,news.answers
+ Subject: Waffle Frequently Asked Questions (FAQ)
+ Frequency: every 30 days
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: comp.benchmarks
+ Subject: [l/m */*/*] *	c.be FAQ
+ Frequency: unknown
+ Date: Fri, 12 Jun 92 11:25:48 GMT
+
+ From: koreth@twitterpater.eng.sun.com (Steven Grimm)
+ Newsgroups: comp.binaries.atari.st,comp.sys.atari.st
+ Subject: v*INF*: Index of previously-published binaries
+ Frequency: every few months
+ Date: 19 Dec 91 19:07:18 GMT
+ Archive-name: Index
+
+ From: koreth@twitterpater.eng.sun.com (Steven Grimm)
+ Newsgroups: comp.binaries.atari.st,comp.sys.atari.st
+ Subject: v*INF*: Introduction to comp.binaries.atari.st
+ Frequency: every few months
+ Date: 19 Dec 91 19:07:08 GMT
+ Archive-name: intro
+
+ From: koreth@panarthea.ebay.sun.com (Steven Grimm)
+ Newsgroups: comp.binaries.atari.st,comp.sys.atari.st
+ Subject: v*INF*: Unpacking binaries (and retrieving old ones)
+ Frequency: every few months
+ Date: 19 Dec 91 19:07:30 GMT
+ Archive-name: unpack.cooked
+
+ From: cbip@cs.ulowell.edu (CBIP Moderator)
+ Newsgroups: comp.binaries.ibm.pc
+ Subject: v*inf*: *
+ Frequency: unknown
+ Date: 15 Jun 92 14:21:06 GMT
+ Archive-name: admin/policy
+
+ From: cbip@cs.ulowell.edu (CBIP Moderator)
+ Newsgroups: comp.binaries.ibm.pc
+ Subject: v*inf*: Administrative notes
+ Frequency: unknown
+ Date: 6 Feb 92 16:33:29 GMT
+ Archive-name: admin/notes
+
+ From: cbip@cs.ulowell.edu (CBIP Moderator)
+ Newsgroups: comp.binaries.ibm.pc
+ Subject: v*inf*: CBIP Submissions and Posting Policy (part */*)
+ Frequency: unknown
+ Date: 13 Feb 92 18:21:33 GMT
+ Archive-name: admin/policy
+
+ From: cbip@cs.ulowell.edu (CBIP Moderator)
+ Newsgroups: comp.binaries.ibm.pc
+ Subject: v*inf*: bin.man, Beginner's Guide to Binaries (part */*)
+ Frequency: unknown
+ Date: 14 Feb 92 19:31:45 GMT
+ Archive-name: admin/bin.man
+
+ From: cbip@cs.ulowell.edu (CBIP Moderator)
+ Newsgroups: comp.binaries.ibm.pc
+ Subject: v*inf*: charter, CBIP.* charter (part */*)
+ Frequency: unknown
+ Date: 14 Feb 92 19:41:09 GMT
+ Archive-name: admin/charter
+
+ From: cbip@cs.ulowell.edu (CBIP Moderator)
+ Newsgroups: comp.binaries.ibm.pc
+ Subject: v*inf*: starter.kit, CBIP Starter's Kit (part */*)
+ Frequency: unknown
+ Date: 14 Feb 92 21:22:04 GMT
+ Archive-name: admin/starter.kit
+
+ From: compilers-request@iecc.cambridge.ma.us (John R. Levine)
+ Newsgroups: comp.compilers
+ Subject: Comp.compilers 1990 Annual
+ Frequency: monthly
+ Date: 1 Aug 92 11:00:13 GMT
+
+ From: compilers-request@iecc.cambridge.ma.us (John R. Levine)
+ Newsgroups: comp.compilers,news.answers
+ Subject: comp.compilers monthly message and Frequently Asked Questions
+ Frequency: monthly
+ Archive-name: compilers-faq
+ Date: Sat, 1 Aug 1992 11:00:04 GMT
+
+ From: lemson@ux1.cso.uiuc.edu (David Lemson)
+ Newsgroups: comp.compression
+ Subject: Compression Table - How to decompress anything (long)
+ Frequency: monthly
+ Date: 6 Aug 91 15:19:12 GMT
+
+ From: jloup@chorus.fr (Jean-loup Gailly)
+ Newsgroups: comp.compression,news.answers
+ Subject: comp.compression Frequently Asked Questions (part */*)
+ Frequency: twice per month
+ Date: 10 Jul 92 16:36:09 GMT
+ Archive-name: compression-faq/part1
+
+ From: welch@xcf.Berkeley.EDU (Sean N. Welch)
+ Newsgroups: comp.dcom.isdn,news.answers
+ Subject: ISDN Frequently Asked Questions (and Answers) [Monthly posting]
+ Frequency: monthly
+ Date: 13 Jul 92 23:02:23 GMT
+ Archive-name: isdn-faq
+
+ From: eric@snark.thyrsus.com (Eric S. Raymond)
+ Newsgroups: comp.dcom.modems,news.answers
+ Subject: Configuring the Telebit Trailblazer for Use with UNIX
+ Frequency: every two months
+
+ From: telecom@eecs.nwu.edu (TELECOM Moderator)
+ Newsgroups: comp.dcom.telecom
+ Subject: Welcome to TELECOM Digest / comp.dcom.telecom
+ Frequency: monthly
+ Date: 3 Feb 92 04:00:00 GMT
+
+ From: wais@daneel.rdt.monash.edu.au (WAIS Information Services (Rik Harris maintainer))
+ Newsgroups: comp.doc.techreports,news.answers
+ Subject: Computer Science Technical Report Archive Sites
+ Frequency: monthly
+ Date: 13 Jul 92 15:30:40 GMT
+ Archive-name: techreport-sites
+
+ From: fin@unet.umn.edu (Craig A. Finseth)
+ Newsgroups: comp.editors,comp.emacs,news.answers
+ Subject: Emacs implementations, list of, regular post [long]
+ Frequency: approximately every two months
+ Date: 17 Jul 92 18:17:40 GMT
+ Archive-name: emacs-implementations
+
+ From: buboo@alf.uib.no (Ove Ruben R Olsen)
+ Newsgroups: comp.editors,news.answers
+ Subject: comp.editors - Frequently Asked Questions
+ Frequency: monthly
+ Date: 27 Jun 92 12:59:38 GMT
+ Archive-name: editor-faq/part1
+
+ From: buboo@alf.uib.no (Ove Ruben R Olsen)
+ Newsgroups: comp.editors,news.answers
+ Subject: comp.editors - VI Archives
+ Frequency: monthly
+ Date: 27 Jun 92 12:59:40 GMT
+ Archive-name: editor-faq/part2
+
+ From: lee@sq.sq.com (Liam R. E. Quin)
+ Newsgroups: comp.fonts,comp.text.tex
+ Subject: Definitive list of all fonts available for Metafont
+ Frequency: every six weeks or so
+ Date: 3 May 92 03:48:55 GMT
+
+ From: jhelling@cs.ruu.nl (Jeroen Hellingman)
+ Newsgroups: comp.fonts,soc.culture.indian,comp.text
+ Subject: multilungual font FAQ
+ Frequency: unknown
+
+ From: tgl+@cs.cmu.edu (Tom Lane)
+ Newsgroups: comp.graphics,alt.graphics.pixutils,alt.binaries.pictures.utilities,alt.binaries.pictures.d,alt.binaries.pictures.erotica.d,news.answers
+ Subject: JPEG image compression: Frequently Asked Questions
+ Frequency: every two weeks
+
+ From: nfotis@ntua.gr (Nick (Nikolaos) C Fotis)
+ Newsgroups: comp.graphics,news.answers
+ Subject: (*) Computer Graphics Resource Listing : WEEKLY [part */*]
+ Frequency: weekly
+ Archive-name: graphics-resources-list/part1
+ Date: 1 Aug 92 12:49:41 GMT
+
+ From: grieggs@jpl-devvax.Jpl.Nasa.Gov (John T. Grieggs)
+ Newsgroups: comp.graphics,news.answers
+ Subject: (*) comp.graphics Frequently Asked Questions (FAQ)
+ Frequency: weekly
+ Date: Wed, 5 Aug 1992 21:05:10 GMT
+ Archive-name: graphics/faq
+
+ From: david@ruc.dk (David Stodolsky)
+ Newsgroups: comp.groupware,news.answers
+ Subject: Introduction to comp.groupware (Periodic informational post)
+ Frequency: every other week
+
+ From: emv@msen.com (Edward Vielmetti)
+ Newsgroups: comp.infosystems.wais,alt.wais
+ Subject: WAIS FAQ part * of *: *
+ Frequency: unknown
+ Date: 5 May 92 20:50:22 GMT
+
+ From: cline@sun.soe.clarkson.edu (Marshall Cline)
+ Newsgroups: comp.lang.c++,news.answers
+ Subject: C++FAQ/part* -- *
+ Frequency: monthly
+
+ From: scs@adam.mit.edu (Steve Summit)
+ Newsgroups: comp.lang.c,news.answers
+ Subject: comp.lang.c Answers (Abridged) to Frequently Asked Questions (FAQ)
+ Frequency: twice per month
+ Archive-name: C-faq/abridged
+ Date: Sat, 1 Aug 1992 04:48:12 GMT
+
+ From: scs@adam.mit.edu (Steve Summit)
+ Newsgroups: comp.lang.c,news.answers
+ Subject: comp.lang.c Answers to Frequently Asked Questions (FAQ List)
+ Frequency: monthly
+ Archive-name: C-faq/faq
+ Date: Sun, 2 Aug 1992 04:14:14 GMT
+
+ From: scs@adam.mit.edu (Steve Summit)
+ Newsgroups: comp.lang.c,news.answers
+ Subject: comp.lang.c Changes to Answers to Frequently Asked Questions (FAQ)
+ Frequency: monthly
+ Date: Mon, 1 Jun 1992 04:00:25 GMT
+ Archive-name: C-faq/diff
+
+ From: mkant+@cs.cmu.edu (Mark Kantrowitz)
+ Newsgroups: comp.lang.lisp,comp.lang.clos,news.answers
+ Subject: FAQ: CLOS and PCL Questions 5/5 [Monthly posting]
+ Frequency: monthly
+ Date: Mon, 13 Jul 92 08:02:31 GMT
+ Archive-name: lisp-faq/part5
+
+ From: mkant+@cs.cmu.edu (Mark Kantrowitz)
+ Newsgroups: comp.lang.lisp,comp.lang.scheme,news.answers
+ Subject: FAQ: Lisp Implementations and Mailing Lists 4/5 [Monthly posting]
+ Frequency: monthly
+ Date: Mon, 13 Jul 92 08:02:19 GMT
+ Archive-name: lisp-faq/part4
+
+ From: mkant+@cs.cmu.edu (Mark Kantrowitz)
+ Newsgroups: comp.lang.lisp,news.answers
+ Subject: FAQ: Lisp Frequently Asked Questions */5 [Monthly posting]
+ Frequency: monthly
+ Date: Mon, 13 Jul 92 08:01:17 GMT
+ Archive-name: lisp-faq/part1
+
+ From: muller@src.dec.com (Eric Muller)
+ Newsgroups: comp.lang.modula3,news.answers
+ Subject: Modula-3 Frequently Asked Questions (FAQ)
+ Frequency: monthly
+ Date: 20 Mar 92 23:30:26 GMT
+ Archive-name: Modula-3-faq
+
+ From: tchrist@convex.COM (Tom Christiansen)
+ Newsgroups: comp.lang.perl,news.answers
+ Subject: comp.lang.perl FAQ
+ Frequency: monthly
+ Date: 8 May 92 00:19:27 GMT
+ Archive-name: perl-faq/faq
+
+ From: tchrist@convex.COM (Tom Christiansen)
+ Newsgroups: comp.lang.perl,news.answers
+ Subject: comp.lang.perl FAQ diffs
+ Frequency: monthly
+ Date: 6 Feb 92 21:19:16 GMT
+
+ From: shiva@well.sf.ca.us (Kenneth Porter)
+ Newsgroups: comp.lang.postscript
+ Subject: FAQ: Frequently Asked Questions in comp.lang.postscript
+ Frequency: monthly
+
+ From: lvirden@cas.org (Larry W. Virden)
+ Newsgroups: comp.lang.tcl,news.answers
+ Subject: comp.lang.tcl Frequently Asked Questions (*/*)
+ 	 (Last updated: *)
+ Frequency: monthly
+ Archive-name: tcl-faq/part1
+ Date: Thu, 6 Aug 1992 11:11:41 GMT
+
+ From: syd@dsinc.DSI.COM (Syd Weinstein)
+ Newsgroups: comp.mail.elm,news.answers
+ Subject: Changes to the Monthly Elm Posting from the Elm Development Group
+ Frequency: monthly
+ Date: 15 Jul 92 01:16:52 GMT
+ Archive-name: elm-monthly/diff
+
+ From: syd@dsinc.DSI.COM (Syd Weinstein)
+ Newsgroups: comp.mail.elm,news.answers
+ Subject: Monthly Elm Posting from the Elm Development Group
+ Frequency: monthly
+ Date: 15 Jul 92 01:16:26 GMT
+ Archive-name: elm-monthly/part1
+
+ From: uucpmap@rutgers.rutgers.edu (UUCP Mapping Project)
+ Newsgroups: comp.mail.maps
+ Subject: UUCP map for *
+ Frequency: monthly
+ Date: 24 Jul 92 16:53:34 GMT
+
+ From: wohler@sap-ag.de (Bill Wohler)
+ Newsgroups: comp.mail.mh,news.answers
+ Subject: MH Frequently Asked Questions (FAQ) with Answers
+ Frequency: monthly
+ Date: Thu, 18 Jun 1992 05:00:40 GMT
+ Archive-name: mh-faq
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: comp.mail.misc,comp.sources.wanted,news.answers
+ Subject: Mail Archive Server (MAS) software list
+ Frequency: monthly
+ Date: Sun, 28 Jun 1992 05:00:31 GMT
+ Archive-name: mas-software
+
+ From: poslfit@gpu.utcs.utoronto.ca (J.J. Chew)
+ Newsgroups: comp.mail.misc,news.newusers.questions
+ Subject: * * Inter-Network Mail Guide
+ Frequency: monthly
+ Archive-name: inmg9206
+ Date: 28 Jul 1992 22:14:53 GMT
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: comp.mail.misc,soc.net-people,news.newusers.questions,news.answers
+ Subject: FAQ: How to find people's E-mail addresses
+ Frequency: biweekly
+ Archive-name: finding-addresses
+ Date: Wed, 5 Aug 1992 05:00:25 GMT
+
+ From: ian@airs.com (Ian Lance Taylor)
+ Newsgroups: comp.mail.uucp,news.answers
+ Subject: UUCP Internals Frequently Asked Questions
+ Frequency: monthly
+ Date: 23 Jul 92 08:30:11 GMT
+ Archive-name: uucp-internals
+
+ From: aftp-list@netcom.com (Tom Czarnik, Coordinator)
+ Newsgroups: comp.misc,comp.sources.wanted,alt.sources.wanted,comp.archives.admin,news.answers
+ Subject: Anonymous FTP List - FAQ
+ Frequency: monthly
+ Archive-name: ftp-list/faq
+ Date: 30 Jul 92 10:09:31 GMT
+
+ From: aftp-list@netcom.com (Tom Czarnik, Coordinator)
+ Newsgroups: comp.misc,comp.sources.wanted,alt.sources.wanted,news.answers
+ Subject: Anonymous FTP List - Files (Part */*)
+ Frequency: monthly
+ Date: 30 Jul 92 10:10:27 GMT
+ Archive-name: ftp-list/files2
+
+ From: aftp-list@netcom.com (Tom Czarnik, Coordinator)
+ Newsgroups: comp.misc,comp.sources.wanted,alt.sources.wanted,news.answers
+ Subject: Anonymous FTP List - Sites (Part */*)
+ Frequency: monthly
+ Archive-name: ftp-list/sites1
+ Date: 30 Jul 92 10:09:47 GMT
+
+ From: usenet@chg.mcd.mot.com (Newprod Moderator)
+ Newsgroups: comp.newprod
+ Subject: comp.newprod Guidelines
+ Frequency: four times a year
+
+ From: ctp@cs.utexas.edu (Clyde T. Poole)
+ Newsgroups: comp.org.decus,comp.sys.dec,comp.os.vms
+ Subject: DECUS Questions Answered (last change *-*-*)
+ Frequency: monthly
+ Date: 30 May 1992 13:48:37 -0500
+
+ From: pozar@toad.com (Tim Pozar)
+ Newsgroups: comp.org.fidonet
+ Subject: FidoNews
+ Frequency: weekly
+
+ From: mike@array.com (Mike Willett)
+ Newsgroups: comp.os.coherent
+ Subject: Comp.OS.Coherent FAQ
+ Frequency: unknown
+
+ From: corsini@labri.greco-prog.fr
+ Newsgroups: comp.os.linux,news.answers
+ Subject: Linux Frequently Asked Questions */2 [monthly posted]
+ Frequency: monthly
+ Date: 12 Jun 92 09:41:43 GMT
+ Archive-name: linux-faq/part1
+
+ From: jb3o+@andrew.cmu.edu (Jon Allen Boone)
+ Newsgroups: comp.os.mach
+ Subject: COMP.OS.MACH.FAQ
+ Frequency: monthly
+ Date: 7 Feb 92 13:38:08 GMT
+ Archive-name: comp-os-mach-faq
+
+ From: overby@plains.nodak.edu (Glen Overby)
+ Newsgroups: comp.os.minix
+ Subject: Changes to MINIX Information Sheet
+ Frequency: monthly
+ Date: 7 Jul 92 00:03:36 GMT
+
+ From: overby@plains.nodak.edu (Glen Overby)
+ Newsgroups: comp.os.minix,news.answers
+ Subject: MINIX Frequently Asked Questions (Last Changed: *)
+ Frequency: Bi-Monthly (1st and 15th)
+ Date: 17 Jul 92 00:28:05 GMT
+ Archive-name: minix-faq
+
+ From: overby@plains.nodak.edu (Glen Overby)
+ Newsgroups: comp.os.minix,news.answers
+ Subject: Minix Information Sheet (Last Changed: *)
+ Frequency: Bi-Monthly (1st and 15th)
+ Date: 17 Jun 92 13:52:37 GMT
+ Archive-name: minix-info
+
+ From: bodoh@xraylith.wisc.edu (Daniel J. Bodoh)
+ Newsgroups: comp.os.msdos.desqview,news.answers
+ Subject: DESQview/QEMM Frequently Asked Questions: READ BEFORE POSTING
+ Frequency: monthly
+ Date: 30 Jun 92 13:50:14 GMT
+ Archive-name: desqview-faq
+
+ From: brown@NCoast.ORG (Stan Brown)
+ Newsgroups: comp.os.msdos.programmer,news.answers
+ Subject: comp.os.msdos.programmer FAQ diff * of 4
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:48:38 GMT
+ Archive-name: msdos-programmer-faq/diff1
+
+ From: brown@NCoast.ORG (Stan Brown)
+ Newsgroups: comp.os.msdos.programmer,news.answers
+ Subject: comp.os.msdos.programmer FAQ part * of 4
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:57:07 GMT
+ Archive-name: msdos-programmer-faq/part1
+
+ From: sip1@ellis.uchicago.edu (Timothy F. Sipples)
+ Newsgroups: comp.os.os2.misc,comp.os.os2.apps,news.answers
+ Subject: OS/2 Frequently Asked Questions*
+ Frequency: biweekly
+ Date: Sat, 1 Aug 1992 16:30:41 GMT
+ Archive-name: os2-faq/user
+
+ From: bjaspan@athena.mit.edu (Barr3y Jaspan)
+ Newsgroups: comp.os.os2.programmer,comp.os.os2.misc,news.answers
+ Subject: OS/2 2.0 Frequently Asked Questions, Programmer's Edition *
+ Frequency: unknown
+ Date: Tue, 7 Jul 1992 20:59:52 GMT
+ Archive-name: os2-faq/prog
+
+ From: patents@cs.su.oz.au
+ Newsgroups: comp.patents
+ Subject: FAQ (Under Construction)
+ Frequency: unknown
+ Date: 5 Mar 92 08:10:48 GMT
+
+ From: srctran@world.std.com (Gregory Aharonian)
+ Newsgroups: comp.patents
+ Subject: Periodic Neural Net Patent Posting
+ Frequency: unknown
+ Date: 22 Feb 92 16:39:21 GMT
+
+ From: brnstnd@nyu.edu (Dan Bernstein)
+ Newsgroups: comp.programming
+ Subject: --- comp.programming charter: read before you post (weekly notice)
+ Frequency: weekly
+ Date: 26 Jul 92 04:00:10 GMT
+
+ From: nivek@frc.ri.cmu.edu (Kevin Dowling)
+ Newsgroups: comp.robotics,news.answers
+ Subject: comp.robotics FAQ (part * of 2)
+ Frequency: monthly
+
+ From: sauer@chama.eece.unm.edu (Tom Sauer)
+ Newsgroups: comp.soft-sys.khoros
+ Subject: comp.soft-sys.khoros FAQ *
+ Frequency: every 2 weeks
+
+ From: dalamb@qucis.queensu.ca (David Alex Lamb)
+ Newsgroups: comp.software-eng,news.answers
+ Subject: FAQ 1: comp.software-eng questions and answers
+ Frequency: monthly
+ Date: 8 Jul 92 01:55:24 GMT
+ Archive-name: software-eng/part1
+
+ From: dalamb@qucis.queensu.ca (David Alex Lamb)
+ Newsgroups: comp.software-eng,news.answers
+ Subject: FAQ 2: CASE tools summary
+ Frequency: monthly
+ Date: 8 Jul 92 01:55:32 GMT
+ Archive-name: software-eng/part2
+
+ From: dalamb@qucis.queensu.ca (David Alex Lamb)
+ Newsgroups: comp.software-eng,news.answers
+ Subject: FAQ 3: Software engineering readings
+ Frequency: monthly
+ Date: 8 Jul 92 01:55:37 GMT
+ Archive-name: software-eng/part3
+
+ From: dalamb@qucis.queensu.ca (David Alex Lamb)
+ Newsgroups: comp.software-eng,news.answers
+ Subject: comp.software-eng periodic postings and archives
+ Frequency: monthly
+ Date: 11 Jun 92 16:17:41 GMT
+ Archive-name: software-eng/part0
+
+ From: koreth@panarthea.EBay.Sun.COM (Steven Grimm)
+ Newsgroups: comp.sources.atari.st
+ Subject: ????
+ Frequency: every few months
+
+ From: reid@decwrl.DEC.COM (Brian Reid)
+ Newsgroups: comp.sources.d,news.admin
+ Subject: arbitron program (v*.*.*--last updated * * *)
+ Frequency: monthly
+ Date: 3 Jul 92 00:41:15 GMT
+
+ From: reid@decwrl.DEC.COM (Brian Reid)
+ Newsgroups: comp.sources.d,news.admin
+ Subject: notesfile arbitron (v*--last updated * * *)
+ Frequency: monthly
+
+ From: billr@saab.cna.tek.com (Bill Randle)
+ Newsgroups: comp.sources.games
+ Subject: v*INF*:  intro* - Introduction to comp.sources.games
+ Frequency: start of every volume, which is 6-12 months...
+
+ From: kent@sparky.imd.sterling.com (Kent Landfield)
+ Newsgroups: comp.sources.misc
+ Subject: v*INF2:  Index for comp.sources.misc, Volume01 through Volume07
+ Frequency: start of every volume, which is 1-2 months..
+ Date: 20 May 92 16:51:16 GMT
+ Archive-name: indx30v01-07
+
+ From: kent@sparky.imd.sterling.com (Kent Landfield)
+ Newsgroups: comp.sources.misc
+ Subject: v*INF3:  Index for comp.sources.misc, Volume08 through Volume14
+ Frequency: start of every volume, which is 1-2 months..
+ Date: 20 May 92 16:51:51 GMT
+ Archive-name: indx30v08-14
+
+ From: kent@sparky.imd.sterling.com (Kent Landfield)
+ Newsgroups: comp.sources.misc
+ Subject: v*INF4:  Index for comp.sources.misc, Volume15 through Volume21
+ Frequency: start of every volume, which is 1-2 months..
+ Date: Tue, 7 Jul 1992 03:20:20 GMT
+ Archive-name: indx31v15-21
+
+ From: kent@sparky.imd.sterling.com (Kent Landfield)
+ Newsgroups: comp.sources.misc
+ Subject: v*INF5:  Index for comp.sources.misc, Volume22 through Volume27
+ Frequency: start of every volume, which is 1-2 months..
+ Date: Tue, 7 Jul 1992 03:21:01 GMT
+ Archive-name: indx31v22-27
+
+ From: kent@sparky.imd.sterling.com (Kent Landfield)
+ Newsgroups: comp.sources.misc
+ Subject: v*INF6:  Index for comp.sources.misc, Volume28 through Volume*
+ Frequency: start of every volume, which is 1-2 months..
+
+ From: kent@sparky.imd.sterling.com (Kent Landfield)
+ Newsgroups: comp.sources.misc
+ Subject: v*INF7:  Index of Patches posted to comp.sources.misc
+ Frequency: start of every volume, which is 1-2 months..
+ Date: Tue, 7 Jul 1992 03:22:12 GMT
+ Archive-name: patchlog31
+
+ From: kent@sparky.imd.sterling.com (Kent Landfield)
+ Newsgroups: comp.sources.misc,comp.sources.d
+ Subject: v*INF1:  Introduction to comp.sources.misc
+ Frequency: start of every volume, which is 1-2 months..
+ Date: 7 Jul 92 03:16:34 GMT
+ Archive-name: intro31
+
+ From: Andrew Patrick <csr@calvin.dgbt.doc.ca>
+ Newsgroups: comp.sources.reviewed,news.answers
+ Subject: comp.sources.reviewed introduction
+ Frequency: monthly
+
+ From: mcgrew@dartagnan.rutgers.edu (Charles Mcgrew)
+ Newsgroups: comp.sources.sun
+ Subject: v*INF3: Location and format of ftp archive site
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: comp-sources-unix@bloom-beacon.mit.edu
+ Newsgroups: comp.sources.unix
+ Subject: V*INF1:  Introduction to comp.sources.unix
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: comp-sources-unix@bloom-beacon.mit.edu
+ Newsgroups: comp.sources.unix
+ Subject: V*INF2:  List of sources in the comp.sources.unix archives
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: comp.sources.wanted,alt.sources.wanted,news.answers
+ Subject: How to find sources (READ THIS BEFORE POSTING)
+ Frequency: biweekly
+ Date: Thu, 16 Jul 1992 05:00:39 GMT
+ Archive-name: finding-sources
+
+ From: argv@sun.com (Dan Heller)
+ Newsgroups: comp.sources.x
+ Subject: How to get X sources for free.
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: argv@sun.com (Dan Heller)
+ Newsgroups: comp.sources.x
+ Subject: How to post submissions (if you've never read it, read it again.)
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: argv@sun.com (Dan Heller)
+ Newsgroups: comp.sources.x
+ Subject: v*INF1: README
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: argv@sun.com (Dan Heller)
+ Newsgroups: comp.sources.x
+ Subject: v*INF2: Archive Listings
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: argv@sun.com (Dan Heller)
+ Newsgroups: comp.sources.x
+ Subject: v*INF3: patchlogs
+ Frequency: start of every volume, which is 3-6 months...
+
+ From: zforum-request@comlab.ox.ac.uk
+ Newsgroups: comp.specification.z,news.answers
+ Subject: comp.specification.z Frequently Asked Questions (Monthly)
+ Frequency: monthly
+ Date: 1 Jul 92 01:00:36 GMT
+ Archive-name: z-faq
+
+ From: std-unix@uunet.uu.net (Moderator, John S. Quarterman)
+ Newsgroups: comp.std.unix
+ Subject: Access to UNIX-Related Standards
+ Frequency: bi-monthly
+
+ From: std-unix@uunet.uu.net (Moderator, John S. Quarterman)
+ Newsgroups: comp.std.unix
+ Subject: Calendar of UNIX-related Events
+ Frequency: monthly
+
+ From: std-unix@uunet.UU.NET (Moderator, John S. Quarterman)
+ Newsgroups: comp.std.unix,comp.org.usenix,comp.unix.questions
+ Subject: Access to UNIX-Related Publications
+ Frequency: bi-monthly
+
+ From: Gerben 'P' Vos <gpvos@cs.vu.nl>
+ Newsgroups: comp.sys.acorn,eunet.micro.acorn,news.answers,comp.answers
+ Subject: Acorn ftp and mail-server archives (fortnightly posting)
+ Frequency: every two weeks
+ Date: Sat, 18 Jul 1992 05:00:31 GMT
+ Archive-name: acorn/archives
+
+ From: banksie@khantazi.welly.gen.nz (Philip R. Banks)
+ Newsgroups: comp.sys.acorn,news.answers
+ Subject: Comp.Sys.Acorn FAQ List Posting (Automatic)
+ Frequency: fortnightly
+ Date: Mon, 15 Jun 1992 00:17:57 +1200
+
+ From: mcr@sandelman.ocunix.on.ca
+ Newsgroups: comp.sys.amiga.datacomm,news.answers
+ Subject: comp.sys.amiga.datacomm: AmigaNOS FAQ
+ Frequency: every 5-6 weeks
+
+ From: ferry@chorus.fr (Ferry de Jong)
+ Newsgroups: comp.sys.amiga.introduction
+ Subject: Amiga newsgroups under comp.sys.amiga.* V*.*
+ Frequency: monthly
+
+ From: ferry@chorus.fr (Ferry de Jong)
+ Newsgroups: comp.sys.amiga.introduction
+ Subject: Frequently Asked Questions and Answers V*.* (* *)
+ Frequency: monthly
+
+ From: ferry@chorus.fr (Ferry de Jong)
+ Newsgroups: comp.sys.amiga.introduction
+ Subject: Usage of comp.sys.amiga.* and Netiquette V*.*
+ Frequency: monthly
+
+ From: rees@paris.citi.umich.edu (Jim Rees)
+ Newsgroups: comp.sys.apollo,news.answers
+ Subject: Apollo Frequently Asked Questions
+ Frequency: monthly
+ Date: Wed, 4 Mar 92 21:52:35 GMT
+ Archive-name: apollo-faq
+
+ From: dmag@engin.umich.edu (Daniel Demaggio )
+ Newsgroups: comp.sys.apple2,news.answers
+ Subject: comp.sys.apple2 - Frequently Asked Questions (and answers) part * of *
+ Frequency: every 3-4 weeks
+ Archive-name: apple2/part1
+ Date: 23 Mar 92 22:19:21 GMT
+
+ From: sourada@iastate.edu (Steven D Ourada)
+ Newsgroups: comp.sys.atari.st,news.answers
+ Subject: Welcome to comp.sys.atari.st!
+ Frequency: twice per month
+
+ From: sourada@iastate.edu (Steven D Ourada)
+ Newsgroups: comp.sys.atari.st,news.answers
+ Subject: Welcome to comp.sys.atari.st! (Hardware)
+ Frequency: twice per month
+
+ From: sourada@iastate.edu (Steven D Ourada)
+ Newsgroups: comp.sys.atari.st,news.answers
+ Subject: Welcome to comp.sys.atari.st! (Software)
+ Frequency: twice per month
+
+ From: greg@gagme.chi.il.us (Gregory Gulik)
+ Newsgroups: comp.sys.att,news.answers
+ Subject: AT&T 3B2 Frequently Asked Questions and Answers
+ Frequency: monthly
+ Date: 20 Jul 92 22:21:14 GMT
+ Archive-name: 3b2-faq
+
+ From: rferguso@gn.ecn.purdue.edu (Robert S. Ferguson)
+ Newsgroups: comp.sys.cbm,comp.misc,news.answers
+ Subject: Commodore FTP sites for * *
+ Frequency: monthly
+ Archive-name: commodore-ftp-sites
+ Date: 16 May 92 18:58:19 GMT
+
+ From: rknop@cco.caltech.edu (Robert Andrew Knop)
+ Newsgroups: comp.sys.cbm,news.answers
+ Subject: comp.sys.cbm FAQ v*  <long>
+ Frequency: monthly
+
+ From: mkrause@mitre.org (Mark Krause)
+ Newsgroups: comp.sys.hp,news.answers
+ Subject: comp.sys.hp FAQ (Frequently Asked Questions)
+ Frequency: monthly
+
+ From: warren@Apple.COM (Chris Warren)
+ Newsgroups: comp.sys.ibm.pc.games,rec.games.misc,news.answers
+ Subject: ADMIN: comp.sys.ibm.pc.games - Frequently Asked Questions - Read before posting
+ Frequency: weekly
+ Date: 5 Aug 92 19:07:49 GMT
+ Archive-name: pc-games-FAQ
+
+ From: thompson@kuhub.cc.ukans.edu
+ Newsgroups: comp.sys.ibmpc.soundcard,comp.sys.ibmpc.hardware,comp.sys.ibmpc.misc,news.answers
+ Subject: PRO AUDIO SPECTRUM SOUND CARD FAQ v*
+ Frequency: monthly
+
+ From: geoff@pmafire.inel.gov (Geoff Allen)
+ Newsgroups: comp.sys.mac.announce
+ Subject: About Macintosh Usenet Groups
+ Frequency: monthly
+ Date: 1 Nov 91 19:05:22 GMT
+
+ From: geoff@pmafire.inel.gov (Geoff Allen)
+ Newsgroups: comp.sys.mac.announce
+ Subject: Answers to Frequently Asked Questions
+ Frequency: monthly
+ Date: 4 Feb 1992 05:45:39 -0600
+
+ From: mkelly@mystix.cs.uoregon.edu (Michael A. Kelly)
+ Newsgroups: comp.sys.mac.programmer
+ Subject: Comp.Sys.Mac.Programmer Frequently Asked Questions Part * (*/*/*)
+ Frequency: weekly
+ Date: Mon, 1 Jun 1992 07:01:37 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.changes: Changes to Frequently Asked Questions
+ Frequency: every two weeks
+ Date: Thu, 23 Jul 1992 21:44:31 GMT
+
+ From: lacsap@media.mit.edu (Pascal Chesnais)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.compatibility:  Questions about compatibility
+ Frequency: every two weeks
+ Date: Fri, 17 Apr 1992 23:24:27 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.disks: Questions about disk drives
+ Frequency: every two weeks
+ Date: 23 Jul 92 21:46:08 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.general: General FAQ
+ Frequency: every two weeks
+ Date: Thu, 23 Jul 1992 21:46:51 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.internal: Questions about NeXT internal hardware
+ Frequency: every two weeks
+ Date: Thu, 23 Jul 1992 21:47:18 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.intro Introduction to Frequently Asked Questions on comp.sys.NeXT
+ Frequency: every two weeks
+ Date: Fri, 26 Jun 1992 18:46:23 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.languages:  Questions about programming languages on the NeXT
+ Frequency: every two weeks
+ Date: Thu, 23 Jul 1992 21:49:05 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.misc: tidbits
+ Frequency: every two weeks
+ Date: Thu, 23 Jul 1992 21:50:08 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.os: Questions about the NeXT operating system
+ Frequency: every two weeks
+ Date: Thu, 23 Jul 1992 21:50:37 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.peripherals:  Questions about peripherals for the NeXT
+ Frequency: every two weeks
+ Date: 23 Jul 1992 21:51:12 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.printing: Questions about printing on the NeXT
+ Frequency: every two weeks
+ Date: Thu, 23 Jul 1992 21:51:31 GMT
+
+ From: lacsap@media.mit.edu (Pascal Chesnais)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.toc - table of contents
+ Frequency: every two weeks
+ Date: Fri, 17 Apr 1992 23:43:55 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.upgrades:  Questions about Upgrades
+ Frequency: every two weeks
+ Date: 23 Jul 1992 21:52:41 GMT
+
+ From: nathan@laplace.biology.yale.edu (Nathan F. Janette)
+ Newsgroups: comp.sys.next.announce
+ Subject: NeXT-FAQ.utilites: Questions about software utilities
+ frequency: every two weeks
+ Date: 26 Jun 92 18:54:26 GMT
+
+ From: billh@vab02.larc.nasa.gov (Bill Henderson)
+ Newsgroups: comp.sys.sgi,news.answers
+ Subject: SGI Anonymous FTP archives (bi-monthly)
+ Frequency: monthly
+ Date: 1 May 92 16:48:46 GMT
+ Archive-name: sgi-anonftp
+
+ From: rgreene@ricecsvm.rice.edu (Bob Greene)
+ Newsgroups: comp.sys.sun
+ Subject: Monthly Intro Message
+ Frequency: monthly
+
+ From: clewis@ferret.ocunix.on.ca (Chris Lewis)
+ Newsgroups: comp.text,news.answers,comp.answers
+ Subject: comp.text Frequently Asked Questions
+ Frequency: bi-weekly
+ Archive-name: text-faq
+ Date: 29 Jul 92 07:31:19 GMT
+
+ From: bobmcc@tcs.com (Bob McCormick)
+ Newsgroups: comp.text.frame,news.answers
+ Subject: comp.text.frame FAQ (Frequently Asked Questions)
+ Frequency: monthly
+ Date: 20 Jul 92 18:04:07 GMT
+ Archive-name: frame-faq
+
+ From: bobby@hot.caltech.edu (Bobby Bodenheimer)
+ Newsgroups: comp.text.tex
+ Subject: Diffs to Frequently Asked Questions
+ Frequency: monthly
+ Date: Tue, 3 Mar 1992 01:17:51 GMT
+
+ From: TeXhax-Request@tex.ac.uk
+ Newsgroups: comp.text.tex
+ Subject: TeXhax Digest V* #*
+ Frequency: unknown
+ Date: 25 Jun 92 17:24:15 GMT
+
+ From: UKTeX-Request@tex.ac.uk
+ Newsgroups: comp.text.tex
+ Subject: UKTeX Digest V* #*
+ Frequency: unknown
+ Date: 3 Jul 92 15:59:32 GMT
+
+ From: chenguo@lab.ultra.nyu.edu (Guoying Chen)
+ Newsgroups: comp.text.tex,news.answers
+ Subject: Diffs of TeX-FAQ-supplement
+ Frequency: monthly
+ Date: 3 May 92 19:57:57 GMT
+ Archive-name: tex-faq-supplement/DIFF
+
+ From: bobby@hot.caltech.edu (Bobby Bodenheimer)
+ Newsgroups: comp.text.tex,news.answers
+ Subject: TeX, LaTeX, etc.: Frequently Asked Questions with Answers [Monthly]
+ Frequency: monthly
+ Date: 8 Jul 92 21:44:47 GMT
+ Archive-name: tex-faq
+
+ From: chenguo@lab.ultra.nyu.edu (Guoying Chen)
+ Newsgroups: comp.text.tex,news.answers
+ Subject: TeX-FAQ-supplement (part * of *)
+ Frequency: monthly
+ Archive-name: tex-faq-supplement/part1
+ Date: 5 Aug 92 21:54:22 GMT
+
+-- 
+Jonathan Kamens						jik@MIT.Edu
+MIT Information Systems/Athena		    Moderator, news.answers
+    (Send correspondence related to the news.answers newsgroup
+	{and ONLY correspondence related to the newsgroup}
+		 to news-answers-request@MIT.Edu.)
+
+From jik@athena.mit.edu Mon Aug 10 12:02:15 1992
+From: jik@athena.mit.edu (Jonathan I. Kamens)
+Newsgroups: news.lists,news.announce.newusers,news.answers
+Subject: List of Periodic Informational Postings, Part II
+Date: 8 Aug 92 05:09:23 GMT
+Followup-To: poster
+Organization: Massachusetts Institute of Technology
+Supersedes: <periodic-postings2_710658475@athena.mit.edu>
+Nntp-Posting-Host: pit-manager.mit.edu
+
+Archive-name: periodic-postings/part2
+
+
+This is part two of the List of Periodic Informational Postings.  See
+the posting entitled "List of Periodic Informational Postings, Part I"
+for more information.
+
+----------------------------------------------------------------------
+
+ From: adams@spss.com (Steve Adams)
+ Newsgroups: comp.unix.aix,bit.listserv.power-l,news.answers
+ Subject: AIX V.3 and IBM RS/6000 - Frequently Asked Questions (Part */*)
+ Frequency: monthly
+ Archive-name: aix-rs6000-faq/part1
+ Date: 1 Jul 92 14:14:45 GMT
+
+ From: jim@jagubox.gsfc.nasa.gov (Jim Jagielski)
+ Newsgroups: comp.unix.aux,news.answers
+ Subject: Apple A/UX FAQ Diffs
+ Frequency: once every two weeks
+ Date: Tue, 28 Apr 1992 10:12:23 GMT
+ Archive-name: aux-faq/diff
+
+ From: jim@jagubox.gsfc.nasa.gov (Jim Jagielski)
+ Newsgroups: comp.unix.aux,news.answers
+ Subject: Apple A/UX FAQ List (*/2)
+ Frequency: once every two weeks
+ Archive-name: aux-faq/part1
+ Date: 4 Aug 92 14:26:56 GMT
+
+ From: karl@NeoSoft.com (Karl Lehenbauer)
+ Newsgroups: comp.unix.bsd
+ Subject: FAQ for 386BSD (last updated *-*-*)
+ Frequency: once a week (?)
+ Date: Sun, 29 Mar 1992 00:01:51 GMT
+
+ From: fnx!vpix-faq@uunet.UU.NET (VP/IX FAQ maintainance)
+ Newsgroups: comp.unix.msdos,news.answers
+ Subject: Frequently Asked Questions (FAQ) for comp.unix.msdos
+ Frequency: unknown
+
+ From: tmatimar@morse.waterloo.edu
+ Newsgroups: comp.unix.questions,comp.unix.shell,news.answers
+ Subject: Frequently Asked Questions about Unix (*/*) [Monthly posting]
+ Frequency: monthly
+ Date: Fri, 3 Jul 1992 05:01:17 GMT
+ Archive-name: unix-faq/part1
+
+ From: tmatimar@morse.waterloo.edu
+ Newsgroups: comp.unix.questions,news.answers
+ Subject: Welcome to comp.unix.questions [Monthly posting]
+ Frequency: monthly
+ Date: Fri, 3 Jul 1992 05:00:39 GMT
+ Archive-name: unix-faq/unix-intro
+
+ From: tmatimar@nff.ncl.omron.co.jp (Ted M A Timar)
+ Newsgroups: comp.unix.questions,news.answers
+ Subject: Welcome to comp.unix.shell [Monthly posting]
+ Frequency: monthly
+
+ From: rcd@raven.eklektix.com (Dick Dunn)
+ Newsgroups: comp.unix.sysv386
+ Subject: Frequently Asked Questions (FAQ) for comp.unix.sysv386
+ Frequency: monthly
+ Date: 8 Jun 92 06:32:27 GMT
+
+ From: steve@ecf.toronto.edu (Steve Kotsopoulos)
+ Newsgroups: comp.unix.sysv386
+ Subject: Frequently Asked Questions About X386 (with answers)
+ Frequency: monthly
+ Date: 3 Jul 92 16:05:34 GMT
+
+ From: eric@snark.thyrsus.com (Eric S. Raymond)
+ Newsgroups: comp.unix.sysv386,comp.sys.intel,news.answers
+ Subject: PC-Clone UNIX Hardware Buyer's Guide
+ Frequency: monthly
+ Date: 6 Jul 92 15:38:45 GMT
+ Archive-name: pc-unix/hardware
+
+ From: eric@snark.thyrsus.com (Eric S. Raymond)
+ Newsgroups: comp.unix.sysv386,comp.unix.bsd,comp.os.mach,comp.unix.wizards,alt.folklore.computers,news.answers
+ Subject: PC-Clone UNIX Software Buyer's Guide
+ Frequency: monthly
+
+ From: eric@snark.thyrsus.com (Eric S. Raymond)
+ Newsgroups: comp.unix.sysv386,comp.unix.bsd,comp.os.mach,news.answers
+ Subject: Known Bugs in the USL UNIX distribution
+ Frequency: monthly
+ Date: 6 Jul 92 15:41:39 GMT
+ Archive-name: usl-bugs
+
+ From: treese@crl.dec.com
+ Newsgroups: comp.unix.ultrix,news.answers
+ Subject: comp.unix.ultrix Frequently Asked Questions
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 21:28:29 GMT
+ Archive-name: ultrix-faq
+
+ From: fitzgb@mml0.meche.rpi.edu (Brian Fitzgerald)
+ Newsgroups: comp.unix.wizards
+ Subject: Intro to comp.unix.wizards - read before posting (weekly announcement, last change: *)
+ Frequency: weekly
+ Date: Sun, 19 Apr 1992 10:00:40 GMT
+
+ From: chip@chinacat.unicom.com (Chip Rosenthal)
+ Newsgroups: comp.unix.xenix.sco
+ Subject: Welcome to comp.unix.xenix.sco [monthly posting]
+ Frequency: weekly
+ Date: Fri, 03 Jul 1992 17:34:07 GMT
+ Archive-name: sco-xenix
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Amiga Anti-viral archive sites, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 19:00:10 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Anti-viral Documentation archive sites, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 19:01:44 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Apple II Anti-viral archive sites, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 19:00:41 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Archive access without anonymous ftp, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 18:59:06 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Atari ST Anti-viral archive sites, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 19:01:12 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Brief guide to files formats, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 18:59:38 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: IBMPC Anti-viral archive sites, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 19:02:15 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Introduction to the Anti-viral archives, listing of * * *
+ Frequency: monthly
+ Date: 2 Mar 92 18:58:35 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Macintosh Anti-viral archive sites, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 19:02:46 GMT
+
+ From: jwright@cfht.hawaii.edu (Jim Wright)
+ Newsgroups: comp.virus
+ Subject: Unix Anti-viral and security archive sites, last changed * * *
+ Frequency: monthly
+ Date: 2 Mar 92 19:03:17 GMT
+
+ From: gl8f@fermi.clas.Virginia.EDU (Greg Lindahl)
+ Newsgroups: comp.windows.misc,news.answers
+ Subject: Comp.windows.misc Frequently Asked Questions (FAQ)
+ Frequency: every other week
+ Date: 15 Jul 92 20:19:31 GMT
+ Archive-name: windows-misc-faq
+
+ From: tomh@wes.on.ca (Tom Haapanen)
+ Newsgroups: comp.windows.ms,bit.listserv.win3-l
+ Subject: comp.windows.ms DIFF of Frequently Asked Questions
+ Frequency: twice per month
+
+ From: tomh@wes.on.ca (Tom Haapanen)
+ Newsgroups: comp.windows.ms,bit.listserv.win3-l,news.answers
+ Subject: comp.windows.ms Frequently Asked Questions
+ Frequency: twice per month
+ Date: Mon, 04 May 1992 19:18:47 GMT
+ Archive-name: ms-windows-faq
+
+ From: tomh@wes.on.ca (Tom Haapanen)
+ Newsgroups: comp.windows.ms.programmer
+ Subject: comp.windows.ms.programmer DIFF of Frequently Asked Questions
+ Frequency: twice per month
+
+ From: tomh@wes.on.ca (Tom Haapanen)
+ Newsgroups: comp.windows.ms.programmer,news.answers
+ Subject: comp.windows.ms.programmer Frequently Asked Questions
+ Frequency: twice per month
+ Date: 4 May 92 19:18:54 GMT
+ Archive-name: ms-winprog-faq
+
+ From: lee@sq.sq.com (Liam R. E. Quin)
+ Newsgroups: comp.windows.open-look,comp.windows.x,alt.toolkits.xview
+ Subject: OPEN LOOK GUI frequently asked questions
+ Frequency: monthly
+ Archive-name: open-look-gui.faq
+ Date: Fri, 7 Aug 92 00:40:11 GMT
+
+ From: jim@applix.com (Jim Morton [ext 237])
+ Newsgroups: comp.windows.x
+ Subject: X Terminal List - Quarterly posting (Q*'*)
+ Frequency: quarterly
+ Date: 15 Sep 91 22:14:48 GMT
+
+ From: converse@expo.lcs.mit.EDU (Donna Converse)
+ Newsgroups: comp.windows.x
+ Subject: list of X consultants
+ Frequency: quarterly
+ Date: Wed, 1 Jul 1992 16:30:17 GMT
+
+ From: klee@decwrl.dec.com (Ken Lee)
+ Newsgroups: comp.windows.x,ba.windows.x,comp.windows.misc,misc.books.technical
+ Subject: X technical bibliography
+ Frequency: monthly
+ Date: Tue, 9 Jun 92 17:06:08 GMT
+
+ From: dbl@osf.org (David B. Lewis)
+ Newsgroups: comp.windows.x,news.answers
+ Subject: comp.windows.x Frequently Asked Questions (FAQ) */*
+ Frequency: monthly
+ Archive-name: x-faq/part1
+ Date: 6 Aug 92 13:13:13 GMT
+
+ From: jan@PANDONIA.CANBERRA.EDU.AU (Jan Newmarch)
+ Newsgroups: comp.windows.x.motif,news.answers
+ Subject: Motif FAQ (Part * of *)
+ Frequency: monthly
+ Date: 13 May 92 22:26:39 GMT
+ Archive-name: motif-faq-1
+
+ From: rthomson@dsd.es.com (Rich Thomson)
+ Newsgroups: comp.windows.x.pex,news.answers
+ Subject: Welcome to comp.windows.x.pex! (FAQ)
+ Frequency: monthly
+ Date: 1 Jul 92 18:58:04 GMT
+ Archive-name: pex-faq
+
+ From: gereon@shadow.ish.de (Gereon Ziegelowski)
+ Newsgroups: de.config.lists
+ Subject: Groupstatistik der letzten 15 Tage
+ Frequency: biweekly
+ Comments: (Group statistics for the last 15 days)
+
+ From: gereon@shadow.ish.de (Gereon Ziegelowski)
+ Newsgroups: de.config.lists
+ Subject: Liste der laufenden Votings
+ Frequency: biweekly
+ Comments: (List of votes in progress)
+
+ From: gereon@shadow.ish.de (Gereon Ziegelowski)
+ Newsgroups: de.config.lists
+ Subject: Newsstatistik der letzten 15 Tage
+ Frequency: biweekly
+ Comments: (News statistics for the last 15 days)
+
+ From: fany@fons.nbg.sub.org (Martin Sluka)
+ Newsgroups: de.rec.music.misc,rec.music.misc
+ Subject: CHART: German Top 10 (singles)*
+ Frequency: weekly
+ Date: 25 Apr 92 00:01:38 GMT
+
+ From: jbw@bigbird.bu.edu (Joe Wells)
+ Newsgroups: gnu.emacs.help,comp.emacs,gnu.emacs.gnus,news.answers
+ Subject: GNU Emacs FAQ (*): Mail and News
+ Frequency: monthly
+ Date: 28 Jun 92 23:44:30 GMT
+ Archive-name: GNU-Emacs-FAQ/part5
+
+ From: jbw@bigbird.bu.edu (Joe Wells)
+ Newsgroups: gnu.emacs.help,comp.emacs,news.answers
+ Subject: GNU Emacs FAQ (*): *
+ Frequency: monthly
+ Date: 28 Jun 92 23:44:30 GMT
+ Archive-name: GNU-Emacs-FAQ/part0
+
+ From: jbw@bigbird.bu.edu (Joe Wells)
+ Newsgroups: gnu.emacs.help,comp.emacs,news.answers
+ Subject: GNU Emacs FAQ (*): Changes
+ Frequency: monthly
+ Date: 28 Jun 92 23:44:30 GMT
+ Archive-name: GNU-Emacs-FAQ/diff
+
+ From: brannon@jove.cs.caltech.edu (Terrence M. Brannon)
+ Newsgroups: gnu.emacs.help,comp.lang.perl,comp.lang.tcl,news.answers
+ Subject: Survey of Interpreted Quick Powerful Languages
+ Frequency: monthly
+
+ From: marca@ncsa.uiuc.edu (Marc Andreessen)
+ Newsgroups: gnu.epoch.misc,news.answers
+ Subject: Epoch Frequently Asked Questions (FAQ)
+ Frequency: monthly
+ Date: 31 May 92 21:48:09 GMT
+ Archive-name: epoch-faq
+
+ From: khushro@zip.eecs.umich.edu (Khushro Shahookar)
+ Newsgroups: misc.books.technical,news.answers
+ Subject: misc.books.technical FREQUENTLY ASKED QUESTIONS (Periodic post)
+ Frequency: monthly
+
+ From: adams@spss.com (Steve Adams)
+ Newsgroups: misc.consumers,news.answers
+ Subject: misc.consumers FAQ on credit diff * of 3
+ Frequency: monthly
+ Archive-name: consumer-credit-faq/diff2
+ Date: Thu, 30 Jul 1992 14:48:35 GMT
+
+ From: adams@spss.com (Steve Adams)
+ Newsgroups: misc.consumers,news.answers
+ Subject: misc.consumers FAQ on credit part * of 3
+ Frequency: monthly
+ Archive-name: consumer-credit-faq/part1
+ Date: Thu, 30 Jul 1992 14:49:37 GMT
+
+ From: house-archive@jester.rtp.dg.com (Topher Eliot)
+ Newsgroups: misc.consumers.house,news.answers
+ Subject: misc.consumers.house FAQ (frequently asked questions)
+ Frequency: once every two weeks
+ Archive-name: house-faq
+ Date: Sun, 2 Aug 92 04:00:13 GMT
+
+ From: clewis@ferret.ocunix.on.ca (Chris Lewis)
+ Newsgroups: misc.consumers.house,rec.woodworking,news.answers
+ Subject: Electrical Wiring FAQ
+ Frequency: fortnightly
+ Archive-name: electrical-wiring
+ Date: 29 Jul 92 07:29:16 GMT
+
+ From: murray@sun13.scri.fsu.edu (John Murray)
+ Newsgroups: misc.forsale
+ Subject: Welcome to Misc.forsale - Frequently Asked Questions (please read!)
+ Frequency: monthly
+
+ From: khushro@eecs.umich.edu (Khushro Shahookar)
+ Newsgroups: misc.forsale.computers,news.answers
+ Subject: NON-PROFIT ORGANIZATIONS accepting computer donations
+ Frequency: irregularly
+
+ From: khushro@eecs.umich.edu (Khushro Shahookar)
+ Newsgroups: misc.forsale.computers,news.answers
+ Subject: misc.forsale.computers FREQUENTLY ASKED QUESTIONS (Periodic post)
+ Frequency: monthly in news.answers, weekly in misc.forsale.computers
+ Archive-name: misc-forsale-computers-faq
+ Date: 1 Aug 92 07:14:32 GMT
+
+ From: linimon@nominil.lonestar.org (Mark Linimon)
+ Newsgroups: misc.jobs.contract
+ Subject: Misc.jobs.contract: Frequently Asked Questions (FAQs)
+ Frequency: monthly
+ Date: 24 Feb 92 02:08:26 GMT
+
+ From: linimon@nominil.lonestar.org (Mark Linimon)
+ Newsgroups: misc.jobs.contract
+ Subject: Misc.jobs.contract: Text of IRS Section 1706
+ Frequency: monthly
+ Date: 24 Feb 92 02:09:10 GMT
+
+ From: linimon@nominil.lonestar.org (Mark Linimon)
+ Newsgroups: misc.jobs.contract
+ Subject: Welcome to misc.jobs.contract
+ Frequency: monthly
+ Date: 24 Feb 92 02:07:54 GMT
+
+ From: snoopy@sopwith.uucp (Snoopy)
+ Newsgroups: misc.jobs.misc,misc.jobs.offered,misc.jobs.resumes,misc.jobs.contract
+ Subject: Welcome to misc.jobs!
+ Frequency: monthly
+ Date: 1 Aug 92 08:01:23 GMT
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: misc.jobs.offered
+ Subject: [l/m */*] Read BEFORE posting: offered stylistic consensus
+ Frequency: biweekly
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: misc.jobs.resumes
+ Subject: [l/m */*] Read BEFORE posting: Stylistic consensus on resumes
+ Frequency: biweekly
+ Date: Sun, 17 Nov 91 12:16:12 GMT
+
+ From: dlin@weber.ucsd.edu (Diane Lin)
+ Newsgroups: misc.kids,news.answers
+ Subject: Welcome to Misc.kids/FAQ File Index*
+ Frequency: twice a month
+ Archive-name: misc-kids-FAQ
+ Date: 15 Jul 92 14:44:03 GMT
+
+ From: betsyp@apollo.hp.com (Betsy Perry)
+ Newsgroups: misc.writing,news.answers
+ Subject: FICTION: Misc.writing Frequently Asked Questions
+ Frequency: every two months
+ Archive-name: writing/faq
+ Date: Thu, 30 Jul 1992 13:09:42 GMT
+
+ From: betsyp@apollo.hp.com (Betsy Perry)
+ Newsgroups: misc.writing,news.answers
+ Subject: Misc.writing Recommended Booklist
+ Frequency: every two months
+ Archive-name: writing/bibliography
+ Date: Thu, 30 Jul 1992 14:32:09 GMT
+
+ From: jonathan@ukmug.uk.mugnet.org (Jonathan Allen)
+ Newsgroups: mugnet.talk,news.admin,comp.os.minix,uk.telecom
+ Subject: MUGNET-UK FAQ
+ Frequency: monthly
+ Date: 13 Jun 92 11:30:25 GMT
+
+ From: shibumi@genbank.bio.net
+ Newsgroups: news.admin
+ Subject: BIONET/BIOSCI Checkgroups message
+ Frequency: monthly
+ Date: 1 Aug 92 07:00:02 GMT
+
+ From: kherron@ms.uky.edu (Kenneth Herron)
+ Newsgroups: news.admin
+ Subject: Non-compliant articles, week ending * * *
+ Frequency: weekly
+ Date: 5 Jul 92 11:44:31 GMT
+
+ From: eggert@twinsun.com (Paul Eggert)
+ Newsgroups: news.admin
+ Subject: nonconforming news Message-IDs of last week
+ Frequency: weekly
+ Date: Wed, 5 Aug 1992 17:41:30 GMT
+
+ From: clewis@ferret.ocunix.on.ca (Chris Lewis)
+ Newsgroups: news.admin,comp.mail.misc,news.answers,comp.answers
+ Subject: UNIX Email Software Survey FAQ
+ Frequency: bi-weekly
+ Archive-name: mail-setup/part1
+ Date: 29 Jul 92 07:30:32 GMT
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.admin,news.announce.newgroups
+ Subject: Checkgroups message (with INET groups)
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:50:24 GMT
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.admin,news.announce.newgroups
+ Subject: Checkgroups message (without INET groups)
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:50:19 GMT
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.admin,news.announce.newusers,news.answers
+ Subject: How to Get Information about Networks
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:18 GMT
+ Archive-name: network-info/part1
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: news.admin,news.announce.newusers,news.answers
+ Subject: How to become a USENET site
+ Frequency: monthly
+ Date: Mon, 20 Jul 1992 05:00:42 GMT
+ Archive-name: site-setup
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.admin,news.announce.newusers,news.software.readers,news.software.b,news.answers
+ Subject: USENET Software: History and Sources
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:45 GMT
+ Archive-name: usenet-software/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.admin,news.misc,news.answers
+ Subject: Changes to How to Get Information about Networks
+ Frequency: every 4-6 weeks
+ Date: 6 May 92 23:51:58 GMT
+ Archive-name: network-info/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.admin,news.misc,news.software.readers,news.software.b,news.answers
+ Subject: Changes to USENET Software: History and Sources
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:42 GMT
+ Archive-name: usenet-software/diff1
+
+ From: mdl@wndrsvr.la.ca.us (Mr. Distribution Lists)
+ Newsgroups: news.admin,news.sysadmin,news.answers,news.lists
+ Subject: Known Geographic Distributions
+ Frequency: monthly
+ Archive-name: distributions/geographic
+ Date: 22 Jul 92 03:21:00 GMT
+
+ From: mdl@wndrsvr.la.ca.us (Mr. Distribution Lists)
+ Newsgroups: news.admin,news.sysadmin,news.answers,news.lists
+ Subject: News Administration Macros for Geographic Distributions
+ Frequency: monthly
+
+ From: tale@uunet.uu.net (David C Lawrence)
+ Newsgroups: news.announce.newgroups,news.groups
+ Subject: Current Status of USENET Newsgroup Proposals
+ Frequency: weekly
+ Date: 4 Aug 92 20:36:36 GMT
+
+ From: tale@uunet.uu.net (David C Lawrence)
+ Newsgroups: news.announce.newgroups,news.groups
+ Subject: Current Status of Votes on Newsgroups
+ Frequency: weekly
+ Date: 20 Apr 92 19:41:36 GMT
+
+ From: tale@uunet.uu.net (David C Lawrence)
+ Newsgroups: news.announce.newgroups,news.groups
+ Subject: New Groups Summary
+ Frequency: weekly
+ Date: 4 Aug 92 20:36:45 GMT
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.announce.newusers,news.admin,news.answers
+ Subject: What is Usenet?
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:39 GMT
+ Archive-name: what-is-usenet/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.announce.newusers,news.answers
+ Subject: A Primer on How to Work With the Usenet Community
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:42 GMT
+ Archive-name: usenet-primer/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.announce.newusers,news.answers
+ Subject: Answers to Frequently Asked Questions
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:44 GMT
+ Archive-name: usenet-faq/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.announce.newusers,news.answers
+ Subject: Emily Postnews Answers Your Questions on Netiquette
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:48 GMT
+ Archive-name: emily-postnews/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.announce.newusers,news.answers
+ Subject: Hints on writing style for Usenet
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:50 GMT
+ Archive-name: usenet-writing-style/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.announce.newusers,news.answers
+ Subject: Introduction to news.announce
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:35 GMT
+ Archive-name: news-announce-intro/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.announce.newusers,news.answers
+ Subject: Rules for posting to Usenet
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:37 GMT
+ Archive-name: posting-rules/part1
+
+ From: brad@looking.on.ca
+ Newsgroups: news.announce.newusers,news.groups,news.admin
+ Subject: How to Create a New Trial Newsgroup
+ Frequency: every 4-6 weeks
+ Date: 9 Sep 91 00:15:22 GMT
+
+ From: tale@cs.rpi.edu (David C Lawrence)
+ Newsgroups: news.announce.newusers,news.groups,news.admin,news.announce.newgroups,news.answers
+ Subject: How to Create a New Newsgroup
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:20 GMT
+ Archive-name: creating-newsgroups/part1
+
+ From: taylor@intuitive.com
+ Newsgroups: news.announce.newusers,news.groups,news.answers
+ Subject: A Guide to Social Newsgroups and Mailing Lists
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:22 GMT
+ Archive-name: social-newsgroups/part1
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: news.answers
+ Subject: Introduction to news.answers
+ Frequency: monthly
+ Archive-name: news-answers-intro
+ Date: Mon, 22 Jun 1992 05:00:29 GMT
+
+ From: khushro@zip.eecs.umich.edu (Khushro Shahookar)
+ Newsgroups: news.answers
+ Subject: MISC.FORSALE.COMPUTERS FAQ (posted Wednesdays on m.f.c)
+ Frequency: weekly
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: news.answers
+ Subject: news.answers submission guidelines
+ Frequency: monthly
+ Archive-name: news-answers-guidelines
+ Date: Thu, 25 Jun 1992 05:00:37 GMT
+
+ From: arromdee@jyusenkyou.cs.jhu.edu (Ken Arromdee)
+ Newsgroups: news.answers,rec.arts.anime,alt.manga,rec.arts.manga
+ Subject: Anime/Manga Script/Translation/Script-In-Progress list
+ Frequency: monthly
+ Archive-name: anime-archives
+ Date: Mon, 20 Jul 1992 01:44:42 GMT
+
+ From: kswanson@casbah.acns.nwu.edu (Kurt Swanson)
+ Newsgroups: news.answers,rec.crafts.brewing
+ Subject: rec.crafts.brewing Frequently Asked Questions (FAQ)
+ Frequency: every other month
+
+ From: arromdee@jyusenkyou.cs.jhu.edu (Ken Arromdee)
+ Newsgroups: news.answers,rec.games.video
+ Subject: rec.games.video Frequently Asked Questions
+ Frequency: irregular
+ Date: Thu, 16 Jul 1992 02:37:36 GMT
+ Archive-name: video-games
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.groups,news.lists,news.admin
+ Subject: USENET READERSHIP SUMMARY REPORT FOR * *
+ Frequency: monthly
+ Date: 2 Aug 92 00:31:36 GMT
+
+ From: reid@decwrl.DEC.COM (Brian Reid)
+ Newsgroups: news.groups,news.lists,news.admin
+ Subject: arbitron data from these sites has expired
+ Frequency: monthly
+ Date: 2 Aug 92 00:32:41 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.groups,news.lists,news.admin,news.lists.ps-maps
+ Subject: USENET FLOW ANALYSIS REPORT FOR * *
+ Frequency: monthly
+ Date: 2 Aug 92 15:48:07 GMT
+
+ From: newsstats@uunet.UU.NET
+ Newsgroups: news.lists
+ Subject: Top 25 News Groups for the last 2 weeks
+ Frequency: bi-weekly
+ Date: Thu, 9 Jul 1992 03:30:34 GMT
+
+ From: newsstats@uunet.UU.NET
+ Newsgroups: news.lists
+ Subject: Top 25 News Submitters by Site by Kbytes for the last 2 weeks
+ Frequency: bi-weekly
+ Date: Thu, 9 Jul 1992 03:30:21 GMT
+
+ From: newsstats@uunet.UU.NET
+ Newsgroups: news.lists
+ Subject: Top 25 News Submitters by Site by number of articles for the last 2 weeks
+ Frequency: bi-weekly
+ Date: Thu, 9 Jul 1992 03:30:29 GMT
+
+ From: newsstats@uunet.UU.NET
+ Newsgroups: news.lists
+ Subject: Top 25 News Submitters by User by Kbytes for the last 2 weeks
+ Frequency: bi-weekly
+ Date: Thu, 9 Jul 1992 03:30:11 GMT
+
+ From: newsstats@uunet.UU.NET
+ Newsgroups: news.lists
+ Subject: Top 25 News Submitters by User by number of articles for the last 2 weeks
+ Frequency: bi-weekly
+ Date: Thu, 9 Jul 1992 03:30:16 GMT
+
+ From: newsstats@uunet.UU.NET
+ Newsgroups: news.lists
+ Subject: Total traffic through uunet for the last 2 weeks
+ Frequency: bi-weekly
+ Date: Thu, 9 Jul 1992 03:30:38 GMT
+
+ From: reid@decwrl.DEC.COM (Brian Reid)
+ Newsgroups: news.lists
+ Subject: USENET Readership report for * *
+ Frequency: monthly
+ Date: 3 Jul 92 00:41:02 GMT
+
+ From: wolf@grasp1.univ-lyon1.fr (Christophe Wolfhugel)
+ Newsgroups: news.lists
+ Subject: Usenet article size statistics -- *
+ Frequency: monthly
+ Date: 6 Jul 1992 08:46:12 +0200
+
+ From: wolf@grasp1.univ-lyon1.fr (Christophe Wolfhugel)
+ Newsgroups: news.lists
+ Subject: Usenet site size statistics -- *
+ Frequency: monthly
+ Date: 6 Jul 1992 08:46:13 +0200
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.admin,news.answers
+ Subject: Changes to How to Construct the Mailpaths File
+ Frequency: every 4-6 weeks
+ Date: 6 May 92 23:51:52 GMT
+ Archive-name: mailpaths/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.admin,news.answers
+ Subject: How to Construct the Mailpaths File
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:05 GMT
+ Archive-name: mailpaths/part1
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: news.lists,news.announce.newusers,news.answers
+ Subject: Changes to List of Periodic Informational Postings
+ Frequency: every 30 days
+ Date: Thu, 9 Jul 1992 05:09:12 GMT
+ Archive-name: periodic-postings/diff
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: news.lists,news.announce.newusers,news.answers
+ Subject: List of Periodic Informational Postings, Part *
+ Frequency: every 30 days
+ Date: Thu, 9 Jul 1992 05:08:10 GMT
+ Archive-name: periodic-postings/part1
+
+ From: arielle@taronga.com (Stephanie da Silva)
+ Newsgroups: news.lists,news.announce.newusers,news.answers
+ Subject: Publicly Accessible Mailing Lists, Part *
+ Frequency: every 4 weeks
+ Date: Sat, 18 Jul 1992 17:50:34 GMT
+ Archive-name: mailing-lists/part1
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists,news.groups
+ Subject: BOTTOM 20 NEWSGROUPS IN ORDER BY POPULARITY (* *)
+ Frequency: monthly
+ Date: Sun, 2 Feb 92 00:15:45 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists,news.groups
+ Subject: BOTTOM 20 NEWSGROUPS IN ORDER BY PROPAGATION (* *)
+ Frequency: monthly
+ Date: Sun, 2 Feb 92 00:15:59 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists,news.groups
+ Subject: TOP 40 NEWSGROUPS IN ORDER BY AMOUNT OF CROSSPOSTING (* *)
+ Frequency: monthly
+ Date: 2 Aug 92 00:31:56 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists,news.groups
+ Subject: TOP 40 NEWSGROUPS IN ORDER BY PER-READER COST (* *)
+ Frequency: monthly
+ Date: 2 Aug 92 00:31:50 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists,news.groups
+ Subject: TOP 40 NEWSGROUPS IN ORDER BY POPULARITY (* *)
+ Frequency: monthly
+ Date: 2 Aug 92 00:31:43 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists,news.groups
+ Subject: TOP 40 NEWSGROUPS IN ORDER BY TRAFFIC VOLUME (* *)
+ Frequency: monthly
+ Date: 2 Aug 92 00:32:09 GMT
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.announce.newusers,news.announce.newgroups,news.answers
+ Subject: Alternative Newsgroup Hierarchies, Part I
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:48:57 GMT
+ Archive-name: alt-hierarchies/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.announce.newusers,news.announce.newgroups,news.answers
+ Subject: Alternative Newsgroup Hierarchies, Part II
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:01 GMT
+ Archive-name: alt-hierarchies/part2
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.announce.newusers,news.announce.newgroups,news.answers
+ Subject: List of Active Newsgroups
+ Frequency: every 4-6 weeks
+ Date: 12 May 92 05:05:50 GMT
+ Archive-name: active-newsgroups/part1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.announce.newusers,news.answers
+ Subject: List of Moderators
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:16 GMT
+ Archive-name: moderator-list/part1
+
+ From: asp@uunet.uu.net (Andrew Partan)
+ Newsgroups: news.lists,news.groups,news.announce.newusers,news.answers
+ Subject: Regional Newsgroup Hierarchies, Part I
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:09 GMT
+ Archive-name: regional-hierarchies/part1
+
+ From: asp@uunet.uu.net (Andrew Partan)
+ Newsgroups: news.lists,news.groups,news.announce.newusers,news.answers
+ Subject: Regional Newsgroup Hierarchies, Part II
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:11 GMT
+ Archive-name: regional-hierarchies/part2
+
+ From: asp@uunet.uu.net (Andrew Partan)
+ Newsgroups: news.lists,news.groups,news.announce.newusers,news.answers
+ Subject: Regional Newsgroup Hierarchies, Part III
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:13 GMT
+ Archive-name: regional-hierarchies/part3
+
+ From: asp@uunet.uu.net (Andrew Partan)
+ Newsgroups: news.lists,news.groups,news.misc
+ Subject: Changes to Regional Newsgroup Hierarchies
+ Frequency: every 4-6 weeks
+ Date: 21 May 91 04:49:58 GMT
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.misc,news.announce.newgroups,news.answers
+ Subject: Changes to Alternative Newsgroup Hierarchies, Part I
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:53 GMT
+ Archive-name: alt-hierarchies/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.misc,news.announce.newgroups,news.answers
+ Subject: Changes to Alternative Newsgroup Hierarchies, Part II
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:58 GMT
+ Archive-name: alt-hierarchies/diff2
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.misc,news.announce.newgroups,news.answers
+ Subject: Changes to List of Active Newsgroups
+ Frequency: every 4-6 weeks
+ Date: 12 May 92 05:06:00 GMT
+ Archive-name: active-newsgroups/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.lists,news.groups,news.misc,news.answers
+ Subject: Changes to List of Moderators
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:50:05 GMT
+ Archive-name: moderator-list/diff1
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists,news.lists.ps-maps
+ Subject: USENET FLOW ANALYSIS for * *: Top 1000 sites
+ Frequency: monthly
+ Date: Sun, 2 Aug 92 15:48:45 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.lists.ps-maps,comp.sources.d,news.admin
+ Subject: "inpaths.c" (last updated *)
+ Frequency: monthly
+ Date: 3 Jul 92 23:11:04 GMT
+
+ From: reid@decwrl.dec.com (Brian Reid)
+ Newsgroups: news.misc
+ Subject: USENET PostScript map *
+ Frequency: monthly
+
+ From: reid@decwrl.DEC.COM (Brian Reid)
+ Newsgroups: news.misc,news.admin,misc.misc,news.groups
+ Subject: USENET Readership summary for * * posted
+ Frequency: monthly
+ Date: Sat, 2 May 92 13:03:12 GMT
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.admin,news.answers
+ Subject: Changes to What is Usenet?
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:31 GMT
+ Archive-name: what-is-usenet/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.answers
+ Subject: Changes to A Primer on How to Work With the Usenet Community
+ Frequency: every 4-6 weeks
+ Date: 6 May 92 23:51:27 GMT
+ Archive-name: usenet-primer/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.answers
+ Subject: Changes to Answers to Frequently Asked Questions
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:36 GMT
+ Archive-name: usenet-faq/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.answers
+ Subject: Changes to Hints on writing style for Usenet
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:46 GMT
+ Archive-name: usenet-writing-style/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.answers
+ Subject: Changes to Introduction to news.announce
+ Frequency: every 4-6 weeks
+ Date: 7 Dec 91 02:14:08 GMT
+ Archive-name: news-announce-intro/diff
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.answers
+ Subject: Changes to Rules for posting to Usenet
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:49:27 GMT
+ Archive-name: posting-rules/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.groups,news.admin,news.announce.newgroups,news.answers
+ Subject: Changes to How to Create a New Newsgroup
+ Frequency: every 4-6 weeks
+ Date: 20 Jul 92 06:50:10 GMT
+ Archive-name: creating-newsgroups/diff1
+
+ From: spaf@cs.purdue.EDU (Gene Spafford)
+ Newsgroups: news.misc,news.groups,news.answers
+ Subject: Changes to A Guide to Social Newsgroups and Mailing Lists
+ Frequency: every 4-6 weeks
+ Date: 6 May 92 23:52:03 GMT
+ Archive-name: social-newsgroups/diff1
+
+ From: jik@athena.mit.edu (Jonathan I. Kamens)
+ Newsgroups: news.newusers.questions,news.answers
+ Subject: Welcome to news.newusers.questions! (weekly posting)
+ Frequency: weekly
+ Archive-name: news-newusers-intro
+ Date: Wed, 5 Aug 1992 05:00:45 GMT
+
+ From: phillips@syrinx.umd.edu (Leanne Phillips)
+ Newsgroups: news.newusers.questions,news.software.readers,news.answers
+ Subject: rn KILL file FAQ
+ Frequency: monthly
+ Archive-name: killfile-faq
+ Date: 6 Aug 92 16:32:19 GMT
+
+ From: billy@sol (Billy Barron - VAX/UNIX Systems Manager)
+ Newsgroups: news.software.anu-news,news.answers
+ Subject: FAQ: news.software.anu-news
+ Frequency: monthly
+ Archive-name: anu-faq
+ Date: Sat, 1 Aug 1992 10:37:05 GMT
+
+ From: wohler@sap-ag.de (Bill Wohler)
+ Newsgroups: news.software.nn,news.answers
+ Subject: NN Frequently Asked Questions (FAQ) with Answers
+ Frequency: monthly
+ Date: Fri, 19 Jun 1992 05:01:01 GMT
+ Archive-name: nn-faq
+
+ From: mdl@wndrsvr.la.ca.us (Mr. Distribution Lists)
+ Newsgroups: news.sysadmin,news.admin,news.answers,news.lists
+ Subject: Known University Distributions
+ Frequency: monthly
+ Archive-name: distributions/university
+ Date: 22 Jul 92 03:21:49 GMT
+
+ From: mdl@wndrsvr.la.ca.us (Mr. Distribution Lists)
+ Newsgroups: news.sysadmin,news.admin,news.answers,news.lists
+ Subject: Public Organizational & Logical Network Distributions
+ Frequency: monthly
+ Archive-name: distributions/logical
+ Date: 22 Jul 92 03:22:18 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.anime,news.answers
+ Subject: rec.arts.anime: Anime Primer
+ Frequency: monthly
+ Archive-name: anime/primer
+ Date: 3 Aug 92 19:05:08 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.anime,news.answers
+ Subject: rec.arts.anime: Anime Resources List
+ Frequency: monthly
+ Archive-name: anime/resources
+ Date: 3 Aug 92 19:05:44 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.anime,news.answers
+ Subject: rec.arts.anime: Frequently Asked Questions
+ Frequency: monthly
+ Archive-name: anime/faq
+ Date: 3 Aug 92 19:04:16 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.anime,news.answers
+ Subject: rec.arts.anime: Welcome to rec.arts.anime!
+ Frequency: monthly
+ Archive-name: anime/welcome
+ Date: 3 Aug 92 19:00:37 GMT
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.arts.books,news.answers
+ Subject: Arthurian Reading List FAQ
+ Frequency: monthly
+ Date: Fri, 17 Jul 1992 05:01:08 GMT
+ Archive-name: books/arthurian
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.books,news.answers
+ Subject: Bookstores in New York City (NYC) List (rec.arts.books)
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:29:33 GMT
+ Archive-name: books/stores/nyc
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.books,news.answers
+ Subject: Bookstores in San Francisco Bay Area (SF) List (rec.arts.books)
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:30:41 GMT
+ Archive-name: books/stores/sf
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.books,news.answers
+ Subject: Bookstores in Various Cities List (rec.arts.books)
+ Frequency: monthly
+ Date: 25 Jul 92 15:31:29 GMT
+ Archive-name: books/stores/various
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.books,news.answers
+ Subject: Changes to Holmes Booklist (rec.arts.books)
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:33:11 GMT
+ Archive-name: books/holmes/diff
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.books,news.answers
+ Subject: Holmes Booklist (rec.arts.books)
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:32:40 GMT
+ Archive-name: books/holmes/list
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.books,news.answers
+ Subject: rec.arts.books Frequently Asked Questions
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:28:36 GMT
+ Archive-name: books/faq
+
+ From: esti@quads.uchicago.edu (Paul A. Estin)
+ Newsgroups: rec.arts.comics
+ Subject: WELCOME TO REC.ARTS.COMICS (*)
+ Frequency: monthly
+ Date: Wed, 3 Jun 1992 20:38:29 GMT
+
+ From: yadallee@ersys.edmonton.ab.ca (Dave Shariff Yadallee)
+ Newsgroups: rec.arts.drwho
+ Subject: Clubs Listing for *
+ Frequency: unknown
+ Date: 16 Jun 92 11:57:44 GMT
+
+ From: kilburn@tomb.cs.wisc.edu (Dora Kilburn)
+ Newsgroups: rec.arts.drwho
+ Subject: Frequently Asked Questions
+ Frequency: monthly
+ Date: 1 Aug 91 22:14:36 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.manga,news.answers
+ Subject: rec.arts.manga: Frequently Asked Questions
+ Frequency: monthly
+ Archive-name: manga/faq
+ Date: 3 Aug 92 18:55:52 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.manga,news.answers
+ Subject: rec.arts.manga: Manga Primer
+ Frequency: monthly
+ Archive-name: manga/primer
+ Date: 3 Aug 92 18:56:42 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.manga,news.answers
+ Subject: rec.arts.manga: Manga Resources
+ Frequency: monthly
+ Archive-name: manga/resources
+ Date: 3 Aug 92 18:57:26 GMT
+
+ From: pearl@remus.rutgers.edu (Starbuck)
+ Newsgroups: rec.arts.manga,news.answers
+ Subject: rec.arts.manga: Welcome to rec.arts.manga
+ Frequency: monthly
+ Archive-name: manga/welcome
+ Date: 3 Aug 92 18:54:19 GMT
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.movies,news.answers
+ Subject: rec.arts.movies Frequently Asked Questions
+ Frequency: monthly
+ Date: Sat, 25 Jul 1992 15:27:54 GMT
+ Archive-name: movies-faq
+
+ From: phillips@syrinx.umd.edu
+ Newsgroups: rec.arts.sf.announce,rec.arts.sf.misc,news.answers
+ Subject: Rec.arts.sf groups, an introduction
+ Frequency: monthly
+ Date: 15 Jul 92 19:04:08 GMT
+ Archive-name: sf-groups-intro
+
+ From: ecl@cbnewsj.cb.att.com (evelyn.c.leeper)
+ Newsgroups: rec.arts.sf.movies,news.answers
+ Subject: rec.arts.sf.movies Frequently Asked Questions
+ Frequency: unknown
+ Date: 25 May 92 15:26:34 GMT
+ Archive-name: sf-movies-faq
+
+ From: dant@techbook.com (Dan Tilque)
+ Newsgroups: rec.arts.sf.written,rec.arts.sf.misc,news.answers
+ Subject: rec.arts.sf.written FAQ
+ Frequency: monthly
+ Date: 18 Jul 92 10:26:26 GMT
+ Archive-name: sf-written-intro
+
+ From: allenmk@ucsu.Colorado.EDU (Allen Melinda Kay)
+ Newsgroups: rec.arts.startrek
+ Subject: Shakespeare in Star Trek
+ Frequency: monthly
+ Date: 3 Feb 92 01:37:19 GMT
+
+ From: hackman@pnet51.orb.mn.org (Otto "Hack-Man" Heuer)
+ Newsgroups: rec.arts.startrek
+ Subject: Star Trek Actors' Other Roles
+ Frequency: monthly
+
+ From: Matt Gertz <mwgertz+@cs.cmu.edu>
+ Newsgroups: rec.arts.startrek,rec.arts.startrek.misc,rec.arts.startrek.current,rec.arts.startrek.tech,rec.arts.startrek.fandom
+ Subject: rec.arts.startrek.* netiquette (*/*/* version)*
+ Frequency: twice a month
+
+ From: ottoh3@CFSMO.Honeywell.COM (Otto Heuer #3)
+ Newsgroups: rec.arts.startrek.current
+ Subject: rasc FREQUENTLY ASKED QUESTIONS LIST
+ Frequency: twice a month
+ Date: 15 Jun 92 15:01:19 GMT
+
+ From: Michael_Shappe@cornell.edu (Michael Scott Shappe)
+ Newsgroups: rec.arts.startrek.current,news.answers
+ Subject: REC.ARTS.STARTREK.CURRENT Introduction--Weekly
+ Frequency: once a week
+ Archive-name: star-trek/rasc-weekly
+ Date: 6 Aug 92 19:31:47 GMT
+
+ From: Michael_Shappe@cornell.edu (Michael Scott Shappe)
+ Newsgroups: rec.arts.startrek.current,rec.arts.startrek.fandom,rec.arts.startrek.misc,rec.arts.startrek.tech,news.answers
+ Subject: REC.ARTS.STARTREK.* Introduction--Monthly
+ Frequency: once a month
+ Archive-name: star-trek/ras-monthly
+ Date: 6 Aug 92 19:32:36 GMT
+
+ From: Michael_Shappe@cornell.edu (Michael Scott Shappe)
+ Newsgroups: rec.arts.startrek.fandom,news.answers
+ Subject: REC.ARTS.STARTREK.FANDOM Introduction--Weekly
+ Frequency: once a week
+ Archive-name: star-trek/rasf-weekly
+ Date: 6 Aug 92 19:32:03 GMT
+
+ From: ottoh3@CFSMO.Honeywell.COM (Otto Heuer #3)
+ Newsgroups: rec.arts.startrek.info
+ Subject: FREQUENTLY ASKED QUESTIONS LIST
+ Frequency: monthly
+ Date: 4 Oct 91 16:03:22 GMT
+
+ From: trek-info@dweeb.fx.com (Jim Griffith - Moderator)
+ Newsgroups: rec.arts.startrek.info
+ Subject: Guidelines For Submitting Articles
+ Frequency: once a month
+ Date: 4 Aug 92 17:25:42 GMT
+
+ From: trek-info@dweeb.fx.com (Jim Griffith - Moderator)
+ Newsgroups: rec.arts.startrek.info
+ Subject: Introduction to rec.arts.startrek.info
+ Frequency: once a month
+ Date: 4 Aug 92 17:20:05 GMT
+
+ From: trek-info@dweeb.fx.com (Jim Griffith - Moderator)
+ Newsgroups: rec.arts.startrek.info
+ Subject: List of Upcoming Conventions
+ Frequency: monthly
+ Date: 4 Aug 1992 18:34:31 GMT
+
+ From: cwayne@triton.unm.edu (Chris Wayne)
+ Newsgroups: rec.arts.startrek.info
+ Subject: Station List (*)
+ Frequency: monthly
+ Date: 2 Jul 91 23:53:18 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: DIFFs - Star Trek Movies List of Lists
+ Frequency: monthly
+ Date: 5 Feb 92 07:32:34 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: DIFFs - Star Trek TOS/TAS List of Lists
+ Frequency: monthly
+ Date: 5 Feb 92 07:31:14 GMT
+
+ From: ottoh3@CFSMO.Honeywell.COM (Otto Heuer #3)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: HOW TO SUBMIT CREATIVE MATERIAL
+ Frequency: twice a month
+ Date: 15 Jun 92 15:01:44 GMT
+
+ From: ottoh3@CFSMO.Honeywell.COM (Otto Heuer #3)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: LIST OF PERIODIC POSTINGS TO r.a.s.* NEWSGROUPS
+ Frequency: twice a month
+ Date: Mon, 15 Jun 1992 15:00:02 GMT
+
+ From: Dan Styer (djstyer@symmetry.cs.mtu.edu)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: List of Actors' Other Roles
+ Frequency: once a month
+
+ From: Chris Wayne (cwayne%hydra.unm.edu@ariel.unm.edu)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: List of TV Stations Showing ST
+ Frequency: once a month
+
+ From: n9043860@henson.cc.wwu.edu (Marcos)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: ST:TNG Canonical Drinking Game
+ Frequency: once a month
+ Date: 15 Jun 92 03:18:31 GMT
+
+ From: Richard Muirden (ram@lionet.wesley.oz.au)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: ST:TOS Romance/Love List
+ Frequency: twice a month
+
+ From: ottoh3@CFSMO.Honeywell.COM (Otto Heuer #3)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: STAR TREK MUSIC
+ Frequency: twice a month
+ Date: Mon, 15 Jun 1992 15:02:32 GMT
+
+ From: Dave Learn (learnd@lafayette.edu)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: Shakespeare references in Star Trek
+ Frequency: once a month
+
+ From: Dan Styer (djstyer@symmetry.cs.mtu.edu)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: Star Trek Creative Works (FTP)
+ Frequency: once a month
+
+ From: npg@cns.umist.ac.uk (Neil P.G.)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: Star Trek Spelling List
+ Frequency: once a month
+ Date: 15 Jul 92 09:41:49 GMT
+
+ From: ottoh3@CFSMO.Honeywell.COM (Otto Heuer #3)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: TREK RATE results
+ Frequency: twice a month
+ Date: Wed, 1 Apr 1992 06:01:23 GMT
+
+ From: Mike Shappe (mikey@amnesia.ithaca.ny.us)
+ Newsgroups: rec.arts.startrek.misc
+ Subject: Weekly Introduction to REC.ARTS.STARTREK
+ Frequency: once a week
+
+ From: Michael_Shappe@cornell.edu (Michael Scott Shappe)
+ Newsgroups: rec.arts.startrek.misc,news.answers
+ Subject: REC.ARTS.STARTREK.MISC Introduction--Weekly
+ Frequency: once a week
+ Date: 16 Jun 92 14:58:42 GMT
+ Archive-name: star-trek/rasm-weekly
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek
+ Subject: Star Trek Movies List of Lists (*)
+ Frequency: once a month
+ Date: Sat, 4 Apr 92 02:03:10 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek
+ Subject: Star Trek TOS/TAS List of Lists (*)
+ Frequency: once a month
+ Date: Sat, 4 Apr 92 02:01:40 GMT
+
+ From: Otto Heuer (ottoh@cfsmo.honeywell.com)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek
+ Subject: TREK RATE
+ Frequency: twice a month
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek,rec.arts.startrek.current
+ Subject: Star Trek TNG List of Lists [*/*] (*)
+ Frequency: twice a month, monthly in July and August
+ Date: Sat, 4 Apr 92 02:09:37 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek.current
+ Subject: DIFFs - Star Trek DS9 List of Lists
+ Frequency: monthly
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek.current
+ Subject: DIFFs - Star Trek TNG List of Lists
+ Frequency: twice a month, monthly in July and August
+ Date: 19 Feb 92 06:24:21 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek.current
+ Subject: Trek Lists in ZOO format [*/*]
+ Frequency: twice a month, monthly in July and August
+ Date: 5 Feb 92 07:30:08 GMT
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek.current,alt.tv.simpsons,rec.arts.tv
+ Subject: DIFFs - Trek LoL/Simpson Archive Site Info
+ Frequency: twice a month
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek.current,alt.tv.simpsons,rec.arts.tv
+ Subject: Trek LoL/Simpson Archive Site Info (*)
+ Frequency: twice a month
+
+ From: mholtz@sactoh0.sac.ca.us (Mark A. Holtz)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek.current,rec.arts.startrek
+ Subject: Star Trek DS9 List of Lists (*)
+ Frequency: monthly
+ Date: 19 Feb 92 06:17:20 GMT
+
+ From: Otto Heuer (ottoh@cfsmo.honeywell.com)
+ Newsgroups: rec.arts.startrek.misc,rec.arts.startrek.info
+ Subject: rasm FREQUENTLY ASKED QUESTIONS LIST
+ Frequency: twice a month
+
+ From: ottoh3@CFSMO.Honeywell.COM (Otto Heuer #3)
+ Newsgroups: rec.arts.startrek.tech
+ Subject: rast FREQUENTLY ASKED QUESTIONS LIST
+ Frequency: twice a month
+ Date: Mon, 15 Jun 1992 15:01:07 GMT
+
+ From: Michael_Shappe@cornell.edu (Michael Scott Shappe)
+ Newsgroups: rec.arts.startrek.tech,news.answers
+ Subject: REC.ARTS.STARTREK.TECH Introduction--Weekly
+ Frequency: once a week
+ Archive-name: star-trek/rast-weekly
+ Date: 6 Aug 92 19:32:25 GMT
+
+ From: mwauford@utkux1.utk.edu (Melissa Wauford)
+ Newsgroups: rec.arts.tv,news.answers
+ Subject: *** REC.ARTS.TV POSTING GUIDELINES ***
+ Frequency: monthly
+ Date: Thu, 6 Aug 1992 23:47:10 GMT
+ Archive-name: tv/abbrevs
+
+ From: mwauford@utkux1.utk.edu (Melissa Wauford)
+ Newsgroups: rec.arts.tv,news.answers
+ Subject: TV Discussion Groups, Etc. (monthly posting)
+ Frequency: unknown
+ Date: Thu, 6 Aug 1992 23:48:11 GMT
+ Archive-name: tv/groups
+
+-- 
+Jonathan Kamens						jik@MIT.Edu
+MIT Information Systems/Athena		    Moderator, news.answers
+    (Send correspondence related to the news.answers newsgroup
+	{and ONLY correspondence related to the newsgroup}
+		 to news-answers-request@MIT.Edu.)
+
+From jik@athena.mit.edu Mon Aug 10 12:02:20 1992
+From: jik@athena.mit.edu (Jonathan I. Kamens)
+Newsgroups: news.lists,news.announce.newusers,news.answers
+Subject: List of Periodic Informational Postings, Part III
+Date: 8 Aug 92 05:09:48 GMT
+Followup-To: poster
+Organization: Massachusetts Institute of Technology
+Supersedes: <periodic-postings3_710658475@athena.mit.edu>
+Nntp-Posting-Host: pit-manager.mit.edu
+
+Archive-name: periodic-postings/part3
+
+
+This is part three of the List of Periodic Informational Postings.
+See the posting entitled "List of Periodic Informational Postings,
+Part I" for more information.
+
+----------------------------------------------------------------------
+
+ From: mwauford@utkux1.utk.edu (Melissa Wauford)
+ Newsgroups: rec.arts.tv,news.answers
+ Subject: TV Discussion Groups, Etc. (monthly posting)
+ Frequency: unknown
+ Date: Thu, 6 Aug 1992 23:48:11 GMT
+ Archive-name: tv/groups
+
+ From: osyjm@cs.montana.edu (Jaye Mathisen)
+ Newsgroups: rec.arts.tv,rec.arts.tv.uk,rec.arts.sf.tv
+ Subject: TV Episode Guides available via anonymous FTP
+ Frequency: weekly
+ Date: 19 Jul 92 17:14:09 GMT
+
+ From: mwauford@utkux1.utk.edu (Melissa Wauford)
+ Newsgroups: rec.arts.tv.soaps,news.answers
+ Subject: *** REC.ARTS.TV.SOAPS POSTING GUIDELINES ***
+ Frequency: monthly
+ Date: Thu, 6 Aug 1992 23:43:39 GMT
+ Archive-name: soaps-abbrevs
+
+ From: gibbsm@ll.mit.edu (Margaret D. Gibbs)
+ Newsgroups: rec.arts.tv.soaps,news.answers
+ Subject: ALL: rec.arts.tv.soaps Monthly FAQ (Frequently Asked Questions)
+ Frequency: monthly
+ Archive-name: soaps-faq
+ Date: 6 Aug 92 12:02:42 GMT
+
+ From: welty@balltown.cma.com (richard welty)
+ Newsgroups: rec.autos,rec.autos.tech,rec.autos.sport
+ Subject: Welcome to Rec.Autos.*
+ Frequency: monthly
+
+ From: geoff@peck.com (Geoff Peck)
+ Newsgroups: rec.aviation,news.answers
+ Subject: Frequently Asked Questions about Aviation (regular posting)
+ Frequency: bimonthly
+ Date: 17 Jul 92 08:00:11 GMT
+ Archive-name: aviation-faq
+
+ From: geoff@peck.com (Geoff Peck)
+ Newsgroups: rec.aviation,news.answers
+ Subject: Netiquette on rec.aviation (regular posting)
+ Frequency: bimonthly
+ Date: Fri, 24 Jul 1992 08:00:06 GMT
+ Archive-name: aviation-netiquette
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: rec.backcountry
+ Subject: [l/m */*/*] *XYZ
+ Frequency: monthly
+ Date: 22 Jul 92 11:09:46 GMT
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: rec.backcountry,news.answers
+ Subject: [l/m */*/*] *XYZ
+ Frequency: monthly
+ Date: 22 Jul 92 11:09:46 GMT
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: rec.backcountry,rec.climbing
+ Subject: [l/m */*/*] *XYZ
+ Frequency: monthly
+ Date: 22 Jul 92 11:09:46 GMT
+
+ From: iglesias@draco.acs.uci.edu (Mike Iglesias)
+ Newsgroups: rec.bicycles,news.answers
+ Subject: Rec.Bicycles Frequently Asked Questions Posting  Part */4
+ Frequency: monthly
+ Date: 10 Jul 92 06:11:23 GMT
+ Archive-name: bicycles-faq/part3
+
+ From: rsk@juniper.circ.upenn.edu (Rick Kulawiec)
+ Newsgroups: rec.boats.paddle
+ Subject: Frequently asked questions and answers [last updated */*/*]
+ Frequency: monthly
+ Date: 19 Apr 91 16:01:56 GMT
+
+ From: rsk@gynko.circ.upenn.edu (Rich Kulawiec)
+ Newsgroups: rec.boats.paddle,news.answers
+ Subject: Whitewater outfitter/dealer address list
+ Frequency: monthly
+ Date: 24 Jul 91 14:24:22 GMT
+ Archive-name: whitewater-addr
+
+ From: alg@cs.cornell.edu (Anne Louise Gockel)
+ Newsgroups: rec.crafts.textiles,alt.sewing,news.answers
+ Subject: Textile Related Books FAQ: Part * of 2
+ Frequency: every six weeks
+ Archive-name: crafts-textiles-books/part1
+ Date: 16 Jun 92 22:31:42 GMT
+
+ From: alg@cs.cornell.edu (Anne Louise Gockel)
+ Newsgroups: rec.crafts.textiles,alt.sewing,news.answers
+ Subject: Textiles FAQ
+ Frequency: every six weeks
+ Date: Tue, 16 Jun 1992 22:24:55 GMT
+ Archive-name: crafts-textiles
+
+ From: alg@cs.cornell.edu (Anne Louise Gockel)
+ Newsgroups: rec.crafts.textiles,alt.sewing,rec.org.sca,news.answers
+ Subject: Historical Costuming FAQ
+ Frequency: every six weeks
+ Date: Tue, 16 Jun 1992 22:30:14 GMT
+ Archive-name: crafts-historical-costuming
+
+ From: ajd@itl.itd.umich.edu (AjD)
+ Newsgroups: rec.food.drink,alt.drugs
+ Subject: Grain Alcohol FAQ (version *)
+ Frequency: unknown
+ Date: Mon, 25 May 92 21:10:00 GMT
+
+ From: aem@mthvax.cs.miami.edu (Rec.Food.Recipes Moderator)
+ Newsgroups: rec.food.recipes
+ Subject: MONTHLY: General Information [last updated *]
+ Frequency: monthly
+ Date: 1 Jan 92 17:48:26 GMT
+ Archive-name: recipes/info/monthly-92-1
+
+ From: marcotte@acsu.buffalo.edu (Brian Marcotte)
+ Newsgroups: rec.food.veg,news.answers
+ Subject: rec.food.veg FREQUENTLY ASKED QUESTIONS LIST (FAQ)
+ Frequency: monthly
+ Date: 3 May 92 07:18:35 GMT
+ Archive-name: vegetarian-faq
+
+ From: jacobs@cs.utah.edu (Steven R Jacobs)
+ Newsgroups: rec.gambling,news.answers
+ Subject: rec.gambling Changes to Frequently Asked Questions
+ Frequency: irregularly
+
+ From: jacobs@cs.utah.edu (Steven R Jacobs)
+ Newsgroups: rec.gambling,news.answers
+ Subject: rec.gambling Frequently Asked Questions
+ Frequency: irregularly
+
+ From: shauck@adobe.com (William R. Shauck)
+ Newsgroups: rec.games.chess,news.answers
+ Subject: rec.games.chess Answers to Frequently Asked Questions */*/*
+ Frequency: semimonthly
+ Date: 20 May 92 19:15:39 GMT
+ Archive-name: chess-faq/part1
+
+ From: shauck@adobe.com (William R. Shauck)
+ Newsgroups: rec.games.chess,news.answers
+ Subject: rec.games.chess FAQ: Table of Contents
+ Frequency: semimonthly
+ Date: 9 Jul 92 06:05:02 GMT
+ Archive-name: chess-faq/part0
+
+ From: stst@vuse.vanderbilt.edu (Stefan Strack)
+ Newsgroups: rec.games.corewar,news.answers
+ Subject: rec.games.corewar Frequently Asked Questions (FAQ)
+ Frequency: twice per month
+
+ From: muir@csi.com (David Muir Sharnoff)
+ Newsgroups: rec.games.empire,news.answers
+ Subject: versions of empire -- monthly posting
+ Frequency: monthly
+ Archive-name: empire-versions
+ Date: 3 Aug 1992 21:12:48 GMT
+
+ From: millerl@wilma.wharton.upenn.edu
+ Newsgroups: rec.games.frp,news.answers
+ Subject: [rec.games.frp] BBSes of interest to roleplayers
+ Frequency: biweekly
+ Date: Sun, 17 May 1992 23:19:09 GMT
+ Archive-name: roleplay/part6
+
+ From: millerl@wilma.wharton.upenn.edu
+ Newsgroups: rec.games.frp,news.answers
+ Subject: [rec.games.frp] Frequently asked questions
+ Frequency: biweekly
+ Date: Sun, 17 May 1992 23:18:30 GMT
+ Archive-name: roleplay/part2
+
+ From: millerl@wilma.wharton.upenn.edu
+ Newsgroups: rec.games.frp,news.answers
+ Subject: [rec.games.frp] Roleplaying net.*.books
+ Frequency: biweekly
+ Date: Sun, 17 May 1992 23:19:15 GMT
+ Archive-name: roleplay/part7
+
+ From: millerl@wilma.wharton.upenn.edu
+ Newsgroups: rec.games.frp,news.answers
+ Subject: [rec.games.frp] Welcome!
+ Frequency: biweekly
+ Date: Sun, 17 May 1992 23:18:17 GMT
+ Archive-name: roleplay/part1
+
+ From: millerl@wilma.wharton.upenn.edu
+ Newsgroups: rec.games.frp,news.answers
+ Subject: [rec.games.frp] archive sites with roleplaying material
+ Frequency: biweekly
+ Date: Sun, 17 May 1992 23:18:41 GMT
+ Archive-name: roleplay/part3
+
+ From: millerl@wilma.wharton.upenn.edu
+ Newsgroups: rec.games.frp,news.answers
+ Subject: [rec.games.frp] roleplaying mailing lists and digests part 1/2
+ Frequency: biweekly
+ Date: Sun, 17 May 1992 23:18:50 GMT
+ Archive-name: roleplay/part4
+
+ From: millerl@wilma.wharton.upenn.edu
+ Newsgroups: rec.games.frp,news.answers
+ Subject: [rec.games.frp] roleplaying mailing lists and digests part 2/2
+ Frequency: biweekly
+ Date: Sun, 17 May 1992 23:19:00 GMT
+ Archive-name: roleplay/part5
+
+ From: adrian@milton.u.washington.edu (Adrian Mariano)
+ Newsgroups: rec.games.go
+ Subject: Go Players Address List
+ Frequency: monthly
+ Date: 3 Aug 92 16:39:10 GMT
+
+ From: adrian@milton.u.washington.edu (Adrian Mariano)
+ Newsgroups: rec.games.go
+ Subject: Go Related Files on Anonymous FTP
+ Frequency: monthly
+ Date: Mon, 3 Aug 1992 16:38:03 GMT
+
+ From: adrian@milton.u.washington.edu (Adrian Mariano)
+ Newsgroups: rec.games.go,news.answers
+ Subject: The Game Go -- Frequently Asked Questions
+ Frequency: monthly
+ Archive-name: go-faq
+ Date: Sun, 2 Aug 1992 05:00:39 GMT
+
+ From: yucao@cco.caltech.edu (Yu Cao)
+ Newsgroups: rec.games.hack,news.answers
+ Subject: [rec.games.hack] Frequently Asked Questions (WEEKLY)
+ Frequency: weekly
+ Archive-name: nethack-faq
+ Date: 5 Aug 92 07:00:24 GMT
+
+ From: grabiner@zariski.harvard.edu (David Grabiner)
+ Newsgroups: rec.games.moria
+ Subject: rec.games.moria Frequently Asked Questions
+ Frequency: monthly
+ Date: 15 Jul 92 11:25:53 EDT
+
+ From: scg@mentor.cc.purdue.edu (Scott Goehring -- Mudlist Administrator)
+ Newsgroups: rec.games.mud,rec.games.mud.lp,alt.mud
+ Subject: Mudlist posting (volume *, issue *)
+ Frequency: weekly
+ Date: 17 Apr 92 18:11:58 GMT
+
+ From: jds@math.okstate.edu (Jennifer "Moira" Smith)
+ Newsgroups: rec.games.mud,rec.games.mud.lp,alt.mud,news.answers
+ Subject: [rec.games.mud]: FAQ #1/3: MUDs and MUDding
+ Frequency: biweekly
+ Date: Tue, 16 Jun 1992 06:00:09 GMT
+ Archive-name: mud-faq/part1
+
+ From: jds@math.okstate.edu (Jennifer "Moira" Smith)
+ Newsgroups: rec.games.mud,rec.games.mud.lp,alt.mud,news.answers
+ Subject: [rec.games.mud]: FAQ #2/3: MUD Clients and Servers
+ Frequency: biweekly
+ Date: 16 Jun 92 06:00:14 GMT
+ Archive-name: mud-faq/part2
+
+ From: jds@math.okstate.edu (Jennifer "Moira" Smith)
+ Newsgroups: rec.games.mud,rec.games.mud.lp,alt.mud,news.answers
+ Subject: [rec.games.mud]: FAQ #3/3: RWHO and "mudwho"
+ Frequency: biweekly
+ Date: Tue, 16 Jun 1992 06:00:16 GMT
+ Archive-name: mud-faq/part3
+
+ From: tom@ocf.berkeley.edu (Tom Holub)
+ Newsgroups: rec.games.netrek,alt.games.xtrek,news.answers
+ Subject: Netrek FTP list.
+ Frequency: monthly
+
+ From: tom@ocf.berkeley.edu (Tom Holub)
+ Newsgroups: rec.games.netrek,news.answers
+ Subject: Netrek Server List
+ Frequency: monthly
+ Date: 18 Jul 1992 03:06:32 GMT
+ Archive-name: netrek/server-list
+
+ From: tom@ocf.berkeley.edu (Tom Holub)
+ Newsgroups: rec.games.netrek,news.answers
+ Subject: rec.games.netrek FAQ List
+ Frequency: monthly
+ Date: 18 Jul 1992 03:06:28 GMT
+ Archive-name: netrek/faq
+
+ From: sao@athena.mit.edu (Andy Oakland)
+ Newsgroups: rec.games.pinball,news.answers
+ Subject: monthly rec.games.pinball FAQ, one of two
+ Frequency: monthly
+ Archive-name: pinball/part1
+ Date: Wed, 29 Jul 1992 15:13:36 GMT
+
+ From: sao@athena.mit.edu (Andy Oakland)
+ Newsgroups: rec.games.pinball,news.answers
+ Subject: monthly rec.games.pinball FAQ, two of two
+ Frequency: monthly
+ Archive-name: pinball/part2
+ Date: Wed, 29 Jul 1992 15:13:55 GMT
+
+ From: jdeitch@umiami.ir.miami.edu
+ Newsgroups: rec.games.video.arcade,news.answers
+ Subject: rec.games.video.arcade Frequently Asked Questions
+ Frequency: monthly
+ Archive-name: videoarcade-faq
+ Date: 4 Aug 92 23:09:48 EDT
+
+ From: magnum@cs.umd.edu
+ Newsgroups: rec.guns
+ Subject: charter for rec.guns
+ Frequency: monthly
+ Date: 14 Jul 92 20:45:09 GMT
+
+ From: funny-request@clarinet.com (Brad Templeton)
+ Newsgroups: rec.humor.funny
+ Subject: Editorial Policy on Offensive Jokes -- Monthly Posting
+ Frequency: monthly
+ Date: Tue, 4 Aug 92 6:35:2 EDT
+
+ From: funny-request@clarinet.com (Brad Templeton)
+ Newsgroups: rec.humor.funny
+ Subject: Guidelines for Submissions -- Monthly Posting
+ Frequency: monthly
+ Date: 3 Aug 92 10:35:09 GMT
+
+ From: funny-request@clarinet.com (Brad Templeton)
+ Newsgroups: rec.humor.funny,news.answers
+ Subject: Introduction to REC.HUMOR.FUNNY -- Monthly Posting
+ Frequency: monthly
+ Archive-name: rhf-intro
+ Date: 2 Aug 92 10:35:02 GMT
+
+ From: chuq@Apple.COM (Chuq Von Rospach, only here for the beer)
+ Newsgroups: rec.mag.otherrealms
+ Subject: Introduction to rec.mag.otherrealms
+ Frequency: tri-weekly
+ Date: 3 May 91 16:13:03 GMT
+
+ From: izar@falafel.cs.huji.ac.il (Izar Tarandach)
+ Newsgroups: rec.martial-arts,news.answers
+ Subject: rec.martial-arts Frequently Asked Questions and Some Answers
+ Frequency: monthly
+ Date: 30 Apr 92 08:56:21 GMT
+ Archive-name: martial-arts-faq
+
+ From: sham@cs.arizona.edu
+ Newsgroups: rec.models.rc,news.answers
+ Subject: R/C Flying: Part * of 2/rec.models.rc FAQ
+ Frequency: every two weeks
+ Date: 20 Jul 92 21:01:27 GMT
+ Archive-name: RC-flying-FAQ/part1
+
+ From: linimon@nominil.lonestar.org (Mark Linimon)
+ Newsgroups: rec.music.bluenote
+ Subject: Rec.music.bluenote: history, common topics, frequently asked questions
+ Frequency: monthly
+ Date: 24 Feb 92 01:53:40 GMT
+
+ From: linimon@nominil.lonestar.org (Mark Linimon)
+ Newsgroups: rec.music.bluenote
+ Subject: Welcome to rec.music.bluenote!
+ Frequency: monthly
+ Date: 24 Feb 92 01:53:07 GMT
+
+ From: gmw1@cunixa.cc.columbia.edu (Gabe M Wiener)
+ Newsgroups: rec.music.classical,news.answers
+ Subject: rec.music.classical FAQ
+ Frequency: once every two weeks
+ Date: Mon, 27 Jul 1992 17:54:50 GMT
+ Archive-name: classical-music-faq
+
+ From: eerke@cs.kun.nl (Eerke Boiten)
+ Newsgroups: rec.music.funky
+ Subject: CHART: Dutch dance
+ Frequency: weekly
+ Date: 10 Mar 92 12:18:13 GMT
+
+ From: rec-music-info@ph.tn.tudelft.nl (Leo Breebaart)
+ Newsgroups: rec.music.info,news.answers
+ Subject: REC.MUSIC.INFO: Submission Guidelines for rec.music.info
+ Frequency: every two weeks
+
+ From: rec-music-info@ph.tn.tudelft.nl (Leo Breebaart)
+ Newsgroups: rec.music.info,news.answers
+ Subject: REC.MUSIC.INFO: Welcome to rec.music.info!
+ Frequency: every two weeks
+
+ From: a3@rivm.nl (Adri Verhoef)
+ Newsgroups: rec.music.info,rec.music.misc
+ Subject: CHART: European Top 20
+ Frequency: weekly
+ Date: 3 Aug 92 09:34:12 GMT
+
+ From: VERKADE@ctss.co.uk (Herman Verkade)
+ Newsgroups: rec.music.info,rec.music.misc
+ Subject: CHART: UK Indie Charts w/e *
+ Frequency: weekly
+ Date: 24 Apr 92 07:57:23 GMT
+
+ From: bill@thd.tv.tek.com (William K. McFadden)
+ Newsgroups: rec.music.makers,rec.audio
+ Subject: LIST OF MUSICAL INSTRUMENT SPEAKERS
+ Frequency: monthly
+ Date: 1 Apr 92 08:10:23 GMT
+
+ From: rsk@gynko.circ.upenn.edu (Rich Kulawiec)
+ Newsgroups: rec.music.makers,rec.music.bluenote,rec.music.folk,news.answers
+ Subject: List of open musical jam sessions
+ Frequency: monthly
+ Archive-name: jam-sessions
+
+ From: rsk@gynko.circ.upenn.edu (Rich Kulawiec)
+ Newsgroups: rec.music.makers,rec.music.synth,alt.guitar,news.answers
+ Subject: Music Equipment Mail/Phone List
+ Frequency: monthly
+ Date: 24 Jul 91 14:29:34 GMT
+
+ From: sluka@stoch.fmi.uni-passau.de (Bernd Sluka)
+ Newsgroups: rec.music.misc
+ Subject: CHART: Austrian Top 20 Singles*
+ Frequency: weekly
+ Date: Mon, 6 Jul 1992 11:41:11 GMT
+
+ From: tkf43427@uxa.cso.uiuc.edu (not-home)
+ Newsgroups: rec.music.misc
+ Subject: CHART: Billboard Top 40 Singles*
+ Frequency: weekly
+
+ From: tkf43427@uxa.cso.uiuc.edu (not-home)
+ Newsgroups: rec.music.misc
+ Subject: CHART: Billboard Top Albums,*
+ Frequency: weekly
+ Date: 12 Mar 92 19:37:28 GMT
+
+ From: buckmr@rpi.edu
+ Newsgroups: rec.music.misc
+ Subject: CHART: US TOP10*
+ Frequency: irregular
+
+ From: buckmr@marcus.its.rpi.edu (Ron Buckmire)
+ Newsgroups: rec.music.misc
+ Subject: CHART: US Top10 (*)
+ Frequency: weekly
+ Date: Tue, 7 Jul 1992 17:36:58 GMT
+
+ From: jakubec@mprgate.mpr.ca (Trent J Jakubec)
+ Newsgroups: rec.music.misc
+ Subject: CHART: Vancouver BC Canada*
+ Frequency: weekly
+ Date: 7 May 92 22:26:25 GMT
+
+ From: mlol-request@wariat.nshore.ncoast.org
+ Newsgroups: rec.music.misc,alt.rock-n-roll
+ Subject: Musical List of Lists
+ Frequency: irregularly
+
+ From: fany@fons.nbg.sub.org (Martin Sluka)
+ Newsgroups: rec.music.misc,de.rec.music.misc
+ Subject: CHART: Bavarian Top 10 (singles)*
+ Frequency: weekly
+ Date: 26 Jun 92 15:10:02 GMT
+
+ From: rsk@gynko.circ.upenn.edu (Rich Kulawiec)
+ Newsgroups: rec.music.misc,rec.arts.sf.misc,news.answers
+ Subject: SF-references-in-music List
+ Frequency: monthly
+
+ From: datta@cs.uwp.edu (David Datta)
+ Newsgroups: rec.music.misc,rec.music.cd,news.answers
+ Subject: [rec.music.misc,cd] Frequently Asked Questions (Monthly Post)
+ Frequency: monthly
+ Date: Thu, 2 Apr 1992 01:56:56 GMT
+ Archive-name: music-faq
+
+ From: datta@cs.uwp.edu (David Datta)
+ Newsgroups: rec.music.misc,rec.music.cd,news.answers
+ Subject: [rec.music.misc,cd] Musical Mail Order (Monthly Post)
+ Frequency: monthly
+ Date: 2 Apr 92 01:56:09 GMT
+ Archive-name: music-mail-order
+
+ From: eerke@cs.kun.nl (Eerke Boiten)
+ Newsgroups: rec.music.misc,soc.culture.netherlands
+ Subject: CHART: Dutch albums
+ Frequency: weekly
+ Date: 10 Apr 92 13:56:17 GMT
+
+ From: eerke@cs.kun.nl (Eerke Boiten)
+ Newsgroups: rec.music.misc,soc.culture.netherlands
+ Subject: CHART: Dutch singles
+ Frequency: weekly
+ Date: 16 Apr 92 12:45:02 GMT
+
+ From: steve@rtfm.mlb.fl.us (Steve Pierce)
+ Newsgroups: rec.nude,news.answers
+ Subject: REC.NUDE Frequently Asked Questions, Part I of II
+ Frequency: monthly
+ Archive-name: nude-faq/part1
+ Date: Mon, 3 Aug 1992 01:58:34 GMT
+
+ From: steve@rtfm.mlb.fl.us (Steve Pierce)
+ Newsgroups: rec.nude,news.answers
+ Subject: REC.NUDE Frequently Asked Questions, Part II of II
+ Frequency: monthly
+ Archive-name: nude-faq/part2
+ Date: Mon, 3 Aug 1992 01:59:48 GMT
+
+ From: phil@miracle.com (Phil Hill)
+ Newsgroups: rec.org.mensa,news.answers
+ Subject: Mensa - Frequently Asked Questions with Answers [monthly]
+ Frequency: monthly
+
+ From: whheydt@pbhya.PacBell.COM (Wilson Heydt)
+ Newsgroups: rec.org.sca
+ Subject: Come on in--the water's fine
+ Frequency: Monthly
+ Date: Mon, 3 Aug 1992 19:22:06 GMT
+
+ From: aluko@leland.stanford.edu (Stephan Goldschmidt)
+ Newsgroups: rec.org.sca
+ Subject: Finding your local SCA
+ Frequency: Periodic
+
+ From: mittle@watson.ibm.com (Josh Mittleman)
+ Newsgroups: rec.org.sca
+ Subject: Intro to the SCA
+ Frequency: Monthly
+
+ From: dennis_sherman@unc.edu
+ Newsgroups: rec.org.sca,alt.sca,news.answers
+ Subject: Rialto FAQ & Style Guide (last mod. */*/*)
+ Frequency: monthly
+ Date: Sat, 16 May 1992 05:00:33 GMT
+ Archive-name: rialto-faq
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets,rec.pets.cats,rec.pets.dogs,news.answers
+ Subject: Fleas, Ticks, and Your Pet: FAQ
+ Frequency: every fifteen days
+ Archive-name: fleas-ticks
+ Date: Fri, 31 Jul 1992 05:00:42 GMT
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.cats,news.answers
+ Subject: rec.pets.cats FAQ (part 1/2)
+ Frequency: monthly
+ Date: Fri, 24 Jul 1992 05:00:41 GMT
+ Archive-name: cats-faq/part1
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.cats,news.answers
+ Subject: rec.pets.cats FAQ (part 2/2)
+ Frequency: monthly
+ Date: Fri, 24 Jul 1992 05:01:20 GMT
+ Archive-name: cats-faq/part2
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  American Kennel Club Titles FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:02:53 GMT
+ Archive-name: dogs-faq/AKC-titles
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Annotated References FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:03:14 GMT
+ Archive-name: dogs-faq/references
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Assorted Topics FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:03:35 GMT
+ Archive-name: dogs-faq/misc1
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Bloodhounds FAQ
+ Frequency: approximately twice a year (or as requested, in rec.pets.dogs)
+ Archive-name: dogs-faq/bloodhounds
+ Date: Tue, 19 May 1992 05:03:35 GMT
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Collies FAQ
+ Frequency: approximately twice a year (or as requested, in rec.pets.dogs)
+ Archive-name: dogs-faq/collies
+ Date: Tue, 19 May 1992 05:03:18 GMT
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Companion and Working Dogs FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:02:10 GMT
+ Archive-name: dogs-faq/working
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Dog Behavior, Problems, and Training FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:02:33 GMT
+ Archive-name: dogs-faq/training
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Greyhounds FAQ
+ Frequency: irregularly (or as requested, in rec.pets.dogs)
+ Date: Fri, 19 Jun 1992 05:01:19 GMT
+ Archive-name: dogs-faq/greyhounds
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Health Care Issues FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:01:46 GMT
+ Archive-name: dogs-faq/health-care
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Introduction FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:00:56 GMT
+ Archive-name: dogs-faq/introduction
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  Labrador Retrievers FAQ
+ Frequency: approximately twice a year (or as requested, in rec.pets.dogs)
+ Date: Fri, 3 Jul 1992 05:02:56 GMT
+ Archive-name: dogs-faq/labradors
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: rec.pets.dogs,news.answers
+ Subject: rec.pets.dogs:  New Owners, New Dogs FAQ
+ Frequency: every 30 days
+ Date: Sat, 18 Jul 1992 05:01:22 GMT
+ Archive-name: dogs-faq/new
+
+ From: atha!aunro!ve6mgs!mark@decwrl.dec.com (Mark G. Salyzyn)
+ Newsgroups: rec.radio.amateur.misc
+ Subject: Amateurs on Usenet List * Part * of *
+ Frequency: monthly
+
+ From: bjahnke%arrlhq.UUCP@uhasun.hartford.edu (Bart Jahnke)
+ Newsgroups: rec.radio.amateur.misc
+ Subject: Examinations Schedules * to *
+ Frequency: bimonthly
+
+ From: pschleck@odin.unomaha.edu (Paul W Schleck KD3FU)
+ Newsgroups: rec.radio.amateur.misc,news.answers
+ Subject: Amateur Radio Elmers List Info and Administrivia
+ Frequency: monthly
+ Archive-name: elmers/admin
+ Date: Sat, 1 Aug 1992 11:06:10 GMT
+
+ From: pschleck@odin.unomaha.edu (Paul W Schleck KD3FU)
+ Newsgroups: rec.radio.amateur.misc,news.answers
+ Subject: Amateur Radio Elmers Resource Directory
+ Frequency: monthly
+ Archive-name: elmers/list
+ Date: Sat, 1 Aug 1992 11:06:26 GMT
+
+ From: pschleck@odin.unomaha.edu (Paul W Schleck KD3FU)
+ Newsgroups: rec.radio.amateur.misc,news.answers
+ Subject: Amateur Radio Elmers Resource Directory Diffs
+ Frequency: monthly
+ Date: Wed, 1 Jul 1992 11:05:05 GMT
+ Archive-name: elmers/diff
+
+ From: pschleck@odin.unomaha.edu (Paul W Schleck KD3FU)
+ Newsgroups: rec.radio.amateur.misc,news.answers
+ Subject: Guide to the Personal Radio Newsgroups
+ Frequency: monthly
+ Date: Thu, 16 Jul 1992 05:58:24 GMT
+ Archive-name: personal-radio-intro
+
+ From: pschleck@odin.unomaha.edu (Paul W Schleck KD3FU)
+ Newsgroups: rec.radio.amateur.misc,news.answers
+ Subject: Index to the rec.radio.amateur.* Supplemental Archives
+ Frequency: monthly
+ Date: Thu, 16 Jul 1992 05:58:04 GMT
+ Archive-name: ham-archives-index
+
+ From: ikluft@uts.amdahl.com (Ian Kluft)
+ Newsgroups: rec.radio.amateur.misc,news.answers
+ Subject: rec.radio.amateur.misc Frequently Asked Questions (Part * of 6)
+ Frequency: twice per month
+ Date: 7 Jul 92 10:08:19 GMT
+ Archive-name: ham-radio-faq/part1
+
+ From: steve@matt.ksu.ksu.edu (Steve Schallehn)
+ Newsgroups: rec.radio.amateur.packet,news.answers
+ Subject: rec.radio.amateur.packet Frequently Asked Questions
+ Frequency: monthly
+ Date: 2 Jul 1992 03:22:55 -0700
+ Archive-name: packet-radio-faq
+
+ From: ikluft@uts.amdahl.com (Ian Kluft)
+ Newsgroups: rec.radio.cb,news.answers
+ Subject: rec.radio.cb Frequently Asked Questions (Part * of *)
+ Frequency: twice monthly
+ Date: 7 Jul 92 10:08:37 GMT
+ Archive-name: cb-radio-faq/part1
+
+ From: ralph@mtunp.att.com (Ralph Brandi)
+ Newsgroups: rec.radio.shortwave
+ Subject: Welcome to rec.radio.shortwave
+ Frequency: monthly
+ Date: 1 Jul 92 19:14:50 GMT
+
+ From: fybush@unixland.natick.ma.us (Scott Fybush)
+ Newsgroups: rec.radio.shortwave
+ Subject: Welcome to rec.radio.shortwave (AM/FM DXing)
+ Frequency: monthly
+ Date: 1 Jul 92 19:16:13 GMT
+
+ From: parnass@ihlpm.att.com (Bob Parnass, AJ9S)
+ Newsgroups: rec.radio.shortwave
+ Subject: Welcome to rec.radio.shortwave (Scanning)
+ Frequency: monthly
+ Date: 1 Jul 92 19:15:49 GMT
+
+ From: ralph@mtunp.att.com (Ralph Brandi)
+ Newsgroups: rec.radio.shortwave
+ Subject: Welcome to rec.radio.shortwave (Shortwave)
+ Frequency: monthly
+ Date: 1 Jul 92 19:15:20 GMT
+
+ From: pschleck@odin.unomaha.edu (Paul W Schleck KD3FU)
+ Newsgroups: rec.radio.swap,news.answers
+ Subject: A Guide to Buying and Selling on Usenet
+ Frequency: monthly
+ Archive-name: swap-guide
+ Date: Sat, 1 Aug 1992 11:06:53 GMT
+
+ From: serrano@osage.csc.ti.com (Yonson Serrano)
+ Newsgroups: rec.running,news.answers
+ Subject: rec.running FAQ part * of *
+ Frequency: monthly
+
+ From: davidb@is.morgan.com (David Birnbaum)
+ Newsgroups: rec.sport.disc,news.answers
+ Subject: rec.sport.disc FAQ - Part 1
+ Frequency: once every two weeks
+ Date: Wed, 22 Jul 1992 03:25:24 GMT
+ Archive-name: disc-faq/part1
+
+ From: davidb@is.morgan.com (David Birnbaum)
+ Newsgroups: rec.sport.disc,news.answers
+ Subject: rec.sport.disc FAQ - Part 2
+ Frequency: once every two weeks
+ Date: Wed, 22 Jul 1992 03:25:24 GMT
+ Archive-name: disc-faq/part2
+
+ From: footpoll@terminus.UUCP (Football Poll)
+ Newsgroups: rec.sport.football
+ Subject: Football poll
+ Frequency: weekly during college football season
+
+ From: footpoll@terminus.UUCP (Football Poll)
+ Newsgroups: rec.sport.football
+ Subject: NCAA Division I-A Team list
+ Frequency: weekly during college football season
+
+ From: wilson@cs.ucf.edu (tom wilson)
+ Newsgroups: rec.sport.hockey,news.answers
+ Subject: rec.sport.hockey Frequently Asked Questions
+ Frequency: monthly
+ Archive-name: hockey-faq
+ Date: 7 Aug 92 06:15:22 GMT
+
+ From: fsspr@acad3.alaska.edu (Sean P. Ryan, Hardcore Alaskan)
+ Newsgroups: rec.sport.pro-wrestling
+ Subject: Wrestling Sheet Listing - mo yr
+ Frequency: monthly
+
+ From: fsspr@acad3.alaska.edu (Sean P. Ryan, Hardcore Alaskan)
+ Newsgroups: rec.sport.pro-wrestling
+ Subject: fj.rec.sports.prowrestling summary for the week of */* - */*
+ Frequency: weekly
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: rec.travel
+ Subject: Simple suggestions for travel (net reminders really)
+ Frequency: three times a year
+ Date: 1 Jul 92 11:30:47 GMT
+
+ From: fsspr@acad3.alaska.edu (Sean P. Ryan, Hardcore Alaskan)
+ Newsgroups: rec.travel,soc.culture.canada
+ Subject: Alaska Highway Rendezvous '92 - [1/2] General Information
+ Frequency: monthly
+ Date: 6 Feb 92 08:42:41 GMT
+
+ From: fsspr@acad3.alaska.edu (Sean P. Ryan, Hardcore Alaskan)
+ Newsgroups: rec.travel,soc.culture.canada
+ Subject: Alaska Highway Rendezvous '92 - [2/2] Calendar of Events
+ Frequency: monthly
+ Date: 6 Feb 92 08:42:41 GMT
+
+ From: autry@relay.sgi.com (Larry Autry)
+ Newsgroups: rec.travel.air,news.answers
+ Subject: AIR FAQ 1/5: Air Travel Intro and Answers to Frequent Questions
+ Frequency: monthly
+
+ From: autry@relay.sgi.com (Larry Autry)
+ Newsgroups: rec.travel.air,news.answers
+ Subject: AIR FAQ 2/5: Airport Codes for North America
+ Frequency: monthly
+
+ From: autry@relay.sgi.com (Larry Autry)
+ Newsgroups: rec.travel.air,news.answers
+ Subject: AIR FAQ 3/5: Worldwide Airport Codes
+ Frequency: monthly
+
+ From: autry@relay.sgi.com (Larry Autry)
+ Newsgroups: rec.travel.air,news.answers
+ Subject: AIR FAQ 4/5: Ticket Consolidators Article
+ Frequency: monthly
+
+ From: autry@relay.sgi.com (Larry Autry)
+ Newsgroups: rec.travel.air,news.answers
+ Subject: AIR FAQ 5/5: How To Prevent Jetlag (Monthly Posting)
+ Frequency: monthly
+
+ From: mkant+@cs.cmu.edu (Mark Kantrowitz)
+ Newsgroups: rec.travel.air,news.answers
+ Subject: FAQ: How to Get Cheap Airtickets [Monthly posting]
+ Frequency: monthly
+ Archive-name: cheap-airfare
+ Date: 2 Aug 92 06:00:53 GMT
+
+ From: B.King@ee.surrey.ac.uk
+ Newsgroups: rec.video
+ Subject: Multi-Standard Video Equipment FAQ (rev *.*)
+ Frequency: monthly
+
+ From: B.King@ee.surrey.ac.uk
+ Newsgroups: rec.video
+ Subject: World TV Standards FAQ (rev *.*)
+ Frequency: monthly
+
+ From: flash@lopez.UUCP (Gary Bourgois)
+ Newsgroups: rec.video.satellite
+ Subject: Frequently Asked Questions about Satellite TV (Monthly Posting)
+ Frequency: monthly
+
+ From: roche@cs.rochester.edu (James Roche)
+ Newsgroups: rec.woodworking
+ Subject: Changes to Frequently Asked rec.woodworking questions
+ Frequency: monthly
+ Date: 1 May 92 17:12:57 GMT
+
+ From: roche@cs.rochester.edu (James Roche)
+ Newsgroups: rec.woodworking
+ Subject: Changes to Frequently Requested rec.woodworking addresses
+ Frequency: monthly, or when there are changes
+ Date: Fri, 1 May 1992 17:13:54 GMT
+
+ From: roche@cs.rochester.edu (James Roche)
+ Newsgroups: rec.woodworking
+ Subject: Frequently Asked rec.woodworking questions (last updated */*/*)
+ Frequency: monthly
+ Date: Mon, 3 Aug 1992 17:04:15 GMT
+
+ From: roche@cs.rochester.edu (James Roche)
+ Newsgroups: rec.woodworking
+ Subject: Frequently Requested Tool reviews (last updated */*/*)
+ Frequency: monthly
+ Date: 3 Aug 92 17:05:49 GMT
+
+ From: roche@cs.rochester.edu (James Roche)
+ Newsgroups: rec.woodworking
+ Subject: Frequently Requested rec.woodworking addresses (last updated */*/*)
+ Frequency: monthly, or when there are changes
+ Date: Mon, 3 Aug 1992 17:05:19 GMT
+
+ From: ronnie@cisco.com (Ronnie Kon)
+ Newsgroups: sci.astro,news.answers
+ Subject: Amateur Telescopes FAQ
+ Frequency: monthly
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.astro,sci.space,news.answers
+ Subject: Space FAQ 01/15 - Introduction
+ Frequency: monthly
+ Archive-name: space/intro
+ Date: 25 Jun 92 18:36:27 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.astro,sci.space,news.answers
+ Subject: Space FAQ 02/15 - Network Resources
+ Frequency: monthly
+ Archive-name: space/net
+ Date: 25 Jun 92 18:37:19 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.astro,sci.space,news.answers
+ Subject: Space FAQ 03/15 - Data Sources
+ Frequency: monthly
+ Archive-name: space/data
+ Date: 25 Jun 92 18:37:26 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.astro,sci.space,news.answers
+ Subject: Space FAQ 04/15 - Calculations
+ Frequency: monthly
+ Archive-name: space/math
+ Date: 25 Jun 92 18:37:38 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.astro,sci.space,news.answers
+ Subject: Space FAQ 05/15 - References
+ Frequency: monthly
+ Archive-name: space/references
+ Date: 25 Jun 92 18:37:43 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.astro,sci.space,news.answers
+ Subject: Space FAQ 06/15 - Constants and Equations
+ Frequency: monthly
+ Archive-name: space/constants
+ Date: 25 Jun 92 18:37:52 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.astro,sci.space,news.answers
+ Subject: Space FAQ 07/15 - Astronomical Mnemonics
+ Frequency: monthly
+ Archive-name: space/mnemonics
+ Date: 25 Jun 92 18:37:57 GMT
+
+ From: mark@storm.ucar.edu (Mark Bradford)
+ Newsgroups: sci.astro,sci.space,sci.space.shuttle
+ Subject: Astro/Space Frequently Seen Acronyms
+ Frequency: monthly
+ Date: Fri, 7 Aug 1992 05:00:32 GMT
+ Archive-name: space-acronyms
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 1: Index
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:20:39 GMT
+ Archive-name: cryonics-faq/part1
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 2: Science/Technology
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:20:50 GMT
+ Archive-name: cryonics-faq/part2
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 3: Philosophy/Religion
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:21:01 GMT
+ Archive-name: cryonics-faq/part3
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 4: Controversy surrounding Cryonics
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:21:12 GMT
+ Archive-name: cryonics-faq/part4
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 5: Neurosuspension
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:21:23 GMT
+ Archive-name: cryonics-faq/part5
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 6: Suspension Arrangements
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:21:32 GMT
+ Archive-name: cryonics-faq/part6
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 7: Cost of Cryonics
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:21:41 GMT
+ Archive-name: cryonics-faq/part7
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 8: Communications
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:21:49 GMT
+ Archive-name: cryonics-faq/part8
+
+ From: tsf+@cs.cmu.edu (Timothy Freeman)
+ Newsgroups: sci.cryonics,news.answers
+ Subject: Cryonics FAQ 9: Glossary
+ Frequency: monthly
+ Date: Fri, 07 Aug 92 00:21:59 GMT
+ Archive-name: cryonics-faq/part9
+
+ From: jfw@ksr.com (John F. Woods)
+ Newsgroups: sci.electronics,rec.radio.amateur.misc
+ Subject: My List of Mail Order Electronics Companies
+ Frequency: every 1-2 months
+ Date: 4 Aug 92 14:36:50 EDT
+
+ From: rick@xing.unocal.com (Richard Ottolini)
+ Newsgroups: sci.geo.meteorology
+ Subject: Frequently asked question: how to get and display weather maps (10/1/91)
+ Frequency: monthly
+
+ From: jack@cloud3.met.fsu.edu (JACK)
+ Newsgroups: sci.geo.meteorology
+ Subject: Tropical Cyclone Weekly Summary #* (*)
+ Frequency: weekly
+ Date: 31 May 92 21:10:37 GMT
+
+ From: ilana@kiowa.scd.ucar.edu (Ilana Stern)
+ Newsgroups: sci.geo.meteorology,news.answers
+ Subject: Sources of Meteorological Data FAQ
+ Frequency: twice per month
+ Date: Mon, 27 Jul 1992 15:40:28 GMT
+ Archive-name: weather-data
+
+ From: alopez-o@maytag.uwaterloo.ca (Alex Lopez-Ortiz)
+ Newsgroups: sci.math,news.answers
+ Subject: sci.math: Frequently Asked Questions
+ Frequency: biweekly
+ Archive-name: sci-math-faq
+ Date: Thu, 6 Aug 1992 13:05:12 GMT
+
+ From: dwallach@nas.nasa.gov (Dan Wallach)
+ Newsgroups: sci.med,news.answers
+ Subject: FAQ: Typing Injuries (1/3): General Info [monthly posting]
+ Frequency: monthly
+ Date: 20 Jul 92 20:06:43 GMT
+ Archive-name: typing-injury-faq/general
+
+ From: dwallach@nas.nasa.gov (Dan Wallach)
+ Newsgroups: sci.med,news.answers
+ Subject: FAQ: Typing Injuries (2/3): Keyboard Alternatives [montly posting]
+ Frequency: monthly
+ Date: 20 Jul 92 20:02:46 GMT
+ Archive-name: typing-injury-faq/keyboards
+
+ From: dwallach@nas.nasa.gov (Dan Wallach)
+ Newsgroups: sci.med,news.answers
+ Subject: FAQ: Typing Injuries (3/3): Software Monitoring Tools [montly posting]
+ Frequency: monthly
+ Date: 20 Jul 92 20:03:11 GMT
+ Archive-name: typing-injury-faq/software
+
+ From: military@att.att.com (Bill Thacker, moderator)
+ Newsgroups: sci.military
+ Subject: sci.military guidelines and etiquette
+ Frequency: monthly
+ Date: 14 Mar 92 02:54:33 GMT
+
+ From: sichase@csa2.lbl.gov (SCOTT I CHASE)
+ Newsgroups: sci.physics,alt.sci.physics.new-theories,news.answers
+ Subject: Frequently Asked Questions About Physics - * * posting
+ Frequency: monthly
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 08/15 - Addresses
+ Frequency: monthly
+ Archive-name: space/addresses
+ Date: 25 Jun 92 18:38:05 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 09/15 - Mission Schedules
+ Frequency: monthly
+ Archive-name: space/schedule
+ Date: 25 Jun 92 18:38:10 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 10/15 - Planetary Probe History
+ Frequency: monthly
+ Archive-name: space/probe
+ Date: 25 Jun 92 18:38:16 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 11/15 - Upcoming Planetary Probes
+ Frequency: monthly
+ Archive-name: space/new_probes
+ Date: 25 Jun 92 18:38:26 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 12/15 - Controversial Questions
+ Frequency: monthly
+ Archive-name: space/controversy
+ Date: 25 Jun 92 18:38:33 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 13/15 - Interest Groups & Publications
+ Frequency: monthly
+ Archive-name: space/groups
+ Date: 25 Jun 92 18:38:37 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 14/15 - How to Become an Astronaut
+ Frequency: monthly
+ Archive-name: space/astronaut
+ Date: 25 Jun 92 18:38:42 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,news.answers
+ Subject: Space FAQ 15/15 - Orbital and Planetary Launch Services
+ Frequency: monthly
+ Archive-name: space/launchers
+ Date: 25 Jun 92 18:38:46 GMT
+
+ From: leech@mahler.cs.unc.edu (Jon Leech)
+ Newsgroups: sci.space,sci.astro,news.answers
+ Subject: Diffs to sci.space/sci.astro Frequently Asked Questions
+ Frequency: monthly
+ Date: 24 Jul 92 04:32:39 GMT
+ Archive-name: space/diff
+
+ From: wollman@uvm.edu (Garrett A. Wollman)
+ Newsgroups: sci.space.news
+ Subject: Changes to Three-Letter Acronym (TLA) Update Program (UP) (CTU)
+ Frequency: monthly
+ Date: 3 Aug 92 20:36:59 GMT
+
+ From: wollman@uvm.edu (Garrett A. Wollman)
+ Newsgroups: sci.space.news
+ Subject: Three-Letter Acronym (TLA) Update Program (UP)
+ Frequency: monthly
+ Date: Mon, 3 Aug 1992 20:36:38 GMT
+
+ From: hlab@milton.u.washington.edu (Mark A. DeLoura)
+ Newsgroups: sci.virtual-worlds,news.answers
+ Subject: Sci.virtual-worlds FAQ Post, * *.
+ Frequency: unknown
+
+ From: mkant+@cs.cmu.edu (Mark Kantrowitz)
+ Newsgroups: soc.college,soc.net-people,news.answers
+ Subject: FAQ: College Email Addresses 1/2 [Monthly posting]
+ Frequency: monthly
+ Archive-name: college-email/part1
+ Date: 7 Aug 92 04:18:16 GMT
+
+ From: mkant+@cs.cmu.edu (Mark Kantrowitz)
+ Newsgroups: soc.college,soc.net-people,news.answers
+ Subject: FAQ: College Email Addresses 2/2 [Monthly posting]
+ Frequency: monthly
+ Archive-name: college-email/part2
+ Date: Fri, 07 Aug 92 04:18:30 GMT
+
+ From: urban@randvax.UUCP (Mike Urban)
+ Newsgroups: soc.culture.esperanto,news.answers
+ Subject: soc.culture.esperanto Frequently Asked Questions (Oftaj Demandoj)
+ Frequency: monthly
+ Date: 1 Aug 92 19:31:13 GMT
+ Archive-name: esperanto-faq
+
+ From: Christophe.Wolfhugel@univ-lyon1.fr (Christophe Wolfhugel)
+ Newsgroups: soc.culture.french,news.answers
+ Subject: FAQ: soc.culture.french */2 [monthly]
+ Frequency: monthly
+ Date: 18 Jul 1992 10:16:37 +0200
+ Archive-name: culture-french-faq/part1
+
+ From: Christophe.Wolfhugel@univ-lyon1.fr (Christophe Wolfhugel)
+ Newsgroups: soc.culture.french,news.answers
+ Subject: FAQ: soc.culture.french - Changes since last posting [monthly]
+ Frequency: monthly
+ Archive-name: culture-french-faq/changes
+
+ From: Christophe.Wolfhugel@univ-lyon1.fr (Christophe Wolfhugel)
+ Newsgroups: soc.culture.french,news.answers
+ Subject: FAQ: soc.culture.french - Intro [monthly]
+ Frequency: monthly
+ Date: 18 Jul 1992 10:16:34 +0200
+ Archive-name: culture-french-faq/part0
+
+ From: nfotis@ntua.gr (Nick (Nikolaos) C Fotis)
+ Newsgroups: soc.culture.greek
+ Subject: (*) Soc.Culture.Greek Frequently Asked Questions and Answers
+ Frequency: unknown
+ Date: 1 Aug 92 12:47:16 GMT
+
+ From: wkau@cs.cmu.edu (Wing Keung F Au)
+ Newsgroups: soc.culture.hongkong,news.answers
+ Subject: Soc.culture.hongkong Frequently-Asked-Questions (*)
+ Frequency: biweekly
+ Date: 16 May 92 23:57:08 GMT
+ Archive-name: hongkong-faq
+
+ From: vikas@deolali.Eng.Sun.COM (Vikas Deolaliker)
+ Newsgroups: soc.culture.indian,news.answers
+ Subject: [soc.culture.indian] FREQUENTLY ASKED QUESTIONS
+ Frequency: monthly
+ Date: 22 Jun 92 23:41:08 GMT
+ Archive-name: india-faq
+
+ From: eugene@amelia.nas.nasa.gov (Eugene N. Miya)
+ Newsgroups: soc.culture.japan,news.answers
+ Subject: [l/m */*/*] Soc.culture.japan references
+ Frequency: monthly
+ Date: 5 Jun 92 11:00:43 GMT
+ Archive-name: culture-japan-references
+
+ From: fekete@bcvax1.bc.edu
+ Newsgroups: soc.culture.magyar,soc.culture.europe,news.answers
+ Subject: Hungarian electronic resources FAQ
+ Frequency: twice per month
+ Archive-name: hungarian-faq
+ Date: Wed, 29 Jul 1992 05:00:24 GMT
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: soc.feminism,news.answers
+ Subject: soc.feminism Information
+ Frequency: monthly
+ Date: Mon, 20 Jul 1992 05:00:36 GMT
+ Archive-name: feminism/info
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: soc.feminism,news.answers
+ Subject: soc.feminism References (part * of 3)
+ Frequency: monthly
+ Date: Mon, 20 Jul 1992 05:01:58 GMT
+ Archive-name: feminism/refs1
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: soc.feminism,news.answers
+ Subject: soc.feminism Resources
+ Frequency: monthly
+ Date: Mon, 20 Jul 1992 05:01:03 GMT
+ Archive-name: feminism/resources
+
+ From: tittle@ics.uci.edu (Cindy Tittle Moore)
+ Newsgroups: soc.feminism,news.answers
+ Subject: soc.feminism Terminologies
+ Frequency: monthly
+ Date: Mon, 20 Jul 1992 05:01:31 GMT
+ Archive-name: feminism/terms
+
+ From: thomas@acuson.com (Chris Thomas)
+ Newsgroups: soc.motss,news.answers
+ Subject: soc.motss FAQ
+ Frequency: monthly
+ Date: 24 Jul 92 23:13:10 GMT
+ Archive-name: motss-faq
+
+ From: mludwig@Bonnie.ICS.UCI.EDU ("Michael S. Ludwig")
+ Newsgroups: soc.net-people
+ Subject: Tips on using soc.net-people [l.m. */*/*]
+ Frequency: biweekly
+ Date: 21 Jul 92 07:53:48 GMT
+
+ From: ejones@umassmed.ummed.edu
+ Newsgroups: talk.abortion,news.answers
+ Subject: talk.abortion FAQ 1/3 [Q & A]
+ Frequency: monthly
+ Date: 6 Jul 92 18:24:50 GMT
+ Archive-name: abortion/part1
+
+ From: ejones@umassmed.ummed.edu
+ Newsgroups: talk.abortion,news.answers
+ Subject: talk.abortion FAQ 2/3 [DATA/INFO]
+ Frequency: monthly
+ Date: 6 Jul 92 18:26:17 GMT
+ Archive-name: abortion/part2
+
+ From: ejones@umassmed.ummed.edu
+ Newsgroups: talk.abortion,news.answers
+ Subject: talk.abortion FAQ 3/3 [DECISIONS]
+ Frequency: monthly
+ Date: 6 Jul 92 18:28:19 GMT
+ Archive-name: abortion/part3
+
+ From: tbsc@volcano.tbsc.ORG (talk.bizarre Steering Committee)
+ Newsgroups: talk.bizarre,news.answers
+ Subject: Welcome to talk.bizarre!  (Monthly Posting)
+ Frequency: monthly
+ Date: 21 Jul 92 22:08:36 GMT
+ Archive-name: talk-bizarre
+
+ From: rsquires%cyclops.eece.unm.edu@lynx.unm.edu (Roger Squires)
+ Newsgroups: talk.origins
+ Subject: talk.origins FAQ list
+ Frequency: unknown
+
+ From: eric@snark.thyrsus.com (Eric S. Raymond)
+ Newsgroups: talk.religion,talk.religion.newage,news.answers
+ Subject: Frequently Asked Questions about Neopaganism
+ Frequency: twice per year (Samhain and Beltane)
+
+ From: root@sting.Berkeley.EDU (Scam Artist)
+ Newsgroups: ucb.becmug,comp.music,rec.music.makers,rec.music.synth
+ Subject: ... Monthly Electronic and Computer Music FAQ, via NetJam, Berkeley ...
+ Frequency: monthly
+ Date: 1 May 92 13:00:27 GMT
+
+ From: ccs@aber.ac.uk (Christopher Samuel)
+ Newsgroups: uk.telecom,news.answers
+ Subject: BT Network Services information (version *)
+ Frequency: monthly
+
+ From: ccs@aber.ac.uk
+ Newsgroups: uk.telecom,news.answers
+ Subject: uk.telecom FAQ (version *)
+ Frequency: monthly
+
+ From: tp@mccall.com
+ Newsgroups: vmsnet.admin
+ Subject: Monthly checkgroups posting
+ Frequency: monthly
+ Date: 3 Aug 92 11:11:16 GMT
+
+ From: tp@mccall.com
+ Newsgroups: vmsnet.announce.newusers,comp.os.vms
+ Subject: Monthly info posting: VMSnet on Bitnet
+ Frequency: monthly
+ Date: 3 Aug 92 11:11:18 GMT
+
+ From: tp@mccall.com
+ Newsgroups: vmsnet.announce.newusers,comp.os.vms,comp.org.decus,comp.sys.dec
+ Subject: Monthly info posting: What is VMSnet?
+ Frequency: monthly
+ Date: 3 Aug 92 11:11:07 GMT
+
+ From: munroe@dmc.com
+ Newsgroups: vmsnet.misc,comp.os.vms,news.answers
+ Subject: Info-VAX Monthly Posting, Part 1 of 3
+ Frequency: monthly
+ Date: 2 Aug 92 08:02:44 EDT
+ Archive-name: info-vax/part01
+
+ From: munroe@dmc.com
+ Newsgroups: vmsnet.misc,comp.os.vms,news.answers
+ Subject: Info-VAX Monthly Posting, Part 2 of 3
+ Frequency: monthly
+ Date: 2 Aug 92 08:02:51 EDT
+ Archive-name: info-vax/part02
+
+ From: munroe@dmc.com
+ Newsgroups: vmsnet.misc,comp.os.vms,news.answers
+ Subject: Info-VAX Monthly Posting, Part 3 of 3
+ Frequency: monthly
+ Date: 2 Aug 92 08:02:54 EDT
+ Archive-name: info-vax/part03
+
+ From: munroe@dmc.com
+ Newsgroups: vmsnet.misc,comp.os.vms,news.answers
+ Subject: Info-VAX: How to find software.
+ Frequency: monthly
+
+ From: tp@mccall.com
+ Newsgroups: vmsnet.sources.d,comp.os.vms
+ Subject: Monthly info posting: vmsnet.sources archive sites
+ Frequency: monthly
+ Date: 3 Aug 92 11:11:22 GMT
+
+
+-- 
+Jonathan Kamens						jik@MIT.Edu
+MIT Information Systems/Athena		    Moderator, news.answers
+    (Send correspondence related to the news.answers newsgroup
+	{and ONLY correspondence related to the newsgroup}
+		 to news-answers-request@MIT.Edu.)
+

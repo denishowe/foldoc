@@ -489,7 +489,6 @@ sub make_key
     s/\s//g;							# Zap all whitespace
 	s/(www\.)?(\w+)\.com/$2/i;			# Web site hostname as query
 	s|(?<=\w)[-\',.\\_]+(?=\w)||g;		# Zap punctuation between alphanum
-	# s/(?<=.)-$//;						# Zap trailing "-"
 
     return substr($_, 0, $keylen);		# Truncate
 }
@@ -657,17 +656,29 @@ sub text2url
 # Expand URL-quoted characters in the query.  These are + for
 # a space or %XX where XX is the ASCI hex character code.
 
+# Treat + as space if there are letters somewhere before and after
+# it and it's not in one of the following, not, e.g. ++ C++ F+L.
+
+our %key_with_plus = map +($_ => 1), qw(
+2B+D
+AssociationofCandC++Users
+C++Linda
+Computer+ScienceNETwork
+C++SIM
+FGL+LV
+F+L
+Hope+C
+Pascal+CSP
+SASL+LV
+);
+
 sub url2text
 {
 	local ($_) = @_;
 
-	# Only treat + as space if there's a letter later in the string, not, e.g. C++ C+-.
-	s/\+(.*?:\w)/ /g unless (/^c\+/i);
+	unless ($key_with_plus{$_}) { 1 while (s/(\w.*)\+(.*\w)/$1 $2/g) }
 
 	s/%([\da-f]{2})/chr(hex($1))/eig;
-
-	# Replace double-encoded multiple, non-adjacent +s with spaces
-	# s/\+/ /g if (/\+.+\+/);
 
 	return $_;
 }

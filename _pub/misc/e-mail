@@ -1,0 +1,1217 @@
+From: ag@unido.UUCP (Anke Goos)
+Newsgroups: eunet.general
+Subject: (long) text of e-mail intro
+Summary: Constructive Comments wanted!
+Date: 15 Jan 90 20:57:59 GMT
+Reply-To: Anke Goos <ag@unido.informatik.uni-dortmund.de>
+Organization: University of Dortmund, W-Germany
+
+Hello EUnet-landers,
+
+       
+                          Your comments
+                     on the following EUnet
+                   documentation are welcome:
+   
+              A User Introduction to Electronic Mail
+
+            
+                        Daniel Karrenberg
+                        <dfk@cwi.eu.net>
+                           Anke Goos
+                        <ag@germany.eu.net>
+   
+                       (c) Copyright Dec 1988             
+              Right for copy permitted, if for no direct
+              commercial use. Support the European E-Mail
+              Directory, published by EUUG <euug@mcsun.eu.net>
+                        by ordering the book!
+
+
+   
+1.  A User Introduction to Electronic Mail
+-   - ---- ------------ -- ---------- ----
+
+This chapter is an introduction to electronic  mail  message
+formats and addressing in wide area networks in the research
+and   development    community.    We    will    focus    on
+'domainaddressing' worldwide taking a quick look at European
+ ------
+conventions.  Finally, we glance at future X.400 addressing.
+This  document  is not a formal specification for the expert
+but a guide for the  user.  The  style  is  therefore  deli-
+berately  informal  and  sometimes redundant with cute exam-
+ples, with the aim of combining pedagogy and  attractiveness
+to the newcomer or even run-away user in computer networks.
+
+
+1.1.  Message Format
+- -   ------- ------
+
+
+Almost every computer system has its own electronic  mailing
+system  and  often  the formats are quite incompatible. How-
+ever, there is one format which is widely used in many  com-
+puter networks. This particular message format is often iden-
+tified by the name of the document  defining  it:  RFC  822.
+Although  RFC  822  +  originated  as  a standard for the US
+research network  Internet,  it  is  now  very  widely  used
+throughout  the  world's research and development (R&D) net-
+works.
+
+This "RFC  822"  message  format  has  become  the  de-facto
+transfer  standard  of today's mail systems.  The format has
+become particularily important where messages cross from one
+network  into  another through gateways.  Such gateways will
+understand not only the message format but also the  address
+syntax  described in RFC822. Even if your mail system cannot
+use the RFC822 address  syntax,  read  this  chapter  anyhow
+because  you  are very likely to come across these addresses
+in messages from other networks or on letterheads and  busi-
+ness cards.
+
+We will use the RFC822 format as a reference in this  guide.
+Later  sections  will discuss the peculiarities of different
+networks and how to deal with them.
+
+
+-------------------------
+  + Apropos RFC822: RFC is short for Request  for  Com-
+ment.   The  full  name  of RFC822 is "Standard for the
+Format of Arpa-Internet Text messages" and cited in our
+bibliography.   Arpa-Internet  is  some  sort of "meta-
+network" of several US networks, in first instance  the
+former  (D)ARPANET. This is named after the Defense Ad-
+vanced Research Project Agency, which  originally  ini-
+tiated it and is part of the US Department of Defense.
+
+
+
+
+1.1.1.  Header and Body
+- - -   ------ --- ----
+
+
+Let us briefly examine a hypothetical message:
+
+
+        From: Molly Cule <Cule@chemistry.oxbridge.UK>
+        To: Alec Tron <e@cloud.uucp>
+        Cc: ATOM32@DHDCHE11.BITNET (Germanium),
+            oxygen-lovers@chemistry.mit.edu
+        Subject: new bindings
+        Date: Sat, 26 Nov 88 15:13:38 +0100
+
+        Dear Alec,
+
+        I find your ideas quite interesting and have forwarded
+        your outline to the oxygen-lovers group in the US. Maybe
+        you can get some more feedback from there.
+
+        Regards Molly
+
+Mail messages consist of  a  header  part  and  the  message
+itself, which is often referred to as the body.  The message
+starts with the header which is separated from the  body  by
+exactly  one empty line.  The header lists information about
+the sender, the recipients, the posting date, the subject of
+the message, etc.           
+
+
+
+1.1.2.  Header Lines
+- - -   ------ -----
+
+Most mail systems only offer the most essential header lines
+for  To:  From: Date: and Subject: , where From and the date
+is often inserted automatically. But you may give your  mail
+a  lot  more  attributes. Here are the most important header
+lines and their meanings.
+
+
+From:             Sender's address
+                  There may only be one of  these  lines  in
+                  the header.
+
+
+Date:             Date and time the message was sent.
+
+                  It is important that the notation  of  the
+                  date  follows  a common form, because many
+                  programs must be able  to  compare  dates,
+                  sort  messages  in  your  mailbox  and the
+                  like.  Most mail systems will automatical-
+                  ly  insert  a  correctly  formatted  Date:
+                  line for you, like: 12 Sep 88 02:17:38 GMT
+                  ,  some  will not even allow you to insert
+                  it yourself.
+
+
+To:               Primary recipient(s) of the message.
+
+                  This line can specify more than one desti-
+                  nation,  in  which  case the addresses are
+                  separated by commas.
+
+
+Subject:          Subject of the message.
+
+                  This is free text. Choose a  short,  mean-
+                  ingful  subject  and don't forget punctua-
+                  tion.  Free telephone calls?  is different
+                  from  Free telephone calls! . Although the
+                  presence of this line is not mandatory, it
+                  is  highly  recommended  to always include
+                  it, if only for politeness  to  the  reci-
+                  pient  who prefers to have a short summary
+                  of the contents. Furthermore a good choice
+                  of  title  eases  the filing and searching
+                  facilities in many mail systems.
+
+
+Cc:               Copy recipients.
+
+                  This is the carbon copy of the  electronic
+                  age,   means   a   copy   just   for  your
+                  information. The example shows  how  data,
+                  that  does  not fit on a single line (like
+                  the second addressee in the  CC-list)  can
+                  be  put on subsequent lines beginning with
+                  white space. There may also  be  something
+                  like  BCc:  for "Blind" carbon copy if you
+                  want to send  a  copy  to  a  third  party
+                  without  notice to other recipients of the
+                  message.
+
+
+Message-Id:       Unique identifier of this message given by
+                  the sending host.
+
+                  Something like
+
+                  <8808140800.AA1302@unido.irb.informatik.uni-
+                  dortmund.de> .
+
+                  Used to make cross references between mes-
+                  sages  automatically  and inserted by most
+                  mail software.
+
+
+Received:         Trace information  used  to  analyze  mail
+                  delivery problems.
+
+                  Usually  multiple  lines   showing   which
+                  machines  the  message  passed  through at
+                  what times and date.
+
+
+Resent-From:      Address of the person or program where the
+                  message comes from.
+
+                  Labels  starting  with  Resent-   indicate
+                  that the message has been forwarded to you
+                  by the person identified  in  the  Resent-
+                  From:  line.  There may also be such lines
+                  as Resent-To:  and Resent-Cc:.
+
+
+Reply-To:         Obviously the address of the  person  whom
+                  to  reply to. In most cases this should be
+                  the address of the sender.  But this is an
+                  opportunity  to  automatically forward all
+                  replies to another place or person without
+                  having  to  ask  for  it  in  the  message
+                  itself.
+
+
+There may also be some other lines like Sender:  to identify
+the  actual  sender  if this is different from the author(s)
+shown in the mailbox address in e.g. From: postmaster .
+Maybe you are surprised whether your own mail system is able
+to  offer  all  these intelligent facilities? Read the docu-
+ments of your mail systems and ask your local mail guru what
+is possible and what is not.
+
+
+1.1.3.  The Message Body
+- - -   --- ------- ----
+
+
+The message body contains the text of the message itself  in
+the  format  of ASCII (or EBCDIC for BITNET). The empty line
+separating header and body is an essential part of the  for-
+mat. Most mail systems ensure its presence automatically.
+
+Most mail systems do not  permit  the  sending  of  binaries
+without  taking some special action.  This sounds ridiculous
+for networks initially made by and for computer people.  But
+it's  the  problem  of the "eighth bit" which might get lost
+when transferred in ASCII or EBCDIC.  To  save  all  control
+codes or special characters bound to the eighth bit, you are
+supposed to encode your binaries into pure ASCII  or  EBCDIC
+before  the  transfer and decode it at the receiving end. In
+most mail systems, some software exists  to  do  this.  Note
+that there is a convention in EUnet not to ensure a transfer
+exceeding 100 kilobyte in the message body.
+
+
+1.2.  Address Syntax
+- -   ------- ------
+
+
+Let's look at three forms of a hypothetical sender's address
+as you might see them in the header of a mail message:
+
+
+       From: Cule@chemistry.oxbridge.UK (Molly Cule)
+
+       From: Molly Cule <Cule@chemistry.oxbridge.UK>
+
+       From: Cule@chemistry.oxbridge.UK
+
+
+
+The string  Molly  Cule  --  although  probably  giving  the
+sender's name -- is not part of the address used by the sys-
+tem to route messages.  The mail system will treat all three
+addresses  exactly  the  same  because  it only looks at the
+string Cule@chemistry.oxbridge.UK .  This is  what  we  call
+the mail address.
+
+Molly Cule  in this example is regarded as a  comment  which
+is  passed  on untouched by the mail system.  You may either
+put the comment in ()  or the address in  <>   according  to
+taste.  If the comment includes punctuation characters it is
+more   correct   to    use    the    ()     form    as    in
+burner@chemistry.uni-goettingen.de   (Dr.  Bunsen).  And  if
+there is a blank in the comment it may  be  even  better  to
+insert double-quotes like "Dr. Bunsen".
+
+
+Let's look at the mail address itself  now.   First  of  all
+split  the  address  at the @  character - there may only be
+one:
+
+
+        Cule  @  chemistry.oxbridge.UK
+
+
+The part to the left of the @  is called the local  part  or
+mailbox  name,  the part to the right the domain. The domain
+specifies where that particular mailbox is located.  If  the
+address  has  no @  at all, like From: Cule , it should be a
+local address, means a local mailbox in  your  organization.
+Most  mail  systems  allow you to omit the local domain as a
+typing shortcut when sending mail to a local  mailbox.   But
+the  full  domain should be added by the system before it is
+sent out.
+
+
+1.2.1.  What's in a  Mailbox Name ?
+- - -   ---- - -- -  ------- ----
+
+
+The mailbox can belong to a user or a group of users, or  it
+can  be  the  place  to put mail for someone with a specific
+function such as postmaster.
+
+In general, it is very hard to guess the mailbox name  of  a
+particular  person.   However  there  exist some conventions
+about the form of mailbox names used for special purposes:
+
+
+
+x-lovers                Mailbox names with  dashes  in  them
+                        are  likely  to  be special.  If the
+                        name looks like belonging to a group
+                        of people it is probably a distribu-
+                        tion  list  or  mailing   list.   In
+                        BITNET/EARN  a  list which discusses
+                        FOO  is   named   FOO-L@host.bitnet.
+                        Mailing   to  such  a  mailbox  will
+                        redistribute  the  message  to   all
+                        those  subscribed to the list. It is
+                        generally a very bad  idea  to  send
+                        your  subscription  to  the list ad-
+                        dress itself since your  request  is
+                        not  really meant to be seen by pos-
+                        sibly hundreds of members  but  only
+                        the list maintainer.
+
+
+x-lovers-request        Names ending on -request  are admin-
+                        istrative  addresses of distribution
+                        lists. This is where  you  send  re-
+                        quests  to subscribe or unsubscribe.
+                        You may even send your contributions
+                        to  this mailbox if the mailing list
+                        is moderated. The moderator is  some
+                        sort  of volunteer editor giving the
+                        mailing list a better quality  as  a
+                        "human filter" for relevant topics.
+
+
+postmaster              Every domain and site is supposed to
+                        have  a postmaster or postman  mail-
+                        box in BITNET where you can  address
+                        questions  and  report problems con-
+                        cerning the mail system.
+
+
+MAILER-DAEMON           This is the agent of  your  friendly
+                        mail system itself.  Messages coming
+                        from  a  similar  address  are  most
+                        likely  reporting  problems with one
+                        of your messages or they will notify
+                        you   of   its  delivery.  Don't  be
+                        intimidated if you can't  understand
+                        all  details of these messages which
+                        may show strange faults in the  mail
+                        system.
+
+                        If however you cannot make sense  of
+                        such  a  report  at  all, be sure to
+                        mail or show the Bwhole  message  to
+                        your  local  mail  expert  who might
+                        need Ball of the information  in  it
+                        to diagnose the problem.
+
+
+local%domain            If you see %  signs in  the  mailbox
+                        name  then this is most likely not a
+                        real mailbox name at all.  Most mail
+                        systems will interpret mailbox names
+                        with  %  s  in  them  as  full  mail
+                        addresses.  More about this later in
+                        the section about domain addressing.
+
+
+John.Mailuser           A growing number of mail systems let
+                        you  address  users  by  their  full
+                        names. First and last name are  usu-
+                        ally  separated  by a dot ". " or an
+                        underscore  sign  "    "   like   in
+                                           -
+                        "John Mailuser   "   because  it  is
+                             -
+                        unhealthy to have blanks in  mailbox
+                        names. This is good practice because
+                        it  makes  mailbox  names   somewhat
+                        guessable.
+
+
+xyz123AB                If you  see  cryptic  mailbox  names
+                        they are most likely from an organi-
+                        zation  where  they   use   computer
+                        account  numbers  as  mailbox names.
+                        These are found mainly on  EARN  and
+                        BITNET.   In  these cases it is good
+                        practice to include a comment in the
+                        address  giving  the  person's  real
+                        name.
+
+
+dmr                     On Unix  systems  it  is  widespread
+                        style  to take user names as mailbox
+                        names.  Many Unix users prefer short
+                        user  names,  and initials in lower-
+                        case letters are widely used.  After
+                        all dmr  alias Dennis M. Ritchie and
+                        ken  Ken Thompson created Unix.
+
+
+Unfortunately, we are stuck with the problem of guessing the
+mailbox  name  for a given person until there is a universal
+user directory service like some sort  of  electronic  tele-
+phone book which can be used to have "a look" for an unknown
+mailbox name.  Some organizations or countries and even mail
+systems  already  tend  to  enforce  Firstname.Lastname as a
+mailbox  name.  Note:  maibox  names  are  case   sensitive.
+Although  our examples showed a mixture upper and lower case
+in the mailbox name Cule@  it might be a local bad  decision
+not  to allow the flat form cule  as well as there are still
+mail systems like that of  BITNET  which  are  not  able  to
+address mailboxes in mixed cases.
+
+
+1.2.2.  What's in a domain ?
+- - -   ---- - -- - ------
+
+
+The part to the right of the @  is  called  a  "domain"  and
+denotes  the  place where the mailbox is located, which usu-
+ally is an organization. In some older  forms  it  can  also
+denote  one or several computers. To find out, you split the
+right hand part at the "."s into so called  subdomains.  The
+rightmost part is called the top-level domain.
+
+
+The syntax for a mail address therefore is:
+
+
+        mailbox@subdom-n. ... .subdom-2.subdom-1.top-level-domain
+
+
+Our example
+
+        Cule@chemistry.oxbridge.UK
+
+
+gets split up as follows:
+
+        mailbox name            Cule
+        subdomain-2             chemistry
+        subdomain-1             oxbridge
+        top-level-domain                UK
+
+
+
+In the above example there is a chemistry department.  Which
+one  of  the  hundreds of chemistry departments worldwide is
+determined by the next subdomain  oxbridge  .  Even  if  you
+don't know oxbridge  you can infer from the top-level domain
+UK  that it must be in the United Kingdom. This way you  may
+see the domain address as a hierarchical set of geographical
+or organizational units. It is irrelevant  whether  you  use
+capital  letters  or lower case letters or a mixture of them
+in the domain part of an address.
+
+
+You see that the higher the number of the subdomain the more
+detailed the information about the destination.  Subdomain-n
+like  chemistry   is  always  to  be  interpreted  as  being
+"inside"  subdomain-n-1  like  oxbridge .  Each subdomain is
+considered to be "inside"  the  one  to  its  right  in  the
+address.  The  one  on  the far rights can be considered the
+"top-level" domain.   In  fact  these  addresses  are  often
+referred  to  as "domain addresses".  This term is a synonym
+for "RFC822 address".
+
+
+Many people and mailer programs will read domains  just  the
+other  way  around  starting with the top-level domain. From
+this point of view the domain address shows some sort of its
+internal     "routing"    information.    Your    mail    to
+Cule@chemistry.oxbridge.uk will find its  way  by  a  mailer
+system  looking  at the rightmost part UK. Arrived in UK the
+mail would  be  forwarded  or  "routed"  to  subdomain-1  of
+oxbridge, from there to subdomain-2 for chemistry.
+
+
+It might be a local feature of  a  domain  address  to  show
+something like local%domain@  like
+
+        Cule%hotspot@chemistry.oxbridge.UK
+
+to the outside world. To understand this you have to imagine
+that  each local domain like the chemistry in oxbridge prob-
+ably has one gatekeeper host for incoming and outgoing mail.
+If  Gatekeeper  has  no  directory to identify on which host
+user Cule may be reached, this has to be  given  within  the
+address.  Thus the Cule%hotspot  just indicates that hotspot
+is the local or even distant host where to forward the mail.
+To   do   that   Gatekeeper   would   transform  the  adress
+Cule%hotspot@chemistry. ... UK  to Cule@hotspot .
+
+This way you may even address one or more  hosts  behind  an
+official                     domain,                    like
+Cule%hotspot%gatekeeper@chemistry.oxbridge.UK .  This  stuff
+is   not  pure  "holy"  RFC822  and  not  handled  the  same
+throughout the network world. But at least you  should  know
+that  there  is no real mystery behind such strange "mailbox
+names" which are no real mailbox names at all.
+
+Considering such local variations it's no wonder that  there
+is  some  diversity in the worldwide use of the domain. For-
+tunately, there are only a few top-level domains used in the
+world of networks. These fall into three classes: countries,
+networks and special cases.
+
+
+1.2.3.  Country Toplevel Domains
+- - -   ------- -------- -------
+
+
+The countries are denoted by the  two  letter  abbreviations
+specified in standard ISO3166 of the International Standards
+Organization (ISO). As an  example  here  are  the  European
+countries listed in this directory:
+
+                AT - Austria
+                BE - Belgium
+                CH - Switzerland
+                DE - W. Germany
+                DK - Denmark
+                ES - Spain
+                FI - Finland
+                FR - France
+                GR - Greece
+                GB - Great Britain (ISO-synonym for UK!)
+                IE - Ireland
+                IS - Iceland
+                IT - Italy
+                LU - Luxembourg
+                NL - The Netherlands
+                NO - Norway
+                PT - Portugal
+                SE - Sweden
+                TR - Turkey
+                UK - United Kingdom
+                YU - Yugoslavia
+
+
+To prove that we are not eurocentric: Note  that  there  are
+still  some  more  country top-level domains, such as NZ for
+New Zealand or AU for Australia, JP for  Japan  and  US  for
+United States.
+
+Be warned however of a British peculiarity.   You  may  come
+across addresses like
+
+        Cule@UK.oxbridge.chemistry
+
+The British drive on the left hand side of the road, so  you
+shouldn't  be  too  surprised that they chose to write their
+mail addresses "backwards".  Outside the UK you should  turn
+it back into the "normal" continental ordering
+
+        Cule@chemistry.oxbridge.UK
+
+
+if it suits you or your  mailer  better.   Your  mailer  may
+correctly  handle the address the wrong way round like this.
+Actually, the gateways between the UK networks and the  rest
+of the world turn around the domains for you.
+But unfortunately sometimes this does not happen on  letter-
+head and business cards as they cross the Channel. From time
+to time a left handed address might escape in the body of  a
+mail message, too.
+
+
+Budejovice, + Czechoslovakia? :-)  ++
+
+Normally both domain orderings will be routed  correctly  by
+clever mail software looking for an innermost subdomain UK .
+But beware - some gloating people are  already  waiting  for
+the  moment when Czechoslovakia or domain .cs  join the net-
+work!  As the subdomain cs for computer  science  frequently
+occurs  at  the lowest level of a UK-address this will prob-
+ably cause problems.  Just imagine the address
+
+        uk.ac.bude.cs
+
+Is this the computer  science  department  of  Bude-Stratton
+University  or  the faculty for academic study of brewing in
+
+
+-------------------------
+  + Budejovice is the home of the real "Budweiser" beer
+
+  ++ BTW: The "smiley face" :-)  is used in  electronic
+mail  to  mark  something  said in a humorous mode. You
+don't know why? Turn your head to  the  left  and  look
+again.  It's  very advisable to use it to make your in-
+tentions clearer as written words don't pass the  into-
+nation  and  mimic  of  the spoken word. The human kind
+showing a lot of emotions there  exist  a  lot  of  so-
+called "icons".  I'm sorry :-( , even unhappy :-((  for
+not to introduce ALL of them, but I'm *sure*  you  will
+work  out  the  irony >-) or the wink ;-)  in the elec-
+tronic eye for yourself next time.
+
+
+
+1.2.4.  Network Toplevel Domains
+- - -   ------- -------- -------
+
+
+The network top-level domains are a trick to incorporate ex-
+isting  networks and their mailboxes into this naming struc-
+ture. Historically a lot of networks  have  developed  elec-
+tronic  mail  systems  based  on  their  own internal naming
+schemes. These naming schemes can usually name mailboxes and
+computers such as in
+
+
+        host!user
+        user at host
+        host::user
+
+
+
+To integrate these existing networks into the domain  naming
+scheme  special "network" top-level domains have been intro-
+duced temporarily  until  everyone  uses  domain  addresses.
+These  top-level  domains  only  have one subdomain and that
+denotes the host computer on which the mailbox resides.
+
+
+For example:
+
+        host!user       ->      user@host.uucp
+        user at host    ->      user@host.bitnet
+        host::user      ->      ? user at a Decnet host
+
+The later ? points to the fact that you cannot  predict  how
+such  a  DECnet  address of VMS mail can be transformed to a
+domain address - if at all - as it depends  on  the  nearest
+gateway in its particular environment.
+
+This network form of naming is not as easy to  interpret  as
+the   organizational   names  with  countries  as  top-level
+domains.  Most of these networks are currently converting to
+country  top-level domains but as this is a slow process you
+can expect to see these top-level domains for some  time  to
+come. If it is possible to use both addresses with a network
+top-level domain and  addresses  with  a  country  top-level
+domain the country based address is usually preferred.
+
+But there are countries with no national naming authority at
+all  so that naming is a matter of the different national or
+sometimes international networks. In different networks even
+the  organizational subdomain concept can be very different.
+In HEPnet for example, a worldwide network  of  High  Energy
+Physicists  the  country  domain is subordinated to the top-
+level domain of hep. Therefore  Hepnet  people  might  think
+user@nikhefh.nl.hep  should be the correct structure for the
+Dutch colleagues of the  universal  HEP  community  and  the
+computer  people  would  think that hep is nothing more than
+one of the components of the Dutch name  space  i.e.,  being
+user@nikhef.hep.nl.   People with some experience think that
+division of subdomains by discipline is even more  difficult
+to manage than by geography ...
+
+
+The most important worldwide network top-level domains are:
+
+
+uucp      is used for UUCP based networks worldwide (includ-
+          ing  EUnet in Europe and Usenet in North America).
+          An internal address in these networks is converted
+          to a domain address as follows:
+
+          host1!host2!target-host!user   <=>    user@target-
+          host.uucp
+
+          More about this later in the EUnet section.
+
+
+bitnet    is often used as a synonym for one worldwide  net-
+          work  system  including BITNET, EARN and NETNORTH.
+          These academic and research  networks  technically
+          form a single network based on the IBM RSCS proto-
+          cols but differ in their management and geographi-
+          cal  extension. Thus EARN is limited to the Europe
+          and the Middle East and Netnorth to Canada.
+
+          An internal address in these networks is converted
+          to a domain address as follows:
+
+          XYZ0123@DDOHRZ21   <=>   xyz0123@ddohrz21.bitnet
+
+
+          Most domains of EARN show a mixture of letters and
+          numbers in their addresses as
+
+                    ccs021@ddohrz21.bitnet
+
+          This might look a bit irritating for EUnetters but
+          these names are as systematic as 8 symbols can be:
+
+
+                    D     - Germany
+                    DO    - the city of Dortmund
+                    HRZ   - the institution "Hochschulrechenzentrum"
+                    1     - the operating system of host
+                          (1 - IBM VM  2 - IBM OS/MVS  5 - DEC VMS  6 - Unix)
+                    1     - the number of the machine
+
+
+
+          With   some   experience   you   will   see   that
+          HAMCWI6.bitnet   should  denote  a Unix machine at
+          the CWI in Amsterdam in Holland.  This  particular
+          machine  however  happens  to be known only by its
+          alias name: MCVAX.bitnet .
+
+
+earn      is a synonym for the  European  Academic  Research
+          Network. Its members all belong to academic insti-
+          tutions like  universities  or  research  centers.
+          EARN  is part of BITNET but is not as widely known
+          by gateways. Since bitnet   is  widely  known  and
+          includes  earn  on the technical level of networks
+          it is generally safer to use bitnet .
+
+
+csnet     is an obsolete top-level domain used by  hosts  in
+          the  Computer  Science network CSNET network which
+          are not yet converted to other addresses.  Founded
+          in  1981  with financial help of the National Sci-
+          ence Founcation to support research  and  develop-
+          ment  of  US computer science it is now integrated
+          into the Internet Domain addressing scheme.
+
+
+You may seldomly find one or the other strange domain  which
+does not fit into all the above networks. For this rare case
+you may take a look at this list of other  minor  and  major
+networks  from  all  over  the  world  which  may be reached
+through links or gateways from EUnet.
+
+
+
+             aristote -  French academic network
+             arpa     -  ARPA-Internet, an US research network
+             cdn      -  Canadian Reserch network
+             cern     -  Swiss CERN
+             chunet   -  Swiss University network
+             dec      -  Dec's Easynet
+             DFN      -  German X.400 network
+             dunet    -  Denish university network
+             funet    -  Finish university network
+             HEPnet   -  High Energy Physicist network
+             iris     -  Spanish X.400 Research Network
+             mlnet    -  Network of the university of West Ontario
+             osiride  -  Italian research network
+             oz       -  Australian university network
+             sunet    -  Swedish university network
+             surfnet  -  Netherlands X.400 research network
+             uninett  -  Norwegian research network
+
+
+
+1.2.5.  Special Toplevel Domains
+- - -   ------- -------- -------
+
+
+You will also come across  special  top-level  domains  that
+don't fit into the either "country" or "network" classes:
+
+
+        com - commercial
+        gov - government
+        edu - educational
+        mil - military
+        net - networking organizations
+        org - other organizations
+
+
+
+These top-level domains belong to subnetworks of  the  North
+American  research network Arpa-Internet and still exist for
+historical reasons due to the major influence of the  former
+Arpanet  on  the  evolution  of networks and networks today.
+These domains should be subdomains of  top-level  domain  US
+but  at the time the domain system was "invented" the inven-
+tors didn't think of network life outside the US.  So we are
+stuck with this colonialism :-).
+
+
+
+1.2.6.  Domain Naming Conventions
+- - -   ------ ------ -----------
+
+
+In 1988 the U.S. UUCP network began to introduce a top-level
+domain  .US  .  Therefore,  you may today also see addresses
+like
+
+        user@organization.city-abr.state.us
+
+or
+
+        user@foohost.city.state.us
+
+like
+
+        ewing@killer.dallas.tx.us .
+
+
+In the above example tx  stands for Texas and  dallas  ,  no
+doubt,  for  the  city "Dallas". You may not be surprised to
+find a host killer  in this area famous  for  the  Southfork
+Ranch,  oil, money, scandals. As you see there are different
+interpretations even in the near-standard of domain address-
+ing.  But subdomains of countries are usually organizations,
+wether a whole state or companies with  their  own  subdivi-
+sions.
+
+In Europe the notation of subdomains is  subject  to  common
+agreement  with  the other networks in each country. In most
+of the European countries EARN has not yet moved to  domain-
+addressing.   Some  countries  have  a  general  distinction
+between academic members like universities and research  and
+the  companies  by using first level subdomains like ac  and
+co.  Note that this is not edu  or  com   as  these  parties
+would be named in United States !
+
+The only common agreement seems to be a great variety within
+limits.   You may find domain addresses like texas.dk  - no,
+not a town or state but just Texas Instruments  in  Denmark.
+There  are  solutions  including site.organization.country ,
+e.g.
+
+        csinn.capsogeti.fr
+
+a French company named Cap Sogeti Innovation Gemini with the
+sub-domain  csinn.  The introduction of domain-addressing on
+the British isles is already history, showing addresses like
+(in continental notation)
+
+        music.ed.ac.uk
+
+for  the  Music  Faculty  of  Edinburgh   (=ed)   University
+(=academic)  in the United Kingdom. In UK they did not agree
+whether long or short names were better.  Thus  all  systems
+can have two names, e.g. music.edinburgh.ac.uk .
+
+Is there any message in  your  mailbox  where  a  very  long
+address is running out of your screen? This probably is mail
+from Germany showing the whole name of the host, one to  two
+organizational  subdomains,  and the organization plus town,
+for example:
+
+        anke@laura.irb.informatik.uni-dortmund.de .
+
+They are verbose those Germans :-) ,  unrelenting  in  their
+efforts  to  be  most  logical.  On the other hand, however,
+paper mail bearing those e-mail addresses has  already  been
+properly delivered by the German surface post office!
+
+
+1.3.  Network peculiarities
+- -   ------- -------------
+
+
+What to do if your mail system does not understand  or  pro-
+duce  domain  addresses?  Well, first of all, ask the person
+responsible for the (mail)  system  to  provide  this  func-
+tionality  along  with  some form of automatic routing. They
+will not have much excuse not  to  do  it,  since  there  is
+"free" mailer software that does support this for almost any
+computer environment presently in use in the R&D world.   In
+the meantime, refer your local administrator to the national
+coordinators of your network whose addresses you  will  find
+in the chapter 2 about "networks and contacts".
+
+We know that screaming at systems people  often  takes  some
+time  to  have  an  effect.  So the next sections give a few
+rules on how to cope until they do  something.  You  can  go
+directly  to  the  section dealing with your type of machine
+and network:
+
+
+1.3.1.  EUnet
+- - -   -----
+
+
+It should be extremely rare to  find  a  Unix  system  which
+doesn't understand domain addresses. If you are connected to
+EUnet ask your systems manager to speak to  the  manager  of
+the national EUnet site about what better software your sys-
+tem could run.
+
+In the meantime find out (from your systems manager) how  to
+address  the national EUnet backbone node or another "smart"
+machine nearby and address your mail as follows:
+
+        host1!host2!smart!chemistry.oxbridge.UK!Cule
+          This  message  will  be sent to host1 which has to
+have a direct link to the sender's machine.  host1 will send
+it  on  to  host2 which in turn will send it to smart  which
+will know how to route to chemistry.oxbridge.uk .
+
+If this fails to work you can try as a last resort
+
+        host1!host2!smart!Cule@chemistry.oxbridge.UK
+
+The last form is an extremely  dangerous  kind  of  address,
+mixing !  and @ .  Keep your fingers crossed as it is not at
+all clear whether any given mail system  will send this mes-
+sage   to   host1  --  according  to  UUCP-style  --  or  to
+chemistry.oxbridge.UK . There's  a  general  rule,  however,
+that  @ has priority over % and !.  You should only use such
+mixed addresses if there is really no other possibility.
+
+Apropos   UUCP:   The   so-called    bang-addressing    with
+host1!host2!host3!user  is  a  reminiscence  of the original
+UUCP store-and-forward transport mechanism  where  addresses
+are  routes  of  host  names  read  from  left  to right and
+separated by ! . This sort of  addressing  had  the  obvious
+disadvantage  that an address for a given user was different
+relative to the actual position of the sender.  Furthermore,
+the  address  might be very long and provoke mistakes if you
+have to type your way through to someone on the  West  Coast
+of  the  United  States :-). Thus the Unix People have found
+better routing systems based on so-called "maps"  of  direc-
+tories with all officially registered sites.
+
+
+In communicating with EUnet participants you  may  sometimes
+face  such  long  lists  of  hosts in the From: line of your
+header. Normally you might ignore it. If you  want  to  pull
+any  knowledge  out  ot the lines, take them as a very rough
+information on which path a mail had taken and how  far  the
+sending host might be!
+
+But there might be the rare case that you want to turn  this
+sort  of address into a domain address. Let's assume there's
+a mail From: mcvax!ukc!gatekeeper!hotspot!Cule and no better
+domain address in sight.
+
+Transforming a bang address into a domain address just means
+deleting  all  the path information but the two ending terms
+for the host and user. In this simple  example  hotspot!Cule
+would  have  to  be turned into Cule@hotspot.uucp to form an
+acceptable uucp-address.
+
+But there is an exception to any rule: The above  rule  only
+applies   to   officially   registered   hosts!  A  mail  to
+Cule@hotspot.uucp would most certainly result in a  reply  a
+mail-daemon  telling  "host or domain unknown".  With a look
+in the domain index of the European E-mail directory - or in
+the  map  data itself - you may check whether domain hotspot
+or Gatekeeper is a known site.  In any case you have to know
+one  official  UUCP  host out of the row.  Taken for granted
+that  ukc  is  official  you  could  form  an  address  like
+Cule%hotspot%Gatekeeper@ukc.uucp.
+
+
+1.3.2.  EARN
+- - -   ----
+
+Before sending a message into other networks  from  an  EARN
+machine  it  is most important to know that you should never
+need to use a different address  if  your  host  supports  a
+modern mailer. It should be the exception to route your mes-
+sage "by hand" to the next possible gateway between two net-
+works.  Your  communication  with Non-BITNET networks may be
+eased by free software like "Crossnet". Apart from this very
+simple  tool  to  deal  with gateways other Message Handling
+programs like "Crosswell" or UCLA (University of California,
+Los  Angelos)  might provide a comfortable mail system. Con-
+vince your local node administrator to install one.
+
+The reason for this special  gatewaying  lies  deep  in  the
+heart  of  the  addressing  scheme of simple BITNET mailers:
+They accept only addresses of the form USER@HOST  consisting
+of  a  maximum  of  eight  upper  case letters or numbers in
+either user name or host name and have their  own  difficul-
+ties  with  more than 80 characters in a line. (BTW: This is
+the reason why the local postmaster  (10 characters) of  the
+Unix  domain is only a postman  at any EARN node.) This does
+not leave enough room to represent domain addresses at  all.
+Therefore  each mail from BITNET destined for other networks
+like EUnet has to be explicitly or automatically routed  via
+a gateway. Any gateway is located at a host belonging to the
+two networks and transferring all mail  between  these  net-
+works  with help of special programs.  These gateways reside
+at normal EARN addresses such as MAILER@MCVAX .
+
+At the time  of  writing  there  are  two  official  gateway
+addresses  in  Europe:   MAILER@MCVAX in the Netherlands and
+MAILER@CERNVAX, reserved for the High Energy Physics Commun-
+ity, BSMTP@UNIDO for German EUnet people and some unofficial
+gateways in other  countries.  Your  local  EARN  postmaster
+should  know  which  one  to  use.  In any case MAILER@MCVAX
+should work as a gateway from all EARN/BITNET domains to all
+EUnet  domains.  If you don't have a modern mailer to enable
+automatic gatewaying you will have to read on how to do this
+"by hand".
+
+Once the  message  arrives  at  one  of  the  above  gateway
+address,  it  is  read  by  a program called the "BSMTP". In
+order to find out the addresses of  the  recipients  on  the
+other networks, the gateway reads a special part of the mes-
+sage it receives.  This part is called the  BSMTP  envelope,
+which  means  a  specific  format  for the Batch Simple Mail
+Transfer Protocol.  It is wrapped  around  a  normal  RFC822
+message  by  the  sender  or  her  mail  system like a paper
+envelope around a letter.  It contains the sender's  and the
+recipient's  addresses  just like a normal envelope do.  The
+gateway unwraps the RFC822 message from the  BSMTP  envelope
+and  sends  the message to the recipient on the foreign net-
+works.  Usually the gateway program does not have to look at
+the  message  itself,  it  gets all the information it needs
+from the BSMTP envelope.
+
+As an example  here  is  a  possible  input  for  mail  from
+YOURNAME@YOURHOST  on EARN to hername@herhost.uucp :
+
+
+HELO yourhost.BITNET
+VERB ON
+TICK xyz1234
+MAIL FROM: <yourusername@yourhost.bitnet>
+RCPT TO: <hername@herhost.uucp>
+DATA
+Date: <sending date, e.g.> Fri, 02 Sep 88 22:44:01 GMT
+From: yourusername@yourhost.bitnet
+To: hername@herhost.uucp
+Subject: <optional subject line>
+
+This is the message body separated from the header
+by an empty line. In networks like EUnet there is a common
+agreement to limit the message body to 100 Kilobyte. The
+body is terminated with a single dot, by itself,
+at the beginning of the line!
+o
+QUIT
+
+
+The lines that begin with words in  all  capitals  plus  the
+line with just a dot on it form the BSMTP envelope.
+
+
+The top-level domains bitnet  and uucp  or country codes are
+very  important  and  must  be included.  Case is ignored in
+all EARN and BITNET addresses.  The blank line  between  the
+message  header and its body is also required, not to forget
+the single point at the beginning of a line to terminate the
+body!   You may leave out Subject:  and Date:  if necessary.
+The same applies for the the BSMTP extensions  VERB  ON   if
+you  don't  want to have long "verbose" records for a failed
+mail from the Gateway and TICK  for later identification  of
+the corresponding reply. All these are not essential but are
+useful in most cases.
+
+The assembled file should be transmitted to your next  gate-
+way address on EARN using the appropriate commands depending
+on the operating system.
+
+The basic formats used for BSMTP-gateways are  described  in
+the  SMTP  document  (RFC821)  and  a short paper by Alan E.
+Crosswell of Columbia University,  who  adapted  the  Simple
+Mail Transport Protocol SMTP into BSMTP to be run on BITNET.
+You are however not supposed to  read  these  documents  any
+further.  Instead  you should now already be a run-away user
+in sending a mail through the next gateway.
+
+
+1.3.3.  X.400
+- - -   - ---
+
+
+X.400 is the common standard by the International  Standards
+Organisation  ISO  and the International Telegraph and Tele-
+phone Consultive Committee CCITT (Comit Consultatif Interna-
+tional Tlphonique et Tlgraphique) for Message Handling.
+
+Many European networks have plans to use  the  standards  of
+X.400  eventually  and  it  is  used by the RARE MHS service
+already as a common standard. RARE is an acronym for Reseaux
+Associes  pour la Recherche Europeenne and is a meta-network
+of European academic  networks  including  Surfnet,  Uninet,
+Funet,  Janet,  Sunet,  Heanet, Aconet, DFN, Switch, Reunir,
+Fundesco, Centernet. At the moment  existing  RARE  services
+live  up  to the name: rare.  But in future it might offer a
+common and unified format for communication among  different
+systems.
+
+In addition to normal text, X.400 messages can contain other
+formats,  i.e.  fax  messages and even voice recordings. The
+addressing is potentially very user friendly. You will even-
+tually  have  to  know only a unique set of so-called attri-
+butes describing the recipient. These attributes  will  then
+be  used for an automatic search in an electronic directory,
+which may roughly be described as some  sort  of  electronic
+telephone  book for e-mail domains and addresses. Related to
+these directories you may stumble about the cryptic code  of
+X.500 which determines the convenient ISO-standard.
+
+Unfortunately directories of user names are not yet here and
+a  mapping  to  RFC822  addresses  is also needed to address
+non-X.400 users. So RARE MHS  uses  a  hierarchical  set  of
+organizational attributes to address its users:
+
+
+Country        specifies the country of the recipient.
+
+               This uses the ISO country  codes  similar  to
+               that of RFC822. Remember? UK for United King-
+               dom, DE for Germany, (not for Denmark as some
+               may  think). Instead DK for Denmark and so on
+               ...
+
+
+AMD            The Administration Management  Domain  speci-
+               fies the public X.400 carrier.
+
+               In UK for example the name  of  the  national
+               PTT British Telecom.
+
+
+PRMD           Private  Management  Domain  specifies  which
+               private X.400 carrier is used.
+
+               That might be BITNET, EARN, EUnet, CSnet or a
+               private organization.
+
+
+Organization   specifies the organization of the recipient.
+
+               This could be a company or a university.  The
+               fictive  university  Oxbridge  would probably
+               fill in here.
+
+
+Org. Unit      specifies sub organization(s).
+
+               There can be  more  than  one  organizational
+               unit.  In  our  example  however  there is no
+               further subunit like laboratory 1 or 2,  just
+               chemistry.
+
+
+Surname        should obviously be  the  family  name,  thus
+               Cule. Maybe someone who wants to have a nick-
+               name in the address would  have  to  cheat  a
+               little bit to fit into this scheme.
+
+
+Givenname      if Surname should be obvious .... all Mollies
+               and Johns of the world should happily fill in
+               a firstname here.
+
+
+As this example may prove it might be not impossible to find
+a  X.400  equivalent  for  any  original RFC822 address. But
+reality will be a bit more complicated than  our  simplified
+example.   Nevertheless  there  may already be the rare case
+that a X.400 mail might reach your mailbox. To reply to this
+message  you  could  simply  take  the address string of the
+From:-line. This might look like
+
+Firstname.Surname@orgunit.orgunit.org.pmd.amd.country
+
+-   or   more   probably   a    subset    of    this    like
+Surname@orgunit.org.country.   If  the  address  is  not yet
+extended by a gateway address it may be more  secure  to  do
+this.  For  UUCP-participants  this might end into something
+like
+
+Firstname.Surname%orgunit.orgunit.org.pmd.amd.country@gateway.uucp.
+
+EARN  people  will  probably  have to send their mail to the
+X.400-participant by a gateway  mechanism  similar  to  that
+described in the EARN section.
+
+Fortunately there is a specification (RFC 987)  how  to  map
+X.400  messages and addresses automatically into the formats
+of RFC822. You might even need less attributes than demanded
+by  RFC822.  Unfortunately the mapping of addresses is still
+done differently at different places in Europe and different
+mailer  systems.   This may cause some confusion but is han-
+dled by gateway mapping tables.
+
+Unfortunately there is not yet any standardised short way to
+show  each X.400 address as a text-string like an address on
+business cards, as different X.400 systems may use different
+representations.  RARE is working on a standard notation for
+the European Research & Development community.
+
+
+
+Copyright 1988 permitted by Daniel Karrenberg & Anke Goos, if
+for no direct commercial use and for EUnet purposes

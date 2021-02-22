@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<!-- Create a map -->
+
+<html>
+<head>
+<title>Make a Map</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/make-map.html">
+<style type="text/css">body { overflow: hidden; margin: 0 }</style>
+</head>
+<body>
+<script>
+
+const config = {
+	lineWidth: 3,
+	loopDelay: 1000,
+	margin: 3,
+	maxDegree: 4,
+	minRadius: 50,
+	numColours: 6,
+};
+
+// Box  ///////////////////////////////////////////////////////////////////////////////////////////
+
+// A rectangular area containing a list of Regions
+
+class Box {
+	constructor() {
+		const canvas = document.createElement('canvas');
+		document.body.append(canvas);
+		this.ctx = canvas.getContext('2d');
+		window.onresize = () => this.maybeResize();
+		window.onkeydown = e => this.handleKey(e); // onkeypress doesn't get ESC
+		this.resize();
+	}
+
+	// Make the canvas almost fill the window
+
+	resize() {
+		const { ctx: { canvas } } = this;
+		const { innerWidth, innerHeight } = window;
+		const { margin } = config;
+		this.height = canvas.height = innerHeight - 2 * margin;
+		this.width = canvas.width = innerWidth - 2 * margin;
+		const s = canvas.style;
+		s.marginLeft = s.marginTop	= `${margin}px`;	 // Centre in window
+		this.regions = [new Region(this)];
+		loopWhile(() => this.step(), config.loopDelay);
+	}
+
+	// Wait until a while after resizing stops then resize the box if the window
+	// has changed shape. Some browsers call onresize on load, Firefox doesn't.
+
+	maybeResize() {
+		debounce(() => {
+			const shape = windowShape();
+			if (shape === (this.shape || '')) return;
+			this.shape = shape;
+			this.resize();
+		});
+	}
+
+	handleClick(x, y) { this.clicked = { x, y } }
+
+	handleKey({ keyCode }) {
+		this.keyPressed = keyCode === 27 ? 'Esc' : String.fromCharCode(keyCode);
+	}
+
+	// Return a list of Points forming a rectangle that fills the box
+
+	rectangle() {
+		const { width, height } = this;
+
+		return [[0, 0], [width, 0], [width, height], [0, height]]
+			.map(xy => this.point(xy));
+	}
+
+	// Return an initial point on the boundary rectangle
+
+	point([x, y]) { return new Point(this, x, y, true) }
+
+	// Move a point, split an edge and cleave a region
+
+	step() {
+		// this.moveSomePoint();
+		this.splitSomeEdge();
+		this.draw();
+		this.cleaveSomeRegion();
+		this.draw();
+		return true;
+	}
+
+	moveSomePoint() { this.regions.any().moveSomePoint() }
+
+	// Add point to some edge of some region
+
+	splitSomeEdge() { this.withLongestEdge().splitLongestEdge() }
+
+	// If some region has edge, add edge's new mid-point
+
+	regionWithEdge(edge) { this.regions.some(region => region.addEdge(edge)) }
+
+	// Return the region with the fewest points
+
+	withFewestPoints() { return this.regions.withMax(r => -r.points.length) }
+
+	withLongestEdge() { return this.regions.withMax(r => r.longestEdgeLength) }
+
+	// Return indexes of cleavable regions, most cleavable first
+
+	mostCleavableRegions() {
+		const { regions } = this;
+		return (
+			regions.indexes()
+				.filter(i => regions[i].cleavability > 0)
+				.sort((i, j) => regions[j].cleavability - regions[i].cleavability)
+		);
+	}
+
+	// Cleave the most cleavable region.  Return true if found.
+
+	cleaveSomeRegion() { return this.mostCleavableRegions().some(k => this.cleaveRegion(k)) }
+
+	// Find the best cleavage of region [k] into two new regions, replace
+	// [k] with them and return true.  If none found, return false.
+
+	cleaveRegion(k) {
+		const rk = this.regions[k];
+		const c = rk.bestCleavage??();			// cleavability??
+		if (! c) return false;
+		const { points, regions } = c;
+		this.regions.splice(k, 1, ...regions);
+		rk.pointsLinked(points);						// Increment degree of newly linked points
+		return true;
+	}
+
+	clear() {
+		const { ctx, height, width } = this;
+		ctx.clearRect(0, 0, width, height);
+	}
+
+	draw() { this.clear(); this.regions.forEach(r => r.draw()) }
+
+	toString() { return this.regions.spaced() }
+}
+
+// Region //////////////////////////////////////////////////////////////////////////////////////////
+
+class Region {
+	constructor(box, points) {
+		this.box = box;
+		this.points = points || box.rectangle(); // The ring of points defining the region
+		this.colour = Colour.random();
+		this.update();
+	}
+
+	// Recalculate derived properties after region's points change
+
+	// Calculation of cleavability shouldn't be recursive??
+
+	update() {
+		this.setEdgeLengths();
+		this.setRadiusAndCleavability();
+	}
+
+	// Set the region's edgeLengths and the index and length of the region's longest edge
+
+	setEdgeLengths() {
+		const { points } = this;
+		const edgeLengths = points.map((p, i) => p.distance(points.modEl(i + 1)));
+		const iMax = edgeLengths.indexWithMax();
+		this.longestEdgeIndex = iMax;
+		this.longestEdgeLength = edgeLengths[iMax];
+	}
+
+	// Set the region's radius to the minimum distance from
+	// its centrum to the midpoint of any of its edges
+
+	setRadiusAndCleavability() {
+		const c = this.centrum();
+		const eps = this.edgeMidPoints();
+		c.drawStar(eps);
+		this.radius = eps.map(p => c.distance(p)).min();
+		this.setCleavages();
+		this.cleavability = ?? // this.cleavages.length ? this.radius : 0;
+	}
+
+	// Set this.cleavages to a list of all this region's possible Cleavages
+
+	setCleavages() {
+		??
+			new Cleavage(??);
+	}
+
+	// Return the best cleavage of the region or undefined if there is none
+
+	// cleavability??
+
+	bestCleavage??() {
+		const indexes = this.linkables();
+		const cleavages = [];
+		indexes.forEach(i => {
+			const js = indexes.modRange(i+2, i-2);	// Not adjacent to i
+			js.forEach(j => {
+				// Only add ordered pairs and only if j is linkable
+				if (i < j && indexes.includes(j)) {
+					cleavages.push(new Cleavage(this, i, j));
+				}
+			});
+		});
+		const best = cleavages.withMax(c => c.merit);
+		console.log(`cleaved ${this} -> ${best}`);
+
+		return best;
+	}
+
+	// Points with indexes have been joined by a new edge
+
+	pointsLinked(indexes) { indexes.forEach(i => this.points[i].hasNewEdge()) }
+
+	// A region's centrum is (mean x, mean y)
+
+	centrum() {
+		const { box, points } = this;
+		const n = points.length;
+		if (n === 0) throw new Error('No points, no centrum');
+		let xt = 0, yt = 0;
+		points.forEach(({ x, y }) => { xt += x; yt += y });
+
+		return new Point(box, xt / n, yt / n, false);
+	}
+
+	edgeMidPoints() {
+		const { points } = this;
+
+		return points.map((p, i) => p.halfWayTo(points.modEl(i + 1)));
+	}
+
+	// Indexes of points that are linkable
+
+	linkables() {
+		const { points } = this;
+
+		return points.indexes().filter(i => points[i].linkable());
+	}
+
+	triangular() { return this.points.length === 3 }
+
+	small() { return this.radius < config.minRadius }
+
+	moveSomePoint() { this.points.any().move() }
+
+	// Add a point on the longest edge of this
+	// region and any region that shares that edge
+
+	splitLongestEdge() {
+		const { box, points, longestEdgeIndex: i } = this;
+		const j = points.modIndex(i + 1);		// Edge [i] -> [j]
+		const pi = points[i];
+		const pj = points[j];
+		const mid = pi.partWayTo(pj);
+		this.addPointAfter(mid, i);
+		box.regionWithEdge([pj, mid, pi]); // Also add new point to region with pj -> pi
+	}
+
+	// Return a new region with last edge [i]->[j],
+	// going round this one from [j] back to [i]
+
+	newRegionWith(i, j) {
+		const { box, points } = this;
+		const newPoints = points.modRange(j, i)
+			.map(k => points[k]);
+		console.log(`${this} / ${points[i]}->${points[j]} -> new [${newPoints.spaced()}]`);
+
+		return new Region(box, newPoints);
+	}
+
+	// If region has edge p->q, add new mid point to it and return true, else false
+
+	addEdge([p, mid, q]) {
+		const { points } = this;
+
+		const k = points.findIndex((pI, i) => pI === p && points.modEl(i+1) === q);
+		if (k < 0) return false;
+		this.addPointAfter(mid, k);
+		console.log(`addEdge ${p}->${q} to ${this}`);
+		return true;
+	}
+
+	// Add a new point p to the region at [i+1]
+
+	addPointAfter(p, i) {
+		this.points.splice(i + 1, 0, p);
+		this.update();
+	}
+
+	draw() {
+		const { box: { ctx }, colour: { string }, points } = this;
+		ctx.lineWidth = config.lineWidth;
+		ctx.strokeStyle = 'black';
+		ctx.beginPath();
+		points[0].moveTo();
+		points.slice(1).forEach(p => p.lineTo());
+		ctx.closePath();
+		ctx.fillStyle = string;
+		ctx.fill();
+		ctx.stroke();												// On top of fill
+		points.forEach(p => p.drawCircle(4));
+	}
+
+	toString() {
+		const ps = this.points.map(p => p.toString()).join('  ');
+		return `[${ps}]/${this.cleavability}`;
+	}
+}
+
+// Cleavage ////////////////////////////////////////////////////////////////////////////////////////
+
+// A Cleavage is an edge between two points of a region that can divide the region in two
+
+class Cleavage {
+  constructor(region, points) {
+		this.region = region;
+		this.points = points;
+		this.regions = this.getRegions();
+		this.merit = this.getMerit();
+	}
+
+	// Return the two new regions that the cleavage would create
+
+	getRegions() {
+		const { region, points: [i, j] } = this;
+
+		return [region.newRegionWith(i, j), region.newRegionWith(j, i)];
+	}
+
+	// The more equal the radii of the two regions, the higher the cleavage's merit
+
+	getMerit() {
+		const { regions } = this;
+		const [r1, r2] = regions.map(r => r.radius);
+
+		return 1/(Math.abs(r1 - r2) + 1);
+	}
+}
+
+
+// Point ///////////////////////////////////////////////////////////////////////////////////////////
+
+// A point's degree is the number of edges joined to it,
+// which is the same as the number of regions it belongs to
+// if we include the pseudo-region outside the map boundary
+
+class Point {
+	constructor(box, x, y, boundary, degree) {
+		this.box = box;
+		this.x = x;
+		this.y = y;
+		this.boundary = boundary;
+		this.degree = degree || 2;
+	}
+
+	// The point has been linked to another point, update its degree
+
+	hasNewEdge() { this.degree++ }
+
+	// A point is linkable if its degree is no more than maxDegree
+
+	linkable() { return this.degree <= config.maxDegree }
+
+	// Return the distance from this point to { x, y }
+
+	distance({ x, y }) { return Math.floor(Math.sqrt((this.x - x)**2 + (this.y - y)**2) + 0.5) }
+
+	partWayTo(that, f = 0.4 + 0.2 * Math.random()) {
+		const { box, x, y } = this;
+		const g = 1 - f;
+
+		return new Point(
+			box,
+			Math.floor(f * x + g * that.x),
+			Math.floor(f * y + g * that.y),
+			this.boundary && that.boundary,
+		);
+	}
+
+	halfWayTo(that) { return this.partWayTo(that, 0.5) }
+
+	move() {
+		const { box: { width, height } } = this;
+		const d = 50;
+		const r = () => rand(-d, d);
+		this.x = limit(this.x + r(), 0, width);
+		this.y = limit(this.y + r(), 0, height);
+	}
+
+	lineTo() {
+		const { box: { ctx }, x, y } = this;
+		ctx.lineTo(x, y);
+	}
+
+	moveTo() {
+		const { box: { ctx }, x, y } = this;
+		ctx.moveTo(x, y);
+	}
+
+	drawCircle(radius, colour = 'white') {
+		const { box: { ctx }, x, y } = this;
+		ctx.strokeStyle = colour;
+		ctx.beginPath();
+		ctx.arc(x, y, radius, 0, 2 * Math.PI);
+		ctx.stroke();
+	}
+
+	drawStar(ps) {
+		const { box: { ctx } } = this;
+		this.drawCircle(config.minRadius);
+		ps.forEach(p => {
+			this.moveTo();
+			p.lineTo();
+			ctx.stroke();
+		});
+	}
+
+	toString() {
+		const { x, y } = this;
+
+		return x + ',' + y;
+	}
+}
+
+// Colour //////////////////////////////////////////////////////////////////////////////////////////
+
+// A Colour has:
+// - vec = [R, G, B] containing ints 0..255
+// - string = "rgb(R,G,B)"
+
+class Colour {
+	// Store the given [R, G, B], where 0 <= R < 256, etc.,
+	// as the new Colour's vec and "rgb(R,G,B)" string.
+
+	constructor(vecOrFun) {
+		const v = typeof vecOrFun === 'function' ? Colour.map(vecOrFun) : vecOrFun;
+		this.vec = v.map(cpt => Math.min(Math.max(cpt, 0), 255.999999));
+		const s = this.vec.map(cpt => Math.floor(cpt)).join(',');
+		this.string = `rgb(${s})`;
+	}
+
+	// Fill the palette with n equally spaced hues as rgb() strings
+
+	static init() {
+		const { numColours } = config;
+		this.palette = this.makePalette(numColours);
+		// this.black = new Colour([0, 0, 0]);
+		// this.white = new Colour([255, 255, 255]);
+		// this.transparent = 'rgba(0,0,0,0)';
+	}
+
+	// Create a palette of numColours equally spaced hues
+
+	static makePalette(numColours) {
+		const hueOffset = Math.random();
+		return zeroTo(numColours)
+			.map(i => Colour.fromHue(hueOffset + i / numColours));
+	}
+
+	// Return a new Colour with hue in 0..1 and maximum saturation and luminance
+
+	static fromHue(hue) {
+		const h = (6 * hue) % 6;	// n equally spaced hues in [0..6)
+		const x = h % 1;					// x = 0 .. 1
+		const y = 1 - x;					// y = 1 .. 0
+		const c = [								// [R, G, B] in 0..1
+			[1, x, 0],							// red	   .. yellow
+			[y, 1, 0],							// yellow  .. green
+			[0, 1, x],							// green   .. cyan
+			[0, y, 1],							// cyan	   .. blue
+			[x, 0, 1],							// blue	   .. magenta
+			[1, 0, y],								// magenta .. red
+		][Math.floor(h)];
+		// Convert to [R, G, B] in 0..255
+		const vec = c.map(cpt => 255.999999 * cpt + rand(-128, 128));
+
+		return new Colour(vec);
+	}
+
+	static map(f) { return nResults(3, f) }
+
+	static random() { return this.palette.any() }
+
+	static reallyRandom() { return new Colour(_ => rand(0, 255)) }
+
+	// L in 0..1 = (max(RGB) + min(RGB)) / 2; where R, G, B in 0..255
+
+	luminosity() { return (this.vec.min() + this.vec.max()) / (2 * 256) }
+
+	// S in 0..1 = L == 1 ? 0 : (max(RGB) — min(RGB)) / (1 — |2L - 1|)
+	// where R, G, B in 0..255; L in 0..1
+
+	saturation() {
+		const desat = 1 - Math.abs(2 * this.luminosity() - 1);
+
+		return desat === 0 ? 0 : (this.vec.max() - this.vec.min()) / (256 * desat);
+	}
+
+	boring() { return this.saturation() < 0.2 }
+
+	setStyles(ctx) {
+		const { string } = this;
+		ctx.fillStyle = string;
+		ctx.strokeStyle = string;
+	}
+}
+
+// Array  //////////////////////////////////////////////////////////////////////////////////////////
+
+Array.prototype.anyIndex = function anyIndex() { return Math.floor(this.length * Math.random()) };
+
+Array.prototype.any = function any() { return this[this.anyIndex()] };
+
+// Return the first true f(x) else undefined
+
+Array.prototype.firstTrue = function firstTrue(f) {
+	for (const x of this) {
+		const fx = f(x);
+		if (fx) return fx;
+	}
+	return undefined;
+};
+
+Array.prototype.indexes = function indexes() { return [...this.keys()] };
+
+Array.prototype.last = function last() { return this[this.length - 1] };
+
+Array.prototype.min = function min() { return Math.min.apply(null, this) };
+
+Array.prototype.max = function max() { return Math.max.apply(null, this) };
+
+// Return the index i for which f(a[i]) is biggest or -1 if no elements
+
+Array.prototype.indexWithMax = function indexWithMax(f = x => x) {
+	let iMax = -1, fMax;
+	this.forEach((el, i) => {
+		const fEl = f(el);
+		if (iMax === undefined || fEl > fMax) { iMax = i; fMax = fEl }
+	});
+	return iMax;
+};
+
+// Return the element e for which f(e) is biggest or undefined if no elements
+
+Array.prototype.withMax = function withMax(f) { return this[this.indexWithMax(f)] };
+
+// Return i modulo the length of the array
+// Note: x % n is broken for x < 0
+
+Array.prototype.modIndex = function modIndex(i) { return mod(i, this.length) };
+
+Array.prototype.modEl = function modEl(i) { return this[this.modIndex(i)] };
+
+// Return modulo indexes from i to j inclusive
+// E.g. [a, b, c, d, e].modRange(3, 1) ==> [3, 4, 0, 1]
+
+Array.prototype.modRange = function modRange(i, j) {
+	const modlen = x => this.modIndex(x);
+	const r = [];
+	for (i = modlen(i), j = modlen(j); ; i = modlen(i + 1)) {
+		r.push(i);
+		if (i === j) return r;
+	}
+};
+
+// Return the elements in order of increasing numerical f(x)
+
+Array.prototype.sortBy = function sortBy(f) { return this.sort((a, b) => f(a) - f(b)) };
+
+Array.prototype.sum = function sum() { return this.reduce((el, acc) => acc + el, 0) };
+
+Array.prototype.shuffle = function shuffle() {
+	return this.sort(() => prob(0.5));
+};
+
+Array.prototype.spaced = function spaced(sep = ' ') {
+	return this.map(x => x.toString()).join(sep);
+};
+
+// Events & Window ////////////////////////////////////////////////////////////////////////////////
+
+document.onclick = click;
+document.onmousemove = click;
+
+function click(e) {
+	if (e.buttons === 2) return;			// Ignore right-click
+	// Stationary click -> type 'click'.  Drag -> mousemove.
+	// Ignore first "click" after movement.
+	const clickEvent = e.type === 'click' && ! click.moving;
+	if (clickEvent) fullScreen();
+	// Ignore mouse move unless button pressed and moved > 1 pixel
+	click.moving = e.type === 'mousemove' && e.buttons && click.old_x
+		&& Math.abs(e.clientX - click.old_x) + Math.abs(e.clientY - click.old_y) > 1;
+	click.old_x = e.clientX;
+	click.old_y = e.clientY;
+	if (! clickEvent && ! click.moving) return;
+	// box.handleClick(e.offsetX, e.offsetY);
+	click.clicked = true;
+}
+
+click.moving = false;
+click.old_x = 0;
+
+// Request for full screen must be initiated by user action in Chrome or Firefox
+// Firefox fix - https://stackoverflow.com/a/27078920/285129
+// about:config > full-screen-api.allow-trusted-requests-only: false
+
+function fullScreen() {
+	const d = document.documentElement;
+	const f = d.requestFullscreen || d.webkitRequestFullscreen || d.msRequestFullscreen;
+	if (! f) { console.log('No full screen API'); return }
+	f.call(d);
+}
+
+function windowShape() {
+	const { innerWidth, innerHeight } = window;
+
+	return `${innerWidth}x${innerHeight}`;
+}
+
+// Utilities //////////////////////////////////////////////////////////////////////////////////////
+
+// Schedule a call to f after t ms (default 1000), cancelling any
+// previous scheduled call.  Assumes a single use in the program.
+
+function debounce(f, t = 1000) {
+	if (debounce.timeout) clearTimeout(debounce.timeout);
+	debounce.timeout = setTimeout(f, t);
+}
+
+function limit(x, min, max) { return Math.min(Math.max(x, min), max) }
+
+// Clear any previous loop then, if f returns true, wait t ms then loop
+
+function loopWhile(f, t) {
+	const looper = () => {
+		clearTimeout(looper.timeout);
+		if (f()) { looper.timeout = setTimeout(looper, t) } else { console.log('Done') }
+	};
+	looper();
+}
+
+// mod(x, n) is like x % n but correct for x < 0, i.e. 0 <= mod(x, n) < n
+
+function mod(x, n) {
+	if (n === 0) throw new RangeError('mod(x, 0)');
+	const r = x % n;
+	return r < 0 ? n + r : r;
+}
+
+// Return ints 0 .. n-1
+
+function zeroTo(n) { return Array(n).indexes() }
+
+// Return the results of calling f(i) for i = 0 .. n-1
+
+function nResults(n, f) { return zeroTo(n).map(f) }
+
+function prob(p) { return Math.random() < p }
+
+// Return a random int, min <= r <= max
+
+function rand(min, max, pow = 1) {
+	return Math.floor(min + (max + 1 - min) * Math.random() ** pow);
+}
+
+// Start Program ///////////////////////////////////////////////////////////////////////////////////
+
+Colour.init();
+window.box = new Box();
+
+</script>
+</body>
+</html>

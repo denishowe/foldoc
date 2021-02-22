@@ -1,0 +1,226 @@
+Reprinted here from ColumbiaNet with permission from Columbia
+University Academic Information Systems.
+
+MODEM PROTOCOL OVERVIEW
+December 4, 1993
+
+MODULATION
+
+Modems communicate with each other using a MODULATION method, which
+translates between digital computer data and analog telephone signals.
+Two modems must support the SAME modulation method or they can't
+communicate at all.
+
+The common modulation methods are:
+
+MODULATION/STANDARD   CONNECTION SPEEDS (BPS)
+  Bell 103              110, 150, 300.
+  CCITT V.21            110, 150, 300.
+  Bell 212A             1200.
+  CCITT V.22            1200, 600.
+  CCITT V.22 bis        2400.
+  CCITT V.32            9600, 4800, 2400.
+  CCITT V.32 bis        14400, 12000, 9600, 7200.
+  Telebit PEP           High speeds, proprietary to Telebit.
+  US Robotics HST       High speeds, proprietary to US Robotics.
+  "V.Terbo"             20000 bps, not a standard, never will be.
+  "V.Fast"              Preliminary implementations of V.34.
+  "V.FC"                "V.Fast-Class".
+  ITU-T V.34 **         28800, 26400, 24000, 21600, 19200, 16800, 14400
+
+** V.34 is not yet finalized.
+
+GLOSSARY
+
+  BPS   = Bits Per Second.  10 bps = 1 cps (character per second);
+          One character = 8 data bits plus 1 start bit and 1 stop bit.
+  CCITT = International Telegraph and Telephone Consultative Committee
+          (Note: CCITT changed its name to ITU-T on March 1, 1993).
+  ITU-T = International Telecommunications Union, Telecommunication
+          Standardization Sector.
+  V.xxx = ITU-T (CCITT) series of "recommendations" (standards) relating
+          to telecommunications.
+  bis   = "the second".
+  ter   = "the third".
+  PEP   = Packet Ensemble Protocol (Telebit proprietary).
+  HST   = High Speed Technology (US Robotics proprietary).
+
+We continue to use "CCITT" in the remainder of this document because
+it is still common usage, particularly in modem manuals and data
+communications texts.
+
+MODULATION FALLBACK
+
+When you make a modem call, the calling (originating) modem sends out
+a tone using the type of modulation that you have selected.  Usually the
+selection is made automatically by the modem, based on the interface
+speed between your PC and the modem, which is sensed automatically by
+most Hayes-compatible modems when they are given an AT command.  In many
+cases, there are also modem-specific commands to choose a particular
+modulation.
+
+If the answering modem supports the type of modulation you have selected,
+the connection is made immediately.  Otherwise the modems attempt to "fall
+back" to a lower type of modulation, the highest one they have in common.
+For example, if a 2400-bps V.22bis modem calls a 14400-bps V.32bis modem,
+the two modems will communicate at 2400 bps, the highest speed they have
+have in common.  Fallback is generally reliable among the CCITT standard
+modulations:
+
+  V.32bis -> V.32 -> V.22bis -> V.22
+
+In the USA, most modems fall back from V.22 to Bell 103, but different
+(incompatible) low-speed modulation methods are used in other countries,
+such as CCITT V.21 or V.23.  Most modern high-speed modems have a command
+to choose the low-speed fallback standard; in the USA, you should set your
+modem to fall back to the Bell 103 standard.
+
+Within a particular modulation (V.32 and up) it is also possible to
+fall back to lower speeds when a higher-speed connection can't be made,
+for example because of excessive noise on the telephone connection.
+For example, a V.32bis connection can be made at 14400 bps, 12000 bps,
+9600 bps, or 7200 bps.
+
+Mixing proprietary modulations like PEP or HST into the fallback scheme
+generally requires special configuration settings on your modem.
+
+It is also possible for the two modems to change speeds in the middle
+of a connection, perhaps because they have detected an increase in
+telephone-line noise; this is called "retraining" -- the connection
+goes "on hold" for a couple seconds, but is not broken.  Retraining
+occurs only if both modems have this capability and have agreed with
+each other to use it.
+
+INTERFACE SPEED AND CONNECTION SPEED
+
+When you make a dialup connection, there are (at least) three separate
+components to the connection.  Assuming you are dialing up from a PC,
+there is the connection between your PC and your (originating) modem, the
+connection between the two modems, and the connection between the "other"
+(answering) modem and whatever device it is attached to.  Each of part
+of the connection can be running at a different speed:
+
+1. LOCAL INTERFACE SPEED: The speed used on the connection between
+   your PC (or terminal or workstation) and your modem.
+
+2. CONNECTION SPEED: The speed of the connection between the two modems,
+   based on the modulation technique that they negotiate with each other.
+
+3. REMOTE INTERFACE SPEED: The speed of the connection between the remote
+   (answering) modem and the terminal server.
+
+SPEED BUFFERING
+
+When originating a call, most modems change their interface speeds to
+match the negotiated connection speed automatically.  When that happens,
+your communications software must also change its speed at the same time.
+For example, if you dial at 9600 bps, but the remote modem answers at 1200
+bps, your modem will print a message like:
+
+  CONNECT 1200
+
+which your communication software takes as a signal to change its
+interface speed to 1200 bps before attempting to go "online" with the
+remote computer or service.
+
+Most modern modems can be configured to fix their interface speed at a
+given value, rather than change it according to the connection speed.
+This is desirable when using data compression.  In this case, the
+CONNECTION SPEED (or MODULATION SPEED) between the two modems is
+different from the INTERFACE SPEED between the modem and the computer.
+The modem performs the speed conversion between its telephone side and
+its data side.
+
+ERROR CORRECTION
+
+After the modems have agreed on a modulation technique, they might
+also try to negotiate an error-detection and -correction method:
+
+  MNP Level 1, 2, 3, or 4
+  CCITT V.42 = LAPM
+  Telebit PEP (proprietary, unknown)
+  US Robotics HST (proprietary, unknown)
+
+When modems' initial error-control methods do not agree, automatic
+fallback is usually as follows:
+
+  V.42 -> MNP 4 -> MNP 3 -> MNP 2 -> MNP 1 -> none
+
+When PEP, HST, or other proprietary methods are involved, special
+configuration settings are needed on the modems to specify the fallback
+sequence.
+
+Please note that no connection can ever be free of errors.  The error
+correction technique used between the modems might be extremely effective,
+but it is not foolproof.  More to the point, the connections between the
+modems and the computers are not error-corrected, nor or the data paths
+within the computers.  Thus it is still quite common to experience data
+loss or corruption, even on an error-corrected modem connection.  Common
+causes include: buffer overflows (often due to a lack of adequate flow
+control between the modem and the computer -- see below), interrupt
+conflicts, loose connectors, and malfunctioning devices.
+
+GLOSSARY
+
+  LAPM = Link Access Protocol for Modems
+  MNP  = Microcom Networking Protocol, proprietary,
+         but licensed by most modem makers.
+
+DATA COMPRESSION
+
+Modems may incorporate data compression methods to increase the effective
+throughput of your data beyond the actual connection speed.  Compression
+is possible only if (a) error correction is also being done, and (b) the
+interface speed between the computer and the modem is higher than the
+connection speed between the two modems.
+
+  MNP Level 3 = 108% efficiency by removing start & stop bits (synchronous)
+  MNP Level 4 = 120% efficiency by optimizing modem-to-modem protocol
+  MNP Level 5 = True compression on top of Level 4, efficiency depends
+      on data
+  V.42bis     = True compression, efficiency depends on data
+  Telebit PEP (proprietary, unknown)
+  US Robotics HST (proprietary, unknown)
+
+Effectiveness of MNP 5 and V.42bis compression vary between 0% and 400% or
+higher, depending on the nature of the data.  Compression fallback:
+
+  V.42bis -> MNP 5 -> none
+
+When PEP or HST is involved, special configuration settings are needed
+on the modem to specify how these fit into the fallback sequence.
+
+FLOW CONTROL
+
+"Flow control" is the method by which one device can control the rate at
+which another device sends data to it.  There are various methods of flow
+control.  The two most commonly used in dialup data communication are:
+
+ . RTS/CTS (Request To Send / Clear To Send) "hardware" flow control is
+   the most effective method.  It uses special wires in the cable,
+   separate from the data wires, to control the flow of data.  It is
+   used between two devices that are immediately connected, such as a
+   computer and a modem.
+
+ . XON/XOFF "software" flow control is less effective and more risky
+   because it mixes flow control characters (Control-S and Control-Q) with
+   the data.  These characters are subject to delay, loss, and corruption,
+   and also cause transparency problems with host applications like EMACS.
+   Software flow control should be used only if hardware flow control is
+   unavailable.
+
+When using error correction or compression, or modems that are capable of
+retraining, it is essential to enable an effective form of flow control
+between each modem and the computer (or terminal, or other device) it is
+immediately connected to.  Without effective flow control, data will be
+lost when one device sends data faster than the other one can receive it.
+
+FURTHER READING
+
+Gianone, C., "Using MS-DOS Kermit", Second Edition, Digital Press (1992),
+Chapter 4, "Cables, Connectors, and Modems", pp.27-36.
+
+da Cruz, F., and C. Gianone, "Using C-Kermit", Digital Press (1993),
+Appendix II, "A Condensed Guide to Serial Data Communications", pp.359-373.
+
+Your modem manual.

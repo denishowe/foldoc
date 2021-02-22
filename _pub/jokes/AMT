@@ -1,0 +1,63 @@
+"The decision which way	round the digits run is, of  course,  mathemati-
+cally  trivial.	 Indeed,  one early British computer had numbers running
+from right to left (because the	spot on	an oscilloscope	tube  runs  from
+left  to  right,  but  in  serial logic	the least significant digits are
+dealt with first). Turing used to mystify audiences at	public	lectures
+when,  quite  by accident, he would slip into this mode	even for decimal
+arithmetic, and	write things like 73+42=16.  The  next	version	 of  the
+machine	 was  made more	conventional simply by crossing	the x-deflection
+wires: this, however, worried the engineers, whose  waveforms  were  all
+backwards.  That problem was in	turn solved by providing a little window
+so that	the engineers (who tended to  be  behind  the  computer	 anyway)
+could view the oscilloscope screen from	the back."
+
+[C. Strachey - private communication]
+From denis Mon Jan  5 14:39 GMT 1987
+TO: jdr
+
+It was Alan [Turing]'s job to make the Manchester machine easy to use,
+but his ideas of convenience were not always shared by others. Alan held
+that human convenience should be catered for by programming techniques,
+not by electronics. In his 1947 talk he had refered to such matters of
+convenience as `fussy little details', and had stressed how they could
+be taken care of by `pure paperwork'. Now at Manchester, he had the
+opportunity, in principle, to put this into practice - for the machine
+hardware had not been designed to pander to the programmer. However, by
+1949 he had lost interest in doing this kind of work. The `fussy little
+details' of binary to decimal conversion, for instance, he now found not
+worth bothering about. He himself found it simple to work in the base-32
+arithmetic in which the machine could be regarded as working, and
+expected other people to do the same.
+
+To use base-32 arithmetic it was necessary to find 32 symbols for the 32
+different `digits'. Here he took over the system already used by the
+engineers, in which they labelled the five-bit combinations according to
+the Baudot teleprinter code. To work this system meant memorising the
+Baudot code and the multiplication table as expressed in it - something
+he, but few others, found easy.
+
+The ostensible reason for sticking to this hideously primitive form of
+coding which entailed so much work for the user, was that the cathode
+ray tube storage made it possible - indeed necessary - to check the
+contents of the store by `peeping' as Alan called it, at a monitor tube.
+He insisted that what one saw as spots on the tube had to correspond
+digit by digit to the program that had been written out. To maintain
+this principle of correspondence it was actually necessary to write out
+the base-32 numbers backwards, with the least significant digit first.
+This was for techinical electronic engineering reasons, the same as
+those which obliged cathode ray tubes to always scan from left to right.
+Another awkwardness arose on account of the five-bit combinations which
+did not correspond to a letter of the alphabet on the Baudot code. Geoff
+Tootill had already introduced extra symbols for these, the zero of the
+base-32 notation being represented by a stroke `/'. The result was that
+pages of programs were covered with strokes - an effect which at
+Cambridge was said to reflect the Manchester rain lashing at the
+windows.
+
+[ Andrew Hodges "Alan Turing - The Enigma of Intelligence" page 398 ]
+
+I just finished reading the above (excellent) biography of AMT which
+also mentions C. Strachey.
+
+To who was the private communication addressed ?
+

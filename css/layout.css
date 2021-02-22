@@ -13,6 +13,8 @@ body
 
 a { text-decoration: none }
 
+p a { border: 1px solid white }
+
 p a:hover { border: 1px dotted #8CF }
 
 h2, h3 { clear: both }
@@ -61,7 +63,7 @@ td
 
 dt { font-weight: bold }
 
-pre { margin-left: -50px }
+/* pre { margin-left: -50px } */
 
 .vertical-space { height: 20px }
 
@@ -79,7 +81,7 @@ pre { margin-left: -50px }
 #left
 {
     min-width: 75%;
-    max-width: 100%;
+    max-width: 95%;
 }
 
 #right
@@ -160,11 +162,13 @@ input[type='text']
 
 #content { clear: left; max-width: 47em }
 
+#content p { line-height: 150% }
+
 #query, #query:hover, #cse-search-box input[type='text']
 {
     float: left;
     width: 43.5em;
-    max-width: 95%;
+    max-width: 88%;
     height: 40px;
     padding: 0 10px !important;
     font-family: 'Belgrano',serif;

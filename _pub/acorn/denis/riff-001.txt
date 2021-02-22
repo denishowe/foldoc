@@ -1,0 +1,37 @@
+!Help for !Riff 0.01 (14 Dec 1994)
+
+!Riff generates random repeating patterns on an attached MIDI instrument.
+A new note is added each time the pattern is played unless the note chosen
+would be unharmonious in the position chosen for it.  Sometimes a section
+of the pattern is copied to one or more other locations in the pattern,
+possibly with a pitch shift and with channels interchanged.  Very
+occasionally the pattern is cleared completely and the whole ghastly
+business starts again, probably producing a different pattern.  The tempo
+also changes randomly between certain limits.
+ 
+!Riff displays the current pattern in a window.  There are no controls
+except Quit.  All you can do to relieve the monotony is change the
+instruments assigned to MIDI channels 1 to 4 or change the value of Seed%
+near the start of !Riff.!RunImage.
+
+!Riff requires a version 3 MIDI podule with the MIDI_FastClock SWI (mine is
+version 3.14).
+
+This program is Copyright 1994 Denis Howe.  You may distribute verbatim or
+modified copies of this program provided each such copy is distributed with
+a copyright notice and distribution conditions identical to these.
+
+History
+=======
+Please send me a copy of any changes you make and add the details here.
+
+0.00 12 May 1992 Written by Denis Howe
+0.01 14 Dec 1994 WIMP version
+
+If you like this kind of infinitely boring music (I love it!) you should
+hear "Drumming" by Steve Reich or anything by Philip Glass or Micheal
+Nyman.  If you have any comments on this program feel free to mail me.
+
+Denis Howe <dbh@doc.ic.ac.uk>
+48 Anson Road, London, NW2 3UU
++44 (181) 450 9448

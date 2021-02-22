@@ -1,0 +1,1320 @@
+Article 52595 of comp.arch:
+Newsgroups: comp.sys.amiga.advocacy,comp.arch
+Path: agate!howland.reston.ans.net!gatech!newsxfer.itd.umich.edu!nntp.cs.ubc.ca!alberta!quartz.ucs.ualberta.ca!tribune.usask.ca!sue!borealis.cs.uregina.ca!bayko
+From: bayko@borealis.cs.uregina.ca (John  Bayko)
+Subject: Re: PG: RISC vs. CISC
+Sender: news@sue.cc.uregina.ca
+Message-ID: <Cuqzz0.1C6E@sue.cc.uregina.ca>
+Date: Thu, 18 Aug 1994 20:37:48 GMT
+References: <32obe1$sc2@news.icaen.uiowa.edu> <32qbqj$du9@dartvax.dartmouth.edu> <32qhlk$7df@masher.mro1.dec.com>
+Organization: University of Regina
+Keywords: microprocessors
+Lines: 1304
+Xref: agate comp.sys.amiga.advocacy:102463 comp.arch:52595
+
+    On the subject of 6502, PDP-8s, 68000s and whatnot, here is
+the Great Microprocessors file.
+    It's decidedly dated, and often inaccurate, but still
+interesting...
+
+
+Great Microprocessors of the Past and Present (V 4.0.0)
+
+Introduction: What's a "Great CPU"?
+              ---------------------
+
+    This list is not intended to be an exhaustive compilation of
+microprocessors, but rather a description of designs that are either
+unique (such as the RCA 1802, Acorn ARM, or INMOS Transputer), or
+representative designs typical of the period (such as the 6502 or 8080,
+68000, and R2000). Not necessarily the first of their kind, or the
+best.
+    A microprocessor generally means a CPU on a single silicon chip,
+but exceptions have been made (and are documented) when the CPU
+includes particularly interesting design ideas, and is generally the
+result of the microprocessor design philosophy. However, towards the
+more modern designs, design from other fields overlap, and this
+criterion becomes rather fuzzy. In addition, parts that used to be
+separate (FPU, MMU) are now usually considered part of the CPU design.
+    This file is not intended as a reference work, though all attempts
+have been made to ensure its accuracy. It includes material from text
+books, magazine articles and papers, authoritative descriptions and
+half remembered folklore from obscure sources. As such, it has no
+bibliography or list of references.
+    Enjoy, criticize, distribute and quote from this list freely.
+
+
+Section One: Before the Great Dark Cloud.
+             ---------------------------
+Part I: The Intel 4004, the first (1972)
+
+    The first single chip CPU was the Intel 4004, a 4-bit processor
+meant for a calculator. It processed data in 4 bits, but its
+instructions were 8 bits long. Program and Data memory were separate,
+1K data memory and a 12-bit PC for 4K program memory (in the form of a
+4 level stack, used for CALL and RET instructions). There were also
+sixteen 4-bit (or eight 8-bit) general purpose registers.
+    The 4004 had 46 instructions. The 4040 was an enhanced version of
+the 4004, adding 14 instructions, larger (8 level) stack, 8K program
+space, and interrupt abilities (including shadows of the first 8
+registers).
+[for additional information, see Appendix B]
+
+Part II: The Intel 8080
+
+    The 8080 was the successor to the 8008 (intended as a terminal
+controller, and similar to the 4040). While the 8008 had 14 bit PC and
+addressing, the 8080 had a 16 bit address bus and an 8 bit data bus.
+Internally it had seven 8 bit registers (six which could also be
+combined as three 16 bit registers), a 16 bit stack pointer to memory
+which replaced the 8 level internal stack of the 8008, and a 16 bit
+program counter. It also had several I/O ports - 256 of them, so I/O
+devices could be hooked up without taking away or interfering with the
+addressing space, and a signal pin that allowed the stack to occupy a
+separate bank of memory.
+
+Part III: The Zilog Z-80 - End of an 8-bit line (July 1976)
+
+    The Z-80 was intended to be an improved 8080 (as was Intel's own
+8085), and it was - vastly improved. It also used 8 bit data and 16 bit
+addressing, and could execute all of the 8080 op codes, but included 80
+more, instructions that included 1, 4, 8 and 16 bit operations and even
+block move and block I/O instructions. The register set was doubled,
+with two banks of registers (including A and F) that could be switched
+between. This allowed fast operating system or interrupt context
+switches. The Z-80 also added two index registers (IX and IY) and
+relocatable vectored interrupts (via the 8-bit IV register).
+    Like many processors (including the 8085), the Z-80 featured many
+undocumented op codes. Chip area near the edge was used for added
+instructions, but fabrication made the failure of these high.
+Instructions that often failed were just not documented, increasing
+chip yield. Later fabrication made these more reliable.
+    But the thing that really made the Z-80 popular was actually the
+memory interface - the CPU generated it's own RAM refresh signals,
+which meant easier design and lower system cost. That and it's 8080
+compatibility, and CP/M, the first standard microprocessor operating
+system, made it the first choice of many systems.
+    The Z-8 was an embedded version with on-chip RAM and ROM. The Z-280
+was a 16 bit version introduced in July, 1987. It also added an MMU to
+expand addressing to 16Mb, features for multitasking, a 256 byte cache,
+and a huge number of new op codes tacked on (total of over 2000!).
+Internal clock could be run at 2 or 4 times the external clock (ex.
+16MHz CPU with a 4MHz bus).
+
+Part IV: The 650x, Another Direction (1975-ish)
+
+    Shortly after the 8080, Motorola introduced the 6800. Some
+designers then started MOS Technologies, which introduced the 650x
+series, based on 6800 design (not a clone for legal reasons), and
+including the 6502 used in Commodores, Apples and Ataris. Steve Wozniak
+described it as the first chip you could get for less than a hundred
+dollars (actually a quarter of the 6800 price).
+    Unlike the 8080 and its kind, the 6502 had very few registers. It
+was an 8 bit processor, with 16 bit address bus. Inside was one 8 bit
+data register, and two 8 bit index registers and an 8 bit stack pointer
+(stack was preset from address 256 to 511). It used these index and
+stack registers effectively, with more addressing modes, including a
+fast zero-page mode that accessed memory addresses from address 0 to
+255 with an 8-bit address that speeded operations (it didn't have to
+fetch a second byte for the address).
+    The 650x also had undocumented instructions.
+    As a side point, Apples, which were among the first microcomputers
+introduced, are still made, now using the 65816, which is compatible
+with the 6502, but has been expanded to 16 bits (including index and
+stack registers, and a 16-bit direct page register), and a 24-bit
+address bus. The Apple II line, which actually includes the Apple I, is
+the longest existing line of microcomputers.
+    Back when the 6502 was introduced, RAM was actually faster than
+CPUs, so it made sense to optimize for RAM access rather than increase
+the number of registers on a chip.
+
+Part V: The 6809, extending the 680x
+
+    The 6800 from Motorola was essentially the same design as the 6502,
+but the latter left out one data register and added one index register,
+a minor change. But the 6809 was a major advance over both - at least
+relatively.
+    The 6809 had two 8 bit accumulators, rather than one in the 6502,
+and could combine them into a single 16 bit register. It also featured
+two index registers and two stack pointers, which allowed for some very
+advanced addressing modes. The 6809 was source compatible with the
+6800, even though the 6800 had 78 instructions and the 6809 only had
+around 59. Some instructions were replaced by more general ones which
+the assembler would translate, and some were even replaced by
+addressing modes.
+    Other features were one of the first multiplication instructions of
+the time, 16 bit arithmetic, and a special fast interrupt. But it was
+also highly optimized, gaining up to five times the speed of the 6800
+series CPU. Like the 6800, it included the undocumented HCF (Halt Catch
+Fire) bus test instruction.
+    The 6800 lived on as well, becoming the 6801/3, which included ROM,
+some RAM, a serial I/O port, and other goodies on the chip. It was
+meant for embedded controllers, where the part count was to be
+minimized. The 6803 led to the 68HC11, and that was extended to 16 bits
+as the 68HC16. But the 6809 was a much faster and more flexible chip,
+particularly with the addition of the OS-9 operating system.
+    Of course, I'm a 6809 fan myself...
+
+    As a note, Hitachi produced a version called the 6309. Compatible
+with the 6809, it added 2 new 8-bit registers that could be added to
+form a second 16 bit register, and all four 8-bit registers could form
+a 32 bit register. It also featured division, and some 32 bit
+arithmetic, and was generally 30% faster in native mode. This
+information, surprisingly, was never published by Hitachi.
+
+Part VI: Advanced Micro Devices Am2901, a few bits at a time
+
+    Bit slice processors were modular processors. Mostly, they
+consisted of an ALU of 1, 2, 4, or 8 bits, and control lines (including
+carry or overflow signals usually internal to the CPU). Two 4-bit ALUs
+could be arranged side by side, with control lines between them, to
+form an ALU of 8-bits, for example. A sequencer would execute a program
+to provide data and control signals.
+    The Am2901, from Advanced Micro Devices, was a popular 4-bit-slice
+processor. It featured sixteen 4-bit registers and a 4-bit ALU, and
+operation signals to allow carry/borrow or shift operations and such to
+operate across any number of other 2901s. An address sequencer (such as
+the 2910) could provide control signals with the use of custom
+microcode in ROM.
+    The Am2903 featured hardware multiply.
+
+Section Two: Forgotten/Innovative Designs before the Great Dark Cloud
+             --------------------------------------------------------
+Part I: RCA 1802, weirdness at its best (1974)
+
+    The RCA 1802 was an odd beast, extremely simple and fabricated in
+CMOS, which allowed it to run at 6.4 MHz (at 10V, but very fast for
+1974) or suspended with the clock stopped. It was an 8 bit processor,
+with 16 bit addressing, but the major features were it's extreme
+simplicity, and the flexibility of it's large register set. Simplicity
+was the primary design goal, and in that sense it was one of the first
+RISC chips.
+    It had sixteen 16-bit registers, which could be accessed as
+thirty-two 8 bit registers, and an accumulator D used for arithmetic
+and memory access - memory to D, then D to registers, and vice versa,
+using one 16-bit register as an address. This led to one person
+describing the 1802 as having 32 bytes of RAM and 65535 I/O ports. A
+4-bit control register P selected any one general register as the
+program counter, while control registers X and N selected registers for
+I/O Index, and the operand for current instruction. All instructions
+were 8 bits - a 4-bit op code (total of 16 operations) and 4-bit
+operand register stored in N.
+     There was no real conditional branching, no subroutine support,
+and no actual stack, but clever use of the register set allowed these
+to be implemented - for example, changing P to another register allowed
+jump to a subroutine. Similarly, on an interrupt P and X were saved,
+then R1 and R2 were selected for P and X until an RTI restored them.
+    A later version, the 1805, was enhanced, adding several Forth
+language primitives. Forth was commonly used in control applications.
+
+    Apart from the COSMAC microcomputer kit, the 1802 saw action in
+some video games from RCA and Radio Shack, and the chip is the heart of
+the Voyager, Viking and Galileo probes. One reason for this is that the
+1802 was also fabricated mounted on sapphire, which leads to radiation
+and static resistance, ideal for space operation.
+
+Part II: Fairchild F8, Register windows
+
+    The F8 was an 8 bit processor. The processor itself didn't have an
+address bus - program and data memory access were contained in separate
+units, which reduced the number of pins, and the associated cost. It
+also featured 64 registers, accessed by the ISAR register in cells
+(windows) of eight, which meant external RAM wasn't always needed for
+small applications. In addition, the 2-chip processor didn't need
+support chips, unlike others which needed seven or more. The F8
+inspired other similar CPUs, such as the Intel 8048.
+    The use of the ISAR register allowed a subroutine to be entered
+without saving a bunch of registers, speeding execution - the ISAR
+would just be changed. Special purpose registers were stored in the
+second cell (regs 9-15), and the first eight registers were accessed
+directly.
+    The windowing concept was useful, but only the register pointed to
+by the ISAR could be accessed - to access other registers the ISAR was
+incremented or decremented through the window.
+
+Part III: SC/MP, early advanced multiprocessing (April 1976)
+
+    The National Semiconductor SC/MP, (nicknamed "Scamp") was a typical
+8 bit processor intended for control applications (a simple BASIC 2.5K
+ROM was added to one version). It featured 16 bit addressing, with 12
+address lines and 4 lines borrowed from the data bus (it was common to
+borrow lines from the data bus for addressing). Internally, it included
+three index registers (P1 to P3) and two 8 bit registers. It had a PC,
+but no stack pointer or subroutine instructions (though they could be
+emulated with index registers). During interrupts, the PC was saved in
+P3. It was meant for embedded control, and these features were omitted
+for cost reasons. It was also bit serial internally to keep it cheap.
+    The unique feature was the ability to completely share a system bus
+with other processors. Most processors of the time assumed they were
+the only ones accessing memory or I/O devices. Multiple SC/MPs could be
+hooked up to the bus, as well as other intelligent devices, such as DMA
+controllers. A control line (ENOUT (Enable Out) to ENIN) could be
+chained along the processors to allow cooperative processing. This was
+very advanced for the time, compared to other CPUs.
+    In addition to I/O ports like the 8080, the SC/MP also had
+instructions and one pin for serial input and one for output.
+
+Part IV: F100-L, a self expanding design
+
+    The Ferranti F100-L was designed by a British company for the
+British Military. It was an 8 bit processor, with 16 bit addressing,
+but it could only access 32K of memory (1 bit for indirection).
+    The unique feature of the F100-L was that it had a complete control
+bus available for a coprocessor that could be added on. Any instruction
+the F100-L couldn't decode was sent directly to the coprocessor for
+processing. Applications for coprocessors at the time were limited, but
+the design is still used in modern processors, such as the National
+Semiconductor 320xx series, which included FPU, MMU, and other
+coprocessors that could just be added to the CPU's coprocessor bus in a
+chain. Other units not foreseen could be added later.
+    The NS 320xx series was the predecessor of the Swordfish processor,
+described later.
+
+Part V: The Western Digital 3-chip CPU (June 1976)
+
+    The Western Digital MCP-1600 was probably the most flexible
+processor available. It consisted of at least four separate chips,
+including the control circuitry unit, the ALU, two or four ROM chips
+with microcode, and timing circuitry. It doesn't really count as a
+microprocessor, but neither do bit-slice processors (AMD 2901).
+    The ALU chip contained twenty six 8 bit registers and an 8 bit ALU,
+while the control unit supervised the moving of data, memory access,
+and other control functions. The ROM allowed the chip to function as
+either an 8 bit chip or 16 bit, with clever use of the 8 bit ALU. Even
+more, microcode allowed the addition of Floating Point routines (40 + 8
+bit format), simplifying programming (and possibly producing a Floating
+Point Coprocessor).
+    Two standard microcode ROMS were available. This flexibility was
+one reason it was also used to implement the DEC LSI-11 processor as
+well as the WD Pascal Microengine.
+
+Part VI: Intersil 6100, old design in a new package
+
+    The IMS 6100 was a single chip design of the PDP-8 minicomputer,
+from DEC. The old PDP-8 design was very strange, and if it hadn't been
+popular, an awkward CPU like the 6100 would never had a reason to be
+designed.
+    The 6100 was a 12 bit processor, which had exactly three registers
+- the PC, AC (an accumulator), and MQ. All 2 operand instructions read
+AC and MQ, and wrote back to AC. It had a 12 bit address bus, limiting
+RAM to only 4K. Memory references were 7 bit (128 word) offset either
+from address 0, or the PC.
+    It had no stack. Subroutines stored the PC in the first word of the
+subroutine code itself, so recursion wasn't possible without fancy
+programming.
+    4K RAM was pretty much hopeless for general purpose use. The 6102
+support chip (included in the 6120) added 3 address lines, expanding
+memory to 32K the same way that the PDP-8/E expanded the PDP-8. Two
+registers, IFR and DFR, held the page for instructions and data
+respectively (IFR always used until a data address was detected). At
+the top of the 4K page, the PC wrapped back to 0, so the last
+instruction on a page had to load a new value into the IFR if execution
+was to continue.
+    The IMS 6120, was used in the DECmate, DEC's original competition
+for the IBM PC.
+
+Part VII: NOVA, another popular adaptation
+
+    Like the PDP-8, the Data General Nova was also copied, not just in
+one, but two implementations - the Data General MN601, Fairchild 9440.
+Luckily, the NOVA was a more mature design than the PDP-8.
+    The NOVA had four 16-bit accumulators, AC0 to AC3. There were also
+three 15-bit system registers - Stack pointer, Frame pointer, and
+Program Counter. AC2 and AC3 could be used for indexed addresses. Apart
+from the small register set, the NOVA was an ordinary CPU design.
+    Another CPU, the PACE, was based on the NOVA design, but featured
+16 bit addressing, more addressing modes, and a 10 level stack (like
+the 8008).
+
+Part VIII: Motorola MC14500B ICU, one bit at a time
+
+    Probably the limit in small processors was the 1 bit 14500B from
+Motorola. It had a 4 bit instruction, and controlled a single data
+read/write line, used for application control. It had no address bus -
+that was an external unit that was added on. Another CPU could be used
+to feed control instructions to the 14500B in an application.
+    It had only 16 pins, less than a typical RAM chip, and ran at 1
+MHz.
+
+
+Section Three: The Great Dark Cloud Falls: IBM's Choice.
+               ----------------------------------------
+Part I: TMS 9900, first of the 16 bits (June 1976)
+
+    One of the first true 16 bit microprocessors was the TMS 9900, by
+Texas Instruments (the first are probably National Semiconductor IMP-16
+or AMD-2901 bit slice processors in 16 bit configuration). It was
+designed as a single chip version of the TI 990 minicomputer series,
+much like the Intersil 6100 was a single chip PDP-8, and the Fairchild
+9440 and Data General mN601 were both one chip versions of Data
+General's Nova. Unlike the IMS 6100, however, the TMS 9900 had a
+mature, well thought out design.
+    It had a 15 bit address space and two internal 16 bit registers.
+One unique feature, though, was that all user registers were actually
+kept in memory - this included stack pointers and the program counter.
+A single workspace register pointed to the 16 register set in RAM, so
+when a subroutine was entered or an interrupt was processed, only the
+single workspace register had to be changed - unlike some CPUs which
+required dozens or more register saves before acknowledging a context
+switch.
+    This was feasible at the time because RAM was often faster than the
+CPUs. A few modern designs, such as the INMOS Transputers, use this
+same design using caches or rotating buffers, for the same reason of
+improved context switches. Other chips of the time, such as the 650x
+series had a similar philosophy, using index registers, but the TMS
+9900 went the farthest in this direction.
+    That wasn't the only positive feature of the chip. It had good
+interrupt handling features and very good instruction set. Serial I/O
+was available through address lines. In typical comparisons with the
+Intel 8086, the TMS9900 had smaller and faster programs. The only
+disadvantage was the small address space and need for fast RAM.
+    Despite the very poor support from Texas Instruments, the TMS 9900
+had the potential at one point to surpass the 8086 in popularity.
+
+Part II: Zilog Z-8000, another direct competitor.
+
+    The Z-8000 was introduced not long after the 8086, but had superior
+features. It was basically a 16 bit processor, but could address up to
+23 bits in some versions by using segment registers (to supply the
+upper 7 bits). There was also an unsegmented version, but both could be
+extended further with an additional MMU that used 64 segment registers.
+    Internally, the Z-8000 had sixteen 16 bit registers, but register
+size and use were exceedingly flexible. The Z-8000 registers could be
+used as sixteen 8 bit registers (only the first half were used like
+this), sixteen 16-bit registers, eight 32 bit registers, or four 64 bit
+registers, and included 32-bit multiply and divide. They were all
+general purpose registers - the stack pointer was typically register
+15, with register 14 holding the stack segment (both accessed as one 32
+bit register for painless address calculations.
+    The Z-8000 featured two modes, one for the operating system and one
+for user programs. The user mode prevented the user from messing about
+with interrupt handling and other potentially dangerous stuff.
+    Finally, like the Z-80, the Z-8000 featured automatic RAM refresh
+circuitry. Unfortunately it was somewhat slow, but the features
+generally made up for that. Initial bugs also hindered its acceptance
+(partly because it did not use microcode). There was a radiation
+resistant military version.
+    A later version, the Z-80000, was expanded to 32 bits internally,
+and was fully pipelined (6 stages).
+
+Part III: Motorola 68000, a refined 16/32 bit CPU
+
+    The 68000 was actually a 32 bit architecture internally, but 16 bit
+externally for packaging reasons. It also included 24 bit addressing,
+without the use of segment registers. That meant that a single directly
+accessed array or structure could be larger than 64K in size. Addresses
+were computed as 32 bit, but the top 8 bits were cut to fit the address
+bus into a 64 pin package (address and data shared a bus in the 40 pin
+packages of the 8086 and Z-8000). Lack of segments made programming the
+68000 easier than competing processors.
+    Looking back, it was logical, since most 8 bit processors featured
+direct 16 bit addressing without segments.
+    The 68000 had sixteen registers, split into data and address
+registers. One address register was reserved for the Stack Pointer.
+Both types of registers could be used for any function except for
+direct addressing. Only address registers could be used as the source
+of an address, but data registers could provide the offset from an
+address.
+    Like the Z-8000, the 68000 featured a supervisor and user mode,
+each with its own Stack Pointer. The Z-8000 and 68000 were similar in
+capabilities, but the 68000 was 32 bit units internally, making it
+faster and eliminating forced segmentations. It was designed for
+expansion, including specifications for floating point and string
+operations (floating point later implemented in the 68040). Like many
+other CPUs of the time, it could fetch the next instruction during
+execution (2 stage pipeline), the 68040 was fully pipelined (6 stages).
+
+Part IV: Intel 8086, IBM's choice (1978)
+
+    The Intel 8086 was based on the design of the 8080/8085 (source
+compatible with the 8080) with a similar register set, but was expanded
+to 16 bits. The Bus Interface Unit fed the instruction stream to the
+Execution Unit through a 6 byte prefetch queue, so fetch and execution
+were concurrent - a primitive form of pipelining (8086 instructions
+varied from 1 to 4 bytes).
+    It featured four 16 bit general registers, which could also be
+accessed as eight 8 bit registers, and four 16 bit index registers
+(including the stack pointer). The data registers were often used
+implicitly by instructions, complicating register allocation for
+temporary values. It featured 64K 8-bit I/O (or 32K 16-bit) ports and
+fixed vectored interrupts. There were also four segment registers that
+could be set from index registers.
+    The segment registers allowed the CPU to access 1 meg of memory
+through an odd process. Rather than just supplying missing bytes, as
+most segmented processors, the 8086 actually added the segment
+registers ( X 16, or shifted left 4 bits) to the address. As a strange
+result, segments overlapped, and it was possible to have two pointers
+with the same value point to two different memory locations, or two
+pointers with different values pointing to the same location. Most
+people consider this a brain damaged design.
+    Although this was largely acceptable for assembly language, where
+control of the segments was complete (it could even be useful then), in
+higher level languages it caused constant confusion (ex. near/far
+pointers). Even worse, this made expanding the address space to more
+than 1 meg difficult. A later version, the 80386, expanded the design
+to 32 bits, and 'fixed' the segmentation, but required extra modes
+(suppressing the new features) for compatibility, and retains the
+awkward architecture. In fact, with the right assembler, code written
+for the 8008 can still be run on the most recent 80486 version.
+    The 80386 added new op codes in a kludgy fashion similar to the
+Z-80 (and Z-280). The 80486 added full pipelines, and clock doubling
+(like the Z-280).
+
+    So why did IBM chose the 8086 series when most of the alternatives
+were so much better? Apparently IBM's own engineers wanted to use the
+68000, and it was used later in the forgotten IBM Instruments 9000
+Laboratory Computer, but IBM already had rights to manufacture the
+8086, in exchange for giving Intel the rights to it's bubble memory
+designs. Apparently IBM was using 8086s in the IBM Displaywriter word
+processor.
+    Other factors were the 8-bit 8088 version, which could use existing
+8085-type components, and allowed the computer to be based on a
+modified 8085 design. 68000 components were not widely available,
+though it could use 6800 components to an extent.
+    Intel bubble memory was on the market for a while, but faded away
+as better and cheaper memory technologies arrived.
+
+
+Section Four: Unix and RISC, a New Hope
+              -------------------------
+Part I: SPARC, an extreme windowed RISC (1987?)
+
+    SPARC, or the Scalable Processor ARChitecture was designed by Sun
+Microsystems for their own use. Sun was a maker of workstations, and
+used standard 68000-based CPUs and a standard operating system, Unix.
+Research versions of RISC processors had promised a major step forward
+in speed [See Appendix A], but existing manufacturers were slow to
+introduce a RISC type processor, so Sun went ahead and developed its
+own (based on Berkley's design). In keeping with their open philosophy,
+they licensed it to other companies, rather than manufacture it
+themselves.
+    SPARC was not the first RISC processor. The AMD 29000 (see below)
+came before it, as did the MIPS R2000 (based on Stanford's design) and
+Hewlett-Packard Precision Architecture CPU, among others. The SPARC
+design was radical at the time, even omitting multiple cycle multiple
+and divide instructions (like a few others), while most RISC CPUs are
+more conventional.
+    SPARC usually contains about 128 or 144 registers, (CISC designs
+typically had 16 or less). At each time 32 registers are available - 8
+are global, the rest are allocated in a 'window' from a stack of
+registers. The window is moved 16 registers down the stack during a
+function call, so that the upper and lower 8 registers are shared
+between functions, to pass and return values, and 8 are local. The
+window is moved up on return, so registers are loaded or saved only at
+the top or bottom of the register stack. This allows functions to be
+called in as little as 1 cycle. Like most RISC processors, global
+register zero is wired to zero to simplify instructions, and SPARC is
+pipelined for performance, and like previous processors, a dedicated
+CCR holds comparison results.
+    SPARC is 'scalable' mainly because the register stack can be
+expanded (up to 512, or 32 windows), to reduce loads and saves between
+functions, or scaled down to reduce interrupt or context switch time,
+when the entire register set has to be saved. Function calls are
+usually much more frequent, so the large register set is usually a
+plus.
+    SPARC is not a chip, but a specification, and so there are various
+designs of it. It has undergone revisions, and now has multiply and
+divide instructions. Most versions are 32 bits, but there are designs
+for 64 bit and superscalar versions. SPARC was submitted to the IEEE
+society to be considered for the P1754 microprocessor standard.
+
+Part II: AMD 29000, a flexible register set (1986?)
+
+    The AMD 29000 is another RISC CPU descended from the Berkley RISC
+design. Like the SPARC design that was introduced shortly later, the
+29000 has a large set of registers split into local and global sets.
+But though it was introduced before the SPARC, it has a more elegant
+method of register management.
+    The 29000 has 64 global registers, in comparison to the SPARC's
+eight. In addition, the 29000 allows variable sized windows allocated
+from the 128 register stack cache. The current window or stack frame is
+indicated by a stack pointer, a pointer to the caller's frame is stored
+in the current frame, like in an ordinary stack (directly supporting
+stack languages like C, a CISC-like philosophy). Spills and fills occur
+only at the ends of the cache, and registers are saved/loaded from the
+memory stack. This allows variable window sizes, from 1 to 128
+registers. This flexibility, plus the large set of global registers,
+makes register allocation easier than in SPARC.
+    There is no special condition code register - any general register
+is used instead, allowing several condition codes to be retained,
+though this sometimes makes code more complex. An instruction prefetch
+buffer (using burst mode) ensures a steady instruction stream. Branches
+to another stream can cause a delay, so the first four new instructions
+are cached - next time a cached branch (up to sixteen) is taken, the
+cache supplies instructions during the initial memory access delay.
+    Registers aren't saved during interrupts, allowing the interrupt
+routine to determine whether the overhead is worthwhile. In addition, a
+form of register access control is provided. All registers can be
+protected, in blocks of 4, from access. These features make the 29000
+useful for embedded applications, which is where most of these
+processors are used, allowing it the claim of 'the most popular RISC
+processor'. The 29000 also includes an MMU and support for the 29027
+FPU.
+
+Part III: MIPS R2000, the other approach. (1987?)
+
+    The R2000 design came from the Stanford MIPS project, which stood
+for Microprocessor without Interlocked Pipeline Stages [See Appendix
+A]. It was intended to simplify processor design by eliminating
+hardware interlocks between the five pipeline stages. This means that
+only single execution cycle instructions can access the thirty two 32
+bit general registers, so that the compiler can schedule them to avoid
+conflicts. This also means that LOAD/STORE and branch instructions have
+a 1 cycle delay to account for. However, because of the importance of
+multiply and divide instructions, a special HI/LO pair of
+multiply/divide registers exist which do have hardware interlocks,
+since these take several cycles to execute and produce scheduling
+difficulties.
+    Like the AMD 29000, the R2000 has no condition code register
+considering it a potential bottleneck. The PC is user visible.
+    The CPU includes an MMU unit that can also control a cache, and the
+CPU can operate as a big or little endian processor. An FPU, the R2010,
+is also specified for the processor.
+    Newer versions include the R3000, with improved cache control, and
+the R4000, which is expanded to 64 bits, and has more pipeline stages
+for a higher clock rate and performance.
+
+Part IV: Motorola 88000, a conservative RISC (1988?)
+
+    A design that is typical of most current RISC processors is the
+Motorola 88000 (originally named the 78000). It is a 32 bit processor
+with Harvard architecture (separate data and instruction buses). Each
+bus has a separate cache, so simultaneous data and instruction access
+doesn't conflict. It is similar to the Hewlett Packard Precision
+Architecture (HP/PA) in design (including many control/status registers
+only in supervisor mode), though the 88000 is more modular, with a
+small elegant instruction set, and the HP/PA has up to 64 bit
+addressing and a large instruction set (including a skip instructions,
+similar in concept to the condition bits in the ARM, but requiring an
+additional instruction).
+    The user accesses thirty-two 32 bit registers, and is organized
+with separate function units internally - an ALU and a floating point
+unit in the 88100 version. Other special function units, such as
+graphics, vector operations, and such can be added to the design to
+produce a custom design for customers. Additional ALU and FPU units and
+instruction scheduling produced the 88110 superscalar version of the
+CPU. The function units of the 88100 share the same register set, while
+the 88110, like most modern chips, has a separate set of thirty two
+80-bit registers for the FPU.
+    The ALU typically executes in 1 cycle, but it or the FPU can take
+several clock cycles for an operation (ex. multiplication). For
+performance, the units are pipelined, so one operation can be accepted
+each cycle, with the result appearing several cycles later. The 88000
+has register interlocks between functional units.
+    In the superscalar 88110, the result from one ALU can be fed
+directly into another in the next clock cycle (as opposed to saving to
+a register first), saving a clock cycle between instructions. Also,
+loads and saves are buffered so the processor doesn't have to wait,
+except when loading from a memory location still waiting for a save to
+complete. The 88110 version can also speculatively execute conditional
+branches in the pipeline. If the speculation is true, there is no
+branch delay in the pipeline. Otherwise, the operations are rolled back
+from a history buffer (at least 1 cycle penalty), and the other fork of
+the branch is taken. This history buffer also allows precise
+interrupts, while interrupts are 'imprecise' in the 88100.
+    The 88200 provides dual caches (including multiprocessor support)
+and MMU functions for the 88000 CPU, if needed.
+
+Part V: Acorn ARM, RISC for the masses (1985?)
+
+    ARM (Advanced RISC Machine) is often praised as one of the most
+elegant modern processors in existence. It was meant to be "MIPs for
+the masses", and designed as part of a family of chips (ARM - CPU, MEMC
+- MMU and DRAM/ROM controller, VIDC - video and DAC, IOC - I/O, timing,
+interrupts, etc), for the Archimedes home computer (multitasking OS,
+windows, etc). It's made by VLSI Technologies Inc.
+    The original ARM2 was a 32 bit CPU, but used 26 bit addressing. The
+newer ARM6xx spec is completely 32 bits. It has user, supervisor, and
+various interrupt modes (including 26 bit modes for ARM2 compatibility)
+and sixteen registers (including user visible PC) and a multiple
+load/save instruction (though many registers are shadowed in other
+modes (2 in supervisor and IRQ, 7 in FIRQ) and need not be saved). The
+ARM series consists of the ARM6 CPU core, which can be used as the
+basis for a custom CPU, the ARM60 base CPU, and the ARM600 which also
+includes 4K cache, MMU, write buffer, and coprocessor interface. It can
+be big- or little-endian. The simplicity means that a 3-stage pipeline
+is adequate.
+    A unique feature of ARM is that every instruction features a 4 bit
+condition code (including 'never execute', not officially recommended).
+Another bit indicates whether the instruction should set condition
+codes, so intervening instructions don't change them. This easily
+eliminates many branches and can speed execution. Addressing also
+features a very useful mode (base register indexed by index register
+shifted by a constant - ra + rb << k) found in few other processors.
+    The ARM hasn't had the development put into it that others have, so
+there aren't superscalar or superpipelined versions, and the clock rate
+is not breathtaking. However it wasn't meant to break speed records,
+and is a very elegant, fast and low cost CPU, which is why it was
+chosen for the Apple Newton handheld system.
+
+Section Five: Just Beyond Scalar
+              ------------------
+Part I: Intel 860, "Cray on a Chip" (1987?)
+
+    The Intel 860 wasn't Intel's first RISC chip - that was the 960,
+but the 960 was slower, and marketed for embedded control applications.
+The 860 was an impressive chip, able at top speed to perform close to
+66 MFLOPS at 33 MHz in real applications, compared to a more typical 5
+or 10 MFLOPS of the time. It has lagged behind newer designs, though.
+    The 860 has several modes, from regular scaler mode to a
+superscalar mode that executes two instructions per cycle and a user
+visible pipelined mode. It can use the 8K data cache in a limited way
+as a small vector register (like those in supercomputers). Instruction
+and data busses are separate, with 4 G of memory, with segments. It
+also includes a Memory Management Unit for virtual storage.
+    The 860 has thirty two 32 bit registers and sixteen 64 bit floating
+point registers. It was one of the first microprocessors to contains
+not only an FPU as well as an integer ALU, and also included a 3-D
+graphics unit that features lines drawing, Gouraud shading, Z-buffering
+for hidden line removal, and other operations in conjunction with the
+FPU.
+    It was also the first able to do an integer operation, and a
+special multiply and add floating point instruction, for the equivalent
+of three instructions, at the same time. However actually getting the
+chip at top speed usually requires using assembly language - using
+standard compilers gives it a speed closer to other processors. Because
+of this, it's best used as a coprocessor, either for graphics, like the
+NeXTdimension board, or floating point acceleration, like add in units
+for workstations. Oddly enough, the 960 is better suited for general
+applications.
+    Another problem is the difficulty handling interrupts. It is
+extensively pipelined, having as many as four pipes operating at once,
+and when an interrupt occurs, the pipes can spill and lose data unless
+complex code is used to clean up. Delays range from 62 cycles (best
+case) to 50 microseconds (almost 2000 cycles)
+
+Part II: IBM RS/6000 POWER chips (1990)
+
+    When IBM decided to become a real part of the workstation market
+(after its unsuccessful PC/RT based on the ROMP processor), it decided
+to produce a new innovative CPU, based partly on the 801 project that
+pioneered RISC theory. RISC normally stands for Reduced Instruction Set
+Computing, but IBM calls it Reduced Instruction Set Cycles, and
+implemented a complex processor with more high level instructions than
+most CISC processors. They ended up with was a CPU that actually
+contains five or seven separate chips - the branch unit, fixed point
+unit, floating point unit, and either two or four cache chips (separate
+data and four instruction per cycle instruction cache).
+    The branch unit is the heart of the CPU, and actually enables up to
+five instructions to be executed at once, though three is more common.
+It contains the condition code register, performs checks on this
+register, and performs branches. It also dispatches instructions to the
+fixed or floating point units, each with its own 6 instruction buffer.
+For added speed, it contains its own loop register (for decrement and
+branch on zero with no penalty). The condition code register has eight
+fields - two reserved for the fixed and floating point units, the other
+six set separately (or combined from several instructions), and can be
+checked several instructions later.
+    The branch unit can speculatively take branches, dispatching
+instructions and then canceling them if the branch is not taken (3
+cycle maximum penalty). However it buffers the other instruction path
+to reduce latency. It also manages procedure calls and returns on a
+program counter stack, allowing effective zero-cycle calls when
+overlapped with other instructions. Finally, it handles interrupts
+(except floating point exceptions) without software intervention.
+    The fixed point unit performs integer operations, as well as some
+complex string instructions and multiple loads and stores. It contains
+thirty two 32 bit registers.
+    The floating point unit contains thirty two 64 bit registers and
+performs all typical floating point operations. In addition, like the
+Intel 860, the floating unit has a special extended precision multiply
+and add instruction. The registers are loaded and stored by the fixed
+point unit. Because FPU instructions are multi-cycle, the FPU provides
+register renaming to reduce or eliminate stalling. Like some other
+CPUs, floating point traps are imprecise due to execution time. For
+debugging, a precise trap mode prevents execution overlap, slowing
+execution. Normally, a trap bit is set on a floating point exception,
+and software can test for the condition to generate a trap.
+    Overall the POWER CPU is very powerful, reminiscent of mainframe
+designs, which almost qualifies it as "Weird and Innovative", and
+violates the RISC philosophy of fewer instructions at over a hundred,
+versus only about 34 for the ARM and 52 for the Motorola 88000
+(including FPU instructions). Though it's a multichip design, single
+chip CPUs to be manufactured by IBM and Motorola qualify it as a
+microprocessor.
+
+Part III: National Semiconductor Swordfish (1991?)
+
+    The Intel 860 is a superscalar chip, but is essentially a VLIW, or
+Very Long Instruction Word processor, which means that more than one
+instruction is contained in a single instruction word - in this case,
+two. The IBM POWER CPU reschedules instructions on the run, which gives
+it more flexibility, but it can only execute different types of
+instructions at the same time - one integer and one floating point, for
+example.
+    The Swordfish chip contains two separate integer units, allowing
+two integer instructions to execute at once, along with one floating
+point add/subtract and yet another DSP unit for multiplies, for a
+theoretical total of four instructions at once. This was before the
+88000 was expanded to a superscalar design.
+    The CPU is a 32 bit processor, but has a 64 bit data bus for
+fetching multiple instructions at once, handled by an instruction
+loader/scheduler. It also features a Digital Signal Processing (DSP)
+unit to perform multiplies and other DSP operations, and a separate
+FPU. The DSP also performs single cycle integer multiplies, a task that
+usually takes around seven cycles for most integer ALUs.
+    It is RISC in the sense that it executes instructions in one cycle.
+It performs 20 MFLOPS at 50 MHz, which is good compared to other RISC
+chips, but slow compared to dedicated DSPs. Still, the FPU and integer
+units result in most processing tasks being faster - at 50 MHz the chip
+runs about 100 MIPS. The POWER CPU is about as fast, but operates at
+half the clock speed.
+    Swordfish features variable bus width (like the 68020 or 80386, but
+over a wide range of 64, 32, 16, or 8 bits). In addition, it can run
+from a 50MHz clock, or a 25 MHz clock in which case it doubles the
+clock internally back to 50 MHz. This allows 25MHz parts to be used
+with it. It also features two DMA channels and a timer unit.
+
+Part IV: DEC Alpha, Designed for the future (1992)
+
+    The DEC Alpha architecture is designed, according to DEC, for a
+operational life of 25 years. Its only real innovation is PALcalls (or
+writable instruction set extension), but it is an elegant blend of
+features, selected to ensure no obvious limits to future performance -
+no special registers, etc. The 21064 is DEC's first Alpha chip.
+    It is a 64 bit chip that doesn't support 8- or 16-bit operations,
+but allows conversions, so no functionality is lost (Most processors of
+this generation are similar, but have instructions with implicit
+conversions). Alpha 32-bit operations differ from 64 bit only in
+overflow detection. Alpha does not provide a divide instruction due to
+difficulty in pipelining it. It's very much like the MIPS R2000,
+including use of general registers to hold condition codes. However,
+Alpha has an interlocked pipeline, so no special multiply/divide
+registers are needed.
+    One reason for Alpha is to replace DEC's two previous architectures
+- the VAX and MIPS CPUs. To do this, the chip provides both IEEE and
+VAX floating point operations, and features Privileged Architecture
+Library (PAL) calls, a set of programmable macros written in the Alpha
+instruction set, similar to the programmable microcode of the Western
+Digital MCP-1600 or the AMD Am2910 CPUs. It simplifies support for
+various operating systems - VMS, Unix or Microsoft NT for example - as
+well as binary translation of VAX and R3000 programs to the new CPU
+    Alpha was also designed for the future, including superscalar,
+multiprocessing, and high future clock rates. Because of this,
+superscalar instructions may be reordered, and trap conditions are
+imprecise (like in the 88100). Special instructions (memory and trap
+barriers) are available to syncronise both occurrences when needed
+(SPARC also has a specification for instruction ordering). Instead of
+dealing with branch delay slots (which produce scheduling problems in
+superscalar execution and compatibility problems with extended
+pipelines), speculative execution and a branch cache are used. Though
+similar to the R2000, PALcode and a simpler architecture make Alpha a
+very elegant processor.
+
+
+Section Six: Weird and Innovative Chips
+             --------------------------
+Part I: Intel 432, Extraordinary complexity (1980)
+
+    The Intel iAPX 432 was a complex, object oriented 32-bit processor
+that included high level operating system support in hardware, such as
+process scheduling and interprocess messaging. It was intended to be
+the main Intel microprocessor - the 80286 was envisioned as a step
+between the 8086 and the 432. The 432 actually included four chips. The
+GDP (processor) and IP (I/O controller) were introduced in 1980, and
+the BIU (Bus Interface Unit) and MCU (Memory Control Unit) were
+introduced in 1983 (but not widely). The GDP complexity was split into
+2 chips (decode/sequencer and execution units, like the Western Digital
+MCP-1600), so it wasn't really a microprocessor.
+    The GDP was exclusively object oriented - normal linear memory
+access wasn't allowed, and there was hardware support for data hiding,
+methods, inheritance, late binding, and access protection, and it was
+promoted as being ideal for the Ada programming language. To enforce
+this, permission checks for every memory access (via a 2 stage
+segmentation) slowed execution (despite cached segment tables). It
+supported up to 2^24 segments, each limited to 64K in size (within a
+2^32 address space), but the object oriented nature of the design meant
+that was not a real limitation. The stack oriented design meant the GDP
+had no user data registers. Instructions were bit encoded, ranging from
+6 bits to 321 bits long (similar to the T-9000) and could be very
+complex.
+    The BIU defined the bus, designed for multiprocessor support
+allowing up to 63 modules (BIU or MCU) on a bus and up to 8 independent
+buses (allowing memory interleaving to speed access). The MCU did
+automatic parity checking and ECC error correcting. The total system
+was designed to be fault tolerant to a large degree, and each of these
+parts contributes to that reliability.
+    Despite these advanced features, the 432 didn't catch on. The main
+reason was that it was slow, sometimes up to five or ten times slower
+than a 68000. Part of this was the lack of local data registers, or a
+data cache. Part of this was the fault-tolerant BIU, which defined an
+asynchronous clocked bus that resulted in 25% to 40% of the access time
+being used by wait states. The instructions weren't aligned on bytes or
+words, and took longer to decode. In addition, the protections imposed
+on the objects slowed data access. Finally, the implementation of the
+GDP on two chips instead of one produced a slower product. However, the
+fact that this complex design was produced and bug free is impressive.
+    It's high level architecture was similar to the Transputer systems,
+but it was implemented in a way that was much slower than other
+processors, while the T-414 not just innovative, but much faster than
+other processors of the time.
+
+    The Intel 960 is sometimes considered a successor of the 432 (also
+called "RISC applied to the 432"), and does have similar hardware
+support for context switching, but has much in common with the Z-80 in
+concept (including four local 16 register sets, rather than two, and
+one 16 register global set). It came about indirectly through the BiiN
+machine, which much more closely resembled the 432.
+
+Part II: Rekursiv, an object oriented processor
+
+    The Rekursiv processor is actually a processor board, not a
+microprocessor, but is neat. It was created by a manufacturing company
+called Linn, to control their manufacturing system. The owner was a
+believer in automation, and had automated the company as much as
+possible with Vaxes, but wasn't satisfied, so hired software experts to
+design a new system, which they called LINGO. It was completely object
+oriented, like smalltalk (and unlike C++, which allows object concepts,
+but handles them in a conventional way), but too slow on the VAXes, so
+Linn commissioned a processor designed for the language.
+    This is not the only processor designed specifically for a language
+that is slow on other CPUs. Several specialized LISP processors, such
+as the Scheme-79 lisp processor, were created, but this chip is unique
+in its object oriented features. It also manages to support objects
+without the slowness of the Intel 432.
+    The Rekursiv processor features a writable instruction set, and is
+highly parallel. It uses 40 bits for objects, and 24 bit addressing,
+kind of. Memory can't be addressed directly, only through the object
+identifiers, which are 40 bit tags. The hardware handles all objects in
+memory and on disk, and swapping them to disk. It has no real program -
+all data and code/methods are embedded in the objects, and loaded when
+a message is sent to them. There is a page table which stores the
+object tags and maps them into memory.
+    There is a 64k area, arranges 16k X 128 bit words, for microcode,
+allowing an instruction set to be constructed on the fly. It can change
+for different objects.
+    The CPU hardware creates, loads, saves, destroys, and manipulates
+objects. The manipulation is accomplished with a standard AMD 29203
+CPU, but the other parts are specially designed. It executes LINGO
+entirely fast enough, and is a perfect match between language and CPU,
+but it can execute more conventional languages, such as Smalltalk or C
+if needed - possible simultaneously, as separate complete objects.
+
+Part III: AT&T CRISP, CISC amongst the RISC (1987)
+
+    The AT&T CRISP was inspired by the Bell Labs C Machine project,
+aimed at a design optimised for the C language. Since C is a stack
+based language, the processor is optimised for memory to memory stack
+based execution, and has no user visible registers (stack pointer is
+modified by special instructions, an accumulator is in the stack), with
+the goal of simplifying the compiler as much as possible.
+    Instead of registers, a thirty-two entry 32 bit two ported stack
+cache is provided. This is similar to the stack cache of the AMD 29000
+(in CRISP it's much smaller but is easily expandable), and CRISP has no
+global registers. Addresses can be memory direct or indirect (for
+pointers) relative to the stack pointer without extra instructions or
+operand bits. The cache is not optimised for multiprocessors.
+    CRISP has a 512 byte instruction prefetch buffer, like the 8086,
+but decodes the variable length (2, 6 or 10 byte) instructions into a
+thirty-two entry decoded instruction cache. Branches are not delayed,
+and a prediction bit directs speculative branch execution. The decode
+unit folds branches into the decoded instructions, so a predicted
+branch does not take any clock cycles, saving execution time. The three
+stage execution unit takes instructions from the decode cache. Results
+can be forwarded when available to any prior stage as needed.
+    Though CISC in philosophy, the CRISP is greatly simplified compared
+to traditional CISC designs, and features some very elegant design
+features. AT&T prefers to call it a RISC processor, and performance is
+comparable to RISC designs.
+
+Part IV: T-9000, parallel computing (1992?)
+
+    The INMOS T-9000 is the latest version of the Transputer
+architecture, a processor designed to be hooked up to other processors
+for high speed parallel processing. The previous versions were the 16
+bit T-212 and 32 bit T-414 and T-800 (which included a 64 bit FPU)
+processors (1985). The instruction set is minimised, like a RISC
+design, but is based on a stack/accumulator design (similar in idea to
+the PDP-8), and designed around the OCCAM language. The most important
+feature is that each chip contains 4 serial links to connect the chips
+in a network.
+    While the transputers were faster than their contemporaries, recent
+RISC designs have surpassed them. The T-9000 attempts to regain the
+lead. It starts with the architecture of the T-800 which contains only
+three 32 bit integer and three 64 bit floating point registers that are
+used as an evaluation stack - they are not general purpose. Instead,
+like the TMS 9900, it uses memory, addressed relative to the workspace
+register. This allows very fast context switching, less than a
+microsecond, speeding and simplifying process scheduling enough that it
+is automated in hardware (supporting two priority levels and event
+handling (link messages and interrupts)). The Intel 432 also attempted
+some hardware process scheduling, but was unsuccessful.
+    Unlike the TMS 9900, the T-9000 is far faster than memory access,
+so the CPU has several levels of very high speed caches and memory
+types. The main cache is 16 K, and is designed for 3 reads and 1 write
+simultaneously. The workspace cache is based on 32 word rotating
+buffers, allows 2 reads and 1 write simultaneously.
+    Instructions are in bytes, consisting of 4 bit op code and 4 bit
+data (usually a 16 byte offset into the workspace), but prefix
+instructions can load extra data for an instruction that follows 4 bits
+at a time. Less frequent instructions can be encoded with 2 (such as
+process start, message I/O) or more bytes (CRC calculations, floating
+point operations, 2D block copies and scheduler queue management). The
+stack architecture makes instructions very compact.
+    The T-9000 contains 4 main internal units, the CPU, the VCP
+(handling the individual links of the previous chips, which needed
+software for communication), the PMI, which manages memory, and the
+Scheduler. There's also an instruction grouper which can schedule five
+instruction stages in the most efficient manner, starting an
+instruction in any stage (bypassing unneeded stages). instructions
+don't can stage skip stages, and leave when finished, freeing the
+pipeline for other instructions.
+    This is ideal for a model of parallel processing known as systolic
+arrays (a pipeline is a simple example). Even larger networks can be
+created with the C104 crossbar switch, which can connect 32 transputers
+or other C104 switches into a network hundreds of thousands of
+processors large. The C104 acts like a instant switch, not a network
+node, so the message is passed through, not stored. Communication can
+be at close to the speed of direct memory access.
+    Like the many CPUs, the Transputers can adapt to a 64, 32, 16, or 8
+bit bus. They can also feed off a 5 MHz clock, generating their own
+internal clock from this signal, and contain internal RAM, making them
+ideal for high performance embedded applications.
+
+    As a note, the T-800 FPU is probably the first large scale
+commercial device to be proven correct through formal design methods.
+
+By:        John Bayko (Tau).
+Internet:  bayko@hercules.cs.uregina.ca
+Fidonet:   John Bayko 1:140/96
+
+
+Appendix A:
+==========
+
+RISC and CISC definitions:
+-------------------------
+
+    RISC usually refers to a Reduced Instruction Set Computer. IBM
+pioneered many RISC ideas (and the acronym) in their 801 project. RISC
+ideas also come from the CDC 6600 computer and projects at Berkley
+(RISC I and II and SOAR) and Stanford University (the MIPS project).
+RISC designs call for each instruction to execute in a single cycle,
+which is done with pipelines, no microcode (to reduce chip complexity
+and increase speed). Operations are performed on registers only (with
+the only memory access being loading and storing). Finally, several
+RISC designs uses a large windowed register set (or stack cache) to
+speed subroutine calls (see the entry on SPARC for a description).
+    But despite these specifications, RISC is more a philosophy than a
+set of design criteria, and almost everything is called RISC, even if
+it isn't. Pipelines are used in the 68040 and 80486 CISC processors to
+execute instructions in a single cycle, even though they use microcode,
+and windowed registers have been added to CISC designs (such as the
+Hitachi H16), speeding them up in a similar way. Basically, RISC asks
+whether hardware (for complex instructions or memory-to-memory
+operations) is necessary, or whether it can be replaced by software
+(simpler instructions or load/store architecture). Higher instruction
+bandwidth is usually offset by a simpler chip that can run at a higher
+clock speed, and more available optimisations for the compiler.
+    CISC refers to a Complex Instruction Set Computer. There's not
+really a set of design features to characterize it like there is for
+RISC, but small register sets, memory to memory operations, large
+instruction sets, and use of microcode are common. The philosophy is
+that if added hardware can result in an overall increase in speed, it's
+good - the ultimate goal of mapping every high level language statement
+on to a single CPU instruction. The disadvantage is that it's harder to
+increase the clock speed of a complex chip. Microcode is a way of
+simplifying processor design to this end. Even though it results in
+instructions that are slower, requiring multiple clock cycles, clock
+frequency could be increased due to the simpler design. However, most
+complex instructions are seldom used.
+
+VAX: The Penultimate CISC (1978)
+---
+
+    The VAX architecture isn't a microprocessor, since it's still
+usually implemented in multiple chip modules. However, it and its
+predecessor, the PDP-11, helped inspire design of the Motorola
+68000, Zilog Z8000, and particularly the National Semiconductor 32xxx
+series CPUs. It was considered the most advanced CISC design, and the
+closest so far to the ultimate CISC goal. This is one reason that the
+VAX 11/780 is used as the speed benchmark for 1 MIPS (Million
+Instructions Per Second), though actual execution was apparently closer
+to 0.5 MIPS.
+    The VAX was a 32 bit architecture, with a 32 bit address range
+(split into 1G sections for process space, process specific system
+space, system space, and unused/reserved for future use). Each process
+has it's own 1G process and 1G process system address space, with
+memory allocated in pages.
+    It features sixteen user visible 32 bit registers. Registers 12 to
+15 are special - AP (Argument Pointer), FP (Frame Pointer), SP and PC
+(user, supervisor, executive, and kernal modes have separate SPs in
+R14, like the 68000 user and supervisor modes). All these registers can
+be used for data, addressing and indexing. A 64 bit PSL (Program Status
+Longword) keeps track of interrupt levels, program status, and
+condition codes.
+    The VAX 11 features an 8 byte instruction prefetch buffer, like the
+8086, while the VAX 8600 has a full 6 stage pipeline. Instructions
+mimic high level language constructs, and provide dense code. For
+example, the CALL instruction, which not only handles the argument list
+itself, but enforces a standard procedure call for all compilers.
+However, the complex instructions aren't always the fastest way of
+doing things. For example, the INDEX instruction was 45% to 60% faster
+when by replaced by simpler VAX instructions. This was one inspiration
+for the RISC philosophy.
+
+RISC Roots: CDC 6600, IBM 801, Berkley RISC, Stanford MIPS
+----------
+
+    Most RISC concepts can be traced back to the Control Data
+Corporation CDC 6600 'Supercomputer' designed by Seymore Cray (1964?).
+It pioneered the heavy use of optimising register operations, while
+restricting memory access to load/store operations.
+    The first system to formalise these principles was the IBM 801
+project (1975). Like the VAX, it was not a microprocessor (ECL
+implementation), but strongly influenced microprocessor designs. The
+design goal was to speed up frequently used instructions while
+discarding complex instructions that slowed the overall implementation.
+Like the CDC 6600, memory access was limited to load/store operations
+(which were delayed, locking the register until complete, so most
+execution could continue). Branches were delayed, and instructions used
+a three operand format common to RISC processors. Execution was
+pipelined, allowing 1 instruction per cycle.
+    The 801 had thirty two 32 bit registers, but no floating point
+unit/registers, and no separate user/supervisor mode, since it was an
+experimental system - security was enforced by the compiler. It
+implemented Harvard architecture with separate data and instruction
+caches, and had flexible addressing modes.
+    IBM tried to commercialise the 801 design when RISC workstations
+first became popular with the ROMP CPU (1986) in the PC/RT workstation,
+but it wasn't successful. Design changes to reduce cost included
+eliminating the caches and harvard architecture, reducing registers to
+sixteen, variable length instructions (to increase instruction
+density), and floating point support via an adaptor to an NS32081 FPU.
+This allowed a small CPU, only 45,000 transistors, but an average
+instruction took around 3 cycles.
+    Some time after the 801, around 1981, projects at Berkley (RISC I
+and II) and Stanford University (MIPS) further developed these
+concepts. The term RISC came from Berkley's project, which was the
+basis for the SPARC processor. Because of this, features are similar,
+including a windowed register file (10 global and 22 windowed, vs 8 and
+24 for SPARC) with R0 wired to 0. Branches are delayed, and like ARM,
+all instructions have a bit to specify if condition codes should be
+set, and execute in a 3 stage pipeline. In addition, next and current
+PC are visible to the user, and last PC is visible in supervisor mode.
+    The Berkley project also produced an instruction cache with some
+innovative features, such as instruction line prefetch that identified
+jump instructions, frequently used instructions compacted in memory and
+expanded upon cache load, multiple cache chips support, and bits to map
+out defective cache lines.
+    The Stanford MIPS project was the basis for the MIPS R2000, and
+like the case with Berkley project, there are close similarities. MIPS
+stood for Microprocessor without Interlocked Pipeline Stages, using the
+compiler to eliminate register conflicts. Like the R2000, the MIPS had
+no condition code register, and a special HI/LO multiply and divide
+register pair.
+    Unlike the R2000, the MIPS had only 16 registers, and
+two delay slots for LOAD/STORE and branch instructions. The PC and last
+three PC values were tracked for exception handling. In addition,
+instructions were 'packed' (like the Berkley RISC), in that many
+instructions specified two operations that were dispatched in
+consecutive cycles (not decoded by the cache). In this way, it was a 2
+operation VLIW, but executed sequentially. User assembly language was
+translated to 'packed' format by the assembler.
+    Being experimental, there was no support for floating point
+operations.
+
+Processor Classifications:
+-------------------------
+
+Arbitrarily assigned by me...
+
+      CISC____________________________________________________________RISC
+      |                                                            14500B
+4-bit |                                                   Am2901
+      |                                 4004
+      |                              4040
+8-bit |                                                        1802
+      |                               8008
+      |                            8080        2650,SC/MP  F8
+      |                   F100-L         6800,650x
+      |
+      |         MCP1600 Z-80              6809
+16-bit|        Z-280
+      |                     8086    TMS9900
+      |               Z8000           65816
+      |
+      |                    68000
+32-bit|                                 CRISP  29000       R2000   ARM
+      | 432       VAX                           SPARC
+      |              Z80000 80486,68040
+      |                   ---<T9000>-Sword--   HP-PA  88100
+      | Rekurs    -RS/6000-<860>---- -fish         88110
+64-bit|                                                   R4000
+      |                                                      Alpha
+      |
+
+
+Appendix B:
+==========
+
+Appearing in IEEE Computer 1972:
+-------------------------------
+
+NEW
+PRODUCTS
+
+FEATURE PRODUCT
+
+COMPUTER ON A CHIP
+
+   Intel  has  introduced  an  integrated  CPU  complete with
+a 4-bit parallel adder, sixteen 4-bit registers, an accumula-
+tor  and  a  push-down  stack  on  one  chip.  It's  one of a
+family  of  four  new  ICs  which  comprise  the  MCS-4 micro
+computer  system--the  first  system  to  bring the power and
+flexibility  of  a  dedicated general-purpose computer at low
+cost in as few as two dual in-line packages.
+    MSC-4   systems   provide  complete  computing  and  con-
+trol  functions  for  test  systems,  data terminals, billing
+machines,   measuring   systems,   numeric   control  systems
+and process control systems.
+    The  heart  of  any  MSC-4  system  is  a  Type 4004 CPU,
+which  incudes  a  set  of  45  instructions.  Adding  one or
+more   Type   4001   ROMs   for   program  storage  and  data
+tables   gives  a  fully  functioning  micro-programmed  com-
+puter.   Add   Type  4002  RAMs  for  read-write  memory  and
+Type 4003 registers to expand the output ports.
+   Using  no  circuitry  other  than  ICs from this family of
+four,  a  system  with  4096  8-bit  bytes of ROM storage and
+5120   bits   of  RAM  storage  can  be  created.  For  rapid
+turn-around  or  only  a  few  systems,  Intel's erasable and
+re-programmable   ROM,   Type   1701,   may   be  substituted
+for the Type 4001 mask-programmed ROM.
+    MCS-4   systems  interface  easily  with  switches,  key-
+boards,  displays,  teletypewriters,  printers,  readers, A-D
+converters   and  other  popular  peripherals.   For  further
+information,  circle the reader service card 87 or call Intel
+at (408) 246-7501.
+              Circle 87 on Reader Service Card
+
+            COMPUTER/JANUARY/FEBRUARY 1971/71
+
+Appearing in IEEE Computer 1975:
+-------------------------------
+
+The age of the affordable computer.
+
+   MITS  announces  the  dawning  of  the  Altair 8800
+Computer.  A  lot  of  brain  power  at a price that's
+bound  to  create  love  and  understanding.   To  say
+nothing of excitement.
+   The  Altair  8800  uses a parallel, 8-bit processor
+(the  Intel  8080)  with  a 16-bit address.  It has 78
+basic  machine  instructions  with  variances over 200
+instructions.  It can directly address up to 65K bytes
+of  memory  and  it  is fast.   Very fast.  The Altair
+8800's basic instruction cycle time is 2 microseconds.
+   Combine   this   speed  and  power  with   Altair's
+flexibility (it can directly address 256 input and 256
+output  devices)   and  you  have  a  computer  that's
+competitive with most mini's on the market today.
+    The  basic  Altair  8800  Computer   includes  the
+CPU,  front  panel  control board,  front panel lights
+and  switches,  power  supply  (enough  to  power  any
+additional  cards),  and  expander  board  (with  room
+for  3 extra cards)  all enclosed in a handsome,  alum-
+inum  case.  Up  to  16  cards can be added inside the
+main case.
+   Options  now  available  include  4K  dynamic  mem-
+ory  cards,  1K  static  memory  cards,  parallel  I/O
+cards,  three serial I/O cards  (TTL,  R232,  and TTY),
+octal  to  binary  computer  terminal,   32  character
+alpha-numeric   display   terminal,   ASCII  keyboard,
+audio  tape  interface,  4 channel storage scope  (for
+testing), and expander cards.
+   Options  under  development  include  a floppy disc
+system,  CRT  terminal,  line printer,  floating point
+processor,   vectored  interrupt   (8  levels),   PROM
+programmer,   direct   memory  access  controller  and
+much more.
+                    PRICE
+Altair 8800 Computer: $439.00* kit
+                      $621.00* assembled
+
+  prices and specifications subject to change without notice
+
+For more information or our free Altair Systems
+Catalogue phone or write: MITS, 6328 Linn N.E.,
+Albuquerque, N.M. 87108, 505/265-7553.
+
+ *In quantities of 1 (one). Substantial OEM discounts available.
+
+[Picture of computer, with switches and lights]
+
+
+Appendix C:
+==========
+
+Bubble Memories:
+---------------
+
+    Certain materials (ie. gadolinium gallium garnet) are magnetizable
+easily in only one direction. A film of these materials can be created
+so that it's magnetizable in an up-down direction. The magnetic fields
+tend to stick together, so you get a pattern that is kind of like air
+bubbles in water squished between glass, half with the north pole
+facing up, half with the south, floating inside the film. When a
+vertical magnetic field is imposed on this, the areas in opposite
+alignment to this field shrink to circles, or 'bubbles'.
+    A bubble can be formed by reversing the field in a small spot, and
+can be destroyed by increasing the field.
+    The bubbles are anchored to tiny magnetic posts arranged in lines.
+Usually a 'V V V' shape or a 'T T T' shape. Another magnetic field is
+applied across the chip, which is picked up by the posts and holds the
+bubble. The field is rotated 90 degrees, and the bubble is attracted to
+another part of the post. After four rotations, a bubble gets moved to
+the next post:
+
+    o                             o              o
+     \/   \/       \/   \/      \/   \/      \/   \/
+                   o
+
+    o_|_   _|_      _|_   _|_     _|_o  _|_      _|_ o _|_     _|_ o _|_
+         |           o  |             |              |             |
+
+    I hope that diagram makes sense.
+    These bubbles move in long thin loops arranged in rows. At the end
+of the row, the bits to be read are copied to another loop that shift
+to read and write units that create or destroy bubbles. Access time for
+a particular bit depends on where it is, so it's not consistent.
+    One of the limitations with bubble memories, why they were
+superceded, was the slow access. A large bubble memory would require
+large loops, so accessing a bit could require cycling through a huge
+number of other bits first. The speed of propagation is limited by how
+fast magnetic fields could be switched back and forth, a limit of about
+1 MHz. On the plus side, they are non-volatile, but eeproms, flash
+memories, and ferroelectric technologies are also non-volatile and and
+are faster.
+
+Ferroelectric and Ferromagnetic (core) Memories:
+-----------------------------------------------
+
+    Ferroelectric materials are analogous to ferromagnetic materials,
+though neither actually need to contain any iron. Ferromagnetic
+materials, used in core memories, will retain a magnetic field that's
+been applied to it.
+    Core memories consist of ferromagnetic rings strung together on
+tiny wires. The wires will induce magnetic fields in the rings, which
+can later be read back. Usually reading this memory will erase it, so
+once a bit is read, it is written back. This type of memory is
+expensive because it has to be constructed physically, but is very fast
+and non-volatile. Unfortunately it's also large and heavy, compared to
+other technologies.
+    Legend reports that a Swedish jet prototype (the Viggen I believe)
+once crashed, but the flight recorders weren't fast enough to record
+the cause of the crash. The flight computers used core memory, though,
+so they were hooked up and read out, and the still contained the data
+microseconds before the crash occurred, allowing the cause to be
+determined.
+    Ferroelectric materials retain an electric field rather than a
+magnetic field. like core memories, they are fast and non-volatile, but
+bits have to be rewritten when read. Unlike core memories,
+ferroelectric memories can be fabricated on silicon chips in high
+density and at low cost.
+
+-- 
+John Bayko.
+bayko@cs.uregina.ca
+
+

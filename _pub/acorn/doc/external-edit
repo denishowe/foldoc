@@ -1,0 +1,976 @@
+                         The External Data Editing Protocol
+                      Designed and Moderated by Jason Williams
+
+                       Document version 1.02, 1 January 1993
+                                  (text version)
+
+
+Introduction
+============
+
+The right idea
+Those people who have used command-line UNIX a bit will have encountered a
+very useful  feature of it - when any program needs to edit a text document,
+it simply saves that  document to a temporary file, and invokes a text
+editor on the file. When the text editor  finishes, the application re-loads
+the (changed) temporary file, and continues.
+
+The wrong idea
+Using Macromind Director and Hypercard on the Macintosh, I noticed that they
+both include   their own bitmap editor sections. These editors are both very
+bad. SuperPaint 3 is very good, however: It would be nice if Superpaint
+could be installed as the  îbitmap editor sectionï of the other programs.
+Superpaint could then be used as a shared  bitmap-editor resource, and the
+user gets a good bitmap editor (of their choice) for use within  the other
+programs.
+
+This is the story of a new protocol for the Archimedes that allows us to do
+something very  similar to the UNIX-based idea mentioned above, only on the
+desktop... 
+
+Using a separate data editor has distinct advantages-
+è The main application doesnët have to include all the editing code
+  (very useful,  especially when multitasking several similar applications
+  alongside each other - the  editor is a shared code resource)
+
+è The editor code need only be resident in memory/executing while it is needed.
+
+è The user can choose exactly the editor that they want to use and that one
+  is used  globally.
+
+è The main application can include support for data types of which it knows
+  relatively  little, relying on the editor to provide that support.
+  The editor and even the layout of the data file format can therefore be
+  improved and  augmented without having to update the main application.
+
+è The êeditorë does not have to supply editing functions. It could, for
+  example, be a  program that simply displays the data ô allowing the user to
+  read some text, view or  play a sound sample, or watch an ARMovie.
+
+This is similar to hotlinking, but much simpler - the data is set out as a
+single chunk, and some  time later is brought back in as a single chunk.
+
+The following are some examples of uses for the protocol ô once you start to
+think about it,  more uses become apparent... in fact, you can do some
+pretty impressive stuff with such a  simple idea:
+
+è A compiler that allows you to edit and re-compile a program from within a
+  text-editor  window. This would augment the current îthrowbackï interface to
+  allow the compiler  to actually open the text editor window on the
+  file-in-error, and automatically  re≠compile the code when the user has
+  finished re-editing the file.
+
+è A desktop publisher that îfarms outï its draw-file illustrations to a
+  drawing package  for editing. This can already be done, of course, but this
+  protocol would make the inter- application transfers 100% automatic.
+  Clicking an êeditë option for a graphic in a DTP  frame would bring up a
+  Draw-file editor window containing the graphic, and when the  user is
+  finished editing, the graphic will be automatically updated to show the
+  changes.
+  (I personally feel that this is better than continuous hotlinking as it
+  allows the user to  decide if and when they will actually replace the
+  DTP-frame data with the new, edited  version ô I guess a bit like an undo
+  feature).
+
+è A drawfile editor that allows you to edit the text from text areas in a
+  normal text editor  window. Notice how this could be combined with the last
+  point, so you could edit the  text from a drawfile from a DTP doc. Imagine
+  selecting a text-area object in draw, and  pressing ctrl-E and having an
+  edit window appear with the text in... or selecting a  sprite, pressing
+  ctrl-E, and have a paint window containing the sprite appear.
+
+è A Sound-Tracker song editor that displays (and possibly allows you to edit
+  and/or  play) itës instrument samples via a digitised sample editors
+  windows.
+
+è An adventure authoring system that lets you edit descriptions in a
+  fully-blown text  editor window, and edit pictures in a fully-blown sprite
+  or draw file editor window,  while only having to provide the
+  location/object editing functions by itself.
+
+è A hypermedia program could allow any type of file to be added into a
+  êcardë, and  simply ask at runtime if there is any application present which
+  is able to êdisplayë the  file: Unrecognised sound sample formats would be
+  picked up by another application  and played, unrecognised data files
+  containing movies could be displayed, etc. without  the hypermedia program
+  even knowing what the information in the data files was!
+
+è A configuration/preferences application with a special configuration-file
+  format could  be used to set all preference options for ALL running
+  applications that support this  message system ô Thus a central, consistent
+  configuration interface system is available,  rather than each application
+  including code to supply preference options in its own  (usually different)
+  interface style and method.
+
+è îTrue colourï menus such as in paint and draw, for setting palette values
+  could be  supplied by an editor: one that would allow users to use HSV or
+  CIE or RGB or CMYK  or a rainbow-colour-picker, in order to mix the colour
+  that the client application wants  ô this would then be returned as (eg) an
+  RGB triplet for the client application to use.
+
+Some of this can be achieved at present through the use of rather messy and
+îhackyï trickery  with Data Transfer messages and file-watching. However, a
+proper protocol is very simple  to implement, and yet exceedingly useful and
+powerful, as I hope the above examples will  have demonstrated to you.
+
+To supply more integrated hotlinking than the above requires large
+alterations and/or  additions to the operating system and very complicated
+protocols. However, the external  editing protocol gives a very passable
+base level of êhotlinkingë that is exceedingly quick and  easy to support in
+RISC OS applications, (relying mainly on existing data transfer protocols), 
+but which can increase the usability of the desktop for certain operations
+immensely.
+
+
+Overview of the protocol
+========================
+
+Two applications are involved in the process:
+è An êeditorë (which supplies the display window and possibly also editing
+  functions),
+
+è A êclientë (which initiates the edit, and supplies data to the editor
+  and/or expects data  back from the editor later). 
+
+An application may include support for either/both editor and client ends of
+the interface. The êuserë is the person using the computer.
+
+From the client end:
+The client application decides (usually at the request of the user) that
+some data needs to be  edited. Unable to supply this function itself, it
+broadcasts to all other applications requesting  an External Editing
+session.
+
+If no reply is recieved, then the client may take any appropriate action
+(for example, run an  editor supplied with the application and then
+re-broadcast the request), but if the edit is not  possible, the client will
+inform the user with an error message indicating that the edit is not 
+possible.
+
+If a reply is received, then a window will have been opened, and the user
+may now edit the  (blank) data in this window. The client now has the
+following options:
+
+è By starting a data transfer to the editor, the client can insert some data
+  at the êcurrent  positionë in the edited data; this can be done at any time,
+  but is mainly intended to  supply an initial chunk of data to be edited.
+  (for example, a compiler might make Edit  display a source code file if an
+  error has been found during compilation)
+
+è By sending an appropriate message, the client can set a selection or
+  cursor position in  the edited data. (for example, the compiler might
+  highlight the line of code containing  the error)
+
+è Another message may be sent by the client at any time to request that the
+  data be  returned. (for example, the compiler could include a button/menu
+  option somewhere  which says 'recompile', which will automatically retrieve
+  the code being edited and  recompile it)
+
+From the editor end:
+Upon receipt of an external edit request broadcast, the editor checks the
+data type, and if it is  able to edit the data, it opens a suitable window
+(on a 'blank' datafile) and replies to the  message.
+
+It will allow the user to edit the data (unless the request was for
+read-only data, see below),  and can also handle some extra functions:
+
+è If a data transfer is started by the client, it will insert the new data
+  into the ExtEdit data,  at the current 'cursor' position.
+
+è If the client requests the data back, or if the user chooses the 'save'
+  menu option or  closes the ExtEdit window, a reverse data transfer will be
+  initiated back to the client.
+
+This is a very simple protocol at heart, and has been designed to be easy to
+implement at the  client end, though it takes a bit of work from the
+editor's end in order to provide enough  functionality.
+
+
+
+=====================
+Protocol message data
+=====================
+
+Before I detail the messages and protocol itself, I will explain some
+êglobalë data fields that  are contained in most messages. These data fields
+always occur at the same position of  messages and always have the same
+meaning in messages, to enable quick and easy message  turnaround and
+general ease for programming.
+
+
+Data type word (&eeee0ttt)
+==========================
+
+The least-significant 16 bits (0ttt) of this word contain a normal RISC OS
+file type number.
+
+The most significant 16 bits (eeee) contain an extension which augments the
+file type number  to provide more information on exactly what the data is.
+This enables, for example, the text  of an Impression document to be saved
+with style information in DDF format to a text (&fff)  file, but still be
+differentiated from a normal text file, by using an extension.
+
+A hypothetical extension might see the normal text file given the data type
+word &00000fff,  while then DDF text might be given the word &20150fff.
+
+The extension &0000 is defined as conveying no extra information, i.e. it is
+a ênormalë file of  the specified type ô the RISC OS file type alone conveys
+all the necessary/available  information.
+
+Extensions &0001 through &04ff are reserved for êuserë use. However, it is
+preferred that you  request an official allocation anyway, for
+future-proofing, to avoid clashes, and to enable all  applications to share
+one data type for each specific type of data, and thus improve the 
+effectiveness of the protocol.
+
+If you have a type of data which can be differentiated to a more precise
+level than RISC OS  filetypes allow, then please write requesting an
+extension number allocation. Allocations can  also be requested for special
+in-house data type numbers for conveyance of specially defined  data chunks.
+
+
+Job Handle (&eeeecccc)
+======================
+
+This is used in all communication between the client and editor as a
+reference to a specific  job. The client and editor both fill in their half
+of this word with unique non-zero numbers,  thus making a job handle which
+is unique at both 'ends'. Once completed, the job handle for  a session is
+never changed. I suggest you use handles as follows:
+
+è Each party simply ANDs off the 16 bits containing their own half of the
+  job handle.  Thus, other than verifying its correctness, you need not
+  concern yourself with the other  applications' half of the handle.
+
+è Each application provides a handle value, so can use any handle value that
+  is easy for  the programmer. Note however, that all handles should be unique
+  so that handles are  not re-used. The suggested method for correctly
+  generating/using handles is:
+    Split your 16-bits of the job handle into 2 parts (perhaps a 10:6 bit
+    split?). The top 10 bits  contain a unique (sequentially generated)
+    number, while the bottom 6 bits contain a  re≠usable array index.
+
+    When a message for an existing session is recieved, mask the array-index
+    off the bottom  to get quick-and-easy access to the relevant information.
+    Then check the entire 32 bits of the recieved handle against the copy
+    you have thoughtfully stored in your array of information on this session,
+    to ensure that it is a valid message. (and not, for example,  an attempt
+    at communication from a previous (dead) session).
+
+
+
+Message flags
+=============
+
+For the sake of simplicity, only one flagword definition has been made, and
+this flagword is  used in all the messages. Some flags are therefore invalid
+in the context of some messages,  and are simply ignored (if in doubt,
+ignore the flag). This allows easy turnaround of  messages, as most of the
+messages are very similar in construction, allowing the programmer  to make
+minor alterations to a received message before using it as the contents of a
+reply.
+
+The flags should be set by the editor when replying to the client in order
+to indicate the  current status (e.g. if you are unable to supply read-only,
+then clear the read-only bit; if you  are unable to edit the data, then set
+the read-only bit): If the client is not happy with the  reported status,
+they should report the problem to the user, and (possibly) abort the
+session.
+
+The defined flags are:
+        Bit     Value   Description
+        0       &1      Continue editing
+                        Messages involving return of the data use this bit
+                        to indicate whether the  external edit session
+                        should continue (bit = 1) or be abandoned (bit = 0) 
+                        once the data has been returned.
+
+                        If the user closes the External Edit window, then
+                        this flag will be ignored,  as the user has
+                        specifically indicated that they wish to end the
+                        session.
+
+        1       &2      Selection only
+                        The EditReturn message uses this bit to indicate
+                        that the whole file  (bit†=†0) or the selection only
+                        (bit = 1) should be returned. When returning  data,
+                        this bit indicates whether it is all/selection only
+                        being returned.
+
+        2       &4      Read-only
+                        This flag is used by the client to request that the
+                        data be treated as read- only. If the editor
+                        supports such a concept, it should not allow the
+                        user to  alter the data in any way. In case the
+                        editor doesn't support this, the client  should be
+                        ready to ignore any attempt to return the data, even
+                        though the editor should note the flag and not
+                        return the data anyway.
+
+        3       &8      Immediate execution
+                        Some data types can be 'played' or 'executed' (e.g.
+                        sound samples/movies, script files). This flag is
+                        used to request that execution of such data should 
+                        begin as soon as possible after receipt of the
+                        message (this may involve  waiting until all the
+                        data has been transferred to the editor).
+                        This can be used to make the 'editor' simply a
+                        'playback device' that is  called by other
+                        multitasking applications.
+                        This flag has no effect if the editor does not
+                        support it; typically the case  when the data type
+                        doesn't allow for any concept of 'playback'.
+
+        4       &10     Adjust selection
+                        When using the cursor-positioning message protocol,
+                        this bit should be  set if the selection range given
+                        should replace the current selection (as if  clicked
+                        upon with select: bit = 0), or be added to the
+                        current selection (as if  clicked upon with adjust:
+                        bit = 1).
+                        This allows arbitrary selections to be built up for
+                        files such as drawfiles,  where the set of selected
+                        items doesn't necessarily cover a single  contiguous
+                        range of values/objects.
+
+5-31    -       Reserved
+                        Must be set to 0 on send, and ignored on recieve.
+
+
+
+============
+The Protocol
+============
+
+The protocol details and fine-print are explained later in this document.
+However, to explain  the basic interactions, as well as give a much clearer
+indication of exactly what messages  should be sent/received at any
+particular time, I have drawn up some state diagrams. The protocol is based
+around these 6 WIMP messages:
+
+Message Name            Description                             Number
+Message_EditRq          Request external editing session        &45D80
+Message_EditAck         Acknowledge external edit               &45D81
+Message_EditReturn      Request return of external edit data    &45D82
+Message_EditAbort       Close editing session completely        &45D83
+Message_EditDataSave    External edit equivalent of DataSave    &45D84
+Message_EditCursor      Cursor/Selection placement              &45D85
+
+The messages that you can expect to send/receive at any point are shown in
+the state diagrams (included as two drawfiles with this document)
+
+
+"Client" Drawfile:
+This shows all the states you should expect to encounter if you are a client
+during a session.  All of the states you should expect to encounter if you
+are an editor during a session are  detailed below:
+
+
+"Editor" Drawfile:
+The only part of the above protocol which is not described in this document
+is the 'send data' process. This is initiated by the sending/receiving of
+an EditDataSave message (which is in  most ways identical to a normal
+DataSave message), followed by normal RAM/disc inter- application data
+transfers as detailed in Acorn's data-interchange message protocol.
+
+The reason for doing this is to allow you to use existing code (very few
+applications don't  already have at least some support for inter-application
+transfers) at the heart of this protocol,  which saves effort and code
+duplication. It would also be rather silly to define yet another  protocol
+if it isn't absolutely necessary.
+
+
+
+
+============
+The Messages
+============
+
+The messages used in the protocol are described in detail below:
+
+---
+Message_EditRq (Request external edit, number &45D80)
+This is sent by a client as a broadcast.
+Any editor recieving it should check the data type, and if they can supply
+the service needed,  they should claim the message with an EditAck, and open
+a blank, appropriate editing  window.
+
+Notes
+This message is always broadcast by the client and received by editors.
+
+If your editor is read-only, it should only reply to this message if the
+read-only flag is  set. If a client would prefer to allow editing of the
+data, it will broadcast with the read- only flag clear, but may re-broadcast
+(if no reply is received) with the read-only flag set,  in order to at least
+display the information. This will stop read-only editors (displayers)  from
+grabbing data when fully-blown editors are available.
+
+Definition
+R0 = 19
+R1 + 20 Data type word
+
+R1 + 24 Job handle
+        The client should place a unique, non-zero integer job handle into
+        the least  significant 16 bits of this word. The most significant
+        bits should all be set to  zero. (i.e. 0x0000xxxx where xxxx is > 0)
+
+R1 + 28 Flag word
+        Flags that are valid and should be supported are Continue-editing (0),
+        Read≠only (2), Immediate execution (3).
+        Note that in the case of some data (sound samples),
+        Immediate-Playback  implies that the data should not be displayed in
+        a window at all, but just  played. If a display is needed as well as
+        playback, use the EditCursor  message to initiate playback after
+        data transfer.
+
+R1 + 32 Parent name
+        A 0-terminated string (max. length 20 characters including the
+        terminator)  identifying the parent document/application (itës file
+        leaf-name, generally).
+        On receipt, the editor should change the edit-window title to read
+        î(Parent)  Filenameï to indicate that the file is a temporary edit
+        of data from the  document/application îparentï.  If this entry is
+        blank (byte @ block+32 = 0)  use the normal title-bar layout
+        "Filename", using just the leafname.
+
+R1 + 52 Leaf name
+        A suggested leaf-name for the edited file. This will be displayed by
+        the  editor in the titlebar of the edit-window, and will appear as
+        the default in the  save-as box. If this entry is blank (byte @ R1 +
+        52 = 0) then use the default  name for this filetype (e.g. Edit
+        would use îTextFileï for a text file)
+
+        This name can be up to 204 characters long (including terminator),
+        but it is  preferred that it is less than 20 characters. If longer,
+        then it should appear like  a normal RISC OS filename, i.e.
+        subdivided into short (preferably < 20  character) sections using a
+        period "." character. Only the 'leaf-name' of this  (the last 20 or
+        fewer characters after the final period character) should ever  be
+        expected to be used by the editor.
+
+
+---
+Message_EditAck (Acknowledge external edit, number &45D81)
+
+This is sent by an editor in reply to an EditRq broadcast. If an editor can
+supply the requested service it opens an appropriate editing window (on a 
+'blank' data file), and then replies to the client.
+
+Notes
+This is only sent by an editor in reply to an EditRq message.
+
+The flag-word will be updated by the editor to reflect the current status.
+e.g. the read- only flag will be set if 'editing' is in read-only mode, or
+clear if not.
+
+Definition
+R0 = 17
+R1 + 20 Data type word
+        Copied from EditRq message.
+
+R1 + 24 Job handle
+        Partially copied from EditRq message.
+        The editor fills in the top 16 bits with a unique, non-zero integer
+        identifier,  and the bottom 16 bits with the number given by the
+        client in the EditRq  message.
+
+R1 + 28 Flag word
+        Copied from EditRq message.
+        The editor should note these flags, and if it is unable to supply
+        any of the  requested functions (e.g. read-only lock), it should set
+        these flags to indicate  its current status.
+
+        If this status (e.g. editing is not possible ô read only flag set)
+        is unacceptable  to the client, it should warn the user, and then
+        abort the session (see below).
+
+        Valid flags are Continue-editing (0), Read-only (2),
+        Immediate-execution (3).
+
+
+---
+Message_EditReturn (Request return of external edit data, number &45D82)
+This message is sent by the client to the editor, to request the return of
+the data. This allows  the client to provide a menu option or a button
+somewhere that will retrieve the data or  retrieve it and begin some
+operation upon it.
+
+Notes
+This message is only sent by the client.
+
+This is the only way in which a client can initiate return of the data, but
+note that the  editor can also initiate the transfer if the editing session
+is closed by the user.
+
+This should not be sent/should be ignored if 'editing' in read-only mode, as
+the data  should not have been changed!
+
+
+Definition
+R0 = 17
+R1 + 20 Data type word
+        Included to allow the client to request the data back in a specific
+        format, not  necessarily the original format.
+        If the editor cannot convert the data to this format for return,
+        then it should  ignore the message, and the client must re-try with
+        a new data-type until a  compromise can be attained! Note that as a
+        last ditch measure the type 'data'  can be used, in which case it is
+        up to the client to recognise the format of the  data from its
+        content. If no compromise can be attained, then abort the 
+        operation, and assume that the editor is dead.
+
+R1 + 24 Job handle
+R1 + 28 Flag word
+        Valid flags are Continue-editing (0), Selection-only (1).
+
+---
+Message_EditAbort (Close editing session completely, number &45D83)
+This message can be sent by either party. If this message is recieved, then
+mark this job handle as defunct ô From now on, any  correspondence relating
+to this job handle should be ignored.
+
+Notes
+The editor should close the window and stop editing.
+Note that this should be done in all circumstances, even if the data has
+been modified.
+
+It is up to the client to warn the user and ensure that itës OK to lose the
+data. The client should always treat external data as modified data.
+
+The sender of the message is responsible for any error report that may
+indicate to the  user that the edit has failed. Thus, the reciever should
+not take any error-reporting action.
+
+EditAbort should be sent whenever a job must be aborted (fatal error, task
+quitting,  etc.) in order to allow the other party to release workspace
+allocated to the editing  session. Remove the job handle from your records,
+and ignore future references to it.  Note that this means you should not
+recycle job handle values.
+
+Note, however, that in some fatal cases, it is better to not send an abort,
+in order to  allow the user to save their edited data and retrieve at least
+some of the data which  would otherwise be lost when your application
+unexpectedly quits. This decision is  thus left up to your judgement.
+
+If playback of any type is running due to previous use of the
+Immediate-Playback flag,  then playback should cease immediately.
+
+This message should not be sent before a session is correctly started (i.e.
+when no valid  job handle exists!), or during the course of any
+inter-application daa transfers.
+
+
+Definition
+R0 = 17
+R1 + 20 Reserved (should be 0).
+R1 + 24 Job handle
+
+
+---
+Message_EditDataSave (Equivalent of DataSave, number &45D84)
+This message is almost identical to Message_DataSave, and may be sent by
+either party to  initiate a data transfer (via the normal RAM or disc
+transfer protocols). The message is used in exactly the same manner as
+Message_DataSave, except instead of  specifying a window/icon destination,
+it supplies a job-handle to indicate the destination.  Any followup messages
+to an EditDataSave are normal Acorn Data transfer protocol  messages.
+
+All fields can/should be filled in as for a normal DataSave message, except
+for the job handle  field, which should instead be filled in wih the job
+handle. 
+
+Notes
+Data transfer, as for Message_DataSave, is from the sender of this message
+to the  reciever.
+
+Normally, this message will follow EditRq, as soon as the client recieves
+the EditAck, in  order to supply the initial data for editing. However, it
+should be noted that the  message need not be sent if the client wants only
+a êblankë editing window.
+
+This message may be sent more than once by the client, in which case each
+data transfer  will be inserted (if relevant, at the current 'cursor'
+position, otherwise at the discretion of  the author), into the ExtEdit
+data.
+
+If the editor cannot supply this service, either due to limited support for
+this protocol,  due to difficulties presented by the data type, or because
+of the read-only flag setting,  etc, the EditDataSave should be ignored and
+an error should be reported, along the  lines of îThis operation is not
+supportedï.
+
+This message is sent by the editor in reply to an EditReturn message, or
+when it wishes  to return the data. More discussion on return of data is
+given below.
+
+If the Immediate-Playback flag was set in the initial EditRq, and the data
+is êplayableë,  then playback should be commenced as soon as this data
+transfer is complete. As soon  as playback finishes, the session should be
+considered aborted (no extra messages need  be sent).
+
+The contents of the 'ignored' fields should be, um..., ignored. Their
+contents are up to  the discretion of the sender ô if the author feels that
+it is easier to call existing code that  fills in these fields in some way,
+they may contain some kind of valid data. However,  the contents of these
+fields should not be relied upon in any way ô do not put extra  'personal'
+data items in these words for use between your own programs!
+
+Definition
+R0 = 17
+R1 + 20  Job handle (normally window handle)
+R1 + 24  Ignored (normally icon handle)
+R1 + 28  Ignored (normally X position)
+R1 + 32  Ignored (normally Y position)
+R1 + 36  Estimated size of data, in bytes
+R1 + 40  File type of data
+         (Not data-type, just base file-type, as in normal DataSave message)
+R1 + 44  Proposed leaf-name of file, 0-terminated.
+
+
+---
+Message_EditCursor (Set cursor/selection position, number &45D85)
+This message can be used with some data types to set either a selection (a
+range of data items  which are selected) or a cursor position (a single data
+item which is selected, or an insertion- point (caret) between data items
+(e.g. characters)).
+
+It is initially sent by the client to the editor to set new values, and is
+immediately returned by  the editor to indicate the success of the
+operation.
+
+Notes
+A data unit is the smallest useful data item represented in a document.
+        Examples:
+                text files: units are characters
+                draw files: units are objects
+                sound samples and other binaries: units are bytes
+        Currently defined data units are listed below.
+
+The cursor is some kind of êmarkerë which can be placed at meaningful unit
+positions  within the document. It is always measured in terms of units from
+the start of the data.
+
+The cursor position is interpreted as follows:
+  The position given indicates a unit of data. The first unit of data is
+  given the unit  number 1, the second is 2, etc. In the context of most
+  data (e.g. drawfiles), this  unambiguously indicates a single unit.
+  Selections between two such unit positions are  inclusive of those
+  positions.
+
+  In some cases (text files, etc), a caret is used to indicate the cursor
+  position, and is placed  between two data units. In this case, the caret
+  is placed after the indicated unit.
+
+  A special-case resuts from these two definitions, which is placement of
+  the caret before  the first data item, in which case a value of 0 should
+  be used. (In drawfiles and similar  cases, a value of 0 should be treated
+  as a value of 1)
+
+The selection is a group of units that can be described by a contiguous
+range delimited  by two cursor positions, called the start-of-selection and
+end-of-selection. Arbitrary  selections in data such as a drawfile can be
+achieved using the 'Adjust-selection' flag in  a series of EditCursor
+messages.
+        Examples:
+                text files: The selection is a series of adjacent characters
+                draw files: Each selection can be any contiguous linear
+                            sequence of objects
+
+
+This is intended mainly for cursor positioning in text files. However, the
+design should  be sufficiently general to cater for most data types. If you
+wish to support the protocol  with an editor, then please contact me so that
+we can sort out official details of the  definition of units with that data
+type. In all releases of this document, all official  definitions at time of
+release will be included below.
+
+If in doubt, default to byte offsets.
+
+
+Definition
+R0 = 17
+R1 + 20 Reserved (should be 0)
+R1 + 24 Job handle
+R1 + 28 Flag word
+        Valid flags are Read-only (2), Immediate-playback (3),
+        Adjust-selection (4).
+
+        The former two flags are used to attempt setting of new values for
+        the current state, and are returned to indicate the new status.
+        Immediate-playback can thus be used to halt or (re)start playback at
+        any time, if playback is multitasking.
+
+R1 + 32 New cursor position *
+R1 + 36 New start-of-selection position *
+R1 + 40 New end-of-selection position *
+
+R1 + 44 (reply only) Old cursor *
+R1 + 48 (reply only) Old start-of-selection *
+R1 + 52 (reply only) Old end-of-selection *
+
+
+* Special cursor-position values
+As mentioned above, positive unit offsets are used to set the cursor
+position and start/end of  the selection. However, in some cases you may not
+wish to alter the current value of any of  these settings, in which case,
+you should fill the position field with the value -1  (&FFFFFFFF).
+
+This allows you to set any or all of the positions individually. By setting
+all three ênewë  positions to -1, you may read the current values without
+altering them.
+
+Note that the flags will always be set to the new values given, so you can
+also alter the flag  settings only, by setting all ênewë positions to -1.
+
+The special value -2 (&FFFFFFFE) should be used to indicate êend-of-dataë.
+Thus, to select the  entire piece of ExtEdit data, you should set the
+selection to the range ê0ë to ê-2ë.
+
+If the editor is unable to return a sensible value for the êoldë values
+(e.g. there is no concept of  a selection, or the selection can't be
+represented as a single contiguous chunk), it will return  values of -1 in
+these fields. It should never return -2 (end-of-data), as the editor should
+be  capable of determining the correct end-of-data unit position.
+
+Note also that in some situations (during movie/sound playback) the returned
+cursor value  may not be correct by the time you recieve the message. This
+facility is really only useful for  reading the position while paused, or
+for less-often updated cursors such as the text cursor in  Edit, and for
+ensuring that a cursor-set operation worked. It would be preferable if this 
+message were not used on every NULL event to watch/control movie playback or
+similar,  except in exceptional (!) circumstances.
+
+Current data unit definitions
+  Type          Filetype  Unit represents                                                                             
+  Text            fff     character
+  Command         ffe         "
+  TaskObey        fd7         "
+  TaskExec        fd6         "
+  Obey            feb         "
+
+  Data            ffd     byte offset
+  BASIC           ffb     byte offset in tokenised data/
+                           character offset in text form
+
+  Sprite          ff9     sprite number/index
+  Palette         fed     colour number, as index into standard file format
+  DrawFile        aff     draw object
+  ARMovie         ae7     animation frame number
+
+
+
+==============
+Sundry Details
+==============
+
+
+Return of data
+==============
+
+The ExtEdit data return can be initiated by:
+Client:
+        Sends EditReturn message (usually prompted by a user action)
+
+Editor:
+        Recieve EditReturn ô return the data,
+
+        User clicks the êsaveë option, the save-as OK button, or presses
+        RETURN in the save-as  window ô return the data, quit if the
+        continue flag is clear.
+
+        User drags the save-as file icon somewhere ô save a copy of the data
+        to the indicated  file, but don't take any other action ô continue
+        editing as if nothing happened.
+
+        User clicks the window close icon ô Ask with a dialogue box as for a
+        normal document  being closed, offering Save/Discard/Cancel options
+        (If Save is clicked, return the data  and quit, Discard means just
+        quit the session (send an abort), and Cancel will resume  editing as
+        if nothing had happened)
+
+
+Error handling
+==============
+If communications break down, you may assume that the session has been
+aborted due to a  bad implementation forgetting to inform you, or loss of
+communications (the other  application is confused or dead). However, be
+careful about such assumptions: There are  several places where no reply is
+a perfectly valid response, and other places (EditCursor  messages) where a
+lack of response isn't necessarily a good indication of communication 
+breakdown. When in doubt, leave the session open until something definitive
+happens to  confirm the fact that communications have broken down.
+
+Errors during file transfer should be treated as normal, but will sometimes
+also indicate that  the session has to be aborted ô note that I have seen
+several applications that spuriously  report êreciever deadë and other
+similar errors in otherwise correct data transfers, which  indicates that
+somebody is failing to send a last êackë message, rather than an actual
+break in  communications... these should not necessarily spell doom for the
+ExtEdit session!
+
+In all cases when you think communications have broken down, or when you
+must  unexpectedly break the connection, you should do your best to send an
+EditAbort (to ensure  that the job has really been aborted) and abandon the
+job tidily.
+
+
+Closing a document containing ExtEdit data
+==========================================
+
+If you wish to quit or close a document containing data that is currently
+tendered out for  external editing, then the external data should be treated
+as modified/unsaved data, i.e.    you should inform the user îThere is
+unsaved (external) data in this documentî, and  allow them to initiate a
+return-and-save of the data, or discard the data, much as you  would with
+normal unsaved data.
+
+Please ensure that you send an abort in the latter case, as it is
+undesirable to have unattached  editing windows floating around.
+
+
+Multi-file document handling
+============================
+
+Some packages (e.g. Impression) use a distributed document format (a
+directory containing  several files) which does not conform to ExtEditës
+idea of a êsingle datafileë. In such cases, it  is up to the designer of the
+multi-file document to provide means for the document to be  handled as a
+single entity.
+
+è With no extra effort, this can be achieved by never using RAMTransfers ô
+  if a  document is saved to disc, then the editor can detect the type and
+  treat it appropriately.
+
+è In cases where RAMTransfer is desired, the designer of the data file
+  format must  specify some means by which the data can be transferred as a
+  single îfileï.
+
+
+External edits of external edits!
+=================================
+
+A hypothetical case:
+We have a DTP document containing a drawfile, and we ExtEdit the drawfile
+out to Draw. From Draw, we ExtEdit out a sprite in the drawfile to Paint,
+and a text-area to Edit.
+
+When the data in the Drawfile needs to be returned (by user closing the draw
+window or  clicking save, or by an EditReturn message),  what should Draw
+do?
+
+The External Edit protocol is designed to be a îPlease edit this data and
+tell me when it is  completeî system. Thus, no editor should attempt to
+retrieve data that is being ExtEditëd  from within an ExtEdit document in
+order to update the data it returns to its own client.
+
+Draw should therefore treat its own copy of the drawfile as being complete
+and disregard  the ExtEdits from within it. Any Abort of this ExtEdit should
+pass the Abort on to any 'child'  ExtEdits.
+
+However, if the editor-author is feeling particularly keen, you may treat
+all external edit data  as êmodifiedë data, and pop up an error box much
+like that for closing an unsaved document:  îThere is unreturned external
+data: Save/Discard/Cancelï. The user clicks one of the buttons:
+
+Save
+  This should request the return of all ExtEdit data to update the drawfile,
+  and then  return the drawfile back to the original client.
+
+Discard
+  This should return the current data to the client, and send ABORT messages
+  to all  related external editors.
+
+Cancel
+  Editing continues as normal, giving the user the opportunity to (e.g.)
+  save the sprite  from paint back into the drawfile, and discard the
+  modified edit docment (leaving the  drawfile unchanged) before attempting
+  to close the drawfile again.
+
+It is preferable that the user should not lose all external-edit data
+without a warning. An  ExtEdit data chunk should not be automatically
+updated by sucking back êchildë ExtEdits, as  this could result in
+unintended êcorruptionë of the document.
+
+
+Alias$@EditType_xxx
+===================
+
+When requesting an External Edit session and receive no reply, first you
+should re-try your  request with different data-types and/or with the
+read-only flag cleared in the hope of  finding a suitable, though less ideal
+editor for your data.
+
+When no acceptable editor has been found by this method, you can attempt to
+run a suitable  editor from disc and then re-try your EditRq's (see below).
+
+If all of this fails, then you should simply give up ô report you inability
+to the user, and  suggest the type of editor you would like them to run
+before attempting that operation  again.
+
+
+Running a suitable editor from disc
+===================================
+
+In this case, it is important that the user is able to configure in some way
+which editor will be  run. It is also important that any suitable editor
+that is available can be run, rather than just  one hard-wired editor that
+the author expects to be available.
+
+In order to improve this situation, I make the following suggestion which I
+strongly urge you  to follow: Editors should, in their !Boot file, set
+variables along the lines of RunType, which  indicates the editor to be run
+for a particular RISC OS filetype, e.g. !Edit might use:
+        Set Alias $@RunType_FFF Run <Obey$Dir>.!Run %%*0
+        Set Alias$@EditType_FFF Run <Obey$Dir>.!Run
+
+A client wishing to run an editor can then execute the command held in the
+most appropriate  Alias$@EditType_??? system variable, and then start
+broadcasting EditRq messages again.
+
+If no Alias$@EditType_??? variable is set, or if it fails for any reason to
+successfully launch an  editor (your retried EditRqs will fail), then you
+should give up and report the problem to the  user.
+
+
+Current registered users of ExtEdit
+===================================
+
+The following applications already support the protocol:
+        StrongEd 2, StrongHlp
+
+The following applications will soon support the protocol:
+        Zap, ZEdit, DSEdit II.
+
+
+Requests For Allocations and Other Communications
+=================================================
+If you wish to use:
+
+  è       flag bits
+  è       data types
+  è       messages or SWI support to augment the protocol
+
+that are not defined in this document, then please request an official
+allocation in order to  ensure no clashes occur, and to allow others to
+support any such new items as well. The  power of this protocol comes from
+unhindered sharing of it by as many applications as  possible
+
+Please write to the following address indicating the desired allocations,
+the product for  which they are to be used, and any details (extra protocol
+conventions, data format, etc.) that  will be needed for others who may wish
+to support the allocated items.
+
+If you wish to request allocations,  or have any suggestions or queries to
+put to me, then  please do not hesitate to contact me:
+
+        Jason Williams,
+        R.D.2, Manuel Road,
+        Silverdale,
+        North Auckland,
+        New Zealand.
+
+Post usually takes 1 week between NZ and Europe.
+
+My email address will be changing in February/March 1993, but it is currently
+        jwil1@cs.aukuni.ac.nz
+

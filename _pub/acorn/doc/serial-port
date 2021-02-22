@@ -1,0 +1,154 @@
+From bjga1@tower.york.ac.uk (Ben Avison) Tue Nov  8 14:30:34 1994
+Newsgroups: comp.sys.acorn,comp.sys.acorn.tech
+Path: doc.ic.ac.uk!sunsite.doc.ic.ac.uk!uknet!festival!leeds.ac.uk!news
+From: bjga1@tower.york.ac.uk (Ben Avison)
+Subject: Re: RS423 - RS232 NIGHTMARE
+Message-ID: <1994Nov8.005142.23643@leeds.ac.uk>
+Sender: news@leeds.ac.uk
+Organization: The University of York
+Date: Tue, 8 Nov 1994 00:51:42 +0000 (GMT)
+References: <39l9ae$qcf@signal.dra.hmg.gb>
+X-Newsreader: TIN [version 1.2 PL2.1]
+Lines: 85
+Followup-To: comp.sys.acorn,comp.sys.acorn.tech
+Xref: doc.ic.ac.uk comp.sys.acorn:37753 comp.sys.acorn.tech:11311
+
+In <39l9ae$qcf@signal.dra.hmg.gb>, Adrian Ian Skilling (skilling@hermes.mod.uk) wrote:
+> 	I'm am trying to connect a piece of RS232
+> equipment up to an RS423 A420. By looping pins
+> 1,4,6,8 together I can now receive info from the
+> serial port. Horray!
+
+Having recently had my own (now solved) serial comms problems, I have
+loads of info to hand... though I'd hesitate to call myself a comms
+expert!
+
+Firstly, I think you'll find that the A420 doesn't have a RS423 port,
+but a (specially bug-ridden Acorn flavour of) RS232... RS423 only has 5
+pins, so you couldn't really be connecting pins 1, 4, 6 and 8 together...
+(RS423 uses a circular DIN plug, and was the serial connector for the
+BBC micro.)
+
+Now I know that there's information floating around that suggests
+connecting pins 1, 4 and 6 of Acorn serial plugs, and other information
+that suggests linking pins 1, 4 and 8, but I've never seen both
+together... the latter, by the way, seems to be the Acorn-recommended
+method. Maybe this is why you're having problems?
+
+You haven't made it clear which type of RS232 the other devicve is
+using; it may be 9-pin or 25-pin. Here are Acorn's recommended wiring
+diagrams for both types (dated 5th July 1994):
+
+Acorn 9-pin D RS232                           IBM 9-pin D RS232
+
+1. DCD  ---+                                       +---  DCD  1.
+           |                                       |
+2. RX   -- | ----------------. .------------------ | --   RX  2.
+           |                  X                    |
+3. TX   -- | ----------------' '------------------ | --   TX  3.
+           |                                       |
+4. DTR  ---O----------------.   .------------------O---  DTR  4.
+           |                 \ /
+5. GND  -- | ---------------  X  ----------------------  GND  5.
+           |                 / \
+6. DSR  -- | ---O-----------'   '----------------------  DSR  6.
+           |    |
+7. RTS  -- | -- | -----------.                           RTS  7.
+           |    |             \
+8. CTS  ---+    |              '-----------------------  CTS  8.
+                |
+9. RI   --------+                                         RI  9.
+
+
+Acorn 9-pin D RS232                              25-pin D RS232
+
+1. DCD  ---+
+           |
+2. RX   -- | ------------------------------------------   TX  3.
+           |
+3. TX   -- | ------------------------------------------   RX  2.
+           |
+4. DTR  ---O-------------------------------------------  DTR 20.
+           |
+5. GND  -- | ------------------------------------------  GND  7.
+           |
+6. DSR  -- | ------------------------------------------  CTS  5.
+           |
+7. RTS  -- | ------------------------------------------  RTS  4.
+           |
+8. CTS  ---+
+
+9. RI   -----------------------------------------------  DCD  8.
+
+Note: if you're trying to use am Apple LaserWriter with a 25-pin RS232,
+the wiring is rather more complicated - I won't bother turning it into
+ASCII unless someone actually needs it!
+
+It is also worth noting that A5000s and Risc PCs (and presumably later
+computers) can be configured in software to utilise PC-wired cables just
+like any IBM clone would... this does away with all this messy
+non-standard wiring, but is unfortunately not much use if you have an
+older computer... :-(
+
+Hope that helps!
+
+--
+*=========================================================*
+|  Ben Avison               (alias Cochrane)  |  ,--/|--  |
+|  Computational Physics, University of York  |  `-/---.  |
+|  Email:  bjga1@{tower|unix|vax}.york.ac.uk  |  -/--|-'  |
+*=========================================================*
+
+From ee91mds2@brunel.ac.uk (Mark Smith) Tue Jan 17 14:02:27 1995
+Path: doc.ic.ac.uk!sunsite.doc.ic.ac.uk!nntp0.brunel.ac.uk!mipc-08.brunel.ac.uk!not-for-mail
+From: ee91mds2@brunel.ac.uk (Mark Smith)
+Newsgroups: comp.sys.acorn.tech
+Subject: Re: Fast serial baud rates
+Date: Sun, 15 Jan 1995 21:29:50 GMT
+Organization: Mark's Risc PC with EtherB & Acorn TCP/IP.
+Lines: 21
+Distribution: world
+Message-ID: <19950115.212950.13@mipc-08.brunel.ac.uk>
+References: <3f0o2h$ef7@lyra.csx.cam.ac.uk> <19950112.185653.76@compton.demon.co.uk>
+Reply-To: ee91mds2@brunel.ac.uk
+NNTP-Posting-Host: mipc-08.brunel.ac.uk
+X-Newsreader: Archimedes TTFN Version 0.36
+
+In article <19950112.185653.76@compton.demon.co.uk>,
+          tom@compton.demon.co.uk (Tom Hughes) wrote:
+
+> The RPC can, but I don't how you do it as I don't have the fifth PRM. You
+> may have to OS_SerialOp I suppose. The A5000 can (or at least some can), but
+> it isn't supported by the OS, so you have to write to the hardware. This is
+> what the blockdrivers do to get 38400 and 57600 on A5000's.
+
+OS_SerialOp 5 & 6 (and OS_byte 7 & 8) now take three extra baud rate codes
+in RISC OS 3.5:
+
+16 - 38400
+17 - 57600
+18 - 115200
+
+-- 
+Mark Smith - Microelectronics Student & Acorn Software Developer.
+
+All comments reflect my personal thoughts only. I reserve the right to be wrong.
+
+.. It's not so much how we stand as the direction we're moving.
+
+==================================================================
+
+/ftp@ftp.acorn.co.uk:/pub/riscos/patches/serial/ReadMe:
+
+The "modules" file is a binary archive which may be decompressed using 
+either ArcFS 2 or SparkFS. Remember to set your ftp client to binary mode 
+before downloading this file.
+
+These two modules are written to run under RISC OS 3.10, and improve 
+integrity of serial communications (particularly receiving) at speeds of 9600 
+baud and above. They were included in the ROM distribution for RISC OS 3.11, 
+and as such are not needed on systems equipped with this version of the OS.
+
+They should be *RMLoaded on system bootup.
+
+==================================================================

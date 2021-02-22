@@ -1,0 +1,54 @@
+From bobrankin@delphi.com (BOB RANKIN) Mon Oct 24 16:03:46 1994
+Path: doc.ic.ac.uk!agate!ames!lll-winken.llnl.gov!uwm.edu!math.ohio-state.edu!caen!msuinfo!news
+From: bobrankin@delphi.com (BOB RANKIN)
+Newsgroups: comp.infosystems.announce
+Subject: Accessing The Internet By E-Mail (V2) (online guide)
+Date: 19 Oct 1994 23:39:47 GMT
+Organization: Delphi Internet Services Corporation
+Lines: 41
+Approved: announce@ibm.cl.msu.edu
+Message-ID: <38eokn$r8e@msuinfo.cl.msu.edu>
+NNTP-Posting-Host: ibm.cl.msu.edu
+
+I am pleased to announce availability of the expanded 2nd Edition of:
+ 
+                 Accessing The Internet By E-Mail
+ 
+This special report will show you how to retrieve files from FTP sites,
+explore the Internet via Gopher, search for information with Archie,
+Veronica, or WAIS, tap into the World-Wide Web, and even access Usenet
+newsgroups using E-MAIL AS YOUR ONLY TOOL.
+ 
+Lots of new stuff as a result of comments from around the world.  Check
+out the updated Net Goodies section!  I've tried to make the entire document
+a bit friendlier and added info on European mail servers.
+ 
+The document "ACCESSING THE INTERNET BY E-MAIL" is now available from an
+automated mail server.  To get a copy, send e-mail to either address below.
+ 
+To: LISTSERV@ubvm.cc.buffalo.edu (for US/Canada/etc.)
+Leave Subject blank, and enter only this line in the body of the note:
+  GET INTERNET BY-EMAIL NETTRAIN F=MAIL
+ 
+Or: MAILBASE@mailbase.ac.uk (for UK/Europe/etc.)
+Leave Subject blank, and enter only this line in the body of the note:
+  send lis-iis e-access-inet.txt
+ 
+You can also get the file by anonymous FTP at either of these sites:
+ 
+At: ubvm.cc.buffalo.edu                 Or: mailbase.ac.uk
+  cd NETTRAIN                              cd pub/lists/lis-iis/files/
+  get INTERNET BY-EMAIL                    get e-access-inet.txt
+ 
+If you prefer, you can Gopher to:  mailbase.ac.uk
+>From the root menu, follow this path to get the file:
+  Mailbase lists - K-O / lis-iis / Other files / e-access-inet.txt /
+ 
+For WWW access here's the URL you need:
+  gopher://nisp.ncl.ac.uk:70/00/lists-k-o/lis-iis/files/e-access-inet.txt
+ 
+Regards,
+Doctor Bob  <BobRankin@Delphi.Com>
+ 
+
+

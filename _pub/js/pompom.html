@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<!--
+	Bots want to be a certain distance from each other
+
+	Stupid IE needs the above "Mark of the Web" comment - with a fucking
+	trailing \r - to allow JavaScript from a local file.  To protect the \r
+	from delete-trailing-whitespace we have to kill write-contents-functions.
+
+	Local variables:
+	write-contents-functions: nil
+	End:
+
+	start firefox -new-window file:%USERPROFILE%/Projects/FOLDOC/foldoc/pub/js/pompom.html
+-->
+
+<html>
+<head>
+<title>Pompom</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/pompom.html">
+<style type="text/css">
+  body { overflow: hidden } /* Prevent scrollbars with no margin */
+  canvas { margin-left: -8px; margin-top: -8px }
+  div#message { z-index: 1; position: absolute; top: 20px; left: 20px; background: white }
+</style>
+</head>
+<body>
+<div id="message"></div>
+<canvas id="canvas">No canvas</canvas>
+<script>
+"use strict";
+
+const TWO_PI = 2*Math.PI;
+const RGB = [0, 1, 2];
+
+
+// Bot  ///////////////////////////////////////////////////////////////////////////////////////////
+
+class Bot extends Object
+{
+	// A new Bot positioned at the group start location
+
+	constructor(group)
+	{
+		super();
+		this.group = group;
+		this.x = group.start.x;
+		this.y = group.start.y;
+	}
+
+	run_bot()
+	{
+		var g = this.group,
+			to_target = p(g.target.p),
+			t = to_target ? g.target : g.bots.any(),
+			x1 = this.x, y1 = this.y,
+			dx = t.x - x1, dy = t.y - y1,					// Vector towards target
+			a = ((dx || dy) ? Math.atan2(dx, dy) : 0) + g.turn,
+			v = g.velocity;
+		if (! to_target && dx*dx + dy*dy < g.d2) v = -v;	// Too close?  Move away.
+		if (g.theta) a = quant(a, g.theta);					// Quantise movement angle
+		var x2 = x1 + v * Math.sin(a) + (Math.random()-0.5), y2 = y1 + v * Math.cos(a);
+		this.x = x2; this.y = y2;
+		if (g.delta1) { x1 = quant(x1, g.delta1); y1 = quant(y1, g.delta1) } // Quantise pos
+		if (g.delta2) { x2 = quant(x2, g.delta2); y2 = quant(y2, g.delta2) } // Quantise dest
+
+		var ctx = this.group.field.ctx;
+		ctx.beginPath();
+		ctx.strokeStyle = g.stroke.rgb();
+		if (g.line) { ctx.moveTo(x1, y1); ctx.lineTo(x2, y2) }
+		if (g.fill) ctx.fillStyle = g.fill.rgb()
+		if (g.radius)
+		{
+			var sx = g.start.x, sy = g.start.y,
+				ox = x1 - sx, oy = y1 - sy;
+			var transforms =
+			[
+			  [ 1, 0, 0, 1],
+			  [-1, 0, 0,-1],
+			  [ 1, 0, 0,-1],
+			  [-1, 0, 0, 1],
+			  [ 0, 1, 1, 0],
+			  [ 0,-1, 1, 0],
+			  [ 0, 1,-1, 0],
+			  [ 0,-1,-1, 0],
+			];
+			transforms
+			  .slice(0, g.reflect)
+			  .forEach(t =>
+			{
+				var x = sx + t[0]*ox + t[1]*oy, y = sy + t[2]*ox + t[3]*oy;
+				ctx.beginPath();
+				ctx.arc(x, y, g.radius, a, a+TWO_PI);
+				if (g.fill) ctx.fill();
+				ctx.stroke();
+			});
+		}
+		if (g.rect) ctx.rect(x1, y1, 4*(x2-x1), 4*(y2-y1));			// x, y, w, h
+		if (g.fill) ctx.fill();
+		ctx.stroke();
+	}
+}
+
+
+// Group  /////////////////////////////////////////////////////////////////////////////////////////
+
+class Group extends Object
+{
+	constructor(field, template)
+	{
+		super();
+		if (template)
+		{
+			Object.assign(this, template);
+			this.bots = [];
+			this.stroke = this.stroke.clone(); // Clone colours
+			this.fill = this.fill && this.fill.clone();
+		}
+		this.field = field;
+		this.id = Group.id();
+		this.age = rand(0, 1000);
+		this.set_start();
+		this.set_target();
+		this.set_bots();				// Needs start
+
+		if (template) return;
+
+		this.set_shape();
+		this.set_dt();
+		this.set_velocity();
+		this.set_delta();
+		this.set_theta();
+		this.set_colour("stroke");
+		this.set_colour("fill");		// After shape
+	}
+
+	// Return the next group id starting at 1 and incrementing mod 100
+
+	static id()
+	{
+		Group.group_id = ((Group.group_id || 0) + 1) % 100;
+
+		return Group.group_id;
+	}
+
+	run_group()
+	{
+		if (this.aged(   19)) { this.step("stroke"); this.step("fill") } // 1 - 99
+		if (this.aged( 6231)) this.set_dt();
+		if (this.aged( 7180)) this.set_velocity();
+		if (this.aged( 9949)) this.set_target();
+		if (this.aged(10234)) this.set_theta();
+		if (this.aged(15337)) this.set_bots();
+		if (this.aged(19423)) this.set_delta();
+		if (this.aged(29700)) this.set_shape();
+		this.age++;
+		this.bots.mapm("run_bot");
+	}
+
+	aged(n) { return this.age % n == 0 }
+
+	set_shape()
+	{
+		var s = Math.random();
+		this.line = s < 0.7;
+		this.radius = ! this.line && s < 0.9 && 0.5 * (1 << rand(0, 5, 4));
+		this.reflect = 1 << rand(0, 3);
+		this.rect = ! this.line && ! this.radius;
+		this.log((this.line ? "line " : "")
+			+ (this.radius ? "radius " + this.radius + " refect " + this.reflect : "")
+			+ (this.rect ? "rect" : ""));
+	}
+
+	// Set the given colour property.  Every shape has a stroke
+	// colour, shapes with radius or rect may have a fill colour.
+
+	set_colour(property)
+	{
+		const enable = property == "stroke" || (this.radius || this.rect) && p(0.5);
+		// Multiple fades for property ??
+		this[property] = enable && new Fade(this[property] && this[property].c);
+		if (this[property]) this.log(property + " " + this[property].toString());
+	}
+
+	step(property)
+	{
+		if (this[property] && this[property].step())
+			this.set_colour(property);
+	}
+
+	// Set new birthplace
+
+	set_start()
+	{
+		this.start = this.field.clicked || this.field.random_pos();
+		this.log("start", show_pos(this.start));
+	}
+
+	set_target()
+	{
+		this.target = this.field.random_pos();
+		this.target.p = 0.1 * rand(0, 5, 3);
+		if (this.target.p)
+			this.log("target", show_pos(this.target) + ' ' + show_prob(this.target.p));
+	}
+
+	// Set distance and turn
+
+	set_dt()
+	{
+		this.d2 = Math.random();
+		this.turn = 2 * Math.pow(Math.random() - 0.5, 2); // +- 1 rad
+		this.log("d2", Math.floor(100*this.d2) + '%',
+				 'turn', Math.floor(360 * this.turn / TWO_PI));
+		this.d2 *= this.field.d2_max;
+		this.d2 = Math.floor(this.d2);
+	}
+
+	set_velocity()
+	{
+		this.velocity = rand(1, 4);
+		this.log("velocity", show_num(this.velocity, 2));
+	}
+
+	set_delta()
+	{
+		this.delta1 = p(0.1) && rand(2, 20, 2);
+		this.delta2 = p(0.1) && rand(2, 20, 2);
+		if (this.delta1 || this.delta2)
+			this.log("delta", this.delta1, this.delta2);
+	}
+
+	set_theta()
+	{
+		this.theta = p(0.2) && rand(3, 8),
+		this.log("theta", this.theta);
+		if (this.theta) this.theta = TWO_PI / this.theta;
+	}
+
+	set_bots()
+	{
+		if (! this.bots) this.bots = [];
+		var n = rand(10, 500);
+		this.log("set from", this.bots.length, "to", n);
+		while (this.bots.length > n) this.kill_bot();
+		if (this.bots.length >= n)
+			return;
+		n -= this.bots.length;
+		while (n--) this.bots.push( new Bot(this) );
+	}
+
+	kill_bot()
+	{
+		var v = Math.floor(this.bots.length * Math.random());
+		this.bots = this.bots.slice(0, v).concat(this.bots.slice(v+1));
+	}
+
+	log() { console.log(this.id + ":", ...arguments) }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Field extends Object
+{
+	constructor()
+	{
+		super();
+		if (Field.field) throw "Multiple fields!";
+		Field.field = true;
+		this.groups = [];
+		this.loop_ms = [0, 100, 1E3, 1E4]; 	// Possible pauses between iterations
+		this.canvas = document.getElementById("canvas");
+		this.ctx = this.canvas.getContext('2d');
+		this.resize();
+		this.run_field();
+	}
+
+	resize()
+	{
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+		var s = 0.6 * Math.min(this.canvas.width, this.canvas.height);
+		this.d2_max = Math.floor(s * s);
+		this.clear();
+	}
+
+	clear()
+	{
+		var p = rand(1, 10),
+			c = new Colour(RGB.map(() => p < 4 ? 0 : p > 7 ? 255 : rand(0, 255)));
+		this.ctx.fillStyle = c.rgb();
+		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.stroke();
+		console.log('clear', c.toString());
+	}
+
+	// Request for full screen must be initiated by user action in Chrome or Firefox
+	// Firefox fix - https://stackoverflow.com/a/27078920/285129
+	// about:config > full-screen-api.allow-trusted-requests-only: false
+
+	fullscreen()
+	{
+		if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
+		var d = document.documentElement,
+			f = d.webkitRequestFullscreen || d.requestFullscreen ||
+			d.msRequestFullscreen || d.mozRequestFullScreen;
+		if (! f) return console.log('No full screen API');
+		f.call(d);
+	}
+
+	// Return a postion in the middle 60% of the field
+
+	random_pos()
+	{
+		const w = this.canvas.width, h = this.canvas.height;
+		const m1 = 0.2, m2 = 1-m1;
+
+		return { x: rand(m1*w, m2*w), y: rand(m1*h, m2*h) };
+	}
+
+	// Add or remove groups, move them all once, pause, repeat
+
+    run_field()
+    {
+        if (p(0.00025)) this.clear();
+
+        var n = this.groups.length;
+        var g, pm;
+        if (! n || this.clicked || p(5E-5*(5-n)))
+        {
+			var template;
+            if (n && p(0.9))
+            {
+                template = this.groups.any(); pm = "cloned";
+            }
+            else
+            {
+                pm = "added";
+            }
+			g = new Group(this, template);
+			this.groups.push(g);
+        }
+        else if (p(0.0002*(n-1)))
+        {
+            g = (this.groups.splice(Math.floor(n * Math.random()), 1))[0];
+			pm = "removed";
+        }
+		this.clicked = undefined;
+        if (g) console.log(g.id + ": " + pm + " -> " + this.groups.length);
+        this.groups.mapm("run_group");
+		var _this = this;
+		setTimeout(function () {_this.run_field()}, _this.loop_ms[0]);
+    }
+
+	change_speed()
+	{
+		this.loop_ms.push(this.loop_ms.shift());
+		console.log('delay', this.loop_ms[0]);
+		Message.show("Delay", this.loop_ms[0], "ms");
+	}
+
+	// Handle click by setting clicked position
+
+	handle_click(x, y) { this.clicked = {x, y} }
+
+	// Handle various key presses
+
+	handle_key(k)
+	{
+		var f =
+		{
+			C: () => this.clear(),
+			F: this.fullscreen,
+			Q: close_window,
+			R: reload,
+			S: () => this.change_speed(),
+		}[k];
+		if (f) return f();
+		Message.show("Key:", k, "\n\nKeys:\n",
+			"Q: close\nC: clear\nF: fullscreen\nR: reload\nS: change speed");
+	}
+}
+
+
+// Fade  ///////////////////////////////////////////////////////////////////////////////////////////
+
+// Fade from colour c to next
+
+class Fade
+{
+	constructor(c, next)
+	{
+	  this.c = c || new Colour();
+	  this.next = next || new Colour();
+	}
+
+	clone() { return new Fade(this.c.clone(), this.next.clone()) }
+
+	// Step the fade towards its target.  If it gets there, call the callback.
+
+	step() { return this.c.approach(this.next) }
+
+	rgb() { return this.c.rgb() }
+
+	toString() { return this.c.toString() + " -> " + this.next.toString() }
+}
+
+
+// Colour //////////////////////////////////////////////////////////////////////////////////////////
+
+// An Array extension containing [r, g, b] decimal integers in 0..255
+
+class Colour extends Array
+{
+	// Return a Colour whose components are copied from the given array or random
+
+	constructor(rgb) { super(); RGB.forEach(i => this[i] = rgb ? rgb[i] : rand(0, 255)) }
+
+	clone() { return new Colour(this) }
+
+	// Pick a colour component and move the colour's toward the target's.
+	// Return true if no component is far from the target.
+
+	approach(target)
+	{
+		RGB.forEach(i => this[i] += this[i] < target[i] ? 1 : -1);
+
+		return ! RGB.some(i => Math.abs(this[i] - target[i]) > 2);
+	}
+
+	rgb() { return "rgb(" + this.join(",") + ")" }
+
+	toString() { return this.map(hex).join("-") }
+}
+
+// Return X as 2 upper case hex digits
+
+function hex(x) { return ("0" + x.toString(16)).substr(-2).toUpperCase() }
+
+
+// Message /////////////////////////////////////////////////////////////////////////////////////////
+
+class Message
+{
+	static show()
+	{
+		var el = document.getElementById("message");
+		el.innerHTML = Array.from(arguments).join(" ").replace(/\n/g, "<br>");
+		el.style.zIndex = 1;
+		setTimeout(function () { el.style.zIndex = -1 }, 2000);
+	}
+}
+
+
+// Array  //////////////////////////////////////////////////////////////////////////////////////////
+
+// Return a shallow clone of an array
+
+Array.prototype.clone = function () { return Object.assign([], this) };
+
+Array.prototype.any = function ()
+{
+	var i = Math.floor(this.length * Math.random());
+
+	return this[i];
+}
+
+// Map a method over an array.  Method will be called like e.method(i, array).
+
+Array.prototype.mapm = function (method)
+{
+	return this.length
+		? this.map(Function.prototype.call.bind(this[0][method]))
+		: [];
+};
+
+
+// Events & Window ////////////////////////////////////////////////////////////////////////////////
+
+var field, moving = false, old_x = 0, old_y;
+
+document.onclick = click;
+document.onmousemove = click;
+
+function click(e)
+{
+	if (e.buttons == 2) return;			// Ignore right-click
+	// Stationary click -> type 'click'.  Drag -> mousemove.
+	// Ignore first "click" after movement.
+	var click = e.type == 'click' && ! moving;
+	if (click) field.fullscreen();
+	// Ignore mouse move unless button pressed and moved > 1 pixel
+	moving = e.type == 'mousemove' && e.buttons && old_x
+	  && Math.abs(e.clientX - old_x) + Math.abs(e.clientY - old_y) > 1;
+	old_x = e.clientX; old_y = e.clientY;
+	if (! click && ! moving) return;
+	field.handle_click(e.offsetX, e.offsetY);
+};
+
+// Wait until done resizing
+
+var resize_timeout;
+window.onresize = function ()			// Not document
+{
+	if (resize_timeout) clearTimeout(resize_timeout);
+	resize_timeout = setTimeout(function () {field.resize()}, 500)
+};
+
+// Handle key press
+
+window.onkeydown = function (e)			// onkeypress doesn't get ESC
+{
+	var k = e.keyCode;
+	var k = k == 27 ? "Esc" : String.fromCharCode(k);
+	field.handle_key(k);
+}
+
+function reload() { location.reload(false) }
+
+// JavaScript can close the window if it opened it.	 It can't
+// open a page from a different domain, including no domain.
+// http://thecodecave.com/2006/07/20/how-to-get-around-access-is-denied-in-a-windowopen-javascript-call/
+
+function close_window() { window.open(location.href, '_self', '').close() }
+
+// Utilities //////////////////////////////////////////////////////////////////////////////////////
+
+// Return the results of calling f(i) for i = 0 .. n-1
+
+function n_results(n, f)
+{
+	var r = [];
+	for (var i = 0; i < n; i++) r.push(f(i));
+
+	return r;
+}
+
+// Return true with probability x
+
+function p(x) { return Math.random() < x }
+
+// Return a random int, min <= r <= max
+
+function rand(min, max, pow)
+{
+	var r = Math.random();
+	if (pow) r = Math.pow(r, pow);
+	return Math.floor(min + (max+1 - min) * r);
+}
+
+function show_num(x, d)
+{
+	return x.toLocaleString(0, {minimumFractionDigits: d, maximumFractionDigits: d});
+}
+
+function show_pos(p) { return '(' + p.x + ',' + p.y + ')' }
+
+function show_prob(p) { return 'p ' + show_num(p, 2) }
+
+// Return the multiple of m nearest to x
+
+function quant(x, m) { return Math.floor(x / m + 0.5) * m }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+field = new Field();
+
+</script>
+</body>
+</html>

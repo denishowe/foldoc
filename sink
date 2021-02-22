@@ -1,8 +1,14 @@
-#!/bin/sh
+#!/bin/sh -x
 
-# sshargs is set in ~/Library/Application Support/Unison/scaleway.prf
+# C:/Bin/sink.cmd passes this to bash
 
-u="unison -ui text scaleway"
+# Mac
+# u="$HOME/Applications/Unison.app/Contents/MacOS/Unison-gui -ui text"
+# --> Symlink on PATH?
+# sshargs for Unison is set in ~/Library/Application Support/Unison/foldoc.prf
+
+export UNISON=C:/Users/denis/Documents/Tech/Unison/home
+u="unison foldoc"
 $u -batch || $u
-ssh -l denis -i ~/.ssh/personal/id_rsa foldoc make --directory=/var/www/foldoc.org
+ssh -l denis foldoc make --directory=/var/www/foldoc.org
 $u -batch || $u

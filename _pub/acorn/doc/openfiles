@@ -1,0 +1,46 @@
+From mhw@minster.york.ac.uk Fri Apr  2 18:56:57 1993
+From: mhw@minster.york.ac.uk
+Newsgroups: comp.sys.acorn.tech
+Subject: Re: file handles
+Date: 1 Apr 93 10:08:54 GMT
+Reply-To: mhw@minster.york.ac.uk (Mark H. Wilkinson)
+Organization: Department of Computer Science, University of York, England
+
+In article <1993Mar31.170603.9464@infodev.cam.ac.uk> ojwb1@phx.cam.ac.uk writes:
+>If someone will tell me the call, I'll write it.
+
+Ok; there seems to be a demand for this...
+
+> From: Brian.Brunswick@cl.cam.ac.uk (Brian Brunswick on ely.cl.cam.ac.uk)
+> Sender: news@cl.cam.ac.uk (The news facility)
+> Newsgroups: comp.sys.acorn
+> Subject: Files - display all open files on RO3
+> Message-ID: <1992Jun2.135544.20232@cl.cam.ac.uk>
+> Date: 2 Jun 92 13:55:44 GMT
+> Reply-To: Brian.Brunswick@cl.cam.ac.uk (Brian Brunswick)
+> Organization: U of Cambridge Computer Lab, UK
+> Lines: 17
+> 
+> One of the useful things that RO3 has gained is a way to go
+> back from a file handle to the name of the file that was opened.
+> 
+> The 6 line BASIC program below does this, and is incredibly useful
+> for finding out whats going on in your machine, and cleaning up
+> after a developement program crashes.
+> 
+> I see no point in not posting something this small.
+> 
+> REM > Files
+> DIM buffer 256
+> FOR S=255 TO 0 STEP -1
+> SYS "XOS_Args",7,S,buffer,256,256,256 TO ,,,,,r5;V
+> buffer?(256-r5)=13
+> IF (V AND 1)=0 THEN PRINTS;":";$buffer
+> NEXT
+> Brian.Brunswick@cl.cam.ac.uk  Disclaimer.  Short sig rules!
+
+-Mark.
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Mark H. Wilkinson (mhw@minster.york.ac.uk)
+

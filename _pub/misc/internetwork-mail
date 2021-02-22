@@ -1,0 +1,841 @@
+From yanoff@csd4.csd.uwm.edu (Scott A. Yanoff) Wed Feb 16 11:52:31 1994
+Path: doc.ic.ac.uk!uknet!pipex!howland.reston.ans.net!vixen.cso.uiuc.edu!uwm.edu!csd4.csd.uwm.edu!yanoff
+From: yanoff@csd4.csd.uwm.edu (Scott A. Yanoff)
+Newsgroups: comp.mail.misc,alt.bbs.lists,alt.internet.services,comp.misc,news.answers,comp.answers
+Subject: Updated Inter-Network Mail Guide
+Followup-To: poster
+Date: 15 Feb 1994 16:41:19 GMT
+Organization: University of Wisconsin - Milwaukee, WI
+Lines: 825
+Approved: news-answers-request@MIT.Edu
+Message-ID: <2jqtvfINNj6h@uwm.edu>
+NNTP-Posting-Host: 129.89.7.4
+Summary: Added Nifty Serve.
+Xref: doc.ic.ac.uk comp.mail.misc:14431 alt.bbs.lists:4228 alt.internet.services:17422 comp.misc:19726 news.answers:17917 comp.answers:3785
+
+Archive-name: mail/inter-network-guide
+
+VERSION: $Date: 2/15/93 $
+
+           * INTER-NETWORK MAIL GUIDE:    Last Update: 2/15/93 *
+
+ Further modifications and (C) 1994 by Scott Yanoff (yanoff@csd4.csd.uwm.edu)
+ Inter-Network Mail Guide - Original Copyright (C) 1992 by John J. Chew
+
+ This guide is available via anonymous ftp to: csd4.csd.uwm.edu
+
+ INTRODUCTION
+
+ This file documents methods of sending mail from one network to another.
+ It represents the aggregate knowledge of the readers of comp.mail.misc
+ and many contributors elsewhere.  If you know of any corrections or
+ additions to this file, please follow the instructions in the section
+ entitled 'HOW TO FORMAT INFORMATION FOR SUBMISSION' and then mail the
+ information to me: Scott A. Yanoff <yanoff@csd4.csd.uwm.edu>. 
+
+ HOW TO USE THIS GUIDE
+
+ If you just want to browse the guide manually for information, this is what
+ you need to know.  The guide is organized as a list of entries.  Each entry
+ tells you how to get from one network to another.  Here is what a typical
+ entry might look like:
+
+   FROM: mynet
+   TO: yournet
+   RECIPIENT: youraddress
+   CONTACT: contactaddress
+   INSTR: send to 'youraddress@thegateway'
+
+ This means that to send mail FROM a network called 'mynet' TO a
+ RECIPIENT address 'youraddress' on a network called 'yournet', you
+ should follow the INSTRUCTIONS shown and address your mail to
+ 'youraddress@thegateway'.
+
+ Names and descriptions of the possible FROM and TO fields:
+
+N: aol           ; America Online; America Online, Inc.; commercial;
+N: alternex      ; AlterNex; IBASE; non-profit;
+N: applelink     ; AppleLink; Apple Computer, Inc.; commercial;
+N: arcom         ; ArCom; Swiss PTT; commercial; X.400 only
+N: att           ; AT&T Mail; AT&T; commercial;
+N: bitnet        ; BITNET; none; academic;
+N: bix           ; Byte Information eXchange; Byte magazine; commercial;
+N: bmug          ; BMUG ; Berkeley Macintosh Users Group; in-house;
+N: calvacom      ; Calvacom;
+- Reseau & Communication Informatique (RCI-Calvacom); commercial;
+N: chasque       ; Chasque; Instituto del Tercer Mundo; non-profit;
+N: comlink       ; ComLink; ? ; non-profit;
+N: compuserve    ; CompuServe; CompuServe Inc.; commercial;
+N: connect       ; Connect Professional Information Network; ?; commercial;
+N: easylink      ; Easylink; AT&T; commercial;
+N: easynet       ; Easynet; DEC; in-house;
+N: econet        ; EcoNet; Institute for Global Communications; non-profit;
+N: ecuanex       ; EcuaNex; ? ; non-profit;
+N: envoy         ; Envoy-100; Telecom Canada; commercial; X.400
+N: fax           ; Facsimile document transmission; none; none;
+N: fidonet       ; FidoNet; none; bbs;
+N: genie         ; GEnie; GE Information Services; commercial;
+N: geonet        ; GeoNet Mailbox Systems; 
+- Geonet Mailbox Services GmbH/Systems Inc.; commercial;
+N: glasnet       ; GlasNet; ? ; non-profit;
+N: gold-400      ; GNS Gold 400; British Telecom; commercial; X.400
+N: goldgate      ; GoldGate Telcom Gold; Net-Tel Computer Systems; ?;
+N: greennet      ; GreenNet; Soft Solutions Ltd; commercial;
+N: gsfcmail      ; GSFCmail; NASA/Goddard Space Flight Center; in-house;
+N: ibm           ; VNET; IBM; in-house;
+N: ibmmail       ; ?; IBM; commercial;
+N: internet      ; Internet; none; academic;
+N: keylink       ; KeyLink; Telecom Australia; commercial; X.400
+N: mailnet       ; X.400; ?; ?;
+N: mausnet       ; Mausnet; Mausnet; non-profit;
+N: mci           ; MCIMail; MCI; commercial;
+N: nasamail      ; NASAMail; NASA; in-house;
+N: nicarao       ; Nicarao; CRIES; non-profit;
+N: niftyserve    ; Nifty Server; ?; commercial;
+N: nordnet       ; NordNet; ? ; non-profit;
+N: nsi           ; NASA Science Internet; NASA; government;
+-  Dual-protocol: instructions given here pertain only to NSI-DECnet addresses
+-  (NSI-TCP/IP addresses should be treated as shown for 'internet')
+N: omnet         ; OMNET; OMNET; commercial;
+N: peacenet      ; PeaceNet/EcoNet; Institute for Global Communications;
+- non-profit;
+N: pegasus       ; Pegasus; Pegasus Networks; non-profit;
+N: prodigy       ; PRODIGY; commercial; ?;
+N: pronet        ; Pro-Net Australia; National Info. Resource Gateway; ?;
+N: sinet         ; Schlumberger Information NETwork; ?; ?;
+N: sprintmail    ; SprintMail; Sprint; commercial;
+N: telecom       ; Telecom Australia; National Videotex Network; ?;
+N: thenet        ; Texas Higher Education Network; University of Texas;
+- academic ;
+N: web           ; The Web; Nirv Community Resource Centre; non-profit;
+N: wwivnet       ; WWIVnet; WWIVnet; non-profit;
+
+ The 'RECIPIENT' record gives an example of an address on the
+ destination network, to make it clear in subsequent lines what text
+ requires subsitution.
+
+ The 'CONTACT' record gives an address for inquiries concerning the
+ gateway, expressed as an address reachable from the source (#FROM:) network.
+ Presumably, if you can't get the gateway to work at all, then knowing
+ an unreachable address on another network will not be of great help.
+
+ The 'INSTR' records, of which there may be several, give verbal
+ instructions to a user of the source network to let them send mail
+ to a user on the destination network.  Text that needs to be typed
+ will appear in double quotes, with C-style escapes if necessary.  If
+ the instructions consist simply of mailing to a certain address, this
+ will be indicated by the words 'send to' followed by a quoted address.
+ If there are alternative addresses, they will be marked 'or to' instead.
+
+ HOW TO FORMAT INFORMATION FOR SUBMISSION
+
+ Here is what I really want in the way of information.  If you are adding
+ a new network to the list, tell me what its official name is (pay attention
+ to capitalization), what the name of its responsible organization is, and
+ what kind of a network it is (academic, commercial, government, in-house
+ or non-profit).  If this isn't clear, look at the examples above.
+ For each connection, give me an entry that looks something like:
+
+  FROM: foonet
+  TO: barnet
+  RECIPIENT: baraddress
+  CONTACT: contactaddress
+  INSTR: send to 'baraddress@thegateway'
+
+ Note that 'contactaddress' must be an address expressed in foonet's native
+ format, and not that of barnet, since if a user is having trouble accessing
+ barnet, giving him/her an address on that net to contact for help is not
+ productive.  If there is no contact/postmaster address, please tell me.
+ If there are more complicated instructions, use additional #INSTR: lines.
+
+ Once you've got all the information together, send it to me in an e-mail
+ message with the words 'INMG update' in the Subject: line.  You can in
+ general expect an answer back from me within a week.
+
+FROM: aol
+TO: applelink
+RECIPIENT: user
+CONTACT: Internet
+INSTR: send to 'user@applelink'
+
+FROM: aol
+TO: compuserve
+RECIPIENT: 71234,567
+CONTACT: Internet
+INSTR: send to '71234.567@cis'
+
+FROM: aol
+TO: genie
+RECIPIENT: user
+CONTACT: Internet
+INSTR: send to 'user@genie'
+
+FROM: aol
+TO: internet
+RECIPIENT: user@domain
+CONTACT: Internet
+INSTR: send to 'user@domain'
+
+FROM: applelink
+TO: bitnet
+RECIPIENT: user@site
+INSTR: send to 'user@site.bitnet@internet#'
+
+FROM: applelink
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to 'user@domain@internet#' (address must be < 35 characters)
+
+FROM: arcom
+TO: internet
+RECIPIENT: fred@Domain.dd.uu.us
+INSTR: send to: 
+- PN=/C=ch/O=inet/ADMD=SWITCHgate/DDA=RFC-822=fred(a)Domain.dd.uu.us
+
+FROM: att
+TO: bitnet
+RECIPIENT: user@site
+INSTR: send to 'internet!site.bitnet!user'
+
+FROM: att
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to 'internet!domain!user'
+
+FROM: bitnet
+TO: internet
+RECIPIENT: user@domain
+INSTR: Methods for sending mail from Bitnet to the Internet vary depending on
+-      what mail software is running at the Bitnet site in question.  In the
+-      best case, users should simply be able to send mail to 'user@domain'.
+-      If this doesn't work, try 'user%domain@gateway' where 'gateway' is a
+-      Bitnet-Internet gateway site nearby.  Finally, if neither of these
+-      works, you may have to try hand-coding an SMTP envelope for your mail.
+
+FROM: calvacom
+TO: fax
+RECIPIENT: (1) 41 08 11 99
+INSTR: send to 'TLC/41081199'
+INSTR: use standard phone numbers as calling from Paris, France.
+
+FROM: calvacom
+TO: internet
+RECIPIENT: user@domain
+CONTACT: postmaster@calvacom.fr
+INSTR: send to 'EM/user@domain'
+
+FROM: calvacom
+TO: easylink
+RECIPIENT: number
+CONTACT: 19000600
+INSTR: send to 'ML/number'
+INSTR: Calvacom professionnal account needed.
+
+FROM: compuserve
+TO: fax
+RECIPIENT: +1 415 555 1212
+INSTR: send to '>FAX 14155551212'
+INSTR: not transitive - message must originate from a CompuServe user
+INSTR: for calls outside the NANP, use '011' as the international prefix
+
+FROM: compuserve
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to '>INTERNET:user@domain' (only from CompuServe users)
+
+FROM: compuserve
+TO: mci
+RECIPIENT: 123-4567
+INSTR: send to '>MCIMAIL:123-4567' (only from CompuServe users)
+
+FROM: connect
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to 'DASN'
+-      and set the first line of message: '"user@domain"@DASN'
+
+FROM: easylink
+TO: calvacom
+RECIPIENT: JS10 (John Smith)
+INSTR: send to '19000600 /ATTN JS10 SMITH+'
+
+FROM: easynet
+TO: bitnet
+RECIPIENT: user@site
+CONTACT: DECWRL::ADMIN
+INSTR: send to 'nm%DECWRL::"user@site.bitnet"' (from VMS using NMAIL)
+INSTR: send to 'user@site.bitnet' (from Ultrix)
+INSTR:   or to 'user%site.bitnet@decwrl.dec.com' (from Ultrix via IP)
+INSTR:   or to 'DECWRL::"user@site.bitnet"' (from Ultrix via DECN)
+
+FROM: easynet
+TO: fidonet
+RECIPIENT: john smith at 1:2/3.4
+CONTACT: DECWRL::ADMIN
+INSTR: send to 'nm%DECWRL::"john.smith@p4.f3.n2.z1.fidonet.org"'
+-      (from VMS using NMAIL)
+INSTR: send to 'john.smith@p4.f3.n2.z1.fidonet.org'
+-      (from Ultrix)
+INSTR: or to '"john.smith%p4.f3.n2.z1.fidonet.org"@decwrl.dec.com'
+-      (from Ultrix via IP)
+INSTR: or to 'DECWRL::"john.smith@p4.f3.n2.z1.fidonet.org"'
+-      (from Ultrix via DECN)
+
+FROM: easynet
+TO: internet
+RECIPIENT: user@domain
+CONTACT: DECWRL::ADMIN
+INSTR: send to 'nm%DECWRL::"user@domain"' (from VMS using NMAIL)
+INSTR: send to 'user@domain' (from Ultrix)
+INSTR:   or to 'user%domain@decwrl.dec.com' (from Ultrix via IP)
+INSTR:   or to 'DECWRL::"user@domain"' (from Ultrix via DECN)
+INSTR:   or to 'user@domain @Internet' (using ALL-IN-1)
+
+FROM: envoy
+TO: internet
+RECIPIENT: user@domain
+CONTACT: ICS.TEST or ICS.BOARD
+INSTR: send to '[RFC-822="user(a)domain"]INTERNET/TELEMAIL/US'
+INSTR: for special characters, use @=(a), !=(b), _=(u),
+INSTR:          any=(three octal digits)
+
+FROM: fax
+TO: calvacom
+RECIPIENT: JS10 (John Smith)
+INSTR: send to '+33 1 41 08 11 99'
+INSTR: and write on every pages 'ATTN JS10 SMITH'
+INSTR: fax are manually processed.
+
+FROM: fidonet
+TO: internet
+RECIPIENT: user@machine.site.domain
+INSTR: convert to 'user@machine.site.domain ON 1:1/31
+
+FROM: fidonet
+TO: wwivnet
+RECIPIENT: number@node
+CONTACT: Kevin C. ON 1:100/215
+INSTR: convert to '#number @node ON 1:100/215'
+INSTR: WWIVgate; LOW TRAFFIC SITE, USE SPARINGLY..  Gateway is modem-based,
+-      they absorb cost of long distance connects to pick-up and deliver.
+-      Keep messages under 10K, use infrequently, do NOT use mail-lists or
+-      file/list-server commands.
+
+FROM: genie
+TO: internet
+RECIPIENT: user@domain
+CONTACT: postmaster@genie.geis.com
+INSTR: send to user@domain@INET#
+
+FROM: geonet
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to 'DASN'
+INSTR: set subject line to 'user@domain!subject'
+
+FROM: gold-400
+TO: internet
+RECIPIENT: user@host
+INSTR: send to '/DD.RFC-822=user(a)host/O=uknet/PRMD=uk.ac/ADMD=gold 400/C=GB/'
+INSTR: for special characters, use @=(a), %=(p), !=(b), "=(q)
+
+FROM: gsfcmail
+TO: internet
+RECIPIENT: user@domain
+CONTACT: cust.svc
+INSTR: send to '(SITE:SMTPMAIL,ID:<user(a)domain>)'
+INSTR: or to '(C:USA,A:TELEMAIL,P:SMTPMAIL,ID:<user(a)domain>)'
+INSTR: or send to 'POSTMAN'
+-      and set the first line of message to 'To: user@domain'
+INSTR: Help is also available by phoning +1 800 858 9947.
+
+FROM: gsfcmail
+TO: nsi
+RECIPIENT: host::user
+CONTACT: cust.svc
+INSTR: send to '(SITE:SMTPMAIL,ID:<user(a)host.DN.NASA.GOV>)'
+INSTR: or to '(C:USA,A:TELEMAIL,P:SMTPMAIL,ID:<user(a)host.DN.NASA.GOV>)'
+INSTR: or send to 'POSTMAN'
+-      and set the first line of message to 'To: user@host.DN.NASA.GOV'
+
+FROM: ibmmail
+TO: internet
+RECIPIENT: "userid@domain"
+INSTR: imbed the following lines in messages sent from IBMMAIL and address 
+- the message to IBMMAIL(INTERNET)
+- /INTERNET
+- /TO userid1@domain
+- /CC userid2@domain
+- /REPORT
+- /END
+
+FROM: internet
+TO: alternex
+RECIPIENT: user
+CONTACT: suporte@ax.apc.org or +55 (21) 286-0348
+INSTR: send to 'user@ax.apc.org'
+
+FROM: internet
+TO: aol
+RECIPIENT: A User
+CONTACT: postmaster@aol.com
+INSTR: send to auser@aol.com (all lower-case, remove spaces)
+INSTR: msgs are truncated to 32K (8K for PCs), all characters except newline
+-      & printable ASCII characters are mapped to spaces, users are limited to
+-      75 pieces of Internet mail in their mailbox at a time.
+
+FROM: internet
+TO: applelink
+RECIPIENT: user
+INSTR: send to 'user@applelink.apple.com'
+
+FROM: internet
+TO: arcom
+RECIPIENT: fred@swissbox.inet.ch
+INSTR: send to:
+- /DDA=SYS=11000/DDA=UFD=TSC000/G=/PN=fred/O=swissbox/A=arCom/C=CH/
+
+FROM: internet
+TO: att
+RECIPIENT: user
+INSTR: send to 'user@attmail.com'
+
+FROM: internet
+TO: bitnet
+RECIPIENT: user@site
+INSTR: send to 'user%site.bitnet@gateway' where 'gateway' is a gateway host
+-      that is on both the internet and bitnet.  Some examples of gateways
+-      are: cunyvm.cuny.edu mitvma.mit.edu.  Check first to see what local
+-      policies are concerning inter-network forwarding.
+
+FROM: internet
+TO: bix
+RECIPIENT: user
+INSTR: send to 'user@bix.com'
+
+FROM: internet
+TO: bmug
+RECIPIENT: John Smith or John J. Smith
+CONTACT: Email the director: Steve_Costa@bmug.org or phone (510)849-BMUG
+INSTR: send to 'John.Smith@bmug.org'  or 'John_J_Smith@bmug.org'
+
+FROM: internet
+TO: calvacom
+RECIPIENT: JS10 (John Smith)
+INSTR: send to 'js10@calvacom.fr'
+INSTR: msgs are limited to 100 000 chars each.
+
+FROM: internet
+TO: chasque
+RECIPIENT: user
+CONTACT: apoyo@chasque.apc.org or +598 (2) 496192
+INSTR: send to 'user@chasque.apc.org'
+
+FROM: internet
+TO: comlink
+RECIPIENT: user
+CONTACT: support@oln.comlink.apc.org or +49 (511) 350-3081
+INSTR: send to 'user@oln.comlink.apc.org'
+
+FROM: internet
+TO: compuserve
+RECIPIENT: 71234,567
+INSTR: send to '71234.567@CompuServe.com'
+INSTR:   Ordinary Compuserve account IDs are pairs of octal numbers
+
+FROM: internet
+TO: compuserve
+RECIPIENT: organization:department:user
+INSTR: send to 'user@department.organization.compuserve.com'
+INSTR:  This syntax is for use with members of organizations which have a
+-       private CompuServe mail area.  'department' may not always be present.
+
+FROM: internet
+TO: connect
+RECIPIENT: NAME
+INSTR: send to 'NAME@connectinc.com'
+
+FROM: internet
+TO: easylink
+RECIPIENT: user mail number 1234567
+INSTR: send to: 1234567@eln.attmail.com
+
+FROM: internet
+TO: easynet
+RECIPIENT: HOST::USER
+CONTACT: admin@decwrl.dec.com
+INSTR: send to 'user@host.enet.dec.com'
+INSTR:   or to 'user%host.enet@decwrl.dec.com'
+
+FROM: internet
+TO: easynet
+RECIPIENT: John Smith @ABC
+CONTACT: admin@decwrl.dec.com
+INSTR: send to 'John.Smith@ABC.MTS.DEC.COM'
+INSTR:   this syntax is for sending mail to ALL-IN-1 users
+
+FROM: internet
+TO: econet
+RECIPIENT: user
+CONTACT: support@igc.apc.org or +1 (415) 442-0220
+INSTR: send to 'user@igc.apc.org
+
+FROM: internet
+TO: ecuanex
+RECIPIENT: user
+CONTACT: intercom@ecuanex.apc.org or +593 (2) 505 074
+INSTR: send to 'user@ecuanex.apc.org'
+
+FROM: internet
+TO: envoy
+RECIPIENT: John Smith (ID=userid)
+INSTR: send to 'uunet.uu.net!att!attmail!mhs!envoy!userid'
+
+FROM: internet
+TO: fidonet
+RECIPIENT: john smith at 1:2/3.4
+INSTR: send to 'john.smith@p4.f3.n2.z1.fidonet.org'
+
+FROM: internet
+TO: genie
+RECIPIENT: user
+CONTACT: postmaster@genie.geis.com
+INSTR: send to user@genie.geis.com 
+
+FROM: internet
+TO: geonet
+RECIPIENT: user at host
+INSTR: send to user@host.geonet.de
+INSTR: geo1 (Europe), geo2 (UK), geo4 (USA)
+
+FROM: internet
+TO: glasnet
+RECIPIENT: user
+CONTACT: support@glas.apc.org or +7 (095) 217-6182
+INSTR: send to 'user@glas.apc.org'
+
+FROM: internet
+TO: gold-400
+RECIPIENT: (G:John, I:Q, S:Smith, OU: org_unit, O:organization, PRMD:prmd)
+INSTR: send to 'john.q.smith@org_unit.org.prmd.gold-400.gb'
+INSTR:   or to
+- '"/G=John/I=Q/S=Smith/OU=org_unit/O=org/PRMD=prmd/ADMD=gold 400/C=GB/"
+- @mhs-relay.ac.uk'
+
+FROM: internet
+TO: goldgate
+RECIPIENT: 10087:CQQ061
+INSTR: send to '10087.CQQ061@goldgate.ac.uk'
+INSTR:   or to '/G=10087/S=CQQ061/P=uk.ac/O=GoldGate/C=GB/'
+
+FROM: internet
+TO: greennet
+RECIPIENT: user
+CONTACT: support@gn.apc.org or +44 (71) 608-3040
+INSTR: user@gn.apc.org    (or user@gn.uucp if mailing from JANET)
+
+FROM: internet
+TO: gsfcmail
+RECIPIENT: user
+CONTACT: naic@nasa.gov
+INSTR: send to 'user@gsfcmail.nasa.gov'
+INSTR:   or to '/PN=user/ADMD=TELEMAIL/PRMD=GSFC/O=GSFCMAIL/C=US/
+-        @x400.msfc.nasa.gov'
+
+FROM: internet
+TO: ibm
+RECIPIENT: user@vmnode.tertiary_domain (syntax?)
+CONTACT: nic@vnet.ibm.com
+INSTR: send to 'user@vmnode.tertiary_domain.ibm.com'
+INSTR: To look up a user's mailbox name, mail to nic@vnet.ibm.com with
+- the line 'WHOIS name' in the message body.
+
+FROM: internet
+TO: ibmmail
+RECIPIENT: ccsssuuu@IBMMAIL.COM        
+CONTACT: IBMMAIL(ccsssuuu)     
+INSTR: send to ccsssuuu@ibmmail.com
+- cc=country code, sss=company site, uuu=unique number (alphanumeric base 35 
+- <36?> number) together this form the "userid" for ibmmail.
+
+FROM: internet
+TO: keylink
+RECIPIENT: (G:John, I:Q, S:Smith, O:MyOrg, A:Telememo, C:au)
+CONTACT: aarnet@aarnet.edu.au
+INSTR: send to John.Q.Smith@MyOrg.telememo.au
+INSTR: for keylink Private Mail Domains such as
+INSTR:   (G:John, S:Smith, O:MyDept, P:AusGov, A:Telememo, C:au)
+INSTR:   send to John.Smith@MyDept.AusGov.telememo.au
+
+FROM: internet
+TO: mausnet
+RECIPIENT: hans schmidt @ box
+CONTACT: postmaster@hb.maus.de
+INSTR: send to 'hans_schmidt@box.maus.de'
+
+FROM: internet
+TO: mci
+RECIPIENT: John Smith (123-4567)
+INSTR: send to '1234567@mcimail.com'
+INSTR: or to 'JSmith@mcimail.com' (if 'JSmith' is unique)
+INSTR: or to 'John_Smith@mcimail.com' (if 'John Smith' is unique - note the
+-      underscore!)
+INSTR: or to 'John_Smith/1234567@mcimail.com' (if 'John Smith' is NOT unique)
+
+FROM: internet
+TO: nasamail
+RECIPIENT: user
+CONTACT: naic@nasa.gov
+INSTR: send to 'user@nasamail.nasa.gov'
+INSTR: Help is available by phoning +1 205 544 1771 or +1 800 858 9947.
+INSTR: Also get the document: ftp.jsc.nasa.gov:/pub/emaddr.txt
+
+FROM: internet
+TO: nicarao
+RECIPIENT: user
+CONTACT: support@nicarao.apc.org or +505 (2) 26228
+INSTR: send to 'user@nicarao.apc.org'
+
+FROM: internet
+TO: niftyserve
+RECIPIENT: user
+CONTACT: postmaster@niftyserve.or.jp
+INSTR: send to 'user@niftyserve.or.jp'
+-      Mail received via the internet is limited to 3000 lines.
+
+FROM: internet
+TO: nordnet
+RECIPIENT: user
+CONTACT: support@pns.apc.org or +46 (8) 600-0331
+INSTR: send to 'user@pns.apc.org'
+
+FROM: internet
+TO: nsi
+RECIPIENT: host::user
+CONTACT: naic@nasa.gov
+INSTR: send to 'user@host.dnet.nasa.gov'
+INSTR:   or to 'user%host.dnet@ames.arc.nasa.gov'
+INSTR:   or to 'user%host.dnet@east.gsfc.nasa.gov'
+INSTR: Help is also available by phoning +1 800 858 9947.
+
+FROM: internet
+TO: omnet
+RECIPIENT: user
+CONTACT: /dd.un=omnet.service/c=us/admd=telemail/o=omnet/@sprint.com
+INSTR: send to '/dd.un=user/o=omnet/admd=telemail/c=us/@sprint.com'
+INSTR: Help is available by phoning +1 617 244 4333 
+
+FROM: internet
+TO: peacenet
+RECIPIENT: user
+CONTACT: support@igc.org
+INSTR: send to 'user@igc.apc.org'
+
+FROM: internet
+TO: pegasus
+RECIPIENT: user
+CONTACT: support@peg.apc.org or +61 (7) 2571111
+INSTR: send to 'user@peg.apc.org'
+
+FROM: internet
+TO: prodigy
+RECIPIENT: user
+CONTACT: postmaster@prodigy.com
+INSTR: send to 'userid@prodigy.com'     For example: abcd01a@prodigy.com
+
+FROM: internet
+TO: pronet
+RECIPIENT: user
+CONTACT: support@pronet.com or +61 3 349-1719 (Brian Evans)
+INSTR: send to 'user@tanus.oz.au'
+
+FROM: internet
+TO: sinet
+RECIPIENT: node::user or node1::node::user
+INSTR: send to 'user@node.SINet.SLB.COM'
+INSTR:   or to 'user%node@node1.SINet.SLB.COM'
+
+FROM: internet
+TO: sprintmail
+RECIPIENT: John Smith at SomeOrganization
+INSTR: send to
+-  '/G=John/S=Smith/O=SomeOrganization/ADMD=TELEMAIL/C=US/@Sprint.COM'
+ Help is available by phoning +1 800 827 4685
+
+FROM: internet
+TO: telecom
+RECIPIENT: user
+CONTACT: support@pronet.com or +61 3 349-1719 (Brian Evans)
+INSTR: send to 'user@viatel.pronet.com'
+INSTR: User mailboxes consist of a 9 digit number.
+INSTR: Eg: the postmaster at viatel could be reached
+INSTR: at 010000003@viatel.pronet.com. User mailbox
+INSTR: queries can be directed to: postmaster@viatel.pronet.com
+
+FROM: internet
+TO: thenet
+RECIPIENT: user@host
+INSTR: send to 'user%host.decnet@utadnx.cc.utexas.edu'
+
+FROM: internet
+TO: web
+RECIPIENT: user
+CONTACT: spider@web.apc.org or +1 (416) 596-0212
+INSTR: send to 'user@web.apc.org
+
+FROM: internet
+TO: wwivnet
+RECIPIENT: number@node
+CONTACT: faq-request@tfsquad.mn.org or bryen@tfsquad.mn.org
+INSTR: convert to 'number-node@wwiv.tfsquad.mn.org'
+INSTR: WWCPgate; LOW TRAFFIC SITE, USE SPARINGLY..  Gateway is modem-based,
+-      they absorb cost of long distance connects to pick-up and deliver.
+-      Keep messages under 10K, use infrequently, do NOT use mail-lists or
+-      file/list-server commands.
+
+FROM: keylink
+TO: internet
+RECIPIENT: John Smith <user@domain>
+CONTACT: (G:CUSTOMER, S:SERVICE, O:CUST.SERVICE, P:telememo, C:au)
+INSTR: send to '(C:au, A:telememo, P:oz.au, "RFC-822":"John Smith
+-  <user(a)domain>")'
+INSTR: special characters must be mapped: @->(a), %->(p), !->(b), "->(q)
+
+FROM: mausnet
+TO: internet
+RECIPIENT: user@domain
+CONTACT: sysop@k2
+INSTR: send to 'user@domain'
+
+FROM: mci
+TO: compuserve
+RECIPIENT: John Smith (71234,567)
+CONTACT: 267-1163 (MCI Help)
+INSTR: at the 'To:' prompt type 'John Smith (EMS)'
+INSTR: at the 'EMS:' prompt type 'compuserve'
+INSTR: at the 'Mbx:' prompt type '71234,567'
+
+FROM: mci
+TO: internet
+RECIPIENT: John Smith <user@domain>
+CONTACT: 267-1163 (MCI Help)
+INSTR: at the 'To:' prompt type 'John Smith (EMS)'
+INSTR: at the 'EMS:' prompt type 'INTERNET'
+INSTR: at the 'Mbx:' prompt type 'user@domain'
+
+FROM: nasamail
+TO: internet
+RECIPIENT: user@domain
+CONTACT: admin
+INSTR: send to '(site:smtpmail,id:<user(a)domain>)'
+INSTR: Help is also available by phoning +1 205 544 1771 and at 'admin/nasa'.
+
+FROM: nasamail
+TO: nsi
+RECIPIENT: host::user
+CONTACT: admin
+INSTR: send to '(site:smtpmail,id:<user(a)host.DN.NASA.GOV>)'
+INSTR: Help is also available by phoning +1 205 544 1771 and at 'admin/nasa'.
+
+FROM: niftyserve
+TO: internet
+RECIPIENT: user
+CONTACT: postmaster@niftyserve.or.jp
+INSTR: send to 'INET:user@domain'
+-      Outgoing messages are limited to 300 lines.
+
+FROM: nsi
+TO: gsfcmail
+RECIPIENT: user
+CONTACT: naic@nasa.gov
+INSTR: send to 'east::"user@gsfcmail.nasa.gov"'
+INSTR: or to 'east::"/PN=user/ADMD=TELEMAIL/PRMD=GSFC/O=GSFCMAIL/C=US/
+-      @x400.msfc.nasa.gov'
+INSTR: Help is also available by phoning +1 800 858 9947.
+
+FROM: nsi
+TO: internet
+RECIPIENT: user@domain
+CONTACT: east::"naic@nasa.gov"
+INSTR: send to 'east::"user@domain"'
+INSTR: or to 'dftnic::"user@domain"'
+INSTR: or to 'nssdca::in%"user@domain"'
+INSTR: or to 'jpllsi::"user@domain"'
+INSTR: Help is also available by phoning +1 800 858 9947.
+
+FROM: nsi
+TO: omnet
+RECIPIENT: user
+CONTACT: omnet.service
+INSTR: send to 'east::"user@omnet.nasa.gov"'
+INSTR: Help also available by phoning +1 617 244 4333 (OMN customers only)
+
+FROM: nsi
+TO: sprintmail
+RECIPIENT: John Smith at SomeOrganization
+CONTACT: east::"naic@nasa.gov"
+INSTR: send to
+- '/G=John/S=Smith/O=SomeOrganization/ADMD=TELEMAIL/C=US/@Sprint.COM'
+INSTR: Help is also available by phoning +1 800 858 9947.
+
+FROM: omnet
+TO: internet
+RECIPIENT: user@domain
+CONTACT: omnet.service
+INSTR: send to '(site:internet, id:<user(a)domain>)'
+INSTR: Or, enter 'compose manual' at the command prompt.  Choose the Internet
+-      address option from the menu that appears.  (Option 3.)
+INSTR: Help also available by phoning +1 617 244 4333
+
+FROM: sinet
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to 'M_MAILNOW::M_INTERNET::"user@domain"'
+INSTR:   or to 'M_MAILNOW::M_INTERNET::domain::user'
+
+FROM: sprintmail
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to '(C:USA,A:TELEMAIL,P:INTERNET,"RFC-822":<user(a)domain>) DEL'
+INSTR: Help available within the United States by phoning +1 800 336 0437 and
+-      pressing '2' on a TouchTone phone.
+
+FROM: sprintmail
+TO: nsi
+RECIPIENT: host::user
+INSTR: send to
+-  '(C:USA,A:TELEMAIL,P:INTERNET,"RFC-822":<user(a)host.DNET.NASA.GOV>) DEL'
+INSTR: Help available within the United States by phoning +1 800 336 0437 and
+-      pressing '2' on a TouchTone phone.
+
+FROM: thenet
+TO: internet
+RECIPIENT: user@domain
+INSTR: send to 'UTADNX::WINS%" user@domain "'
+
+FROM: wwivnet
+TO: fidonet
+RECIPIENT: First Last ON zone:node/fnet
+CONTACT: 1@3469
+INSTR: convert to 'First Last ON zone:node/fnet @656'
+INSTR: WWIVgate; LOW TRAFFIC SITE, USE SPARINGLY..  Gateway is modem-based,
+-      they absorb cost of long distance connects to pick-up and deliver.
+-      Keep messages under 10K, use infrequently, do NOT use mail-lists or
+-      file/list-servers commands.
+
+FROM: wwivnet
+TO: internet
+RECIPIENT: user@machine.site.domain
+CONTACT: faq-request@9702 or 1@9702
+INSTR: convert to 'user#machine.site.domain@506'
+-      If 'user' begins with digits, begin address with a quote.
+INSTR: WWCPgate; LOW TRAFFIC SITE, USE SPARINGLY..  Gateway is modem-based,
+-      they absorb cost of long distance connects to pick-up and deliver.
+-      Keep messages under 10K, use infrequently, do NOT use mail-lists or
+-      file/list-server commands.
+-- 
+ _/\ _ !\ _         @           Milwaukee, WI - A Great Place On a Great Lake
+!  _! !! ! !_  ~~  @ ~  ~~         
+! ! ! !! ! ! !~~__=||_~ ~~~ Computing Services Division - MAINFRAME CONSULTING
+! ! ! _! ! ~~~ ~\____/  ~~~  yanoff@csd4.csd.uwm.edu   yanoff@point.cs.uwm.edu
+
