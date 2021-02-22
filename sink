@@ -2,7 +2,7 @@
 
 # C:/Bin/sink.cmd passes this to bash
 
-# Mac
+# Mac Unison never terminates
 # u="$HOME/Applications/Unison.app/Contents/MacOS/Unison-gui -ui text"
 # --> Symlink on PATH?
 # sshargs for Unison is set in ~/Library/Application Support/Unison/foldoc.prf
