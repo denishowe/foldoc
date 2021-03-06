@@ -378,7 +378,7 @@ sub read_logs
 
 	# Web server access logs: current, finished and .gz
 
-	my @wwwlogs = glob "/var/log/apache2/foldoc.org-access-*";
+	my @wwwlogs = glob "/var/log/apache2/foldoc.org/access-*";
 	my $old = @{[keys %$dates]};
 	my $n = 100;						# Keep n most recent
 	print "\n$n/" . @wwwlogs . " logs, $old old\n";
