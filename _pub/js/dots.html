@@ -27,6 +27,19 @@ span {display: inline-table; width: 49%; height: 100%}
 // gl = colour(cl)				# Linear colour gradient
 // sp = size(p, s)				# Black disc
 
+/* Move to {(x+vx, y+vy)} for t = 0, dt, 2*dt, ..., 2*pi
+  where vx(t) = wave_x(i, t)
+	wave_x(i, t) = a_x[i]*cyc(f_x[i]*t+p_x[i])*e^-(d_x[i]*t)
+	cyc(t) = t/(2*pi),	or
+	cyc(t) = sin(t),	or
+	cyc(t) = square(t)
+* Transform each input point to one output point
+* Transform each input point to all output points
+* Rotate set about point
+* Apply transform with sequence of sets of parameters
+* Add noise to some dimension
+*/
+
 /////////////////////////////////////////////////////////////////////////////
 
 // A Codes object is a vector of 'width' Code objects, each
