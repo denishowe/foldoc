@@ -134,7 +134,7 @@ class Timer {
 		let secsLeft = Math.floor((this.endMs - this.nowMs() + 999) / 1E3); // Seconds to go
 		if (secsLeft < 0) { this.timeExpired(); return }
 		const s = this.secsToString(secsLeft);
-		document.title = s.replace('<br/>', ' ').replace(/ : /g, ':');
+		document.title = s.replace('<br>', ' ').replace(/ : /g, ':');
 		const htmlTime = s.replace(/(\D+)/g, '<span class="sep">$1</span>');
 		this.els('.time').forEach(e => e.innerHTML = htmlTime);
 		this.schedule();
@@ -142,7 +142,7 @@ class Timer {
 
 	secsToString(n) {
 		const bases = [Infinity, 12, 30, 24, 60, 60];  // Modulos for y, m, d, h, m, s
-		const seps = [ 'y ', 'm ', 'd<br/>', ' : ', ' : ', '' ];
+		const seps = [ 'y ', 'm ', 'd<br>', ' : ', ' : ', '' ];
 		let s = '';
 		do {
 			s = seps.pop() + s;

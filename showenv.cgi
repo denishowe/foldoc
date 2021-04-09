@@ -83,7 +83,7 @@ print '<form action="', $ENV{SCRIPT_NAME}, '" method="', $method, '">
   POST:<input name=method type="radio" value="POST" ',
   $post && "checked", '>
   <P>
-  Text: <input name="text" type="text" value="', $form{text}, '"><BR>
+  Text: <input name="text" type="text" value="', $form{text}, '"><br>
   Input file: <input name="file" type="file"><br>
   <input type="submit" value="Submit">
 <form>

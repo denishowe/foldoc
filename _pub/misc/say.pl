@@ -245,7 +245,7 @@ sub display
 	s/./uc $&/e;			# Initial capital
 	s|\s*//\s*|$web ? "<p>" : "\n\n"|eg; # Paragraph
 	print "$_\n\n\n";
-	print "<hr />\n" if ($web);
+	print "<hr>\n" if ($web);
 }
 
 # ############################################################################ #

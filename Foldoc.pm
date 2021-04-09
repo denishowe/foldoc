@@ -351,7 +351,7 @@ sub foldoctohtml
 		}
 		elsif (/^$/)		   		# Formatted blank line becomes <p>
 		{
-			s|^$|<p />| unless ($preformatted);
+			s|^$|<p></p>| unless ($preformatted);
 		}
 		else					   	# No extra whitespace - normal text
 		{
