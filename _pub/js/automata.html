@@ -98,7 +98,6 @@ class Bot {
 		this.pos.occupant(this);
 		this.colour = Colour.colourful(index, Bot.initialNum);
 		this.rules = Bot.best && p(0.9) ? Bot.best.mutatedRules() : Bot.randomRules();
-		this.setRuleIndexes();
 		this.ruleIndex = 0;
 		this.energy = Bot.energy();
 		this.points = 0;
@@ -136,36 +135,32 @@ class Bot {
 
 	static randomRules() { return [Rule.random()] }
 
-	// If bot's current Rule is active at position pos, set the bot's next position
-	// unless off the grid.  Advance bot's pointer to next rule.  Claim new or old pos.
+	// Set the bot's next position unless off the grid and claim it.  Advance bot's pointer.
 
 	calc() {
 		const rule = this.rules[this.ruleIndex];
 		this.ruleIndex = (this.ruleIndex + 1) % this.rules.length; // Point Bot to next rule
-		const action = rule.isActiveAt(this.pos) && rule.action;
-		this.next_pos = action && this.pos.cellAtVector(action);
-		(this.next_pos || this.pos).claim(true);	// Claim new or current pos
+		this.next_pos = this.pos.cellAtVector(rule.action);
+		this.next_pos?.claim(true);	// Claim new pos
 	}
 
 	// If new position is empty and I'm sole claimant, move there.  Die if out of energy.
 
 	move() {
 		let n = this.next_pos;
-		if (n && n.claim() != 1) n = false;	// Drop disputed claim
+		if (n && n.claim() !== 1) n = undefined; // Drop disputed claim
 		this.energy--;
-		const dead = ! this.isLive();
-		if (n || dead) {
-			this.pos.occupant(undefined);		// Clear old pos
-			this.draw();
-			if (dead) return;
-			const prev = this.previous_pos;
-			if (! n.equal(prev) && ! n.equal(this.pos)) this.energy += 5;
-			this.points++;
-			if (! Bot.best || this.points > Bot.best.points) Bot.best = this;
-			this.previous_pos = this.pos;
-			this.pos = n;
-			n.occupant(this);
-		}
+		const dead = ! n || ! this.isLive();
+		this.pos.occupant(undefined);		// Clear old pos
+		this.draw();
+		if (dead) return;
+		const prev = this.previous_pos;
+		if (! n.equal(prev) && ! n.equal(this.pos)) this.energy += 5;
+		this.points++;
+		if (! Bot.best || this.points > Bot.best.points) Bot.best = this;
+		this.previous_pos = this.pos;
+		this.pos = n;
+		n.occupant(this);
 		this.draw();							// Draw old/new pos, colour
 	}
 
@@ -180,16 +175,6 @@ class Bot {
 		console.log('%cbest%c %s %d points', `color: ${ c }`, 'color: black', bs, p);
 	}
 
-	// Bot dies if its position is occupied by another bot
-
-	check() {
-		const p = this.pos;
-		const o = p.occupant();
-		if (o == this) return;
-		console.log(this + ' vs ' + o);
-		Bot.stop();
-	}
-
 	// Return black faded towards white as the Bot's energy decreases
 
 	borderColour() {
@@ -198,79 +183,59 @@ class Bot {
 		return Colour.white.multiply(k < 0 ? 0 : k);
 	}
 
+	cloneRules() { return this.rules.clone() }
+
 	// Return a randomly modified copy of the Bot's rules
 
 	mutatedRules() {
-		const rules = this.rules.clone();
-		// todo maybe remove a rule
-		const newRule = Rule.random();
-		newRule.mutate(rules);
-		rules.push(newRule);
-
+		const rules = this.cloneRules();
+		const n = rules.length;
+		const changes = [
+			() => {},																		 	// No change
+			() => { rules.setAny(Rule.random()) },       	// Change a rule
+		];
+		if (n > 1) changes.push(
+				() => rules.dropAny()                      	// Remove a rule
+		);
+		if (n < 10) changes.push(
+				() => {	rules.push(Rule.random()) },       	// Append a rule
+				() => { rules.append(this.cloneRules()) },	// Append a duplicate set
+		);
+		(changes.any())();
 		return rules;
 	}
 
-	setRuleIndexes() { this.rules.forEach((r, i) => r.index = i) }
-
-	toString() { return (this.rules || []).map(r => r.toString()).join(' ') }
+	toString() { return (this.rules || []).map(r => r.toString()).join('') }
 }
 
 /// Rule ////////////////////////////////////////////////////////////
 
-// A Rule has a look direction and wanted type (off, empty, bot) and an action
-// direction.  Its index is set according to its position in a Bot's rules.
-
+// A Rule has a direction
 
 class Rule {
-	constructor(look, want, action) {
-		this.look = look;
-		this.want = want;
+	constructor(action) {
 		this.action = action || Direction.random();
 	}
 
-	static random() { return new Rule(Direction.random(), Cell.types.any()) }
+	static random() { return new Rule(Direction.random()) }
 
-	// A Rule is active at `pos` if the type of object in the look direction from `pos` is the rule's want
+	clone() { return new Rule(this.action) }
 
-	isActiveAt(pos) { return pos.cellAtVector(this.look).type?.() == this.want }
-
-	clone() { return new Rule(this.look, this.want, this.action) }
-
-	// Randomly change the rule
-
-	mutate(rules) {
-		const r = Math.random();
-		if (r < 0.2) {
-			this.look = Direction.random();
-		} else if (r < 0.4) {
-			this.want = Cell.types.any();
-		} else if (r < 0.6) {
-			this.action = Direction.random();
-		} else if (r < 0.8) {
-			this.next = rules.anyIndex();	// Set random jump
-		}
-	}
-
-	toString() {
-		const { action, index, look, want } = this;
-		const wantString = Cell.typeString[want];
-
-		return `${ index }:${ look.toString() }${ wantString }${ action.toString() }`;
-	}
+	toString() { return this.action.toString() }
 }
 
 /// Direction ///////////////////////////////////////////////////////////////
 
 class Direction {
-	constructor([symbol, x, y]) { this.symbol = symbol; this.x = x; this.y = y }
+	constructor(symbol, x, y) { this.symbol = symbol; this.x = x; this.y = y }
 
 	static init() {
 		Direction.all = [
-			['N',  0, -1, 1],	// y increases downwards
-			['E',  1,  0, 2],
-			['S',  0,  1, 4],
-			['W', -1,  0, 8]
-		].map(dxyb => new Direction(dxyb));
+			['N',  0, -1],	// y increases downwards
+			['E',  1,  0],
+			['S',  0,  1],
+			['W', -1,  0]
+		].map(sxy => new Direction(...sxy));
 	}
 
 	// Return a random direction from NESW
@@ -323,10 +288,14 @@ class Grid {
 		}
 	}
 
-	static randomCell() { return new Cell(rand(0, Grid.xMax), rand(0, Grid.yMax)) }
+	static randomCell() { return new Cell(rand(0, this.xMax), rand(0, this.yMax)) }
 
 	static clearClaims() { this.claims = [] }
+
+	static isOnGrid(x, y) { return x >= 0 && x <= this.xMax && y >= 0 && y <= this.yMax }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 class Cell {
 	constructor(x, y) { this.x = x; this.y = y }
@@ -359,7 +328,7 @@ class Cell {
 
 	// Return true if cell is on the grid
 
-	isOnGrid({ x, y } = this) { return x >= 0 && x <= Grid.xMax && y >= 0 && y <= Grid.yMax }
+	isOnGrid() { return Grid.isOnGrid(this.x, this.y) }
 
 	// Return the type of thing in this cell: 'off' (off screen), 'empty' or 'bot'
 
@@ -380,12 +349,12 @@ class Cell {
 		return row[x];
 	}
 
-	// Return the cell at this position plus vector v, or false if off grid
+	// Return the cell at this position plus vector v, or undefined if off grid
 
 	cellAtVector(v) {
 		const x = this.x + v.x, y = this.y + v.y;
 
-		return this.isOnGrid({ x, y }) && new Cell(x, y);
+		return Grid.isOnGrid(x, y) ? new Cell(x, y) : undefined;
 	}
 
 	draw() {
@@ -458,13 +427,21 @@ class MyArray {
 
 	clone() { return this.map(x => x.clone()) }
 
-	// Return a random index of the array
+	// Return a random index of the array or zero if it's empty
 
 	anyIndex() { return Math.floor(this.length * Math.random()) }
 
 	// Return a random element of the array
 
 	any() { return this[this.anyIndex()] }
+
+	append(tail) { this.push(...tail) }
+
+	// Remove a random element
+
+	dropAny() { this.splice(this.anyIndex(), 1) }
+
+	setAny(x) { this[this.anyIndex()] = x }
 }
 
 Object.getOwnPropertyNames(MyArray.prototype)
