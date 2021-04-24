@@ -39,7 +39,7 @@ window.onkeydown = function keyDown(e) {
 
 /// Run ////////////////////////////////////////////////////////////////////////////////////////////
 
-// Singleton for whole program
+// Singleton
 
 let run;
 
@@ -97,7 +97,7 @@ class Bot {
 
 		this.pos.occupant(this);
 		this.colour = Colour.colourful(index, Bot.initialNum);
-		this.rules = Bot.best && p(0.9) ? Bot.best.mutatedRules() : Bot.randomRules();
+		this.rules = Bot.best ? Bot.best.mutatedRules() : Direction.random();
 		this.ruleIndex = 0;
 		this.energy = Bot.energy();
 		this.points = 0;
@@ -131,16 +131,12 @@ class Bot {
 		return Bot.all.length;
 	}
 
-	// Return a single rule loop
-
-	static randomRules() { return [Rule.random()] }
-
 	// Set the bot's next position unless off the grid and claim it.  Advance bot's pointer.
 
 	calc() {
 		const rule = this.rules[this.ruleIndex];
 		this.ruleIndex = (this.ruleIndex + 1) % this.rules.length; // Point Bot to next rule
-		this.next_pos = this.pos.cellAtVector(rule.action);
+		this.next_pos = this.pos.cellInDirection(rule);
 		this.next_pos?.claim(true);	// Claim new pos
 	}
 
@@ -183,66 +179,42 @@ class Bot {
 		return Colour.white.multiply(k < 0 ? 0 : k);
 	}
 
-	cloneRules() { return this.rules.clone() }
-
 	// Return a randomly modified copy of the Bot's rules
 
 	mutatedRules() {
-		const rules = this.cloneRules();
+		const { rules } = this;
 		const n = rules.length;
-		const changes = [
-			() => {},																		 	// No change
-			() => { rules.setAny(Rule.random()) },       	// Change a rule
-		];
-		if (n > 1) changes.push(
-				() => rules.dropAny()                      	// Remove a rule
-		);
-		if (n < 10) changes.push(
-				() => {	rules.push(Rule.random()) },       	// Append a rule
-				() => { rules.append(this.cloneRules()) },	// Append a duplicate set
-		);
-		(changes.any())();
-		return rules;
+		const d = Direction.random();
+		return [
+			{ ok: true,		f: () => rules },						// No change
+			{ ok: true,		f: () => d },								// New set
+			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
+			{ ok: n >  1,	f: () => rules.dropAny() },	// Remove a rule
+			{ ok: n < 10,	f: () => rules + d },				// Append a rule
+			{ ok: n <  5,	f: () => rules + rules },		// Duplicate set
+		].filter(change => change.ok).any().f();
 	}
 
-	toString() { return (this.rules || []).map(r => r.toString()).join('') }
-}
-
-/// Rule ////////////////////////////////////////////////////////////
-
-// A Rule has a direction
-
-class Rule {
-	constructor(action) {
-		this.action = action || Direction.random();
-	}
-
-	static random() { return new Rule(Direction.random()) }
-
-	clone() { return new Rule(this.action) }
-
-	toString() { return this.action.toString() }
+	toString() { return this.rules }
 }
 
 /// Direction ///////////////////////////////////////////////////////////////
 
 class Direction {
-	constructor(symbol, x, y) { this.symbol = symbol; this.x = x; this.y = y }
-
 	static init() {
-		Direction.all = [
-			['N',  0, -1],	// y increases downwards
-			['E',  1,  0],
-			['S',  0,  1],
-			['W', -1,  0]
-		].map(sxy => new Direction(...sxy));
+		this.vector = {
+			N: { dx: 0,  dy: -1 },	// y increases downwards
+			E: { dx: 1,  dy: 0 },
+			S: { dx: 0,  dy: 1 },
+			W: { dx: -1, dy: 0 },
+		};
+
+		this.directions = [...Object.keys(this.vector)];
 	}
 
 	// Return a random direction from NESW
 
-	static random() { return Direction.all.any() }
-
-	toString() { return this.symbol }
+	static random() { return this.directions.any() }
 }
 
 /// Grid ///////////////////////////////////////////////////////////
@@ -300,10 +272,10 @@ class Grid {
 class Cell {
 	constructor(x, y) { this.x = x; this.y = y }
 
-	static init(cellSize) {
-		this.size = cellSize;
-		this.types = ['empty', 'bot', 'off'];
-		this.typeString = { empty: '∅', bot: '⬛', off: '-'}
+	static init(size) {
+		this.size = size;
+		// this.types = ['empty', 'bot', 'off'];
+		// this.typeString = { empty: '∅', bot: '⬛', off: '-'}
 	}
 
 	equal(p) { return p && this.x == p.x && this.y == p.y }
@@ -317,7 +289,7 @@ class Cell {
 	occupant(newOccupant) {
 		let row = Grid.grid[this.y];
 		if (! row) {
-			if (! arguments.length) return undefined;
+			if (! newOccupant) return undefined; // Set undefined or get in non-existent row
 			row = Grid.grid[this.y] = [];
 		}
 		if (arguments.length)				// New occupant may be undefined
@@ -326,13 +298,9 @@ class Cell {
 		return row[this.x];
 	}
 
-	// Return true if cell is on the grid
-
-	isOnGrid() { return Grid.isOnGrid(this.x, this.y) }
-
 	// Return the type of thing in this cell: 'off' (off screen), 'empty' or 'bot'
 
-	type() { return !this.isOnGrid() ? 'off' : this.occupant() ? 'bot' : 'empty' }
+	// type() { return !this.isOnGrid() ? 'off' : this.occupant() ? 'bot' : 'empty' }
 
 	// If `add`, increment the claims on the cell.  Return the total.
 
@@ -349,10 +317,12 @@ class Cell {
 		return row[x];
 	}
 
-	// Return the cell at this position plus vector v, or undefined if off grid
+	// Return the cell in direction d from this position, or undefined if off grid
 
-	cellAtVector(v) {
-		const x = this.x + v.x, y = this.y + v.y;
+	cellInDirection(d) {
+		let { x, y } = this;
+		const { dx, dy } = Direction.vector[d];
+		x += dx; y += dy;
 
 		return Grid.isOnGrid(x, y) ? new Cell(x, y) : undefined;
 	}
@@ -418,34 +388,35 @@ class Colour {
 	toString() { return 'rgb(' + this.r + ',' + this.g + ',' + this.b + ')' }
 }
 
-/// Array extentions /////////////////////////////////////////////////
+/// Extend built-in classes /////////////////////////////////////////////////
 
-// Instance methods of MyArray are copied to Array below
+// Instance methods of MyClass are copied to Class below
 
 class MyArray {
-	// Return clones of the array's elements
-
-	clone() { return this.map(x => x.clone()) }
-
-	// Return a random index of the array or zero if it's empty
-
-	anyIndex() { return Math.floor(this.length * Math.random()) }
-
 	// Return a random element of the array
 
 	any() { return this[this.anyIndex()] }
 
-	append(tail) { this.push(...tail) }
+	// Return a random index of the array or zero if it's empty
 
-	// Remove a random element
-
-	dropAny() { this.splice(this.anyIndex(), 1) }
-
-	setAny(x) { this[this.anyIndex()] = x }
+	anyIndex() { return Math.floor(this.length * Math.random()) }
 }
-
 Object.getOwnPropertyNames(MyArray.prototype)
 	.forEach(method => Array.prototype[method] = MyArray.prototype[method]);
+
+class MyString {
+	anyIndex() { return Math.floor(this.length * Math.random()) }
+
+	dropAny() { return this.setAny() }
+
+	setAny(x = '') {
+		const i = this.anyIndex();
+
+		return this.slice(0, i) + x + this.slice(i + 1);
+	}
+}
+Object.getOwnPropertyNames(MyString.prototype)
+	.forEach(method => String.prototype[method] = MyString.prototype[method]);
 
 /// Utils ////////////////////////////////////////////////////////////
 
