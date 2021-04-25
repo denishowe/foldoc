@@ -21,9 +21,9 @@ body {
 // Main entry point.  Restart once they stop resizing.
 
 const cellSize = 16;
-const botsPerCell = 0.5;
-const maxCycles = 2000;
-const maxInitialEnergy = 20;						// Initial energy
+const botsPerCell = 0.9;
+const maxInitialEnergy = 10;
+const maxCycles = 20 * maxInitialEnergy;
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
@@ -88,7 +88,7 @@ class Bot {
 	  this.pos = Grid.anyEmpty();
  		if (! this.pos) return;
 		this.colour = Colour.colourful(index, Bot.initialNum);
-		this.rules = Bot.best ? Bot.best.mutatedRules() : Direction.random();
+		this.rules = Bot.best ? Bot.best.mutatedRules() : Bot.initialRules();
 		this.ruleIndex = 0;
 		this.energy = Bot.initialEnergy();
 		this.points = 0;
@@ -104,42 +104,41 @@ class Bot {
 		Bot.best = undefined;
 	}
 
-	// Return random initial fraction of max energy
+	static initialRules() { return mapUpTo(rand(1, 3), () => Direction.random()).join('') }
 
-	static initialEnergy() { return Math.floor(maxInitialEnergy * (0.1 + 0.9 * Math.random())) }
+	static initialEnergy() { return maxInitialEnergy }
 
 	// Run one step of bot activity and return number left alive
 
 	static step() {
-		Bot.all.map(b => b.move());
-		Bot.all = Bot.all.filter(b => b.isLive());
-		// console.log('Pop', Bot.all.length);
+		Bot.all = Bot.all.filter(b => b.move());
 
 		return Bot.all.length;
 	}
 
 	// Move to bot's next position if empty.  Die if out of energy or off grid.
+	// Return true if still alive.
 
 	move() {
 		let n = this.getNextPos();
-		this.energy = n ? this.energy - 1 : 0;
+		if (! n) this.energy = 0;	// Fell off grid and died
 		const targetBot = n && ! n.equal(this.pos) && n.occupant();
 		if (targetBot) {
-			this.energy += targetBot.energy;
-			targetBot.die();
-		}
+			this.energy++;				// Fed
+			targetBot.energy--;
+			this.scorePoint();
+		} else this.energy--;		// Hungry
 		const dead = ! this.isLive();
-		if (dead || !targetBot) this.pos.occupant(undefined);	// Clear old pos
-		this.points++;
-		if (dead || targetBot) return;
-		if (! Bot.best || this.points > Bot.best.points) Bot.best = this;
+		if (dead || ! targetBot) this.pos.occupant(undefined);	// Vacate old pos
+		if (dead || targetBot) return ! dead;
 		this.pos = n;
 		n.occupant(this);
+		return true;
 	}
 
-	die() {
-		this.energy = 0;
-		this.pos.occupant(undefined);
+	scorePoint() {
+		this.points++;
+		if (! Bot.best || this.points > Bot.best.points) Bot.best = this;
 	}
 
 	getNextPos() { return this.pos.cellInDirection(this.getNextRule()) }
@@ -173,12 +172,13 @@ class Bot {
 		const { rules } = this;
 		const n = rules.length;
 		const d = Direction.random();
+		const s = Bot.initialRules();
 		return [
 			{ ok: true,		f: () => rules },						// No change
-			{ ok: true,		f: () => d },								// New set
+			{ ok: true,		f: () => s },								// New set
 			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
 			{ ok: n >  1,	f: () => rules.dropAny() },	// Remove a rule
-			{ ok: n < 10,	f: () => rules + d },				// Append a rule
+			{ ok: n < 10,	f: () => rules + s },				// Append some rules
 			{ ok: n <  5,	f: () => rules + rules },		// Duplicate set
 		].filter(change => change.ok).any().f();
 	}
@@ -197,13 +197,9 @@ class Direction {
 			W: { dx: -1, dy:  0 },
 			O: { dx:  0, dy:  0 },
 		};
-
-		this.directions = [...Object.keys(this.vector)];
 	}
 
-	// Return a random direction from NESW
-
-	static random() { return this.directions.any() }
+	static random() { return 'NESWOOOO'.any() }
 }
 
 /// Grid ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,6 +365,8 @@ Object.getOwnPropertyNames(MyArray.prototype)
 
 class MyString {
 	anyIndex() { return Math.floor(this.length * Math.random()) }
+
+	any() { return this[this.anyIndex()] }
 
 	dropAny() { return this.setAny() }
 
