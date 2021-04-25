@@ -14,74 +14,68 @@ body {
 </style>
 </head>
 <body>
-<!--
-	http://foldoc.org/pub/js/automata.html
-	c:\progra~1\intern~1\iexplore.exe -k %USERPROFILE%\Projects\FOLDOC\foldoc\pub\js\automata.html
-  -->
+<!--http://foldoc.org/pub/js/automata.html -->
 <canvas id="canvas" />
 <script>
-// todo
 
 // Main entry point.  Restart once they stop resizing.
 
-const maxCycles = 2000;
+const cellSize = 16;
 const botsPerCell = 0.5;
-const maxEnergy = 500;									// Initial energy
+const maxCycles = 2000;
+const maxInitialEnergy = 20;						// Initial energy
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
 	// console.log('key', kc, ks);
 	if (kc == 17 || kc == 18) return;			// Ignore Alt keys
 	if (kc == 27) return close_window();	// Esc key --> close window
-	if (ks == ' ') return run.startStop();
-	if (ks == 'S') return run.changeSpeed();
+	if (ks == ' ') return Run.startStop();
+	if (ks == 'S') return Run.changeSpeed();
 }
 
-/// Run ////////////////////////////////////////////////////////////////////////////////////////////
-
-// Singleton
-
-let run;
+/// Run ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Run {
-	constructor() {
-		run = this;
-		Colour.init();
-		Direction.init();
-		Cell.init(16); // Cell width and height in pixels
+	static init() {
 	  Grid.init();
+		Direction.init();
+		Colour.init();
   	this.reset();
 	}
 
 	// Start, resize or all dead
 
-	reset() {
+	static reset() {
+		Cell.reset();
 	  Bot.reset();
   	this.periods = [0, 100, 500];
-  	this.t = 0;
+  	this.botCount = -1;
 	  this.start();
 	}
 
-	startStop() { this.running ? this.stop() : this.start() }
+	static startStop() { this.running ? this.stop() : this.start() }
 
-	stop() { this.running = false }
-
-	start() {
+	static start() {
 		this.running = true;
 		this.step();
 	}
 
-	step() {
+	static stop() { this.running = false }
+
+	static step() {
 		if (! this.running) return;
-		const numAlive = Bot.step();
-		if (this.t++ > maxCycles || ! numAlive) // Long run or all dead?
+		const botCount = Bot.step();
+		if (botCount !== this.botCount) this.t = 0;
+		this.botCount = botCount;
+		if (this.t++ > maxCycles || ! botCount) // Pop unchanging or zero?
 			return this.reset();
 		const [t] = this.periods;
 		const _this = this;
 		setTimeout(() => requestAnimationFrame(() => _this.step()), t);
 	}
 
-	changeSpeed() {
+	static changeSpeed() {
 		this.periods.push(this.periods.shift());
 		console.log('period', this.periods[0]);
 	}
@@ -92,15 +86,13 @@ class Run {
 class Bot {
 	constructor(index) {
 	  this.pos = Grid.anyEmpty();
-
  		if (! this.pos) return;
-
-		this.pos.occupant(this);
 		this.colour = Colour.colourful(index, Bot.initialNum);
 		this.rules = Bot.best ? Bot.best.mutatedRules() : Direction.random();
 		this.ruleIndex = 0;
-		this.energy = Bot.energy();
+		this.energy = Bot.initialEnergy();
 		this.points = 0;
+		this.pos.occupant(this); // Draws bot
 	}
 
 	// Recreate all Bots according to the screen size
@@ -108,61 +100,57 @@ class Bot {
 	static reset() {
 		if (Bot.best) Bot.best.show();
 		Bot.initialNum = Math.floor(Grid.numCells * botsPerCell);
-		Bot.all = [];
-		for (let i = 0; i < Bot.initialNum; i++)
-			Bot.all.push(new Bot(i));
-		Bot.all.forEach(b => b.draw());		// Draw all at once
+		Bot.all = mapUpTo(Bot.initialNum, i => new Bot(i));
 		Bot.best = undefined;
 	}
 
 	// Return random initial fraction of max energy
 
-	static energy() { return Math.floor((0.5 + 0.5 * Math.random()) * maxEnergy) }
+	static initialEnergy() { return Math.floor(maxInitialEnergy * (0.1 + 0.9 * Math.random())) }
 
 	// Run one step of bot activity and return number left alive
 
 	static step() {
-		Grid.clearClaims();
-		Bot.all.map(b => b.calc());		// Claim new positions
-		Bot.all.map(b => b.move());		// Then move
+		Bot.all.map(b => b.move());
 		Bot.all = Bot.all.filter(b => b.isLive());
 		// console.log('Pop', Bot.all.length);
 
 		return Bot.all.length;
 	}
 
-	// Set the bot's next position unless off the grid and claim it.  Advance bot's pointer.
-
-	calc() {
-		const rule = this.rules[this.ruleIndex];
-		this.ruleIndex = (this.ruleIndex + 1) % this.rules.length; // Point Bot to next rule
-		this.next_pos = this.pos.cellInDirection(rule);
-		this.next_pos?.claim(true);	// Claim new pos
-	}
-
-	// If new position is empty and I'm sole claimant, move there.  Die if out of energy.
+	// Move to bot's next position if empty.  Die if out of energy or off grid.
 
 	move() {
-		let n = this.next_pos;
-		if (n && n.claim() !== 1) n = undefined; // Drop disputed claim
-		this.energy--;
-		const dead = ! n || ! this.isLive();
-		this.pos.occupant(undefined);		// Clear old pos
-		this.draw();
-		if (dead) return;
-		const prev = this.previous_pos;
-		if (! n.equal(prev) && ! n.equal(this.pos)) this.energy += 5;
+		let n = this.getNextPos();
+		this.energy = n ? this.energy - 1 : 0;
+		const targetBot = n && ! n.equal(this.pos) && n.occupant();
+		if (targetBot) {
+			this.energy += targetBot.energy;
+			targetBot.die();
+		}
+		const dead = ! this.isLive();
+		if (dead || !targetBot) this.pos.occupant(undefined);	// Clear old pos
 		this.points++;
+		if (dead || targetBot) return;
 		if (! Bot.best || this.points > Bot.best.points) Bot.best = this;
-		this.previous_pos = this.pos;
 		this.pos = n;
 		n.occupant(this);
-		this.draw();							// Draw old/new pos, colour
+	}
+
+	die() {
+		this.energy = 0;
+		this.pos.occupant(undefined);
+	}
+
+	getNextPos() { return this.pos.cellInDirection(this.getNextRule()) }
+
+	getNextRule() {
+		const { rules, ruleIndex } = this;
+		this.ruleIndex = (ruleIndex + 1) % rules.length; // Point Bot to next rule
+		return rules[ruleIndex];
 	}
 
 	isLive() { return this.energy > 0 }
-
-	draw() { this.pos.draw() }
 
 	show() {
 		const bs = this.toString();
@@ -174,7 +162,7 @@ class Bot {
 	// Return black faded towards white as the Bot's energy decreases
 
 	borderColour() {
-		const k = 1 - this.energy / maxEnergy;
+		const k = 1 - this.energy / maxInitialEnergy;
 
 		return Colour.white.multiply(k < 0 ? 0 : k);
 	}
@@ -203,10 +191,11 @@ class Bot {
 class Direction {
 	static init() {
 		this.vector = {
-			N: { dx: 0,  dy: -1 },	// y increases downwards
-			E: { dx: 1,  dy: 0 },
-			S: { dx: 0,  dy: 1 },
-			W: { dx: -1, dy: 0 },
+			N: { dx:  0, dy: -1 },	// y increases downwards
+			E: { dx:  1, dy:  0 },
+			S: { dx:  0, dy:  1 },
+			W: { dx: -1, dy:  0 },
+			O: { dx:  0, dy:  0 },
 		};
 
 		this.directions = [...Object.keys(this.vector)];
@@ -217,19 +206,18 @@ class Direction {
 	static random() { return this.directions.any() }
 }
 
-/// Grid ///////////////////////////////////////////////////////////
+/// Grid ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Grid {
 	static init() {
-		this.grid = [];
 		const ww = window.innerWidth, wh = window.innerHeight;
 		const cw = this.round(ww), ch = this.round(wh);
 		this.ctx = this.context(ww, wh, cw, ch);
 		this.ctx.fillStyle = 'blue';
 		this.ctx.rect(0, 0, cw, ch);
 		// Set the inclusive max x and y for the given width and height in pixels
-		this.xMax = Math.floor(cw / Cell.size - 1);
-		this.yMax = Math.floor(ch / Cell.size - 1);
+		this.xMax = Math.floor(cw / cellSize - 1);
+		this.yMax = Math.floor(ch / cellSize - 1);
 		this.numCells = (this.xMax + 1) * (this.yMax + 1);
 	}
 
@@ -242,14 +230,15 @@ class Grid {
 		canvas.style.marginLeft = ((ww - cw)/2 - 11) + 'px';
 		canvas.style.marginTop	= ((wh - ch)/2 - 11) + 'px';
 		canvas.style.border = 'solid';
-		canvas.onclick = run.startStop;
+		canvas.onclick = () => Run.startStop();
 
 		return canvas.getContext('2d');
 	}
 
-	// Round window coord to a multiple of the grid size.
+	// Round window coord to a multiple of the cell size
 
-	static round(x) { return Math.floor((x-6) / Cell.size) * Cell.size }
+	static round(x) {
+		return Math.floor((x - 6) / cellSize) * cellSize }
 
 	// Return a random empty position
 
@@ -261,10 +250,6 @@ class Grid {
 	}
 
 	static randomCell() { return new Cell(rand(0, this.xMax), rand(0, this.yMax)) }
-
-	static clearClaims() { this.claims = [] }
-
-	static isOnGrid(x, y) { return x >= 0 && x <= this.xMax && y >= 0 && y <= this.yMax }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -272,74 +257,52 @@ class Grid {
 class Cell {
 	constructor(x, y) { this.x = x; this.y = y }
 
-	static init(size) {
-		this.size = size;
-		// this.types = ['empty', 'bot', 'off'];
-		// this.typeString = { empty: '∅', bot: '⬛', off: '-'}
-	}
+	static reset() { this.grid = [] }
 
 	equal(p) { return p && this.x == p.x && this.y == p.y }
 
-	// Return canvas coords
-
-	origin() { return {x: this.x * Cell.size, y: this.y * Cell.size} }
-
-	// Get or set the occupant of this cell
+	// Get the occupant of this cell or set and draw ( may be undefine)
 
 	occupant(newOccupant) {
-		let row = Grid.grid[this.y];
-		if (! row) {
-			if (! newOccupant) return undefined; // Set undefined or get in non-existent row
-			row = Grid.grid[this.y] = [];
-		}
-		if (arguments.length)				// New occupant may be undefined
-			row[this.x] = newOccupant;
-
-		return row[this.x];
-	}
-
-	// Return the type of thing in this cell: 'off' (off screen), 'empty' or 'bot'
-
-	// type() { return !this.isOnGrid() ? 'off' : this.occupant() ? 'bot' : 'empty' }
-
-	// If `add`, increment the claims on the cell.  Return the total.
-
-	claim(add) {
+		const set = arguments.length;
 		const { x, y } = this;
-		let row = Grid.claims[y];
+		const { grid } = Cell;
+		let row = grid[y];
 		if (! row) {
-			if (! add) return 0;
-			row = Grid.claims[y] = [];
+			if (! set) return undefined; // Get in non-existent row
+			row = grid[y] = [];
 		}
-		row[x] = row[x] || 0;
-		if (add) row[x]++;
-
+		if (set) {
+			row[x] = newOccupant;
+			this.draw();
+		}
 		return row[x];
 	}
 
-	// Return the cell in direction d from this position, or undefined if off grid
+	// Return the cell in direction d from this one, or undefined if off grid
 
 	cellInDirection(d) {
 		let { x, y } = this;
 		const { dx, dy } = Direction.vector[d];
-		x += dx; y += dy;
+		x += dx; y+= dy;
+		const { xMax, yMax } = Grid;
 
-		return Grid.isOnGrid(x, y) ? new Cell(x, y) : undefined;
+		return x >= 0 && x <= xMax && y >= 0 && y <= yMax ? new Cell(x, y) : undefined;
 	}
 
 	draw() {
-		const { x, y } = this.origin();
+		const x = this.x * cellSize, y = this.y * cellSize;
 		const occupant = this.occupant();
-		const c = Grid.ctx;
+		const { ctx } = Grid;
 		const margin = occupant ? 2 : 0;
 
-		c.strokeStyle = occupant ? occupant.borderColour().toString() : 'white';
-		c.fillStyle = occupant ? occupant.colour.toString() : 'white';
-		c.beginPath();
-		c.rect(x + margin, y + margin, Cell.size - 2*margin, Cell.size - 2*margin);
-		c.fill();
-		c.stroke();
-		c.closePath();
+		ctx.strokeStyle = occupant ? occupant.borderColour().toString() : 'white';
+		ctx.fillStyle = occupant ? occupant.colour.toString() : 'white';
+		ctx.beginPath();
+		ctx.rect(x + margin, y + margin, cellSize - 2*margin, cellSize - 2*margin);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
 	}
 
 	toString() { return '(' + this.x + ',' + this.y + ')' }
@@ -426,6 +389,13 @@ function p(probability) { return Math.random() < probability }
 
 function rand(min, max) { return Math.floor(min + (max+1 - min) * Math.random()) }
 
+function mapUpTo(n, f) {
+	function mapFrom(i) { return i >= n ? [] : [f(i), ...mapFrom(i + 1)] }
+
+	return mapFrom(0);
+}
+
+
 function close_window() {
 	// JavaScript can close the window if it opened it.	 It can't
 	// open a page from a different domain, including no domain.
@@ -433,7 +403,7 @@ function close_window() {
 	window.open(location.href, '_self', '').close();
 }
 
-new Run();
+Run.init();
 
 </script>
 </body>
