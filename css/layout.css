@@ -192,9 +192,11 @@ input[type='text']
 
 .clear { clear: both }
 
-#google_translate_element { margin: 0 0 -8% 5% }
-.goog-te-gadget { white-space: normal !important }
-.goog-te-gadget div { margin-right: 65px }
+#google_translate_element {
+    height: 50px;
+    width: 160px;
+    margin: 12px 0 -30px 60px;
+}
 
 #social { margin: 10px 0 20px 15px }
 
