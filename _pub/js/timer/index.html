@@ -16,28 +16,14 @@ body {
   font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
 }
 
-a {
-  display: inline-block;
-  width: 3em;
-  height: 1.2em;
-  text-align: center;
-  margin: 5px;
-  border: 1px solid grey;
-  padding: 5px;
-  border-radius: 12px;
-  background-color: #fef;
-  text-decoration: none;
+.controls {
+	line-height: 40pt;
+	font-size: 2.5vw;
 }
 
-.controls { font-size: 2.5vw }
-
-.options { line-height: 40pt }
-
-.options-icon {
-	position: absolute;
-	top: 22px;
-	left: 70px;
+.controls .options {
 	font-size: 2.8vw;
+	padding-top: 2.5px;
 }
 
 @keyframes change { to { transform: rotate(360deg); color: red } }
@@ -48,11 +34,21 @@ a {
   animation-name: change;
   animation-duration: 2s;
 	animation-timing-function: linear;
-	animation-direction: alternate;
+	/* animation-direction: alternate; */
   animation-iteration-count: infinite;
 }
 
-.times { display: inline }
+.controls span {
+  display: inline-block;
+	height: 52px;
+  width: 200px;
+  text-align: center;
+  margin: 12px 6px;
+  border: 2px solid grey;
+  padding: 5px;
+  border-radius: 12px;
+  background-color: #fef;
+}
 
 .timer {
   display: none;
@@ -60,12 +56,9 @@ a {
 }
 
 .time {
+  font-size: 18vw;
   text-align: center;
   color: darkblue;
-}
-
-.time {
-  font-size: 18vw;
 }
 
 .sep {
@@ -76,69 +69,111 @@ a {
 </head>
 <body>
 <div class="controls">
-  <a class="options" href="#"><div class="options-icon">&#9881;</div>&nbsp;</a>
-	<div class="times">
-		<a href="?5">5s</a>
-		<a href="?10">10s</a>
-		<a href="?20">20s</a>
-		<a href="?30">30s</a>
-		<a href="?60">1m</a>
-		<a href="?120">2m</a>
-		<a href="?300">5m</a>
-		<a href="?600">10m</a>
-		<a href="?1200">20m</a>
-		<a href="?1800">30m</a>
-		<a href="?3600">1h</a>
-		<a href="?86400">1d</a>
-		<a href="?2592000">1m</a>
-		<a href="?31104000">1y</a>
-	</div>
+	<span class="options" data-x="options">&#9881;</span>
+	<span data-x="clear">clear</span>
+	<span data-x="5">5 sec</span>
+	<span data-x="10">10 sec</span>
+	<span data-x="20">20 sec</span>
+	<span data-x="30">30 sec</span>
+	<span data-x="60">1 min</span>
+	<span data-x="120">2 min</span>
+	<span data-x="300">5 min</span>
+	<span data-x="600">10 min</span>
+	<span data-x="1200">20 min</span>
+	<span data-x="1800">30 min</span>
+	<span data-x="3600">1 hour</span>
+	<span data-x="86400">1 day</span>
+	<span data-x="2592000">1 mon</span>
+	<span data-x="31104000">1 year</span>
 </div>
 <div class="timer"><div class="time"></div></div>
 <script>
 
 class Timer {
 	constructor() {
+		this.allowNotify();
 		this.bindMethods();
 
-		this.optionsIcon = this.el('.options-icon');
-		this.el('.options').onclick = this.optionsClicked;
+		this.optionsIcon = this.el('.options');
+		this.el('.controls').onclick = this.controlsClicked;
 
 		// chrome://flags/#autoplay-policy
 		this.audio = new Audio('ding.wav');
 		this.dingsTotal = 3;
 
-		this.start(parseFloat(this.queryString()));
-	}
-
-	start(secs) {
-		if (isNaN(secs)) return;
-		this.toggleTimes(true);
-		this.show('.timer', true);
-		this.endMs = 1E3 * Math.floor(this.nowMs()/1E3 + secs + 1);
-		this.allowNotify();
-		this.schedule();
+		const qs = this.queryString();
+		if (qs) this.setOrAdd(qs);
 	}
 
 	bindMethods() {
-		['alert', 'optionsClicked', 'update']
+		['alert', 'controlsClicked', 'update']
 			.forEach(m => this[m] = this[m].bind(this));
 	}
 
-	schedule() {
-		const msToNextSecond = 1E3 - this.nowMs() % 1E3;
+	controlsClicked(event) {
+		this.alerting = false;
+		this.toggleTitle('Timer');
+		const button = event.target.dataset.x;
+		switch (button) {
+			case 'options':
+				this.toggleTimes();
+				return;
+			case 'clear':
+				this.endMs = undefined;
+				this.show('.timer', false);
+				return;
+		}
+		this.setOrAdd(button);
+	}
+
+	setOrAdd(string) {
+		const secs = parseFloat(string);
+		this.toggleTimes(false);
+		// If timer is set, add secs, else set it
+		const wasSet = this.endMs;
+		this.endMs = wasSet ? this.endMs + 1E3 * secs : 1E3 * Math.floor(Date.now()/1E3 + secs + 1);
+		if (wasSet) return;
+		this.show('.timer', true);
+		this.scheduleUpdate();
+	}
+
+	scheduleUpdate() {
+		const msToNextSecond = 1E3 - Date.now() % 1E3;
 		setTimeout(this.update, msToNextSecond);
 	}
 
 	update() {
-		let secsLeft = Math.floor((this.endMs - this.nowMs() + 999) / 1E3); // Seconds to go
-		if (secsLeft < 0) { this.timeExpired(); return }
+		if (!this.endMs) return;
+		const secsLeft = Math.floor((this.endMs - Date.now() + 999) / 1E3); // Seconds to go
+		if (secsLeft < 0) { this.startAlert(true); return }
 		const s = this.secsToString(secsLeft);
-		document.title = s.replace('<br>', ' ').replace(/ : /g, ':');
+		this.toggleTitle(s.replace('<br>', ' ').replace(/ : /g, ':'));
 		const htmlTime = s.replace(/(\D+)/g, '<span class="sep">$1</span>');
 		this.els('.time').forEach(e => e.innerHTML = htmlTime);
-		this.schedule();
+		this.scheduleUpdate();
 	}
+
+	startAlert(on) {
+		this.animateOptionsButton(on);
+		this.notify(on);
+		this.dings = on ? this.dingsTotal : 0;
+		this.alerting = on;
+		if (on) { this.alert() } else { this.toggleTitle('Timer') }
+	}
+
+	alert() {
+		if (!this.alerting) { this.startAlert(false); return };
+		if (--this.dings >= 0)
+			this.audio.play().catch(e => {});	// Catch Chrome fail
+		this.toggleTitle();
+		setTimeout(this.alert, 2E3);
+	}
+
+	toggleTimes(show = !this.showTimes) {
+		this.show('.controls span:not(.options)', this.showTimes = show);
+	}
+
+	queryString() { return location.search.substr(1) }
 
 	secsToString(n) {
 		const bases = [Infinity, 12, 30, 24, 60, 60];  // Modulos for y, m, d, h, m, s
@@ -154,36 +189,6 @@ class Timer {
 
 		return s;
 	}
-
-	timeExpired() { this.setAlert(true) }
-
-	optionsClicked() {
-		this.setAlert(false);
-		this.toggleTimes();
-	}
-
-	setAlert(on) {
-		this.animateOptionsButton(on);
-		this.notify(on);
-		this.toggleTitle(true);
-		this.dings = on ? this.dingsTotal : 0;
-		if (on) this.alert();
-	}
-
-	alert() {
-		if (--this.dings >= 0)
-			this.audio.play().catch(e => {});	// Catch Chrome fail
-		this.toggleTitle();
-		setTimeout(this.alert, 2E3);
-	}
-
-	toggleTimes(hide) {
-		this.show('.times a', this.showTimes = ! (hide || this.showTimes));
-	}
-
-	nowMs() { return (new Date).getTime() }
-
-	queryString() { return location.search.substr(1) }
 
 	show(sel, showHide) {
 		this.els(sel).forEach(e => e.style.display = showHide ? 'inline-block' : 'none');
@@ -201,18 +206,16 @@ class Timer {
 	}
 
 	notify(on) {
-		if (! on && this.notification ) { this.notification.close(); return }
-		const body = "Time's up!";
-		const icon = 'reaper.jpg';
-		this.notification = new Notification('Timer expired', { body, icon });
-		this.notification.onclick = () => this.setAlert(false);
+		if (!on) { this.notification?.close(); return }
+		this.notification = new Notification('Timer expired', { body: "Time's up!", icon: 'reaper.jpg' });
+		this.notification.onclick = () => this.alerting = false;
 		// There's no way to tell whether onclose was the user
 		// closing a notification or Firefox autoclosing it after 10s
 	}
 
-	toggleTitle() {
+	toggleTitle(title) {
 		this.titleState = ! this.titleState;
-		document.title = this.titleState ? 'time up' : 'TIME UP';
+		document.title = title || (this.titleState ? 'time up' : 'TIME UP');
 	}
 
 	animateOptionsButton(on) {
