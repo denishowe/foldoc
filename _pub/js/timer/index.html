@@ -128,7 +128,6 @@ class Timer {
 
 	setOrAdd(string) {
 		const secs = parseFloat(string);
-		this.toggleTimes(false);
 		// If timer is set, add secs, else set it
 		const wasSet = this.endMs;
 		this.endMs = wasSet ? this.endMs + 1E3 * secs : 1E3 * Math.floor(Date.now()/1E3 + secs + 1);
