@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Clock</title>
-    <meta charset="UTF-8">
-    <!-- https://fonts.google.com/specimen/Rozha+One -->
-    <link href="https://fonts.googleapis.com/css?family=Rozha+One&display=swap" rel="stylesheet">
-  </head>
-  <body style="overflow: hidden; font-family: 'Rozha One'">
-    <canvas></canvas>
-    <script>
+<head>
+  <title>Clock</title>
+  <meta charset="UTF-8">
+  <!-- https://fonts.google.com/specimen/Rozha+One -->
+  <link href="https://fonts.googleapis.com/css?family=Rozha+One&display=swap" rel="stylesheet">
+</head>
+
+<body style="overflow: hidden; font-family: 'Rozha One'">
+  <canvas></canvas>
+  <script>
 
 const textHeight = 200;
 const fontFamily = 'Rozha One';
@@ -28,12 +29,13 @@ window.onresize = () => after(100, resize);
 function after(delayMS, callback) {
   if (callback.pending) clearTimeout(callback.pending);
   callback.pending = setTimeout(() => {
-	callback.pending = null;
-	callback();
+    callback.pending = null;
+    callback();
   }, delayMS);
 }
 
 function resize() {
+  // alert(`inner w${innerWidth} h${innerHeight}   outer w${outerWidth} h${outerHeight}`);
   const can = document.querySelector('canvas');
   can.width = window.innerWidth - 16;
   can.height = window.innerHeight - 26;
@@ -43,8 +45,8 @@ function resize() {
   previous = '';
   grid = null;
   const loop = () => {
-	frame();
-	if (! resize.pending) requestAnimationFrame(loop);
+    frame();
+    if (!resize.pending) requestAnimationFrame(loop);
   };
   setTimeout(loop, 100);				// Allow time for font to load
 }
@@ -61,20 +63,20 @@ function frame() {
   ctx.clearRect(0, 0, width, height);
 
   if (!grid) {
-	const kx = width / points.width;
-	const ky = height / points.height;
-	const gap = 1;
-	grid = 0.9 * Math.min(kx, ky);
-	size = Math.max(grid - gap, 1);
-	marginX = (width - grid * points.width) / 2;
-	marginY = (height - grid * points.height) / 2;
+    const kx = width / points.width;
+    const ky = height / points.height;
+    const gap = 1;
+    grid = 0.9 * Math.min(kx, ky);
+    size = Math.max(grid - gap, 1);
+    marginX = (width - grid * points.width) / 2;
+    marginY = (height - grid * points.height) / 2;
   }
 
   const d = height * Math.pow(Math.sin(Math.PI * ms / cycleMS), 8);
   const phase = 1000 * minute;
   points.forEach(p => {
-  	ctx.fillStyle = angleRGB(p.cf * ms + phase);
-  	ctx.fillRect(marginX + grid * p.x + d * p.dx, marginY + grid * p.y + d * p.dy, size, size);
+    ctx.fillStyle = angleRGB(p.cf * ms + phase);
+    ctx.fillRect(marginX + grid * p.x + d * p.dx, marginY + grid * p.y + d * p.dy, size, size);
   });
 }
 
@@ -83,7 +85,9 @@ function frame() {
 // Set points.width and points.height to the range of coords found.
 
 function textImage(text) {
+  // text = '26:66'; // Widest
   const textWidth = Math.floor(ctx.measureText(text).width);
+  // console.log(text, 'width', textWidth);
   const textHeightAdjusted = textHeight + 5; // +5 for Safari and screensaver
   ctx.clearRect(0, 0, textWidth, textHeightAdjusted);
   ctx.fillStyle = 'rgb(0,0,0)';
@@ -91,11 +95,12 @@ function textImage(text) {
   const image = ctx.getImageData(0, 0, textWidth, textHeightAdjusted).data;
   points = [];
   for (let y = 0; y < textHeightAdjusted; y++) {
-	for (let x = 0; x < textWidth; x++) {
-	  const i = 4 * (textWidth * y + x);
-	  if (image[i + 3]) points.push({ x, y });
-	}
+    for (let x = 0; x < textWidth; x++) {
+      const i = 4 * (textWidth * y + x);
+      if (image[i + 3]) points.push({ x, y });
+    }
   }
+  ctx.clearRect(0, 0, textWidth, textHeightAdjusted);
   const xs = points.map(p => p.x);
   const ys = points.map(p => p.y);
   const xMin = Math.min.apply(null, xs);
@@ -109,10 +114,10 @@ function textImage(text) {
   const numColours = Math.floor(1 + 10 * Math.random());
 
   points.forEach(p => {
-	p.x -= xMin; p.y -= yMin;
-	p.cf = Math.floor(k * (p.x*p.x + p.y*p.y)) % numColours;
-	const a = 0.05 * p.x * p.y;
-	p.dx = b * Math.cos(a); p.dy = b * Math.sin(a);
+    p.x -= xMin; p.y -= yMin;
+    p.cf = Math.floor(k * (p.x * p.x + p.y * p.y)) % numColours;
+    const a = 0.05 * p.x * p.y;
+    p.dx = b * Math.cos(a); p.dy = b * Math.sin(a);
   });
   points.width = xMax - xMin;
   points.height = yMax - yMin;
@@ -138,8 +143,20 @@ function angleRGB(angle) {
 
 // function isSafari() { return navigator.userAgent.match(/AppleWebKit\/605/) } // Also matches screensaver
 
+// Request for full screen must be initiated by user action in Chrome or Firefox
+// Firefox fix - https://stackoverflow.com/a/27078920/285129
+// about:config > full-screen-api.allow-trusted-requests-only: false
+
+document.onclick = function fullscreen() {
+  if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
+  const d = document.documentElement;
+  const f = d.webkitRequestFullscreen || d.requestFullscreen || d.msRequestFullscreen || d.mozRequestFullScreen;
+  if (!f) return console.log('No full screen API');
+  f.call(d);
+}
+
 window.onresize();
 
-    </script>
-  </body>
+  </script>
+</body>
 </html>
