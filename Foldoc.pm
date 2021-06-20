@@ -601,13 +601,13 @@ sub template
 
 	# Handle <!-- set VAR VALUE --> in content
 	$ENV{CONTENT} =~
-		s/<!--\s+set\s+(\w+)\s+(.*?)\s+-->\s*/$ENV{$1} = $2, ""/egs;
+		s/<!--\s*set\s+(\w+)\s+(.*?)\s*-->\s*/$ENV{$1} = $2, ""/egs;
 
 	my $output = file_contents($template);
 
 	# Handle <!-- if VAR --> ... <!-- end VAR -->
 	$output =~
-		s/(\s*<!-- if (\w+) -->.*<!-- end \2 -->\n)/$ENV{$2} ? $1 : ""/egs;
+		s/(\s*<!--\s*if\s+(\w+)\s+-->.*<!--\s+end\s+\2\s*-->\n)/$ENV{$2} ? $1 : ""/egs;
 
 	# Substitute $VAR with $ENV{VAR}.  Allow for variable
 	# references in substituted value but only one level.

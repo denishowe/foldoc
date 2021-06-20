@@ -3,6 +3,7 @@ use Test::More tests => 8;
 use lib "../lib";
 use Test::Web;
 
+# cpan install TAP::Harness
 # cd foldoc && prove
 
 $ENV{RUN}++ or TAP::Harness->new->runtests(<*.t>);
