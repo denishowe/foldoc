@@ -1,5 +1,5 @@
 use TAP::Harness;
-use Test::More tests => 8;
+use Test::More tests => 9;
 use lib "../lib";
 use Test::Web;
 
@@ -12,8 +12,7 @@ my $t = Test::Web->new(url => "http://foldoc.org");
 
 # Home
 
-$t->get_ok("/")
-	->contains(title => "FOLDOC - Computing Dictionary", "Home title");
+$t->get_ok("/")->contains("<title>(.*?)</title>", "FOLDOC - Computing Dictionary", "Home title");
 
 # Dangling cross-reference
 
@@ -23,7 +22,7 @@ $t->get_ok("/precedence")
 # Contents
 
 $t->get_ok("/contents/D.html")
-	->contains("a[href=/DWIM]" => "DWIM", "D entry label");
+	->contains('<a href="/DWIM">(.*?)</a>', "DWIM", "contents/D entry label");
 
 $t->get_ok("/contents/subject.html", "subject index")
 	->content_like(qr/entries by subject/i)
@@ -58,8 +57,6 @@ $t->get_ok("/Classic C")
 
 $t->get_ok('/word-search?query=%5Equ..ms%24')
 	->content_like(qr/qualms/);
-
-done_testing();
 
 # Redirects
 # Neighbouring entries
