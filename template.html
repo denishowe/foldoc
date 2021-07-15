@@ -104,7 +104,7 @@
 					var s = document.createElement("script");
 					s.setAttribute("type", "text/javascript");
 					s.setAttribute("src", "//www.htmlcommentbox.com/jread?page="
-						+ escape(hcb_user.PAGE).replace("+", "%2B")
+						+ escape(hcb_user.PAGE).replace(/\+/g, "%2B")
 						+ "&mod=%241%24wq1rdBcg%24.0y2uzvjA2bsnhzpXVq9F."
 						+ "&opts=17374&num=10"); // No e-mail field: 16846
 					if (typeof s != "undefined")

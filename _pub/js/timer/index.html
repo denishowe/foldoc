@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
 <!--
-	Display a countdown from a number of seconds given in the query string
+Display a countdown from a number of seconds given in a query string
+containing any sequence of numbers (with optional decimal point)
+optionally followed by units - s (default), m, h, d, w, mo (30 days),
+y - in any case.  Non-number, non-letter characters are ignored.
 -->
 
 <html>
@@ -75,12 +78,14 @@ body {
 	<span data-x="10">10 sec</span>
 	<span data-x="20">20 sec</span>
 	<span data-x="30">30 sec</span>
+	<br>
 	<span data-x="60">1 min</span>
 	<span data-x="120">2 min</span>
 	<span data-x="300">5 min</span>
 	<span data-x="600">10 min</span>
 	<span data-x="1200">20 min</span>
 	<span data-x="1800">30 min</span>
+	<br>
 	<span data-x="3600">1 hour</span>
 	<span data-x="86400">1 day</span>
 	<span data-x="2592000">1 mon</span>
@@ -127,7 +132,7 @@ class Timer {
 	}
 
 	setOrAdd(string) {
-		const secs = parseFloat(string);
+		const secs = this.parseQueryString(string);
 		// If timer is set, add secs, else set it
 		const wasSet = this.endMs;
 		this.endMs = wasSet ? this.endMs + 1E3 * secs : 1E3 * Math.floor(Date.now()/1E3 + secs + 1);
@@ -169,10 +174,10 @@ class Timer {
 	}
 
 	toggleTimes(show = !this.showTimes) {
-		this.show('.controls span:not(.options)', this.showTimes = show);
+		this.show('.controls :not(.options)', this.showTimes = show);
 	}
 
-	queryString() { return location.search.substr(1) }
+	queryString() { return decodeURI(location.search.substr(1)) }
 
 	secsToString(n) {
 		const bases = [Infinity, 12, 30, 24, 60, 60];  // Modulos for y, m, d, h, m, s
@@ -187,6 +192,37 @@ class Timer {
 		} while (n);
 
 		return s;
+	}
+
+	// Return a number of seconds given a query string
+
+	unitSeconds = (() => {
+		const m = 60;
+		const h = 60 * m;
+		const d = 24 * h;
+		const mo = 30*d;
+
+		return { s: 1, m, h, d, w: 7*d, mo, y: 12*mo };
+	})();
+
+	parseQueryString(s) {
+		console.log(s);
+		let t = 0;
+		s = s.toLowerCase();
+		while (true) {
+			const matchNumber = s.match(/^.*?([\d.]+)/);
+			console.log('num', matchNumber, t);
+			if (!matchNumber) return t;
+			let number = parseFloat(matchNumber[1]);
+			s = s.substr(matchNumber[0].length);
+			const matchUnits = s.match(/^[^0-9.a-z]*?(s|mo?|h|d|w|y)[a-z]*/);
+			if (matchUnits) {
+				number *= this.unitSeconds[matchUnits[1]];
+				s = s.substr(matchUnits[0].length);
+			}
+			t += number;
+			console.log('units', matchUnits, number, t);
+		}
 	}
 
 	show(sel, showHide) {
