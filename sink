@@ -7,6 +7,8 @@
 # --> Symlink on PATH?
 # sshargs for Unison is set in ~/Library/Application Support/Unison/foldoc.prf
 
+# In Windows bash, ensure git ssh is on PATH
+
 export UNISON=C:/Users/denis/Documents/Tech/Unison/home
 u="unison foldoc"
 $u -batch || $u
