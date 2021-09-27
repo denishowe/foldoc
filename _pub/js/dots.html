@@ -20,26 +20,26 @@ span {display: inline-table; width: 49%; height: 100%}
 
 /////////////////////////////////////////////////////////////////////////////
 
-// file:///C:/Users/denis/Projects/FOLDOC/foldoc/_pub/js/dots.html
+/* file:///C:/Users/denis/Projects/FOLDOC/foldoc/_pub/js/dots.html
 
-// p = point(x, y)				# Black point
-// cp = colour(p, c)			# Coloured point
-// l = line(p1, p2)				# Width 1, black line
-// cl = colour(l, c)			# Width 1, single colour
-// gl = colour(cl)				# Linear colour gradient
-// sp = size(p, s)				# Black disc
+	colour(r(), g(), b())			# Coloured point (other colour models)
+	point(x(), y(), colour)		# Position
+	line(p1, p2)							# Straight line, width 1, gradient from colour of p1 to p2
+	circle(p, r(), lc, fc)  	# Disc with centre p, radius r(), line colour lc, fill colour fc
 
-/* Move to {(x+vx, y+vy)} for t = 0, dt, 2*dt, ..., 2*pi
-  where vx(t) = wave_x(i, t)
-	wave_x(i, t) = a_x[i]*cyc(f_x[i]*t+p_x[i])*e^-(d_x[i]*t)
-	cyc(t) = t/(2*pi),	or
-	cyc(t) = sin(t),	or
-	cyc(t) = square(t)
-* Transform each input point to one output point
-* Transform each input point to all output points
-* Rotate set about point
-* Apply transform with sequence of sets of parameters
-* Add noise to some dimension
+  Each function, e.g. x(t), where	t = [0, dt, 2*dt, ..., 1], returns one of:
+	* 0									constant zero
+	* k									constant k
+	* t
+	* sin(q*t)
+	* square(q*t)
+	* noise()
+	* m * f(t)					f(t) not constant
+	* f(t) = e^(d*t)
+	* f1(t) + f2(t)			f1, f2 not both constant
+	* f1(t) * f2(t)			f1, f2 neither constant
+
+	* Rotate point p1 about point p2?
 */
 
 // A point is an array (x, y, c) where c is a colour string.
