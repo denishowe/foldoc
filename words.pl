@@ -4,7 +4,7 @@
 
 # Denis Howe 2011-05-31 - 2012-10-18 14:07
 
-# http://foldoc.org/words.pl?t.*ia$
+# http://foldoc.org/words.pl?tri.*bia$
 
 use strict;
 use warnings;
