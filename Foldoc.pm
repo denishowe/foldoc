@@ -592,11 +592,11 @@ sub template
 		STATUS HEADERS META_DESCRIPTION BOTTOM_ADS RIGHT_ADS);
 
 	map { $ENV{$_->[0]} = $_->[1] if (! defined $ENV{$_->[0]}) }
-		[SOURCE			=> $template],
-		[URL			=> "$root_url/" . ($output_file || "")],
-		[DATE      		=> $date],
-		[NUM_TERMS 		=> $num_entries],
-		[UPDATED   		=> last_modified()],
+		[SOURCE					=> $template],
+		[URL						=> "$root_url/" . ($output_file || "")],
+		[DATE      			=> $date],
+		[NUM_ENTRIES		=> $num_entries],
+		[UPDATED   			=> last_modified()],
 		[HTMLCOMMENTBOX => ($ENV{URL} || "") ne "$root_url/random-entry"];
 
 	# Handle <!-- set VAR VALUE --> in content
