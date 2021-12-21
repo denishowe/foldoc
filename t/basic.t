@@ -1,5 +1,5 @@
 use TAP::Harness;
-use Test::More tests => 9;
+use Test::More tests => 20;
 use lib "../lib";
 use Test::Web;
 
@@ -8,11 +8,12 @@ use Test::Web;
 
 $ENV{RUN}++ or TAP::Harness->new->runtests(<*.t>);
 
-my $t = Test::Web->new(url => "http://foldoc.org");
+my $origin =  "http://foldoc.org";
+my $t = Test::Web->new(url => $origin);
 
 # Home
 
-$t->get_ok("/")->contains("<title>(.*?)</title>", "FOLDOC - Computing Dictionary", "Home title");
+$t->get_ok("/")->contains("<title>FOLDOC - Computing Dictionary</title>", "Home title");
 
 # Dangling cross-reference
 
@@ -22,41 +23,39 @@ $t->get_ok("/precedence")
 # Contents
 
 $t->get_ok("/contents/D.html")
-	->contains('<a href="/DWIM">(.*?)</a>', "DWIM", "contents/D entry label");
+	->contains('<a href="/DWIM">DWIM</a>', "contents/D entry label");
 
 $t->get_ok("/contents/subject.html", "subject index")
-	->content_like(qr/entries by subject/i)
-	->contains("a[href=/contents/job.html]" => "job", "subject index link");
+	->contains(qq{<a href="/contents/job.html">}, "subject index link");
 
 $t->get_ok("/contents/music.html", "music subject")
 	->contains(h2 => "Entries for subject music")
-	->contains("a[href=/mod]" => "mod", "music mod link");
+	->contains("a[href=/mod]", "music mod link");
 
 # Search
 
-$t->get_ok("/?query=foo&action=Search")
-	->status_is(302, "Query 302")
-	->header_is(Location => "/foo", "Query target");
+$t->get_ok("/?query=foo&action=Search", "legacy query param", 301)
+	->header_is(Location => $t->absolute("/foo"), "Query param redirect");
 
 # Entry with image
 
 $t->get_ok("/exclusive%20or")
-	->element_exists("img[src][title]", "Entry with image");
+	->element_exists("img", "Entry with image");
 
 # Plural query
 
 $t->get_ok("/cpus", "Case, stem")
-	->text_like(p => qr/part of a computer/, "Plural query");
+	->contains(qr/computer which controls/, "Plural query");
 
 # Follow cross-ref
 
 $t->get_ok("/Classic C")
-	->contains(h2 => "K&R C", "Follow cross-ref");
+	->contains("<h2>K&amp;R C</h2>", "Follow cross-ref");
 
 # Word-search
 
-$t->get_ok('/word-search?query=%5Equ..ms%24')
-	->content_like(qr/qualms/);
+$t->get_ok('/words.pl?r=[^aeiouy]{6}')
+	->content_like(qr/crwths/);
 
 # Redirects
 # Neighbouring entries

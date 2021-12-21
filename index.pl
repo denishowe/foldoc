@@ -7,7 +7,7 @@
 # 1999-11-10 - 2018-04-08
 
 # SET REQUEST_URI=Charles+W.+Bachman& SET QUERY_STRING=debug& perl index.cgi
-# HTTP_HOST=foldoc.org REQUEST_URI=/ABCL%2fc%2b QUERY_STRING=debug perl index.cgi
+# REQUEST_URI=//cpus QUERY_STRING=debug perl foldoc/index.pl
 
 # ############################################################################################### #
 # Dictionary, keys, offsets and contents are in same
@@ -30,6 +30,7 @@ $| = 1;
 # in the REQUEST_URI but not in the QUERY_STRING
 
 $_ = $ENV{REQUEST_URI} || "";
+debug "REQUEST_URI:", $_;
 $_ .= "?$ENV{QUERY_STRING}" if (($ENV{QUERY_STRING} || "") ne "");
 
 # Maybe redirect and exit or leave $_ as query term
@@ -37,8 +38,8 @@ $_ .= "?$ENV{QUERY_STRING}" if (($ENV{QUERY_STRING} || "") ne "");
 debug "URL:", $_;
 
 # Test: http://wombat.doc.ic.ac.uk/foo  --> foldoc.org/foo
-if ($ENV{HTTP_HOST} && $ENV{HTTP_HOST} ne $server_name || check_redirect($_))
-{
+$ENV{HTTP_HOST} ||= $server_name;
+if ($ENV{HTTP_HOST} ne $server_name || check_redirect($_)) {
 	s|^/*|$root_url/|
 		unless (/^http/);
 	# 301 permanent redirect is better for search engine optimisation

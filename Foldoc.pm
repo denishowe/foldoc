@@ -515,23 +515,22 @@ sub man_page
 	return "<a href=\"$url\">$page_ref</a>";
 }
 
-# Return query in a form more likely to match.  Only used if query
-# doesn't match so it doesn't matter if we convert a term into a
-# non-term.
+# If query doesn't match, return a form more likely to match.  May convert a term into a non-term.
 
 sub singular
 {
 	local ($_) = @_;
 
-	return $_ if (length $_ < 5			# Leave short words alone
-				  && !/[A-Z]+s/);		# Except CPUs, URLs, RFCs
+	# This breaks "cpus" --> "central processing unit"
+	# # Leave short words alone, except CPUs, URLs, RFCs
+	# return $_ if (length $_ < 5 && !/[A-Z]+s/);
 
-	$_ = lc $_;							# Scrap case
+	$_ = lc $_;											# Scrap case
 
 	# Singularise
-	s/([^b])ies$/$1y/i;					# binaries, not newbies
-	s/(h|ss|x)es$/$1/i;					# macintoshes, classes, boxes
-	s/s$//i;							# computers
+	s/([^b])ies$/$1y/i;							# binaries, not newbies
+	s/(h|ss|x)es$/$1/i;							# macintoshes, classes, boxes
+	s/s$//i;												# computers
 
 	# -ize etc.
 	s/ize$/ise/i;
