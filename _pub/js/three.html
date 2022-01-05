@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-	three.js playpen
--->
-
 <html>
 <head>
 <title>three.js playpen</title>
@@ -13,64 +9,51 @@
 <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
 <script>
 "use strict";
-let camera, material, renderer, scene;
-const meshes = [];
+const pi = Math.PI;
+// https://threejs.org/docs/#api/en/math/Vector3
+const xUnitVector = new THREE.Vector3(1, 0, 0)
+const yUnitVector = new THREE.Vector3(0, 1, 0)
+const zUnitVector = new THREE.Vector3(0, 0, 1)
+let camera, spit, renderer, scene;
+let theta = 0;
 
 init();
 
 function init() {
-  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-  camera.position.z = 1;
-
-  scene = new THREE.Scene();
-
-  // scene.add(new THREE.DirectionalLight(0x0000FF));
-
-  material = new THREE.MeshNormalMaterial();
-  // material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+  // https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
+  // A camera looks down its local, negative z-axis, i.e. into the screen
+  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 20;
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
-  // renderer.setAnimationLoop(animate);
   document.body.appendChild(renderer.domElement);
+  const radius = 0.7;
+  const length = 20;
+  const spitGeometry = new THREE.CylinderGeometry(radius, radius, length, 12);
+  // https://threejs.org/docs/#api/en/materials/Material
+  const material = new THREE.MeshNormalMaterial({ wireframe: false });
+  // https://threejs.org/docs/#api/en/objects/Mesh
+  spit = new THREE.Mesh(spitGeometry, material);
+  spit.position.set(2, 1, 0);
+  spit.rotation.z = pi/2; // Rotate from along the y axis to along the x axis
+  spit.rotation.y = 0.7;  // Rotate about y to give perspective
   restart();
 }
 
 function restart() {
   renderer.setSize(window.innerWidth-17, window.innerHeight-15);
-  addShape();
-  animate();
+  scene = new THREE.Scene();
+  scene.add(spit);
+  render();
 }
 
-function addShape() {
-  // const geometry = new THREE.BoxGeometry(rand(), rand(), rand());
-  const radius = 0.01 + 0.02 * Math.random();
-  // const height = 0.05 + 0.5 * Math.random();
-  const height = 20 * radius;
-  const openEnded = false;
-  const geometry = new THREE.CylinderGeometry(radius, radius, height, 100, 1, openEnded);
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(3*pos(), pos(), 0);
-  mesh.rotation.x = Math.random();
-  scene.add(mesh);
-  meshes.push(mesh);
-  setTimeout(addShape, 200);
-}
-
-function pos() { return 0.5 * (Math.random() - 0.5) }
-
-function animate(time) {
-  meshes.forEach(mesh => {
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.005;
-    mesh.rotation.z += 0.02;
-  });
+function render() {
+  spit.rotateOnAxis(yUnitVector, 0.01);
   renderer.render(scene, camera);
-  requestAnimationFrame(animate);
+  requestAnimationFrame(render);
 }
 
-// Wait until resized for a while
-
-window.onresize = function () {
+window.onresize = function debounceResize() {
 	if (window.onresize.timeout) clearTimeout(window.onresize.timeout);
 	window.onresize.timeout = setTimeout(() => {
 		const { innerWidth, innerHeight } = window;
