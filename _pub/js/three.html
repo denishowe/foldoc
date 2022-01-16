@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>three.js playpen</title>
+<title>Lithuanian tree cake “Šakotis”</title>
 <meta charset="UTF-8">
 <link rel="canonical" href="http://foldoc.org/pub/js/three.html">
 </head>
@@ -14,7 +14,10 @@ const pi = Math.PI;
 const xUnitVector = new THREE.Vector3(1, 0, 0)
 const yUnitVector = new THREE.Vector3(0, 1, 0)
 const zUnitVector = new THREE.Vector3(0, 0, 1)
-let camera, spit, renderer, scene;
+
+const spitRadius = 1;
+
+let camera, renderer, scene, spit;
 let theta = 0;
 
 init();
@@ -23,34 +26,52 @@ function init() {
   // https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
   // A camera looks down its local, negative z-axis, i.e. into the screen
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.x = -20;
   camera.position.z = 20;
+  camera.lookAt(0, 0, 0);
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   document.body.appendChild(renderer.domElement);
-  const radius = 0.7;
-  const length = 20;
-  const spitGeometry = new THREE.CylinderGeometry(radius, radius, length, 12);
+  spit = makeSpit();
+  const drip = makeDrip();
+  spit.add(drip);
+
+  restart();
+}
+
+function makeSpit() {
+  const length = 40;
+  const geometry = new THREE.CylinderGeometry(spitRadius, spitRadius, length, 6);
   // https://threejs.org/docs/#api/en/materials/Material
   const material = new THREE.MeshNormalMaterial({ wireframe: false });
   // https://threejs.org/docs/#api/en/objects/Mesh
-  spit = new THREE.Mesh(spitGeometry, material);
-  spit.position.set(2, 1, 0);
-  spit.rotation.z = pi/2; // Rotate from along the y axis to along the x axis
-  spit.rotation.y = 0.7;  // Rotate about y to give perspective
-  restart();
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(0.1*length, 0, 0);
+  mesh.rotation.z = pi/2; // Rotate from along the y (vertical) axis to along the x axis
+
+  return mesh;
+}
+
+function makeDrip() {
+  const geometry = new THREE.SphereGeometry(1);
+  const material = new THREE.MeshBasicMaterial( { color: 0x4444FF } );
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(spitRadius, 0, 0);
+
+  return mesh;
 }
 
 function restart() {
   renderer.setSize(window.innerWidth-17, window.innerHeight-15);
   scene = new THREE.Scene();
   scene.add(spit);
-  render();
+  rotate();
 }
 
-function render() {
-  spit.rotateOnAxis(yUnitVector, 0.01);
+function rotate() {
+  spit.rotateOnAxis(yUnitVector, -0.01);
   renderer.render(scene, camera);
-  requestAnimationFrame(render);
+  requestAnimationFrame(rotate);
 }
 
 window.onresize = function debounceResize() {

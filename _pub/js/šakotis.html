@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lithuanian tree cake (Šakotis)</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/three.html">
+</head>
+<body style="overflow: hidden">
+<script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+<script>
+"use strict";
+const pi = Math.PI;
+// https://threejs.org/docs/#api/en/math/Vector3
+const xUnitVector = new THREE.Vector3(1, 0, 0)
+const yUnitVector = new THREE.Vector3(0, 1, 0)
+const zUnitVector = new THREE.Vector3(0, 0, 1)
+
+const spitLength = 40;
+const spitRadius = 1;
+let spitRotation = 0;
+
+let camera, renderer, scene, spit;
+let theta = 0;
+
+init();
+
+function init() {
+  // https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
+  // A camera looks down its local, negative z-axis, i.e. into the screen
+  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.x = -20;
+  camera.position.z = 20;
+  camera.lookAt(0, 0, 0);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  document.body.appendChild(renderer.domElement);
+  spit = makeSpit();
+
+  restart();
+}
+
+function makeSpit() {
+  const geometry = new THREE.CylinderGeometry(spitRadius, spitRadius, spitLength, 6);
+  // https://threejs.org/docs/#api/en/materials/Material
+  // const material = new THREE.MeshNormalMaterial();
+  const material = new THREE.MeshBasicMaterial( { color: 0xCCCCFF } );
+  // https://threejs.org/docs/#api/en/objects/Mesh
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(0.1*spitLength, 0, 0);
+  mesh.rotation.z = pi/2; // Rotate from along the y (vertical) axis to x = -len/2..len/2
+
+  return mesh;
+}
+
+function addDrip() {
+  const dripRadius = 0.1;
+  const geometry = new THREE.SphereGeometry(dripRadius);
+  // https://www.rapidtables.com/web/color/RGB_Color.html
+  const material = new THREE.MeshBasicMaterial( { color: 0xFF9933 } );
+  const mesh = new THREE.Mesh(geometry, material);
+  // Add drip to spit original position along the y axis
+  const y = spitLength*(Math.random()-0.5);
+  const x = spitRadius * Math.cos(spitRotation);
+  const z = spitRadius * Math.sin(spitRotation);
+  mesh.position.set(x, y, z);
+  spit.add(mesh);
+}
+
+function restart() {
+  renderer.setSize(window.innerWidth-17, window.innerHeight-15);
+  scene = new THREE.Scene();
+  scene.add(spit);
+  rotate();
+}
+
+function rotate() {
+  spit.rotateOnAxis(yUnitVector, -0.01);
+  spitRotation -= 0.01;
+  addDrip();
+  renderer.render(scene, camera);
+  requestAnimationFrame(rotate);
+}
+
+window.onresize = function debounceResize() {
+	if (window.onresize.timeout) clearTimeout(window.onresize.timeout);
+	window.onresize.timeout = setTimeout(() => {
+		const { innerWidth, innerHeight } = window;
+		const shape = `${innerWidth}x${innerHeight}`;
+		if (shape == (window.onresize.shape || '')) return;
+		window.onresize.shape = shape;
+		restart();
+	}, 1E3);
+};
+</script>
+</body>
+</html>
