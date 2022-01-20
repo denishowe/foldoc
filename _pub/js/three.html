@@ -42,8 +42,12 @@ function init() {
 function makeSpit() {
   const length = 40;
   const geometry = new THREE.CylinderGeometry(spitRadius, spitRadius, length, 6);
+
   // https://threejs.org/docs/#api/en/materials/Material
+  // MeshBasicMaterial is not affected by lighting
   const material = new THREE.MeshNormalMaterial({ wireframe: false });
+  // const material = new THREE.MeshBasicMaterial({ color: 0xCCCCFF });
+
   // https://threejs.org/docs/#api/en/objects/Mesh
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(0.1*length, 0, 0);
