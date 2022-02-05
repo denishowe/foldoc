@@ -9,22 +9,25 @@
 <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
 <script>
 "use strict";
+// https://www.youtube.com/watch?v=jS26QKMVouU
 const pi = Math.PI;
 // https://threejs.org/docs/#api/en/math/Vector3
 const xUnitVector = new THREE.Vector3(1, 0, 0)
 const yUnitVector = new THREE.Vector3(0, 1, 0)
 const zUnitVector = new THREE.Vector3(0, 0, 1)
 
-const spitLength = 50;
-const spitRadius = 1;
+const spitRadius = 2;
+const spitLength = 20 * spitRadius;
 let spitRotation = 0;
+const spitSpeed = -0.1; // -ve => bottom towards viewer
+
+const dripRadius = 0.3 * spitRadius;
+const dripsTouchDistanceSquared = (1.5 * dripRadius)**2;
 let dripsFalling = [];
-let dripOrbitRadius = 1.08 * spitRadius;
+let dripsRotating = [];
 
 let camera, renderer, scene, spit;
 let theta = 0;
-
-init();
 
 function init() {
   renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -33,14 +36,11 @@ function init() {
   scene.background = new THREE.Color(0x220000);
   addCamera();
   addLight();
-
-  spit = makeSpit();
-
+  addSpit();
   window.addEventListener('resize', restart);
   restart();
-  scene.add(spit);
   addDrip();
-  animate();
+  rotateSpit();
 }
 
 function restart() {
@@ -51,76 +51,110 @@ function restart() {
   camera.updateProjectionMatrix();
 }
 
-// Create the spit along the x axis, centered on the origin
-
-function makeSpit() {
-  const geometry = new THREE.CylinderGeometry(spitRadius, spitRadius, spitLength, 6);
-  // https://threejs.org/docs/#api/en/materials/MeshLambertMaterial
-  const material = new THREE.MeshLambertMaterial({ color: 0xCCCCFF });
-  // https://threejs.org/docs/#api/en/objects/Mesh
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.rotation.z = -pi/2; // Rotate from along the y (vertical) axis to x = -len/2..len/2
-
-  return mesh;
-}
+// https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
 
 function addCamera() {
-  // https://threejs.org/docs/#api/en/cameras/PerspectiveCamera
   camera = new THREE.PerspectiveCamera(70, 1, 0.1, 100);
-  camera.position.set(-0.45*spitLength, 3, 12);
-  camera.lookAt(-0.31*spitLength, 2, 0); // Default -ve z (into screen)
+  camera.position.set(-0.4 * spitLength, 0.1 * spitLength, 0.5 * spitLength); // +ve z is toward viewer
+  camera.lookAt(0.5 * camera.position.x, 0, 0);
 }
 
+// https://threejs.org/docs/#api/en/lights/PointLight
+
 function addLight() {
-  // https://threejs.org/docs/#api/en/lights/PointLight
   const light = new THREE.PointLight(0xFFFFFF, 2);
   light.position.set(-spitLength, 10, 10);
   scene.add(light);
 }
 
-function animate() {
-  spit.rotateOnAxis(yUnitVector, 0.01);
-  spitRotation += 0.01;
-  dripsFalling = dripsFalling.filter(falling);
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
+// Create the spit along the x axis, centered on the origin
+
+// https://threejs.org/docs/#api/en/materials/MeshLambertMaterial
+
+function addSpit() {
+  const geometry = new THREE.CylinderGeometry(spitRadius, spitRadius, spitLength, 6);
+  geometry.rotateZ(0.5*pi); // Rotate about the origin from along the y (vertical) axis to x (horizontal)
+  const material = new THREE.MeshLambertMaterial({ color: 0xCCCCFF });
+  spit = new THREE.Mesh(geometry, material);
+  scene.add(spit);
 }
 
 function addDrip() {
-  const dripRadius = 0.3;
   const geometry = new THREE.SphereGeometry(dripRadius);
-  // https://www.rapidtables.com/web/color/RGB_Color.html
   const material = new THREE.MeshBasicMaterial( { color: randomColour() } );
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(randomAlongSpit(), 20, 0); // Relative to spit vertical orientation
+  mesh.position.set(randomAlongSpit(), 20, 0);
   scene.add(mesh);
   dripsFalling.push(mesh);
-  setTimeout(addDrip, 5)
+  setTimeout(addDrip, 1)
 }
 
+function rotateSpit() {
+  spit.rotateOnAxis(xUnitVector, spitSpeed);
+  spitRotation += spitSpeed;
+  dripsFalling = dripsFalling.filter(falling);
+  renderer.render(scene, camera);
+  requestAnimationFrame(rotateSpit);
+}
+
+// Lower the drip and return true if it hasn't hit
+// anything, else stick it to the spit and return false
+
 function falling(drip) {
-  if ((drip.position.y -= 0.2) > dripOrbitRadius) return true;
+  drip.position.y -= 0.2;
+  if (!hitSomething(drip)) return true;
+  // Stick drip to spit
   scene.remove(drip);
-  stickDripToSpit(drip);
+  const r = drip.position.y;
+  // Rotate drip to spit original position along the y axis, given the spit's current rotation
+  drip.position.y = r*Math.cos(spitRotation);
+  drip.position.z = -r*Math.sin(spitRotation);
+  spit.add(drip);
+  dripsRotating.push(drip);
   return false;
 }
 
-function stickDripToSpit(drip) {
-  // Rotate drip to spit original position along the y axis, given the spit's current rotation
-  const r = drip.position.y;
-  drip.position.set(-r*Math.cos(spitRotation), drip.position.x, -r*Math.sin(spitRotation));
-  dripOrbitRadius += 0.001;
+// Has the drip hit anything?
 
-  spit.add(drip);
+function hitSomething(drip) { return hitSpit(drip) || hitOtherDrip(drip) }
+
+// Has the drip hit the spit?
+
+const dripOnSpitRadius = spitRadius + 0.5 * dripRadius;
+
+function hitSpit(drip) {
+  return drip.position.y < dripOnSpitRadius;
 }
 
-function randomAlongSpit() { return -0.5*spitLength + spitLength * Math.random()**4 }
+// Has drip hit a rotating drip?
 
-function randomColour() { return any(0xE47808, 0xE07006, 0xDC6804, 0xD86002) }
+const dripPos = new THREE.Vector3;
+
+function hitOtherDrip(drip) {
+  drip.getWorldPosition(dripPos);
+  return dripsRotating.some(drop => dripsTouch(dripPos, drop));
+}
+
+// Have two drips collided?
+
+const dropPos = new THREE.Vector3;
+
+function dripsTouch(dripPos, drop) {
+  drop.getWorldPosition(dropPos);
+  return dripPos.distanceToSquared(dropPos) < dripsTouchDistanceSquared;
+}
+
+function randomAlongSpit() { return -0.5*spitLength + spitLength * Math.random() }
+
+// https://www.rapidtables.com/web/color/RGB_Color.html
+
+function randomColour() { return any(0xE47800, 0xE07000, 0xDC6800, 0xD86000) }
 
 function any(...args) { return args[Math.floor(args.length * Math.random())] }
 
 function rand(min, max) { return Math.floor(min + (max-min+1) * Math.random()) }
+
+init();
 </script>
 </body>
 </html>
