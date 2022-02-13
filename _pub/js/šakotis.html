@@ -11,20 +11,18 @@
 "use strict";
 // https://www.youtube.com/watch?v=jS26QKMVouU
 const pi = Math.PI;
-// https://threejs.org/docs/#api/en/math/Vector3
-const xUnitVector = new THREE.Vector3(1, 0, 0)
-const yUnitVector = new THREE.Vector3(0, 1, 0)
-const zUnitVector = new THREE.Vector3(0, 0, 1)
 
-const spitRadius = 2;
-const spitLength = 20 * spitRadius;
-let spitRotation = 0;
+const spitLength = 10;
+const spitRadius = spitLength / 10;
 const spitSpeed = -0.1; // -ve => bottom towards viewer
 
-const dripRadius = 0.3 * spitRadius;
-const dripsTouchDistanceSquared = (1.5 * dripRadius)**2;
+const dripRadius = 0.15 * spitRadius;
+let dripMeshes;
 let dripsFalling = [];
 let dripsRotating = [];
+let dripsFlying = [];
+const dripPos = new THREE.Vector3;
+const dripColours = [0xD05000, 0xD45800, 0xD86000, 0xDC6800, 0xE07000];
 
 let camera, renderer, scene, spit;
 let theta = 0;
@@ -37,10 +35,13 @@ function init() {
   addCamera();
   addLight();
   addSpit();
+
+  const geometry = new THREE.SphereGeometry(dripRadius);
+  dripMeshes = dripColours.map(color => new THREE.Mesh(geometry, new THREE.MeshBasicMaterial( { color } )));
+
   window.addEventListener('resize', restart);
   restart();
-  addDrip();
-  rotateSpit();
+  setInterval(animate, 20);
 }
 
 function restart() {
@@ -55,8 +56,8 @@ function restart() {
 
 function addCamera() {
   camera = new THREE.PerspectiveCamera(70, 1, 0.1, 100);
-  camera.position.set(-0.4 * spitLength, 0.1 * spitLength, 0.5 * spitLength); // +ve z is toward viewer
-  camera.lookAt(0.5 * camera.position.x, 0, 0);
+  camera.position.set(-0.4 * spitLength, 0.1 * spitLength, 0.7 * spitLength); // +ve z is toward viewer
+  camera.lookAt(0.3 * camera.position.x, 0, 0);
 }
 
 // https://threejs.org/docs/#api/en/lights/PointLight
@@ -74,83 +75,89 @@ function addLight() {
 function addSpit() {
   const geometry = new THREE.CylinderGeometry(spitRadius, spitRadius, spitLength, 6);
   geometry.rotateZ(0.5*pi); // Rotate about the origin from along the y (vertical) axis to x (horizontal)
-  const material = new THREE.MeshLambertMaterial({ color: 0xCCCCFF });
+  const material = new THREE.MeshLambertMaterial({ color: dripColours[0] });
   spit = new THREE.Mesh(geometry, material);
   scene.add(spit);
 }
 
-function addDrip() {
-  const geometry = new THREE.SphereGeometry(dripRadius);
-  const material = new THREE.MeshBasicMaterial( { color: randomColour() } );
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(randomAlongSpit(), 20, 0);
-  scene.add(mesh);
-  dripsFalling.push(mesh);
-  setTimeout(addDrip, 1)
+function animate() {
+  spit.rotation.x += spitSpeed;
+  addDrip();
+  dripsFalling = dripsFalling.filter(falling);
+  dripsRotating = dripsRotating.filter(rotating);
+  dripsFlying = dripsFlying.filter(flying);
+  renderer.render(scene, camera);
 }
 
-function rotateSpit() {
-  spit.rotateOnAxis(xUnitVector, spitSpeed);
-  spitRotation += spitSpeed;
-  dripsFalling = dripsFalling.filter(falling);
-  renderer.render(scene, camera);
-  requestAnimationFrame(rotateSpit);
+function addDrip() {
+  const drip = any(dripMeshes).clone();
+  drip.position.set(randomAlongSpit(), 6, 0);
+  scene.add(drip);
+  dripsFalling.push(drip);
 }
 
 // Lower the drip and return true if it hasn't hit
 // anything, else stick it to the spit and return false
 
 function falling(drip) {
-  drip.position.y -= 0.2;
-  if (!hitSomething(drip)) return true;
-  // Stick drip to spit
-  scene.remove(drip);
-  const r = drip.position.y;
-  // Rotate drip to spit original position along the y axis, given the spit's current rotation
-  drip.position.y = r*Math.cos(spitRotation);
-  drip.position.z = -r*Math.sin(spitRotation);
+  drip.position.y -= 0.1;
+  let target;
+  if (!(hitSpit(drip) || (target = touchingOtherDrip(drip)))) return true;
+  // Position drip relative to spit's current rotation
   spit.add(drip);
+  const r = drip.position.y;
+  const a = spit.rotation.x;
+  if (target) drip.position.x = target.position.x;
+  drip.position.y = r*Math.cos(a);
+  drip.position.z = -r*Math.sin(a);
   dripsRotating.push(drip);
   return false;
 }
 
-// Has the drip hit anything?
-
-function hitSomething(drip) { return hitSpit(drip) || hitOtherDrip(drip) }
-
 // Has the drip hit the spit?
 
-const dripOnSpitRadius = spitRadius + 0.5 * dripRadius;
+const dripHitSpitY = spitRadius + 0.5*dripRadius;
 
 function hitSpit(drip) {
-  return drip.position.y < dripOnSpitRadius;
+  return drip.position.y < dripHitSpitY;
 }
 
 // Has drip hit a rotating drip?
 
-const dripPos = new THREE.Vector3;
-
-function hitOtherDrip(drip) {
+function touchingOtherDrip(drip) {
   drip.getWorldPosition(dripPos);
-  return dripsRotating.some(drop => dripsTouch(dripPos, drop));
+  return dripsRotating.find(drop => drop != drip && dripsTouch(dripPos, drop));
 }
 
 // Have two drips collided?
 
 const dropPos = new THREE.Vector3;
+const dripsTouchDistanceSquared = 2 * dripRadius**2;
 
 function dripsTouch(dripPos, drop) {
   drop.getWorldPosition(dropPos);
   return dripPos.distanceToSquared(dropPos) < dripsTouchDistanceSquared;
 }
 
+function rotating(drip) {
+  if (Math.random() > 0.005) return true;
+  drip.getWorldPosition(dripPos);
+  if (Math.abs(dripPos.y + spitRadius) + Math.abs(dripPos.z) > 0.1) return true;
+  scene.add(drip);
+  dripsFlying.push(drip);
+  return false;
+}
+
+function flying(drip) {
+  drip.position.z += 0.1;
+  if ((drip.position.y -= 0.2) > -5*spitRadius) return true;
+  scene.remove(drip);
+  return false;
+}
+
 function randomAlongSpit() { return -0.5*spitLength + spitLength * Math.random() }
 
-// https://www.rapidtables.com/web/color/RGB_Color.html
-
-function randomColour() { return any(0xE47800, 0xE07000, 0xDC6800, 0xD86000) }
-
-function any(...args) { return args[Math.floor(args.length * Math.random())] }
+function any(array) { return array[Math.floor(array.length * Math.random())] }
 
 function rand(min, max) { return Math.floor(min + (max-min+1) * Math.random()) }
 
