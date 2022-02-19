@@ -156,14 +156,13 @@ function flying(drip) {
   return false;
 }
 
-let music;
+let music, musicButton;
 
 function playMusic() {
   music = new Audio('Tureja liepa - Giriu Dvasios.mp3');
   music.volume = 0.5;
-  music.play();
-  const b = document.createElement("button");
-  b.style = `
+  musicButton = document.createElement("button");
+  musicButton.style = `
     background-image: url("sound-on.png");
     background-size: 32px;
     background-repeat: no-repeat;
@@ -176,16 +175,14 @@ function playMusic() {
     border-color: #990000;
     cursor: pointer;
   `;
-  document.body.appendChild(b);
-  b.addEventListener('click', toggleMusic);
+  document.body.appendChild(musicButton);
+  musicButton.addEventListener('click', toggleMusic);
+  toggleMusic();
 }
 
 function toggleMusic() {
-  if (music.paused) {
-    music.play();
-  } else {
-    music.pause();
-  }
+  music.paused ? music.play() : music.pause();
+  musicButton.style.backgroundImage = `url("sound-${music.paused ? 'off' : 'on'}.png")`;
 }
 
 let infoPanel;
