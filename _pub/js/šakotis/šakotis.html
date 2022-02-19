@@ -9,7 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
 <script>
 "use strict";
-// https://www.youtube.com/watch?v=jS26QKMVouU
 const pi = Math.PI;
 
 const spitLength = 10;
@@ -42,6 +41,8 @@ function init() {
   window.addEventListener('resize', restart);
   restart();
   setInterval(animate, 20);
+  makeInfoPanel();
+  playMusic();
 }
 
 function restart() {
@@ -153,6 +154,93 @@ function flying(drip) {
   if ((drip.position.y -= 0.2) > -5*spitRadius) return true;
   scene.remove(drip);
   return false;
+}
+
+let music;
+
+function playMusic() {
+  music = new Audio('Tureja liepa - Giriu Dvasios.mp3');
+  music.volume = 0.5;
+  music.play();
+  const b = document.createElement("button");
+  b.style = `
+    background-image: url("sound-on.png");
+    background-size: 32px;
+    background-repeat: no-repeat;
+    width: 37px;
+    height: 36px;
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    border-radius: 8px;
+    border-color: #990000;
+    cursor: pointer;
+  `;
+  document.body.appendChild(b);
+  b.addEventListener('click', toggleMusic);
+}
+
+function toggleMusic() {
+  if (music.paused) {
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+
+let infoPanel;
+
+function makeInfoPanel() {
+  infoPanel = document.createElement('div');
+  infoPanel.innerHTML = `<p>
+<a href="https://en.wikipedia.org/wiki/Šakotis">Šakotis</a>
+(branched tree) is a Lithuanian cake
+<a href="https://www.youtube.com/watch?v=jS26QKMVouU">cooked on a rotating spit</a>.
+</p><p>
+The music, <a href="https://giriudvasios.bandcamp.com/track/tur-ja-liepa">"Tureja liepa"</a>
+by the <a href="https://giriudvasios.bandcamp.com/">Giriu Dvasios</a> project, is based on a
+<a href="https://www.allaroundthisworld.com/listen/eastern-european-songs-for-kids/tureja-liepa/#.YhEQXJanxaQ">
+traditional<a> Lithuanian <a href="https://en.wikipedia.org/wiki/Daina_(Lithuania)#Sutartin%C4%97s">folk song</a>
+about a lime tree.
+</p><p style="margin-left: 20px">
+Nine lime tree branches<br/>
+blowing in the wind,<br/>
+One breaks off, oh no!,<br/>
+the wind is blowing again.
+</p>`;
+infoPanel.style = `
+    display: none;
+    position: absolute;
+    bottom: 16px;
+    right: 65px;
+    width: 260px;
+    padding: 0 16px;
+    background-color: white;
+    border: 2px solid #990000;
+    border-radius: 8px;
+`;
+  document.body.appendChild(infoPanel);
+  const b = document.createElement("button");
+  b.style = `
+    width: 39px;
+    height: 36px;
+    position: absolute;
+    bottom: 20px;
+    right: 69px;
+    font-size: xx-large;
+    line-height: 0px;
+    border-radius: 8px;
+    border-color: #990000;
+    cursor: pointer;
+  `;
+  b.innerHTML = 'ⓘ';
+  document.body.appendChild(b);
+  b.addEventListener('click', toggleInfo);
+}
+
+function toggleInfo() {
+  const s = infoPanel.style;
+  s.display = s.display ? '' : 'none';
 }
 
 function randomAlongSpit() { return -0.5*spitLength + spitLength * Math.random() }
