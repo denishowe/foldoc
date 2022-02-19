@@ -7,6 +7,88 @@
 </head>
 <body style="overflow: hidden">
 <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+
+<style>
+button {
+  position: absolute;
+  bottom: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button, info-panel {
+  border: 2px solid #990000;
+}
+
+#music-toggle {
+  background-size: 26px;
+  background-repeat: no-repeat;
+  background-position: left 4px bottom 3px;
+  width: 37px;
+  height: 36px;
+  right: 24px;
+}
+
+#info-open {
+  width: 39px;
+  height: 36px;
+  right: 69px;
+  font-size: 32px;
+  line-height: 0px;
+  border-radius: 8px;
+  border-color: #990000;
+  cursor: pointer;
+}
+
+#info-open span {
+	position: absolute;
+	left: 3px;
+	top: 15px;
+}
+
+#info-panel {
+  position: absolute;
+  bottom: 20px;
+  right: 65px;
+  width: 260px;
+  padding: 6px 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+#info-close {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  font-size: 24px;
+  cursor: pointer;
+}
+</style>
+
+<button id="music-toggle"></button>
+
+<button id="info-open"><span>ⓘ</span></button>
+
+<div id="info-panel">
+  <span id="info-close">×</span>
+  <p>
+    <a href="https://en.wikipedia.org/wiki/Šakotis">Šakotis</a>
+    (branched tree) is a Lithuanian cake
+    <a href="https://www.youtube.com/watch?v=jS26QKMVouU">cooked on a rotating spit</a>.
+    </p><p>
+    The music, <a href="https://giriudvasios.bandcamp.com/track/tur-ja-liepa">"Tureja liepa"</a>
+    by the <a href="https://giriudvasios.bandcamp.com/">Giriu Dvasios</a> project, is based on a
+    <a href="https://www.allaroundthisworld.com/listen/eastern-european-songs-for-kids/tureja-liepa/#.YhEQXJanxaQ">
+    traditional<a> Lithuanian <a href="https://en.wikipedia.org/wiki/Daina_(Lithuania)#Sutartin%C4%97s">folk song</a>
+    about a lime tree.
+    </p><p style="margin-left: 20px">
+    Nine lime tree branches<br/>
+    blowing in the wind,<br/>
+    One breaks off, oh no!,<br/>
+    the wind is blowing again.
+  </p>
+</div>
+
 <script>
 "use strict";
 const pi = Math.PI;
@@ -41,7 +123,7 @@ function init() {
   window.addEventListener('resize', restart);
   restart();
   setInterval(animate, 20);
-  makeInfoPanel();
+  setUpInfoPanel();
   playMusic();
 }
 
@@ -161,21 +243,7 @@ let music, musicButton;
 function playMusic() {
   music = new Audio('Tureja liepa - Giriu Dvasios.mp3');
   music.volume = 0.5;
-  musicButton = document.createElement("button");
-  musicButton.style = `
-    background-image: url("sound-on.png");
-    background-size: 32px;
-    background-repeat: no-repeat;
-    width: 37px;
-    height: 36px;
-    position: absolute;
-    bottom: 20px;
-    right: 24px;
-    border-radius: 8px;
-    border-color: #990000;
-    cursor: pointer;
-  `;
-  document.body.appendChild(musicButton);
+  musicButton = document.getElementById('music-toggle');
   musicButton.addEventListener('click', toggleMusic);
   toggleMusic();
 }
@@ -185,59 +253,16 @@ function toggleMusic() {
   musicButton.style.backgroundImage = `url("sound-${music.paused ? 'off' : 'on'}.png")`;
 }
 
-let infoPanel;
-
-function makeInfoPanel() {
-  infoPanel = document.createElement('div');
-  infoPanel.innerHTML = `<p>
-<a href="https://en.wikipedia.org/wiki/Šakotis">Šakotis</a>
-(branched tree) is a Lithuanian cake
-<a href="https://www.youtube.com/watch?v=jS26QKMVouU">cooked on a rotating spit</a>.
-</p><p>
-The music, <a href="https://giriudvasios.bandcamp.com/track/tur-ja-liepa">"Tureja liepa"</a>
-by the <a href="https://giriudvasios.bandcamp.com/">Giriu Dvasios</a> project, is based on a
-<a href="https://www.allaroundthisworld.com/listen/eastern-european-songs-for-kids/tureja-liepa/#.YhEQXJanxaQ">
-traditional<a> Lithuanian <a href="https://en.wikipedia.org/wiki/Daina_(Lithuania)#Sutartin%C4%97s">folk song</a>
-about a lime tree.
-</p><p style="margin-left: 20px">
-Nine lime tree branches<br/>
-blowing in the wind,<br/>
-One breaks off, oh no!,<br/>
-the wind is blowing again.
-</p>`;
-infoPanel.style = `
-    display: none;
-    position: absolute;
-    bottom: 16px;
-    right: 65px;
-    width: 260px;
-    padding: 0 16px;
-    background-color: white;
-    border: 2px solid #990000;
-    border-radius: 8px;
-`;
-  document.body.appendChild(infoPanel);
-  const b = document.createElement("button");
-  b.style = `
-    width: 39px;
-    height: 36px;
-    position: absolute;
-    bottom: 20px;
-    right: 69px;
-    font-size: xx-large;
-    line-height: 0px;
-    border-radius: 8px;
-    border-color: #990000;
-    cursor: pointer;
-  `;
-  b.innerHTML = 'ⓘ';
-  document.body.appendChild(b);
-  b.addEventListener('click', toggleInfo);
+function showInfo(show) {
+  document.getElementById('info-panel').style.display = show ? '' : 'none';
 }
 
-function toggleInfo() {
-  const s = infoPanel.style;
-  s.display = s.display ? '' : 'none';
+function idDisplay(id, show) { document.getElementById(id).addEventListener('click', () => showInfo(show)) }
+
+function setUpInfoPanel() {
+  idDisplay('info-open', true);
+  idDisplay('info-close', false);
+  showInfo(false);
 }
 
 function randomAlongSpit() { return -0.5*spitLength + spitLength * Math.random() }
