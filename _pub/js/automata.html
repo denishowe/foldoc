@@ -18,12 +18,10 @@ body {
 <canvas id="canvas" />
 <script>
 
-// Main entry point.  Restart once they stop resizing.
-
 const cellSize = 16;
 const botsPerCell = 0.9;
-const maxInitialEnergy = 10;
-const maxCycles = 20 * maxInitialEnergy;
+const maxInitialEnergy = 500;
+const maxCycles = 20;
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
@@ -44,7 +42,7 @@ class Run {
   	this.reset();
 	}
 
-	// Start, resize or all dead
+	// Start or all dead
 
 	static reset() {
 		Cell.reset();
@@ -66,13 +64,11 @@ class Run {
 	static step() {
 		if (! this.running) return;
 		const botCount = Bot.step();
-		if (botCount !== this.botCount) this.t = 0;
+		if (botCount !== this.botCount) this.t = 0; // Population changed
 		this.botCount = botCount;
-		if (this.t++ > maxCycles || ! botCount) // Pop unchanging or zero?
+		if (this.t++ > maxCycles)										// Population unchanged for too long
 			return this.reset();
-		const [t] = this.periods;
-		const _this = this;
-		setTimeout(() => requestAnimationFrame(() => _this.step()), t);
+		setTimeout(() => requestAnimationFrame(() => this.step()), this.periods[0]);
 	}
 
 	static changeSpeed() {
@@ -104,7 +100,7 @@ class Bot {
 		Bot.best = undefined;
 	}
 
-	static initialRules() { return mapUpTo(rand(1, 3), () => Direction.random()).join('') }
+	static initialRules() { return mapUpTo(rand(1, 5), () => Direction.random()).join('') }
 
 	static initialEnergy() { return maxInitialEnergy }
 
@@ -116,18 +112,18 @@ class Bot {
 		return Bot.all.length;
 	}
 
-	// Move to bot's next position if empty.  Die if out of energy or off grid.
-	// Return true if still alive.
+	// Move bot to next position if empty.  Die if out
+	// of energy or off grid. Return true if still alive.
 
 	move() {
 		let n = this.getNextPos();
 		if (! n) this.energy = 0;	// Fell off grid and died
 		const targetBot = n && ! n.equal(this.pos) && n.occupant();
 		if (targetBot) {
-			this.energy++;				// Fed
-			targetBot.energy--;
+			this.energy++;					// Fed
+			targetBot.energy -= 2;	// Eating each other is unsustainable
 			this.scorePoint();
-		} else this.energy--;		// Hungry
+		} else this.energy--;			// Hungry
 		const dead = ! this.isLive();
 		if (dead || ! targetBot) this.pos.occupant(undefined);	// Vacate old pos
 		if (dead || targetBot) return ! dead;
