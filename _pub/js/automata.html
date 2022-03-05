@@ -20,8 +20,7 @@ body {
 
 const cellSize = 16;
 const botsPerCell = 0.9;
-const maxInitialEnergy = 500;
-const maxCycles = 20;
+const maxCycles = 200;
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
@@ -86,8 +85,7 @@ class Bot {
 		this.colour = Colour.colourful(index, Bot.initialNum);
 		this.rules = Bot.best ? Bot.best.mutatedRules() : Bot.initialRules();
 		this.ruleIndex = 0;
-		this.energy = Bot.initialEnergy();
-		this.points = 0;
+		this.visited = new Set();
 		this.pos.occupant(this); // Draws bot
 	}
 
@@ -102,39 +100,36 @@ class Bot {
 
 	static initialRules() { return mapUpTo(rand(1, 5), () => Direction.random()).join('') }
 
-	static initialEnergy() { return maxInitialEnergy }
-
 	// Run one step of bot activity and return number left alive
 
 	static step() {
 		Bot.all = Bot.all.filter(b => b.move());
-
+		// Kill bots with relatively few visits
+		let targetVisits = -9e9;
+		Bot.all.forEach(b => {
+			b.visitCount = b.visited.size;
+			if (b.visitCount > targetVisits) targetVisits = b.visitCount;
+		});
+		if (targetVisits > 1) {
+			targetVisits *= 0.5;
+			console.log('target visits', targetVisits);
+			Bot.all = Bot.all.filter(b => b.visitCount > targetVisits);
+		}
 		return Bot.all.length;
 	}
 
-	// Move bot to next position if empty.  Die if out
-	// of energy or off grid. Return true if still alive.
+	// Move bot to next position if empty.  Die if off grid.  Return true if still alive.
 
 	move() {
+		this.visited.add(this.pos.toString);
 		let n = this.getNextPos();
-		if (! n) this.energy = 0;	// Fell off grid and died
-		const targetBot = n && ! n.equal(this.pos) && n.occupant();
-		if (targetBot) {
-			this.energy++;					// Fed
-			targetBot.energy -= 2;	// Eating each other is unsustainable
-			this.scorePoint();
-		} else this.energy--;			// Hungry
-		const dead = ! this.isLive();
+		const dead = !n;	// Fell off grid and died
+		const targetBot = n && !n.equal(this.pos) && n.occupant();
 		if (dead || ! targetBot) this.pos.occupant(undefined);	// Vacate old pos
 		if (dead || targetBot) return ! dead;
 		this.pos = n;
 		n.occupant(this);
 		return true;
-	}
-
-	scorePoint() {
-		this.points++;
-		if (! Bot.best || this.points > Bot.best.points) Bot.best = this;
 	}
 
 	getNextPos() { return this.pos.cellInDirection(this.getNextRule()) }
@@ -145,21 +140,10 @@ class Bot {
 		return rules[ruleIndex];
 	}
 
-	isLive() { return this.energy > 0 }
-
 	show() {
 		const bs = this.toString();
-		const p = this.points;
 		const c = this.colour.toString();
-		console.log('%cbest%c %s %d points', `color: ${ c }`, 'color: black', bs, p);
-	}
-
-	// Return black faded towards white as the Bot's energy decreases
-
-	borderColour() {
-		const k = 1 - this.energy / maxInitialEnergy;
-
-		return Colour.white.multiply(k < 0 ? 0 : k);
+		console.log('%cbest%c %s', `color: ${ c }`, 'color: black', bs);
 	}
 
 	// Return a randomly modified copy of the Bot's rules
@@ -288,7 +272,7 @@ class Cell {
 		const { ctx } = Grid;
 		const margin = occupant ? 2 : 0;
 
-		ctx.strokeStyle = occupant ? occupant.borderColour().toString() : 'white';
+		ctx.strokeStyle = occupant ? 'black' : 'white';
 		ctx.fillStyle = occupant ? occupant.colour.toString() : 'white';
 		ctx.beginPath();
 		ctx.rect(x + margin, y + margin, cellSize - 2*margin, cellSize - 2*margin);
