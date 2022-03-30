@@ -17,7 +17,8 @@
 <canvas id="canvas"></canvas>
 <script>
 'use strict';
-
+const loopDelay = 0;
+const pointsPerLoop = 1E5;
 let size = 1 << rand(0, 4);
 
 let ctx, drawSize, screen, xMax, yMax;
@@ -44,7 +45,6 @@ window.onkeydown = function (e) {
   run();
 }
 
-const pointsPerLoop = 10;
 function growPoints() { for (let i = pointsPerLoop; i--; ) grow(...randomPoint()) }
 
 function grow(sx, sy) {
@@ -64,7 +64,6 @@ function seed() {
   drawDot(x, y, c);
 }
 
-const loopDelay = 0;
 function loop(f) { f(); setTimeout(() => loop(f), loopDelay) }
 
 function randomPoint() { return [xMax, yMax].map(max => rand(0, max)) }
