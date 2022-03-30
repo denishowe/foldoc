@@ -18,26 +18,34 @@
 <script>
 'use strict';
 
-const size = 1 << rand(0, 4); // console.log('size', size);
-const drawSize = size; // - (size < 3 ? 0 : 1);
+let size = 1 << rand(0, 4);
 
-const { xMax, yMax, ctx } = createCanvas();
+let ctx, drawSize, screen, xMax, yMax;
 
 const neighbour = [ [1,0], [0,1], [-1,0], [0,-1] ].map( vxy => ({ nx: vxy[0], ny: vxy[1] }) );
 
-for (let y = 0; y < yMax; y++) {
-  screen[y] = [];
-  for (let x = 0; x < xMax; x++) {
-    drawDot(x, y, screen[y][x] = randomColour());
+function run() {
+  window.onresize = run;
+  ({ ctx, xMax, yMax } = createCanvas());
+  drawSize = size - (size < 3 ? 0 : 1);
+  screen = [];
+  for (let y = 0; y < yMax; y++) {
+    screen[y] = [];
+    for (let x = 0; x < xMax; x++) {
+      drawDot(x, y, screen[y][x] = randomColour());
+    }
   }
+  loop(growPoints);
 }
 
-function growPoint() {
-  for (let i = 1E4; i--; ) {
-    const { rx, ry } = randomPoint();
-    grow(rx, ry);
-  }
+window.onkeydown = function (e) {
+  const sizeChange = { 38: +1, 40: -1 }[e.keyCode];
+  if (sizeChange) size += sizeChange;
+  run();
 }
+
+const pointsPerLoop = 10;
+function growPoints() { for (let i = pointsPerLoop; i--; ) grow(...randomPoint()) }
 
 function grow(sx, sy) {
   const c = screen[sy][sx];
@@ -46,21 +54,20 @@ function grow(sx, sy) {
   const y = (sy + ny + yMax) % yMax;
   screen[y][x] = c;
   drawDot(x, y, c);
-  if (p(1E-5)) seed(); // 1E-6
+  if (p(5E-5)) seed();
 }
 
 function seed() {
-  const { rx, ry } = randomPoint();
+  const[ x, y ] = randomPoint();
   const c = randomColour();
-  screen[ry][rx] = c;
-  drawDot(rx, ry, c);
+  screen[y][x] = c;
+  drawDot(x, y, c);
 }
 
-function loop(f) { f(); setTimeout(() => loop(f), 0) }
+const loopDelay = 0;
+function loop(f) { f(); setTimeout(() => loop(f), loopDelay) }
 
-function run() { loop(growPoint) }
-
-function randomPoint() { return { rx :rand(0, xMax), ry: rand(0, yMax) } }
+function randomPoint() { return [xMax, yMax].map(max => rand(0, max)) }
 
 function createCanvas() {
   const can = document.getElementById("canvas");
@@ -103,6 +110,7 @@ function nOf(n, f) {
 }
 
 run();
+
 </script>
 </body>
 </html>
