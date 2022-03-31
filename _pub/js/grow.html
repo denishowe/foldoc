@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- Denis Howe 2019-08-03 - 2022-03-31 -->
 <meta charset="UTF-8">
-<author>Denis Howe</author>
-<date>2019-08-03 - 2019-08-03</date>
 <title>Grow</title>
 <link rel="canonical" href="http://foldoc.org/pub/js/grow.html">
 <style type="text/css">
   body {
     overflow: hidden; /* Prevent scrollbars with no margin */
-    background-color: black;
+    background-color: grey;
   }
 </style>
 </head>
@@ -17,18 +16,20 @@
 <canvas id="canvas"></canvas>
 <script>
 'use strict';
+
 const loopDelay = 0;
 const pointsPerLoop = 1E5;
-let size = 1 << rand(0, 4);
+const seedProbability = 1E-6; // 1E-5
+
+let size = 1 << rand(2, 5);
 
 let ctx, drawSize, screen, xMax, yMax;
 
 const neighbour = [ [1,0], [0,1], [-1,0], [0,-1] ].map( vxy => ({ nx: vxy[0], ny: vxy[1] }) );
 
 function run() {
-  window.onresize = run;
   ({ ctx, xMax, yMax } = createCanvas());
-  drawSize = size - (size < 3 ? 0 : 1);
+  drawSize = size - (size < 6 ? 0 : 1);
   screen = [];
   for (let y = 0; y < yMax; y++) {
     screen[y] = [];
@@ -39,10 +40,20 @@ function run() {
   loop(growPoints);
 }
 
+window.onresize = run;
+
 window.onkeydown = function (e) {
   const sizeChange = { 38: +1, 40: -1 }[e.keyCode];
-  if (sizeChange) size += sizeChange;
+  if (sizeChange) {
+    size += sizeChange;
+    if (size < 1) size = 1;
+  }
   run();
+}
+
+window.onclick = function () {
+	document.documentElement.requestFullscreen(); // Must be initiated by user action
+	setTimeout(run, 50);
 }
 
 function growPoints() { for (let i = pointsPerLoop; i--; ) grow(...randomPoint()) }
@@ -54,7 +65,7 @@ function grow(sx, sy) {
   const y = (sy + ny + yMax) % yMax;
   screen[y][x] = c;
   drawDot(x, y, c);
-  if (p(5E-5)) seed();
+  if (p(seedProbability)) seed();
 }
 
 function seed() {
