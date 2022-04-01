@@ -8,7 +8,7 @@
 <style type="text/css">
   body {
     overflow: hidden; /* Prevent scrollbars with no margin */
-    background-color: grey;
+    background-color: darkblue;
   }
 </style>
 </head>
@@ -29,7 +29,7 @@ const neighbour = [ [1,0], [0,1], [-1,0], [0,-1] ].map( vxy => ({ nx: vxy[0], ny
 
 function run() {
   ({ ctx, xMax, yMax } = createCanvas());
-  drawSize = size - (size < 6 ? 0 : 1);
+  drawSize = size - (size < 5 ? 0 : 1);
   screen = [];
   for (let y = 0; y < yMax; y++) {
     screen[y] = [];
