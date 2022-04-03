@@ -19,9 +19,9 @@
 
 const loopDelay = 0;
 const pointsPerLoop = 1E5;
-const seedProbability = 5E-7; // 1E-6
+const seedProbability = 2E-6;
 
-let size = 1 << rand(2, 5);
+let cellSize = 12;
 
 let ctx, drawSize, screen, xMax, yMax;
 
@@ -29,7 +29,7 @@ const neighbour = [ [1,0], [0,1], [-1,0], [0,-1] ].map( vxy => ({ nx: vxy[0], ny
 
 function run() {
   ({ ctx, xMax, yMax } = createCanvas());
-  drawSize = size - (size < 5 ? 0 : 1);
+  drawSize = cellSize - (cellSize < 5 ? 0 : 1);
   screen = [];
   for (let y = 0; y < yMax; y++) {
     screen[y] = [];
@@ -40,18 +40,36 @@ function run() {
   loop(growPoints);
 }
 
-window.onresize = run;
+// Return a Promise that resolves when the window size has been different for a while
+
+async function hasResized() {
+  return new Promise(resolve => {
+    window.onresize = function () {
+      if (window.onresize.timeout) clearTimeout(window.onresize.timeout);
+      window.onresize.timeout = setTimeout(() => {
+        const { innerWidth, innerHeight } = window;
+        const shape = `${innerWidth}x${innerHeight}`;
+        if (shape == (window.onresize.shape || '')) return
+        window.onresize.shape = shape;
+        resolve();
+      }, 1500);
+    };
+  });
+}
+
+hasResized().then(run);
 
 window.onkeydown = function ({ keyCode }) {
   const sizeChange = { 38: +1, 40: -1 }[keyCode];
   if (! sizeChange) return;
-  const newSize = size + sizeChange;
+  const newSize = cellSize + sizeChange;
   if (newSize < 1) return;
-  size = newSize;
+  cellSize = newSize;
   run();
 }
 
 window.onclick = function () {
+  if (document.fullscreenElement) return;
 	document.documentElement.requestFullscreen(); // Must be initiated by user action
 	setTimeout(run, 50);
 }
@@ -83,10 +101,10 @@ function createCanvas() {
   const can = document.getElementById("canvas");
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const xMax = Math.floor(w / size);
-  const yMax = Math.floor(h / size);
-  can.width = size * xMax;
-  can.height = size * yMax;
+  const xMax = Math.floor(w / cellSize);
+  const yMax = Math.floor(h / cellSize);
+  can.width = cellSize * xMax;
+  can.height = cellSize * yMax;
   can.style.marginLeft = (w - can.width) / 2 - 8 + 'px';
   can.style.marginTop = (h - can.height) / 2 - 8 + 'px';
   document.body.appendChild(can);
@@ -96,7 +114,7 @@ function createCanvas() {
 
 function drawDot(x, y, c) {
   ctx.fillStyle = hex(c);
-  ctx.fillRect(size*x, size*y, drawSize, drawSize);
+  ctx.fillRect(cellSize*x, cellSize*y, drawSize, drawSize);
 }
 
 Array.prototype.any = function any() { return this[rand(0, this.length)] }
