@@ -1,7 +1,7 @@
 use TAP::Harness;
-use Test::More tests => 20;
+use Test::More tests => 22;
 use lib "../lib";
-use Test::Web;
+use Test::Web; # C:/Strawberry/perl/site/lib
 
 # cpan install TAP::Harness
 # cd foldoc && prove
@@ -37,6 +37,11 @@ $t->get_ok("/contents/music.html", "music subject")
 $t->get_ok("/?query=foo&action=Search", "legacy query param", 301)
 	->header_is(Location => $t->absolute("/foo"), "Query param redirect");
 
+# Test: http://foldoc.org//Fairchild
+$t->get_ok("//Fairchild", "Query starts with /");
+
+# Test: http://foldoc.org/%2fdev%2fnull
+
 # Entry with image
 
 $t->get_ok("/exclusive%20or")
@@ -58,7 +63,6 @@ $t->get_ok('/words.pl?r=[^aeiouy]{6}')
 	->content_like(qr/crwths/);
 
 # Redirects
+
 # Neighbouring entries
-# life
 # Missing entries
-# Other search engines

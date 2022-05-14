@@ -65,25 +65,6 @@ sub check_redirect
 	s|^/||;								# Drop initial /
 	debug "check_redirect", $_;
 
-	# Redirect legacy URLs
-	# Test: http://foldoc.org/index.cgi?xyzzy --> /?xyzzy
-	# Test: http://foldoc.org/home.html		  --> /
-	return 1 if (s/^index.cgi// + s/^home.html//);
-
-	# Redirect to /pub/misc or /pub
-	# Test: http://foldoc.org/x/dates --> /pub/misc/dates
-	if (m!.+?/(.+)!)
-	{
-		my $f = "pub/misc/$1";
-		if (-r $f) {$_ = $f; return 1}
-	}
-	# Test: http://foldoc.org/jokes --> /pub/jokes
-	my $f = "pub/$_";
-	if (length $_ > 2 && -r $f) {$_ = $f; return 1}
-
-	# Redirect misc simple URLs
-	return 1 if (s/denis-cv.html/Denis Howe CV.pdf/i);
-
 	$_ = url2text($_);
 	debug "url2text -> ($_)";
 
