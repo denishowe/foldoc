@@ -16,6 +16,7 @@ new.html
 node_modules
 offsets
 private
+_pub/games/wordle
 rss.xml
 sitemap.txt
 source.html
