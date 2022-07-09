@@ -125,12 +125,12 @@ class Box {
 	// [k] with them and return true.  If none found, return false.
 
 	cleaveRegion(k) {
-		const rk = this.regions[k];
-		const c = rk.bestCleavage??();			// cleavability??
+		const r = this.regions[k];
+		const c = r.bestCleavage();
 		if (! c) return false;
 		const { points, regions } = c;
-		this.regions.splice(k, 1, ...regions);
-		rk.pointsLinked(points);						// Increment degree of newly linked points
+		this.regions.splice(k, 1, ...regions);	// Replace k with regions
+		r.pointsLinked(points);									// Increment degree of newly linked points
 		return true;
 	}
 
@@ -156,11 +156,10 @@ class Region {
 
 	// Recalculate derived properties after region's points change
 
-	// Calculation of cleavability shouldn't be recursive??
-
 	update() {
 		this.setEdgeLengths();
-		this.setRadiusAndCleavability();
+		this.setRadius();
+		this.setCleavability();
 	}
 
 	// Set the region's edgeLengths and the index and length of the region's longest edge
@@ -173,41 +172,37 @@ class Region {
 		this.longestEdgeLength = edgeLengths[iMax];
 	}
 
-	// Set the region's radius to the minimum distance from
-	// its centrum to the midpoint of any of its edges
+	// Set the region's radius to the minimum distance from its centrum to the midpoint of any of its edges
 
-	setRadiusAndCleavability() {
+	setRadius() {
 		const c = this.centrum();
 		const eps = this.edgeMidPoints();
 		c.drawStar(eps);
 		this.radius = eps.map(p => c.distance(p)).min();
-		this.setCleavages();
-		this.cleavability = ?? // this.cleavages.length ? this.radius : 0;
 	}
 
-	// Set this.cleavages to a list of all this region's possible Cleavages
+	// Set the region's cleavability to its radius if it has Cleavages, else zero
+
+	setCleavability() {
+		this.setCleavages();
+		this.cleavability = this.cleavages.length ? this.radius : 0;
+	}
+
+	// Set this.cleavages to this region's possible Cleavages
 
 	setCleavages() {
-		??
-			new Cleavage(??);
+		const indexes = this.linkables(); 	// Points not at maxDegree
+		const cleavagesFrom = i =>	indexes	// From some linkable point...
+			.nonAdjacentIndexes(i)
+			.filter(j => i < j)								// ...to some later linkable point
+			.map(j => new Cleavage(this, i, j));
+		this.cleavages = indexes.map(cleavagesFrom).flat();
 	}
 
-	// Return the best cleavage of the region or undefined if there is none
+	// Return the best Cleavage of the region or undefined if there is none
 
-	// cleavability??
-
-	bestCleavage??() {
-		const indexes = this.linkables();
-		const cleavages = [];
-		indexes.forEach(i => {
-			const js = indexes.modRange(i+2, i-2);	// Not adjacent to i
-			js.forEach(j => {
-				// Only add ordered pairs and only if j is linkable
-				if (i < j && indexes.includes(j)) {
-					cleavages.push(new Cleavage(this, i, j));
-				}
-			});
-		});
+	bestCleavage() {
+		const cleavages = this.cleavages;
 		const best = cleavages.withMax(c => c.merit);
 		console.log(`cleaved ${this} -> ${best}`);
 
@@ -344,7 +339,6 @@ class Cleavage {
 	}
 }
 
-
 // Point ///////////////////////////////////////////////////////////////////////////////////////////
 
 // A point's degree is the number of edges joined to it,
@@ -364,9 +358,9 @@ class Point {
 
 	hasNewEdge() { this.degree++ }
 
-	// A point is linkable if its degree is no more than maxDegree
+	// A point is linkable if its degree is less than maxDegree
 
-	linkable() { return this.degree <= config.maxDegree }
+	linkable() { return this.degree < config.maxDegree }
 
 	// Return the distance from this point to { x, y }
 
@@ -583,6 +577,10 @@ Array.prototype.shuffle = function shuffle() {
 Array.prototype.spaced = function spaced(sep = ' ') {
 	return this.map(x => x.toString()).join(sep);
 };
+
+// Return indexes not adjacent to i
+
+Array.prototype.nonAdjacentIndexes(i) = function nonAdjacentIndexes() { return indexes.modRange(i+2, i-2) };
 
 // Events & Window ////////////////////////////////////////////////////////////////////////////////
 
