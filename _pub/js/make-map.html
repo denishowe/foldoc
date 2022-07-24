@@ -188,7 +188,7 @@ class Region {
 		this.cleavability = this.cleavages.length ? this.radius : 0;
 	}
 
-	// Set this.cleavages to this region's possible Cleavages
+	// Set the region's possible Cleavages
 
 	setCleavages() {
 		const indexes = this.linkables(); 	// Points not at maxDegree
@@ -204,7 +204,7 @@ class Region {
 	bestCleavage() {
 		const cleavages = this.cleavages;
 		const best = cleavages.withMax(c => c.merit);
-		console.log(`cleaved ${this} -> ${best}`);
+		// console.log(`cleaved ${this} -> ${best}`);
 
 		return best;
 	}
@@ -265,7 +265,7 @@ class Region {
 		const { box, points } = this;
 		const newPoints = points.modRange(j, i)
 			.map(k => points[k]);
-		console.log(`${this} / ${points[i]}->${points[j]} -> new [${newPoints.spaced()}]`);
+		// console.log(`${this} / ${points[i]}->${points[j]} -> new [${newPoints.spaced()}]`);
 
 		return new Region(box, newPoints);
 	}
@@ -278,7 +278,7 @@ class Region {
 		const k = points.findIndex((pI, i) => pI === p && points.modEl(i+1) === q);
 		if (k < 0) return false;
 		this.addPointAfter(mid, k);
-		console.log(`addEdge ${p}->${q} to ${this}`);
+		// console.log(`addEdge ${p}->${q} to ${this}`);
 		return true;
 	}
 
@@ -305,7 +305,7 @@ class Region {
 
 	toString() {
 		const ps = this.points.map(p => p.toString()).join('  ');
-		return `[${ps}]/${this.cleavability}`;
+		return `[${ps}] cleavability ${this.cleavability}`;
 	}
 }
 
@@ -314,9 +314,10 @@ class Region {
 // A Cleavage is an edge between two points of a region that can divide the region in two
 
 class Cleavage {
-  constructor(region, points) {
+  constructor(region, point1, point2) {
 		this.region = region;
-		this.points = points;
+		this.point1 = point1;
+		this.point2 = point2;
 		this.regions = this.getRegions();
 		this.merit = this.getMerit();
 	}
@@ -324,9 +325,9 @@ class Cleavage {
 	// Return the two new regions that the cleavage would create
 
 	getRegions() {
-		const { region, points: [i, j] } = this;
+		const { region, point1, point2 } = this;
 
-		return [region.newRegionWith(i, j), region.newRegionWith(j, i)];
+		return [region.newRegionWith(point1, point2), region.newRegionWith(point2, point1)];
 	}
 
 	// The more equal the radii of the two regions, the higher the cleavage's merit
@@ -335,7 +336,7 @@ class Cleavage {
 		const { regions } = this;
 		const [r1, r2] = regions.map(r => r.radius);
 
-		return 1/(Math.abs(r1 - r2) + 1);
+		return -(Math.abs(r1 - r2));
 	}
 }
 
@@ -530,10 +531,10 @@ Array.prototype.min = function min() { return Math.min.apply(null, this) };
 
 Array.prototype.max = function max() { return Math.max.apply(null, this) };
 
-// Return the index i for which f(a[i]) is biggest or -1 if no elements
+// Return the index i for which f(a[i]) is biggest or undefined if no elements
 
 Array.prototype.indexWithMax = function indexWithMax(f = x => x) {
-	let iMax = -1, fMax;
+	let iMax, fMax;
 	this.forEach((el, i) => {
 		const fEl = f(el);
 		if (iMax === undefined || fEl > fMax) { iMax = i; fMax = fEl }
@@ -574,13 +575,15 @@ Array.prototype.shuffle = function shuffle() {
 	return this.sort(() => prob(0.5));
 };
 
-Array.prototype.spaced = function spaced(sep = ' ') {
-	return this.map(x => x.toString()).join(sep);
+Array.prototype.spaced = function spaced() {
+	return this.map(x => x.toString()).join(' ');
 };
 
 // Return indexes not adjacent to i
 
-Array.prototype.nonAdjacentIndexes(i) = function nonAdjacentIndexes() { return indexes.modRange(i+2, i-2) };
+Array.prototype.nonAdjacentIndexes = function nonAdjacentIndexes(i) {
+	return this.length < 4 ? [] : this.modRange(i+2, i-2);
+};
 
 // Events & Window ////////////////////////////////////////////////////////////////////////////////
 
