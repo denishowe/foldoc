@@ -388,7 +388,7 @@ sub foldoctohtml
 	s|\{([^}]*\S)\s*\(([^)]*)\)\}|<em><a href="$2">$1</a></em>|gi;
 
 	# Transform "{Unix manual pages}: foo(7), bar(1)."
-	s|^({Unix manual pages?}:) (.*?)\.$|$1 . ' ' . man_pages($2) . '.'|ems;
+	s|^(\{Unix manual pages?\}:) (.*?)\.$|$1 . ' ' . man_pages($2) . '.'|ems;
 
 	# An internal cross-reference like
 	#
