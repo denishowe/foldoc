@@ -146,7 +146,7 @@ class Group extends Object
 
 	run_group()
 	{
-		if (this.aged(   19)) { this.step("stroke"); this.step("fill") } // 1 - 99
+		if (this.aged(   37)) this.step_colour();
 		if (this.aged( 6231)) this.set_dt();
 		if (this.aged( 7180)) this.set_velocity();
 		if (this.aged( 9949)) this.set_target();
@@ -182,6 +182,8 @@ class Group extends Object
 		this[property] = enable && new Fade(this[property] && this[property].c);
 		if (this[property]) this.log(property + " " + this[property].toString());
 	}
+
+	step_colour()	{ this.step("stroke"); this.step("fill") }
 
 	step(property)
 	{
@@ -289,7 +291,7 @@ class Field extends Object
 	clear()
 	{
 		var p = rand(1, 10),
-			c = new Colour(RGB.map(() => p < 4 ? 0 : p > 7 ? 255 : rand(0, 255)));
+		c = new Colour(RGB.map(() => p < 4 ? 0 : p > 7 ? 255 : rand(0, 255)));
 		this.ctx.fillStyle = c.rgb();
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		this.ctx.stroke();
@@ -322,37 +324,37 @@ class Field extends Object
 
 	// Add or remove groups, move them all once, pause, repeat
 
-    run_field()
-    {
-        if (p(0.00025)) this.clear();
+	run_field()
+	{
+		if (p(0.0001)) this.clear();
 
-        var n = this.groups.length;
-        var g, pm;
-        if (! n || this.clicked || p(5E-5*(5-n)))
-        {
+		var n = this.groups.length;
+		var g, pm;
+		if (! n || this.clicked || p(5E-5*(5-n)))
+		{
 			var template;
-            if (n && p(0.9))
-            {
-                template = this.groups.any(); pm = "cloned";
-            }
-            else
-            {
-                pm = "added";
-            }
+			if (n && p(0.9))
+			{
+					template = this.groups.any(); pm = "cloned";
+			}
+			else
+			{
+					pm = "added";
+			}
 			g = new Group(this, template);
 			this.groups.push(g);
-        }
-        else if (p(0.0002*(n-1)))
-        {
-            g = (this.groups.splice(Math.floor(n * Math.random()), 1))[0];
+		}
+		else if (p(0.0002*(n-1)))
+		{
+			g = (this.groups.splice(Math.floor(n * Math.random()), 1))[0];
 			pm = "removed";
-        }
+		}
 		this.clicked = undefined;
-        if (g) console.log(g.id + ": " + pm + " -> " + this.groups.length);
-        this.groups.mapm("run_group");
+		if (g) console.log(g.id + ": " + pm + " -> " + this.groups.length);
+		this.groups.mapm("run_group");
 		var _this = this;
 		setTimeout(function () {_this.run_field()}, _this.loop_ms[0]);
-    }
+	}
 
 	change_speed()
 	{
