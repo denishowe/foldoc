@@ -128,9 +128,10 @@ class Box {
 		const r = this.regions[k];
 		const c = r.bestCleavage();
 		if (! c) return false;
+		console.log('Best cleavage', c);
 		const { points, regions } = c;
 		this.regions.splice(k, 1, ...regions);	// Replace k with regions
-		r.pointsLinked(points);									// Increment degree of newly linked points
+		r.linkPoints(points);										// Increment degree of newly linked points
 		return true;
 	}
 
@@ -209,9 +210,9 @@ class Region {
 		return best;
 	}
 
-	// Points with indexes have been joined by a new edge
+	// Join the points with `indexes` with a new edge
 
-	pointsLinked(indexes) { indexes.forEach(i => this.points[i].hasNewEdge()) }
+	linkPoints(indexes) { indexes.forEach(i => this.points[i].hasNewEdge()) }
 
 	// A region's centrum is (mean x, mean y)
 
@@ -314,10 +315,9 @@ class Region {
 // A Cleavage is an edge between two points of a region that can divide the region in two
 
 class Cleavage {
-  constructor(region, point1, point2) {
+  constructor(region, i, j) {
 		this.region = region;
-		this.point1 = point1;
-		this.point2 = point2;
+		this.points = [i, j];
 		this.regions = this.getRegions();
 		this.merit = this.getMerit();
 	}
@@ -325,18 +325,18 @@ class Cleavage {
 	// Return the two new regions that the cleavage would create
 
 	getRegions() {
-		const { region, point1, point2 } = this;
+		const { region, points: [i, j] } = this;
 
-		return [region.newRegionWith(point1, point2), region.newRegionWith(point2, point1)];
+		return [region.newRegionWith(i, j), region.newRegionWith(j, i)];
 	}
 
-	// The more equal the radii of the two regions, the higher the cleavage's merit
+	// The bigger and more equal the radii of the two regions, the higher the cleavage's merit
 
 	getMerit() {
 		const { regions } = this;
 		const [r1, r2] = regions.map(r => r.radius);
 
-		return -(Math.abs(r1 - r2));
+		return r1 + r2 - Math.abs(r1 - r2);
 	}
 }
 
