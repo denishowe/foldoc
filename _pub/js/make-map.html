@@ -13,16 +13,15 @@
 
 const config = {
 	lineWidth: 3,
-	loopDelay: 1000,
-	margin: 3,
-	maxDegree: 4,
-	minRadius: 50,
+	loopDelayMs: 1000,
+	margin: 3,			// Number of pixels to leave empty at window edges
+	maxDegree: 4,		// The maximum number of edges that can connect to a point
 	numColours: 6,
 };
 
 // Box  ///////////////////////////////////////////////////////////////////////////////////////////
 
-// A rectangular area containing a list of Regions
+// A rectangular area containing a list of Regions plus rendering and event handling
 
 class Box {
 	constructor() {
@@ -31,33 +30,28 @@ class Box {
 		this.ctx = canvas.getContext('2d');
 		window.onresize = () => this.maybeResize();
 		window.onkeydown = e => this.handleKey(e); // onkeypress doesn't get ESC
-		this.resize();
+		window.onresize(); // Fake an initial resize
 	}
 
-	// Make the canvas almost fill the window
+	// Schedule a resize of the box if the window has changed
+	// shape.  Some browsers call onresize on load, Firefox doesn't.
+
+	maybeResize() { if (window.changedShape()) this.resizeLater() }
+
+	resizeLater() { debounce(() => this.resize()) }
+
+	// Make the canvas fill the window minus some margins
 
 	resize() {
 		const { ctx: { canvas } } = this;
 		const { innerWidth, innerHeight } = window;
-		const { margin } = config;
+		const { loopDelayMs, margin } = config;
 		this.height = canvas.height = innerHeight - 2 * margin;
 		this.width = canvas.width = innerWidth - 2 * margin;
 		const s = canvas.style;
 		s.marginLeft = s.marginTop	= `${margin}px`;	 // Centre in window
 		this.regions = [new Region(this)];
-		loopWhile(() => this.step(), config.loopDelay);
-	}
-
-	// Wait until a while after resizing stops then resize the box if the window
-	// has changed shape. Some browsers call onresize on load, Firefox doesn't.
-
-	maybeResize() {
-		debounce(() => {
-			const shape = windowShape();
-			if (shape === (this.shape || '')) return;
-			this.shape = shape;
-			this.resize();
-		});
+		this.loop = new Loop(() => this.step(), loopDelayMs);
 	}
 
 	handleClick(x, y) { this.clicked = { x, y } }
@@ -81,11 +75,11 @@ class Box {
 
 	// Move a point, split an edge and cleave a region
 
-	step() {
-		// this.moveSomePoint();
-		this.splitSomeEdge();
+	step() { // Return true if something happened??
+		// this.moveSomePoint(); // addPoint redistrubtes points along edge??
+		this.splitSomeEdge(); // Return true if split??
 		this.draw();
-		this.cleaveSomeRegion();
+		this.cleaveSomeRegion(); // Return true if cleaved??
 		this.draw();
 		return true;
 	}
@@ -200,7 +194,7 @@ class Region {
 		this.cleavages = indexes.map(cleavagesFrom).flat();
 	}
 
-	// Return the best Cleavage of the region or undefined if there is none
+	// Return the Cleavage of the region with the max Merit or undefined if there are no Cleavages
 
 	bestCleavage() {
 		const cleavages = this.cleavages;
@@ -241,8 +235,6 @@ class Region {
 	}
 
 	triangular() { return this.points.length === 3 }
-
-	small() { return this.radius < config.minRadius }
 
 	moveSomePoint() { this.points.any().move() }
 
@@ -409,7 +401,7 @@ class Point {
 
 	drawStar(ps) {
 		const { box: { ctx } } = this;
-		this.drawCircle(config.minRadius);
+		this.drawCircle(50);
 		ps.forEach(p => {
 			this.moveTo();
 			p.lineTo();
@@ -444,16 +436,16 @@ class Colour {
 	// Fill the palette with n equally spaced hues as rgb() strings
 
 	static init() {
-		const { numColours } = config;
-		this.palette = this.makePalette(numColours);
+		this.palette = this.makePalette();
 		// this.black = new Colour([0, 0, 0]);
 		// this.white = new Colour([255, 255, 255]);
 		// this.transparent = 'rgba(0,0,0,0)';
 	}
 
-	// Create a palette of numColours equally spaced hues
+	// Create a palette of equally spaced hues
 
-	static makePalette(numColours) {
+	static makePalette() {
+		const { numColours } = config;
 		const hueOffset = Math.random();
 		return zeroTo(numColours)
 			.map(i => Colour.fromHue(hueOffset + i / numColours));
@@ -585,17 +577,41 @@ Array.prototype.nonAdjacentIndexes = function nonAdjacentIndexes(i) {
 	return this.length < 4 ? [] : this.modRange(i+2, i-2);
 };
 
-// Events & Window ////////////////////////////////////////////////////////////////////////////////
+// Window ////////////////////////////////////////////////////////////////////////////////////////
 
-document.onclick = click;
-document.onmousemove = click;
+window.shape = function shape() {
+	const { innerWidth, innerHeight } = this;
+
+	return `${innerWidth}x${innerHeight}`;
+}
+
+window.changedShape = function changedShape() {
+	const newShape = this.shape();
+	const changed = !window.oldShape || newShape !== window.oldShape;
+	window.oldShape = newShape;
+
+	return changed;
+}
+
+// Request for full screen must be initiated by user action in Chrome or Firefox
+// Firefox fix - https://stackoverflow.com/a/27078920/285129
+// about:config > full-screen-api.allow-trusted-requests-only: false
+
+window.fullScreen = function fullScreen() {
+	const d = this.document.documentElement;
+	const f = d.requestFullscreen || d.webkitRequestFullscreen || d.msRequestFullscreen;
+	if (! f) { console.log('No full screen API'); return }
+	f.call(d);
+}
+
+// Events ////////////////////////////////////////////////////////////////////////////////////////
 
 function click(e) {
 	if (e.buttons === 2) return;			// Ignore right-click
 	// Stationary click -> type 'click'.  Drag -> mousemove.
 	// Ignore first "click" after movement.
 	const clickEvent = e.type === 'click' && ! click.moving;
-	if (clickEvent) fullScreen();
+	if (clickEvent) window.fullScreen();
 	// Ignore mouse move unless button pressed and moved > 1 pixel
 	click.moving = e.type === 'mousemove' && e.buttons && click.old_x
 		&& Math.abs(e.clientX - click.old_x) + Math.abs(e.clientY - click.old_y) > 1;
@@ -609,21 +625,36 @@ function click(e) {
 click.moving = false;
 click.old_x = 0;
 
-// Request for full screen must be initiated by user action in Chrome or Firefox
-// Firefox fix - https://stackoverflow.com/a/27078920/285129
-// about:config > full-screen-api.allow-trusted-requests-only: false
+document.onclick = click;
+document.onmousemove = click;
 
-function fullScreen() {
-	const d = document.documentElement;
-	const f = d.requestFullscreen || d.webkitRequestFullscreen || d.msRequestFullscreen;
-	if (! f) { console.log('No full screen API'); return }
-	f.call(d);
-}
+// Loop ///////////////////////////////////////////////////////////////////////////////////////////
 
-function windowShape() {
-	const { innerWidth, innerHeight } = window;
+// Call function `f` every `delayMs` until it returns false or `stop()` called.
+// this.timeout is the id of the next scheduled call.
 
-	return `${innerWidth}x${innerHeight}`;
+class Loop {
+	constructor(f, delayMs) {
+		this.f = f;
+		this.delayMs = delayMs;
+		this.step();
+	}
+
+	toggle() { this.timeout ? this.stop() : this.step() }
+
+	step() { this.schedule(this.f()) }
+
+	// Cancel any existing scheduled call and, if `reschedule` is true, schedule another one
+
+	schedule(reschedule = true) {
+		this.stop();
+		if (reschedule) this.timeout = setTimeout(() => this.step(), this.delayMs);
+	}
+
+	stop() {
+		clearTimeout(this.timeout);
+		delete this.timeout;
+	}
 }
 
 // Utilities //////////////////////////////////////////////////////////////////////////////////////
@@ -637,16 +668,6 @@ function debounce(f, t = 1000) {
 }
 
 function limit(x, min, max) { return Math.min(Math.max(x, min), max) }
-
-// Clear any previous loop then, if f returns true, wait t ms then loop
-
-function loopWhile(f, t) {
-	const looper = () => {
-		clearTimeout(looper.timeout);
-		if (f()) { looper.timeout = setTimeout(looper, t) } else { console.log('Done') }
-	};
-	looper();
-}
 
 // mod(x, n) is like x % n but correct for x < 0, i.e. 0 <= mod(x, n) < n
 
