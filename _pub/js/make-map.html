@@ -51,10 +51,11 @@ class Box {
 		const s = canvas.style;
 		s.marginLeft = s.marginTop	= `${margin}px`;	 // Centre in window
 		this.regions = [new Region(this)];
-		this.loop = new Loop(() => this.step(), loopDelayMs);
+		// this.loop = new Loop(() => this.step(), loopDelayMs);
+		this.step();
 	}
 
-	handleClick(x, y) { this.clicked = { x, y } }
+	handleClick(x, y) { this.step() }
 
 	handleKey({ keyCode }) {
 		this.keyPressed = keyCode === 27 ? 'Esc' : String.fromCharCode(keyCode);
@@ -73,15 +74,16 @@ class Box {
 
 	point([x, y]) { return new Point(this, x, y, true) }
 
-	// Move a point, split an edge and cleave a region
+	// Move a point, split an edge and try to cleave
+	// a region.  Return true if some region cleaved.
 
-	step() { // Return true if something happened??
-		// this.moveSomePoint(); // addPoint redistrubtes points along edge??
-		this.splitSomeEdge(); // Return true if split??
+	step() {
+		this.moveSomePoint();
+		this.splitSomeEdge();
 		this.draw();
-		this.cleaveSomeRegion(); // Return true if cleaved??
+		const cleaved = this.cleaveSomeRegion();
 		this.draw();
-		return true;
+		return cleaved;
 	}
 
 	moveSomePoint() { this.regions.any().moveSomePoint() }
@@ -98,6 +100,8 @@ class Box {
 
 	withFewestPoints() { return this.regions.withMax(r => -r.points.length) }
 
+	// Return the region with the longest edge
+
 	withLongestEdge() { return this.regions.withMax(r => r.longestEdgeLength) }
 
 	// Return indexes of cleavable regions, most cleavable first
@@ -111,12 +115,12 @@ class Box {
 		);
 	}
 
-	// Cleave the most cleavable region.  Return true if found.
+	// Cleave the most cleavable region and return true, else false if no cleavage found.
 
 	cleaveSomeRegion() { return this.mostCleavableRegions().some(k => this.cleaveRegion(k)) }
 
 	// Find the best cleavage of region [k] into two new regions, replace
-	// [k] with them and return true.  If none found, return false.
+	// [k] with them and return true.  If no cleavages, return false.
 
 	cleaveRegion(k) {
 		const r = this.regions[k];
@@ -198,7 +202,7 @@ class Region {
 
 	bestCleavage() {
 		const cleavages = this.cleavages;
-		const best = cleavages.withMax(c => c.merit);
+		const best = cleavages.withMax(c => c.merit); // Undefined if empty
 		// console.log(`cleaved ${this} -> ${best}`);
 
 		return best;
@@ -238,8 +242,7 @@ class Region {
 
 	moveSomePoint() { this.points.any().move() }
 
-	// Add a point on the longest edge of this
-	// region and any region that shares that edge
+	// Add a point on the longest edge of this region
 
 	splitLongestEdge() {
 		const { box, points, longestEdgeIndex: i } = this;
@@ -372,6 +375,9 @@ class Point {
 	}
 
 	halfWayTo(that) { return this.partWayTo(that, 0.5) }
+
+	// Move the point at random but keep it on screen
+	// Better than random??
 
 	move() {
 		const { box: { width, height } } = this;
@@ -608,52 +614,35 @@ window.fullScreen = function fullScreen() {
 
 function click(e) {
 	if (e.buttons === 2) return;			// Ignore right-click
-	// Stationary click -> type 'click'.  Drag -> mousemove.
-	// Ignore first "click" after movement.
-	const clickEvent = e.type === 'click' && ! click.moving;
-	if (clickEvent) window.fullScreen();
-	// Ignore mouse move unless button pressed and moved > 1 pixel
-	click.moving = e.type === 'mousemove' && e.buttons && click.old_x
-		&& Math.abs(e.clientX - click.old_x) + Math.abs(e.clientY - click.old_y) > 1;
-	click.old_x = e.clientX;
-	click.old_y = e.clientY;
-	if (! clickEvent && ! click.moving) return;
-	// box.handleClick(e.offsetX, e.offsetY);
-	click.clicked = true;
+	box.handleClick(e.offsetX, e.offsetY);
 }
 
-click.moving = false;
-click.old_x = 0;
-
-document.onclick = click;
-document.onmousemove = click;
+document.addEventListener('click', click); // e.type === 'click', 'mousemove'
 
 // Loop ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Call function `f` every `delayMs` until it returns false or `stop()` called.
-// this.timeout is the id of the next scheduled call.
+// Call `shouldContinueFunction` every `delayMs` until it returns false or `stop()` called.
 
 class Loop {
-	constructor(f, delayMs) {
-		this.f = f;
+	constructor(shouldContinueFunction, delayMs) {
+		this.shouldContinueFunction = shouldContinueFunction;
 		this.delayMs = delayMs;
+		this.step = this.step.bind(this);
 		this.step();
 	}
 
-	toggle() { this.timeout ? this.stop() : this.step() }
+	// Cancel any existing scheduled call and, if the function returns true, schedule another call
 
-	step() { this.schedule(this.f()) }
-
-	// Cancel any existing scheduled call and, if `reschedule` is true, schedule another one
-
-	schedule(reschedule = true) {
+	step() {
 		this.stop();
-		if (reschedule) this.timeout = setTimeout(() => this.step(), this.delayMs);
+		if (this.shouldContinueFunction()) this.nextCallTimeoutId = setTimeout(this.step, this.delayMs);
 	}
 
+	toggle() { this.nextCallTimeoutId ? this.stop() : this.step() }
+
 	stop() {
-		clearTimeout(this.timeout);
-		delete this.timeout;
+		clearTimeout(this.nextCallTimeoutId);
+		delete this.nextCallTimeoutId;
 	}
 }
 
