@@ -72,13 +72,12 @@ class Box {
 
 	// Return an initial point on the boundary rectangle
 
-	point([x, y]) { return new Point(this, x, y, true) }
+	point([x, y]) { return new Point(this, x, y, true, 2) }
 
-	// Move a point, split an edge and try to cleave
-	// a region.  Return true if some region cleaved.
+	// Move a point, split an edge and try to cleave a region.  Return true if some region cleaved.
 
 	step() {
-		this.moveSomePoint();
+		// this.moveSomePoint();
 		this.splitSomeEdge();
 		this.draw();
 		const cleaved = this.cleaveSomeRegion();
@@ -88,7 +87,7 @@ class Box {
 
 	moveSomePoint() { this.regions.any().moveSomePoint() }
 
-	// Add point to some edge of some region
+	// Add a point to the longest edge of any region
 
 	splitSomeEdge() { this.withLongestEdge().splitLongestEdge() }
 
@@ -96,41 +95,35 @@ class Box {
 
 	regionWithEdge(edge) { this.regions.some(region => region.addEdge(edge)) }
 
-	// Return the region with the fewest points
-
-	withFewestPoints() { return this.regions.withMax(r => -r.points.length) }
-
 	// Return the region with the longest edge
 
 	withLongestEdge() { return this.regions.withMax(r => r.longestEdgeLength) }
 
-	// Return indexes of cleavable regions, most cleavable first
+	// Return the most cleavable region
 
-	mostCleavableRegions() {
-		const { regions } = this;
-		return (
-			regions.indexes()
-				.filter(i => regions[i].cleavability > 0)
-				.sort((i, j) => regions[j].cleavability - regions[i].cleavability)
-		);
-	}
+	mostCleavableRegion() { return this.regions.withMax(r => r.getCleavability()) }
 
 	// Cleave the most cleavable region and return true, else false if no cleavage found.
 
-	cleaveSomeRegion() { return this.mostCleavableRegions().some(k => this.cleaveRegion(k)) }
+	cleaveSomeRegion() { return this.cleaveRegion(this.mostCleavableRegion()); }
 
-	// Find the best cleavage of region [k] into two new regions, replace
-	// [k] with them and return true.  If no cleavages, return false.
+	// Find the best cleavage of region `r` into two new regions, replace
+	// it with them and return true.  If no cleavages, return false.
 
-	cleaveRegion(k) {
-		const r = this.regions[k];
+	cleaveRegion(r) {
 		const c = r.bestCleavage();
 		if (! c) return false;
 		console.log('Best cleavage', c);
 		const { points, regions } = c;
-		this.regions.splice(k, 1, ...regions);	// Replace k with regions
-		r.linkPoints(points);										// Increment degree of newly linked points
+		this.replaceRegion(r, regions);		// Replace r with new regions
+		r.linkPoints(points);							// Increment degree of newly linked points
 		return true;
+	}
+
+	// Replace region r with rs
+
+	replaceRegion(r, rs) {
+		this.regions = this.regions.without(r).concat(rs);
 	}
 
 	clear() {
@@ -158,7 +151,7 @@ class Region {
 	update() {
 		this.setEdgeLengths();
 		this.setRadius();
-		this.setCleavability();
+		this.setCleavages();
 	}
 
 	// Set the region's edgeLengths and the index and length of the region's longest edge
@@ -180,18 +173,15 @@ class Region {
 		this.radius = eps.map(p => c.distance(p)).min();
 	}
 
-	// Set the region's cleavability to its radius if it has Cleavages, else zero
+	// Return the region's radius if it has Cleavages, else zero
 
-	setCleavability() {
-		this.setCleavages();
-		this.cleavability = this.cleavages.length ? this.radius : 0;
-	}
+	getCleavability() { return this.cleavages.length ? this.radius : 0 }
 
 	// Set the region's possible Cleavages
 
 	setCleavages() {
 		const indexes = this.linkables(); 	// Points not at maxDegree
-		const cleavagesFrom = i =>	indexes	// From some linkable point...
+		const cleavagesFrom = i => indexes	// From some linkable point...
 			.nonAdjacentIndexes(i)
 			.filter(j => i < j)								// ...to some later linkable point
 			.map(j => new Cleavage(this, i, j));
@@ -202,7 +192,7 @@ class Region {
 
 	bestCleavage() {
 		const cleavages = this.cleavages;
-		const best = cleavages.withMax(c => c.merit); // Undefined if empty
+		const best = cleavages.withMax(c => c.getMerit()); // Undefined if empty
 		// console.log(`cleaved ${this} -> ${best}`);
 
 		return best;
@@ -221,7 +211,7 @@ class Region {
 		let xt = 0, yt = 0;
 		points.forEach(({ x, y }) => { xt += x; yt += y });
 
-		return new Point(box, xt / n, yt / n, false);
+		return new Point(box, xt / n, yt / n, false); // degree is undefined
 	}
 
 	edgeMidPoints() {
@@ -254,8 +244,7 @@ class Region {
 		box.regionWithEdge([pj, mid, pi]); // Also add new point to region with pj -> pi
 	}
 
-	// Return a new region with last edge [i]->[j],
-	// going round this one from [j] back to [i]
+	// Return a new region with last edge [i]->[j], going round this one from [j] back to [i]
 
 	newRegionWith(i, j) {
 		const { box, points } = this;
@@ -301,7 +290,7 @@ class Region {
 
 	toString() {
 		const ps = this.points.map(p => p.toString()).join('  ');
-		return `[${ps}] cleavability ${this.cleavability}`;
+		return `[${ps}] cleavability ${this.getCleavability()}`;
 	}
 }
 
@@ -313,8 +302,6 @@ class Cleavage {
   constructor(region, i, j) {
 		this.region = region;
 		this.points = [i, j];
-		this.regions = this.getRegions();
-		this.merit = this.getMerit();
 	}
 
 	// Return the two new regions that the cleavage would create
@@ -328,8 +315,7 @@ class Cleavage {
 	// The bigger and more equal the radii of the two regions, the higher the cleavage's merit
 
 	getMerit() {
-		const { regions } = this;
-		const [r1, r2] = regions.map(r => r.radius);
+		const [r1, r2] = this.getRegions().map(r => r.radius);
 
 		return r1 + r2 - Math.abs(r1 - r2);
 	}
@@ -347,7 +333,7 @@ class Point {
 		this.x = x;
 		this.y = y;
 		this.boundary = boundary;
-		this.degree = degree || 2;
+		this.degree = degree;
 	}
 
 	// The point has been linked to another point, update its degree
@@ -371,13 +357,13 @@ class Point {
 			Math.floor(f * x + g * that.x),
 			Math.floor(f * y + g * that.y),
 			this.boundary && that.boundary,
+			2,
 		);
 	}
 
 	halfWayTo(that) { return this.partWayTo(that, 0.5) }
 
 	// Move the point at random but keep it on screen
-	// Better than random??
 
 	move() {
 		const { box: { width, height } } = this;
@@ -582,6 +568,10 @@ Array.prototype.spaced = function spaced() {
 Array.prototype.nonAdjacentIndexes = function nonAdjacentIndexes(i) {
 	return this.length < 4 ? [] : this.modRange(i+2, i-2);
 };
+
+// Return the array without the element with the given value
+
+Array.prototype.without = function without(unwanted) { return this.filter(x => x !== unwanted) }
 
 // Window ////////////////////////////////////////////////////////////////////////////////////////
 
