@@ -70,7 +70,7 @@ class Box {
 			.map(xy => this.point(xy));
 	}
 
-	// Return an initial point on the boundary rectangle
+	// Return one of the initial points on the boundary rectangle
 
 	point([x, y]) { return new Point(this, x, y, true, 2) }
 
@@ -232,7 +232,8 @@ class Region {
 
 	moveSomePoint() { this.points.any().move() }
 
-	// Add a point on the longest edge of this region
+	// Add a point on the longest edge of this region,
+	// between longestEdgeIndex and the next point after that
 
 	splitLongestEdge() {
 		const { box, points, longestEdgeIndex: i } = this;
@@ -255,7 +256,7 @@ class Region {
 		return new Region(box, newPoints);
 	}
 
-	// If region has edge p->q, add new mid point to it and return true, else false
+	// If region has edge p->q, add new point `mid` to it and return true, else false
 
 	addEdge([p, mid, q]) {
 		const { points } = this;
@@ -267,7 +268,7 @@ class Region {
 		return true;
 	}
 
-	// Add a new point p to the region at [i+1]
+	// Add a new point p to the region at [i+1] (possibly at the end of the array)
 
 	addPointAfter(p, i) {
 		this.points.splice(i + 1, 0, p);
@@ -325,7 +326,8 @@ class Cleavage {
 
 // A point's degree is the number of edges joined to it,
 // which is the same as the number of regions it belongs to
-// if we include the pseudo-region outside the map boundary
+// if we include the pseudo-region outside the map boundary.  A corner point's degree
+// is 2.
 
 class Point {
 	constructor(box, x, y, boundary, degree) {
