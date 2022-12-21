@@ -116,9 +116,10 @@ my $query_url = text2url($query);
 my $elsewhere = qq{
 <p>
 Try this search on
-<a href="http://www.wikipedia.org/wiki/Special:Search?search=$query_url">Wikipedia</a>,
-<a href="http://www.onelook.com/cgi-bin/cgiwrap/bware/dofind.cgi?word=$query_url">OneLook</a>,
-<a href="http://www.google.com/search?q=define:$query_url">Google</a>
+<a href="https://www.wikipedia.org/wiki/Special:Search?search=$query_url">Wikipedia</a>,
+<a href="https://www.wiktionary.org/wiki/$query_url">Wiktionary</a>,
+<a href="https://www.google.com/search?q=define:$query_url">Google</a>,
+<a href="https://www.onelook.com/?w=$query_url">OneLook</a>.
 </p>
 };
 

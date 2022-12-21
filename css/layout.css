@@ -81,7 +81,6 @@ dt { font-weight: bold }
 #left
 {
     min-width: 75%;
-    max-width: 95%;
 }
 
 #right
@@ -128,7 +127,7 @@ input[type='text']
     -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
     -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );*/
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
     background-color: #ededed;
     -webkit-border-top-left-radius: 6px;
