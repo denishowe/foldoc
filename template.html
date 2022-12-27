@@ -169,24 +169,25 @@
 		</div> <!-- right -->
 	</div> <!-- container -->
 
-	<!-- Quantcast -->
-	<script>
-		var _qevents = _qevents || [];
-		(function () {
+	<!-- Start Quantcast -->
+	<script type="text/javascript">
+		window._qevents = window._qevents || [];
+		(function() {
 			var elem = document.createElement('script');
-			elem.src = "https://secure.quantserve.com/quant.js";
+			elem.src = 'https://secure.quantserve.com/quant.js';
 			elem.async = true;
-			elem.type = "text/javascript";
+			elem.type = 'text/javascript';
 			var scpt = document.getElementsByTagName('script')[0];
 			scpt.parentNode.insertBefore(elem, scpt);
 		})();
-
-		_qevents.push({ qacct: "p-48Rosdvs3EiOc" });
+		window._qevents.push({ qacct: 'p-48Rosdvs3EiOc', uid: '__INSERT_EMAIL_HERE__' });
 	</script>
 	<noscript>
-		<img src="//pixel.quantserve.com/pixel/p-48Rosdvs3EiOc.gif" height="1"
-			width="1" alt="Quantcast">
+		<div style="display:none;">
+		<img src="https//pixel.quantserve.com/pixel/p-48Rosdvs3EiOc.gif" border="0" height="1" width="1" alt="Quantcast"/>
+		</div>
 	</noscript>
+	<!-- End Quantcast -->
 </body>
 
 </html>
