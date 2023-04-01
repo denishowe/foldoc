@@ -446,7 +446,7 @@ sub load_logs
 		open my $LOG, $log or die "Can't read $log: $!";
 		$log =~ m|.*/(.*)|;
 		$dates->{$1} = 1;
-		print STDERR " $1";
+		print STDERR "."; # " $1";
 		my $key;
 		while (<$LOG>)
 		{
@@ -464,6 +464,8 @@ sub load_logs
 		}
 		close $LOG;
 	}
+	print STDERR "\n";
+
 	return ($client_hits, $key_clients, $key_query, $dates);
 }
 
