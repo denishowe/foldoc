@@ -18,7 +18,7 @@
 'use strict';
 
 const loopDelay = 0;
-const pointsPerLoop = 1E5;
+const pointsPerLoop = 20; // 1E5;
 const seedProbability = 2E-6;
 
 let cellSize = 12;
@@ -113,8 +113,15 @@ function createCanvas() {
 }
 
 function drawDot(x, y, c) {
+  const left = screen[y][x-1] == c;
+  const right = screen[y][x+1] == c;
+  const down = screen[y+1]?.[x] == c; // y increases downwards
+  const up = screen[y-1]?.[x] == c;
   ctx.fillStyle = hex(c);
-  ctx.fillRect(cellSize*x, cellSize*y, drawSize, drawSize);
+  const xx = cellSize * x;
+  const yy = cellSize * y;
+  ctx.strokeRect(xx, yy, drawSize, drawSize);
+  ctx.fillRect(xx - left, yy - up, drawSize + left + right, drawSize + down + up);
 }
 
 Array.prototype.any = function any() { return this[rand(0, this.length)] }
