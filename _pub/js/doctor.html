@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+	Medical conditions and their treatments
+-->
+
+<html>
+<head>
+<title>Doctor</title>
+<meta charset="UTF-8">
+<link rel="canonical" href="http://foldoc.org/pub/js/doctor.html">
+</head>
+<body style="overflow: hidden; margin: 30px; font-size: x-large;">
+<div style="margin-top: -8px; margin-left: -8px">
+	<p><span>Patient is suffering from:</span> <b><span id="condition"></span></b></p>
+	<p><span>Treatment:</span>
+    <select id="treatment" style="font-size: large;">
+      <option selected disabled hidden>Choose a treatment</option>
+    </select>
+  </p>
+  <div id="result"></div>
+</div>
+<script>
+"use strict";
+
+const conditions = {
+  Measles: { Asprin: 50, ['Bed Rest']: 10, Zovirax: 1 },
+  ['Nervous Tension']: { ['Bed Rest']: 90, Psychotherapy: 80 },
+};
+
+function run() {
+  const condition = Object.keys(conditions).any();
+  const treatments = [...new Set(Object.values(conditions).map(Object.keys).flat())].sort();
+  const treatmentElement = el('treatment');
+  treatmentElement.selectedIndex = 0;
+  treatments.forEach(treatment => {
+    const opt = document.createElement('option');
+    opt.innerHTML = treatment;
+    treatmentElement.appendChild(opt);
+  })
+  el('condition', condition);
+  treatmentElement.addEventListener('change', event => {
+    const treatment = event.target.value;
+    const eff = conditions[condition][treatment] || 0;
+    el('result', `Treating <b>${condition}</b> with <b>${treatment}</b> is <b>${eff}%</b> effective.`);
+  })
+}
+
+Array.prototype.any = function () { return this[Math.floor(this.length * Math.random())] }
+
+function el(id, text) {
+  const e = document.getElementById(id);
+  if (text !== undefined) e.innerHTML = text;
+
+  return e;
+}
+
+run();
+</script>
+</body>
+</html>
