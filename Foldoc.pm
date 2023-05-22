@@ -56,19 +56,17 @@ sub debug
 }}
 
 # Set $_ to the new (relative) URL and return true to redirect or set
-# $_ to the query and return false.  Used for index.cgi and missing().
+# $_ to the query and return false.  Used for index.pl and missing().
 
 sub check_redirect
 {
 	($_) = @_;							# NOT local, set caller's $_
 
-	s|^/||;								# Drop initial /
 	debug "check_redirect", $_;
 
-	$_ = url2text($_);
-	debug "url2text -> ($_)";
+	s|^/||;									# Drop initial /
 
-	# No query string
+	# Check for query string before decoding URL (e.g. %3F)
 	# Test: http://foldoc.org/foo
 	unless (s/.*\?(.)/$1/)
 	{
@@ -81,6 +79,10 @@ sub check_redirect
 		$_ = "home-page" if ($_ eq "");
 		return;
 	}
+
+	$_ = url2text($_);
+	s/\s+/ /g;							# Normalise whitespace
+	debug "url2text -> ($_)";
 
 	# Legacy query string parameters
 	# Test: http://foldoc.org?query=foo&action=Search
