@@ -2579,9 +2579,11 @@ Zwolle, Netherlands
 function go() {
 	const randomPlace = places[Math.floor(places.length * Math.random())];
 	const url = place => 'https://www.google.com/maps?t=k&q=' + encodeURIComponent(place);
-	const anchor = place => `<a href="${url(place)}" title="${place}">${place}</a> `;
-	const anchors = [randomPlace, ...places].map(anchor);
-	document.body.innerHTML = anchors.join('');
+	const anchor = (place, label) => `<a href="${url(place)}" title="${place}">${label || place}</a> `;
+	const randomAnchor = anchor(randomPlace, 'RANDOM PLACE');
+	const anchors = [randomAnchor, ...places.map(place => anchor(place))];
+	document.body.innerHTML = '<a href="https://www.groovypost.com/howto/make-google-maps-3d/">HOW TO VIEW 3D</a>'
+		+ anchors.join('');
 }
 
 </script>
