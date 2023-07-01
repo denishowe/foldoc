@@ -38,8 +38,9 @@ our $offsetlen	 = length $maxoffset;	# Digits in integer
 our $offsetline	 = $offsetlen + 1;		# Include \n
 our $num_entries = (-s $keyfile || 0) / $keyline;
 
-# Format into which to insert RFC number to get URL - Thanks Dave Collins
-our $rfc_url_fmt = "http://www.faqs.org/rfcs/rfc%s.html";
+# Format into which to insert RFC number to get URL
+our $rfc_url_fmt = "https://www.ietf.org/rfc/rfc%s.txt";
+# Or "http://www.faqs.org/rfcs/rfc%s.html"; # Thanks Dave Collins
 
 # Declare early so we can use it without ()
 
