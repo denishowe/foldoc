@@ -1,6 +1,13 @@
 <html>
-<body>
+	<head>
+		<title>Notification</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="canonical" href="https://foldoc.org/pub/js/notification.html">
+		</head>
+		<body>
 <script>
+	if (location.protocol !== 'https:') location.href = 'https://foldoc.org/pub/js/notification.html';
 // https://stackoverflow.com/questions/2271156/chrome-desktop-notification-example#
 
 // request permission on page load
@@ -33,6 +40,7 @@ function notifyMe()
 	{
 		window.open("http://stackoverflow.com/a/13328397/1269037");
 	};
+	console.log(notification);
 }
 </script>
 <button onclick="notifyMe()">Notify me!</button>
