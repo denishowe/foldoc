@@ -6,10 +6,8 @@
 </head>
 <body ondrop="dropped(event)" ondragover="allow_drop(event)">
 <script>
-function allow_drop(e)
-{
-	e.preventDefault();
-}
+
+function allow_drop(e) { e.preventDefault() }
 
 function dropped(e)
 {
@@ -56,35 +54,16 @@ function peek()
 	setTimeout(peek, 1000);
 }
 
-// setTimeout(peek, 1000);
-
 window.open("https://www.ingress.com/intel?pll=51.575074,-0.370745");
+
 </script>
 
-<!-- Dragging out of an iframe is disabled
-		 in Chrome without --disable-web-security
+<h1>Drop Portal link or Google Maps link here</h1>
 
-<iframe id="intel" height="85%" width="100%"
-	 src="https://www.ingress.com/intel?pll=51.575074,-0.370745"></iframe>
-
--->
-
-<i>Drop Portal link or Google Maps link here</i>
-<br>
-<b>Dropped text:</b> <span id="show_text">---</span>
-<b>Latitude:</b><span id="lat">---</span>
-<b>Longitude:</b> <span id="lng">---</span>
-<b>Portal Name:</b> <span id="name">---</span> <br>
-<b>Intel:</b> <span id="intel">---</span>
+<div><b>Dropped text:</b> <span id="show_text">---</span></div>
+<div></div><b>Latitude:</b><span id="lat">---</span></div>
+<div></div><b>Longitude:</b> <span id="lng">---</span></div>
+<div></div><b>Portal Name:</b> <span id="name">---</span></div>
+<div></div><b>Intel:</b> <span id="intel">---</span></div>
 </body>
 </html>
-
-
-<!--
-Local variables:
-compile-command: "\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" file://C:/Users/Denis/Projects/Misc/Chrome/drop.html"
-compile-command: "\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --disable-web-security file://C:/Users/Denis/Projects/Misc/Chrome/drop.html"
-compile-command: "start http://foldoc.org/pub/misc/intel-drop.html"
-compile-command: "unison -batch imperial"
-End:
--->

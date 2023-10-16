@@ -14,7 +14,7 @@ use vars qw($dicbase $dictionary
 
 # Set the (virutal) hostname for this machine used in redirects
 our $server_name = "foldoc.org";
-our $root_url = "http://$server_name";		# No trailing /
+our $root_url = "https://$server_name";		# No trailing /
 for ($ENV{SERVER_PORT})
 {
 	$root_url .= ":$_" if ($_ && $_ ne "80"); # Natalie Kubler
@@ -45,7 +45,7 @@ our $rfc_url_fmt = "https://www.ietf.org/rfc/rfc%s.txt";
 # Declare early so we can use it without ()
 
 {
-	my $debug; for ($ENV{QUERY_STRING}) { $debug = $_ && s/debug// }
+	my $debug = $ENV{REQUEST_URI} && $ENV{REQUEST_URI} =~ s/\?debug[^&]*//;
 
 sub debug
 {
@@ -65,67 +65,44 @@ sub check_redirect
 
 	debug "check_redirect", $_;
 
-	s|^/||;									# Drop initial /
+	s|^/||;									# Drop normal initial /
 
-	# Check for query string before decoding URL (e.g. %3F)
-	# Test: http://foldoc.org/foo
-	unless (s/.*\?(.)/$1/)
-	{
-		# Drop extra initial "/"s except /dev/null
-		# Test: http://foldoc.org//Fairchild
-		# Test: http://foldoc.org/%2fdev%2fnull
-		s|^/+([^d])|$1| && return 1;
-		# Drop trailing /s except "/", "s///"
-		s|([^/])/$|$1| && return 1;
-		$_ = "home-page" if ($_ eq "");
-		return;
-	}
+	# Drop extra initial "/"s (except /dev/null) and redirect
+	# Test: http://foldoc.org//Fairchild
+	# Test: http://foldoc.org/%2fdev%2fnull
+	s|^/+([^d])|$1| && return 1;
+
+	# Drop trailing /s except "/", "s///"
+	s|([^/])/$|$1| && return 1;
+
+	# If nothing left, serve home page
+	$_ eq "" && ($_ = "home-page") && return;
+
+	return 1 if (
+		# If there's a query string, strip everything up to the "?" before decoding URL (e.g. %3F)
+		# Test: http://foldoc.org/query?foo
+		s/.*\?(.)/$1/ +				# Eager OR
+
+		# Legacy query string parameters
+		# Test: http://foldoc.org?query=foo&action=Search
+		# Test: http://foldoc.org/?query=%2F&action=Search
+		s/query=|&action=.*//g);
 
 	$_ = url2text($_);
 	s/\s+/ /g;							# Normalise whitespace
 	debug "url2text -> ($_)";
 
-	# Legacy query string parameters
-	# Test: http://foldoc.org?query=foo&action=Search
-	# Test: http://foldoc.org/?query=%2F&action=Search
-	s/query=//;
-	s/&action=.*//;
-
 	# Empty query
 	# Test: http://foldoc.org?query=&action=Search
 	# Test: http://foldoc.org?query=0&action=Search
-	return 1 if (! /\S/					# Redirect to home
+	return ! /\S/											# Redirect to home
 	# Superfluous verbiage
 	# Test: http://foldoc.org/what+does+%22foo%22+mean%3f
-	  	|| s/what\s+(?:does\s+)?(.+)\s+mean.*/$1/i
+		|| s/what\s+(?:does\s+)?(.+)\s+mean.*/$1/i
 	# Test: http://foldoc.org/what+is+a+foo%3f
 		|| s/what\s+[i']s\s+(?:an?\s+)?(.+?)\??/$1/i
 		|| s/^\s*"\s*(.+?)\s*"\s*$/$1/	# Quotes won't help
-		|| s/([^?])\?$/$1/);			# Zap trailing "?"
-
-	# Legacy action parameter
-	# Test: http://foldoc.org/?action=Home
-	# Test: http://foldoc.org/?action=Feedback
-	# Test; http://foldoc.org/?action=Random
-	my $action;
-	if ($action = (/action=([^&]+)/)[0]
-		and $action = {Home		=> "",
-					   Feedback => "help.html",
-					   Random   => "random-entry"}->{$action})
-	{
-		$_ = $action;
-		return 1
-	}
-
-	# Query string --> URL path
-	# Test: http://foldoc.org/?fo	--> /fo
-	# Test: http://foldoc.org/?%25	--> /%
-	# Test: http://foldoc.org/?%2F	--> //
-	# Test: http://foldoc.org/?%3F	--> /?
-  	# http://foldoc.org/?query=c%2Fc%2B%2B --> /C%2fC++
-	$_ = text2url($_);
-
-	return ($_ ne "");
+		|| s/([^?])\?$/$1/;							# Zap trailing "?"
 }
 
 # Return -1,0,1 if s1 comes before, same or after s2.  If $whole is
