@@ -200,8 +200,7 @@ binsrch:
 	while ($max - $min > 1)
 	{
 		my $mid = int(($min + $max)/2);
-		my $midkey = getkey($KEY, $mid)
-			or return (2, 1);			# Error
+		my $midkey = getkey($KEY, $mid);			# May be false, e.g. "0"
 		# Compare whole strings with case significant
 		my $cmp = diccmp($midkey, $key, 1, 1);
 		debug qq{$min $mid $max "$key" <=> "$midkey" -> $cmp};
@@ -427,15 +426,14 @@ sub anchor
 
 sub line_at
 {
-    my ($fh, $offset) = @_;
+	my ($fh, $offset) = @_;
 
 	use Carp;
-    seek $fh, $offset, 0
-		or confess "Can't seek file $fh offset $offset: $!";
-    my $line = <$fh>; return unless (defined $line);
-    chomp $line;
+	seek $fh, $offset, 0 or confess "Can't seek file $fh offset $offset: $!";
+	my $line = <$fh>; return unless (defined $line);
+	chomp $line;
 
-    return $line;
+	return $line;
 }
 
 # Normalise a dictionary heading or query for insertion as,
