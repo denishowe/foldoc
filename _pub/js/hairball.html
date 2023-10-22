@@ -13,7 +13,10 @@ const XY = ['x', 'y'];
 const RGB = ['r', 'g', 'b'];
 const phase = { x: 0, y: 0.5*pi };
 
-const probResetPerPoint = 1E-6;
+const probResetPerPoint = 1E-7;
+
+const initialMsPerDraw = parseInt(location.search?.slice(1), 10) || 0;
+let msPerDraw = initialMsPerDraw;
 
 let size, ctx, ps, colour, colourChange, gt, dgt;
 let step, pointAngleChange, nClone;
@@ -64,7 +67,7 @@ function draw() {
 		if (pr(0.5)) reset(); else ps.length = Math.floor(0.2 * ps.length);
 	}
 
-	setTimeout(draw, 0);
+	setTimeout(draw, msPerDraw);
 }
 
 function dimFun(dims, f) { return dims.map(f) }
@@ -135,6 +138,10 @@ window.onresize = function ()
 {
 	clearTimeout(resize_timeout);
 	resize_timeout = setTimeout(() => init(), 300);
+};
+
+window.onkeydown = function (event) {
+	if (event.key === ' ') msPerDraw = msPerDraw ? 0 : initialMsPerDraw;
 };
 
 function capture() {
