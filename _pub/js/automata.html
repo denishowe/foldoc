@@ -19,9 +19,9 @@ body {
 <canvas id="canvas" />
 <script>
 
-const cellSize = 16;
-const botsPerCell = 0.7;
-const maxCycles = 200;
+const cellSize = 20;
+const botsPerCell = 0.5;
+const maxCycles = 100;
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
@@ -87,7 +87,7 @@ class Bot {
  		if (! this.pos) return;
 		this.colour = Colour.colourful(index, Bot.initialNum);
 		this.rules = Bot.best && p(0.1) ? Bot.best.mutatedRules() : Bot.initialRules();
-		this.ruleIndex = 0;
+		this.ruleIndex = this.rules.anyIndex();
 		this.visited = new Set();
 		this.pos.occupant(this); // Draws bot
 	}
@@ -108,37 +108,29 @@ class Bot {
 	// Run one step of bot activity and return number left alive
 
 	static step() {
-		Bot.all = Bot.all.filter(b => b.move());
-		// Kill bots with relatively few visits
-		let maxVisits = 0;
+		Bot.all.forEach(b => b.move());
+		// Kill bot with fewest visits
+		let worstBot;
 		Bot.all.forEach(b => {
-			if (b.visited.size <= maxVisits) return;
-			maxVisits = b.visited.size;
-			if (!Bot.best || maxVisits > Bot.best.visited.size) Bot.best = b;
+			const visitCount = b.visited.size;
+			if (!Bot.best || visitCount > Bot.best.visited.size) Bot.best = b;
+			if (!worstBot || visitCount < worstBot.visited.size) worstBot = b;
 		});
-		if (maxVisits > 1) {
-			const targetVisits = maxVisits * 0.5;
-			Bot.all.forEach(b => {
-				b.live = b.visited.size > targetVisits;
-				if (!b.live) b.vacatePos();
-			});
-			Bot.all = Bot.all.filter(b => b.live);
-		}
+		worstBot.vacatePos();
+		Bot.all = Bot.all.filter(b => b !== worstBot);
+
 		return Bot.all.length;
 	}
 
-	// Move bot to next position if empty.  Die if off grid.  Return true if still alive.
+	// Move bot to next position if empty
 
 	move() {
 		this.visited.add(this.pos.toString());
 		let n = this.getNextPos();
-		const dead = !n;	// Fell off grid and died
-		const targetBot = n && !n.equal(this.pos) && n.occupant();
-		if (dead || ! targetBot) this.vacatePos();
-		if (dead || targetBot) return ! dead; // No move
+		if (!n || !n.equal(this.pos) && n.occupant()) return;
+		this.vacatePos();
 		this.pos = n;
 		n.occupant(this);
-		return true;
 	}
 
 	vacatePos() { this.pos.occupant(undefined) }
@@ -166,11 +158,12 @@ class Bot {
 		const s = Bot.initialRules();
 		return [
 			{ ok: true,		f: () => rules },						// No change
-			{ ok: true,		f: () => s },								// New set
+			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
+			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
 			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
 			{ ok: n >  1,	f: () => rules.dropAny() },	// Remove a rule
-			{ ok: true, 	f: () => rules + s },				// Append some rules
-			{ ok: true, 	f: () => rules + rules },		// Duplicate set
+			{ ok: n < 20, f: () => rules + s },				// Append some rules
+			{ ok: n < 20, f: () => rules + rules },		// Duplicate set
 		].filter(change => change.ok).any().f();
 	}
 
