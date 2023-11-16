@@ -20,7 +20,7 @@ body {
 <script>
 
 const cellSize = 16;
-const botsPerCell = 0.9;
+const botsPerCell = 0.7;
 const maxCycles = 200;
 
 window.onkeydown = function keyDown(e) {
@@ -48,7 +48,7 @@ class Run {
 		Cell.reset();
 	  Bot.reset();
   	this.periods = [0, 100, 500];
-  	this.botCount = -1;
+  	this.botOldCount = -1;
 	  this.start();
 	}
 
@@ -64,10 +64,12 @@ class Run {
 	static step() {
 		if (! this.running) return;
 		const botCount = Bot.step();
-		if (botCount !== this.botCount) this.t = 0; // Population changed
-		this.botCount = botCount;
-		if (this.t++ > maxCycles)										// Population unchanged for too long
+		if (botCount !== this.botOldCount) this.t = 0; // Population changed
+		this.botOldCount = botCount;
+		if (!botCount || this.t++ > maxCycles)	{ // Population zero or unchanged for too long
+			// console.log('Population zero or static');
 			return this.reset();
+		}
 		setTimeout(() => requestAnimationFrame(() => this.step()), this.periods[0]);
 	}
 
@@ -84,7 +86,7 @@ class Bot {
 	  this.pos = Grid.anyEmpty();
  		if (! this.pos) return;
 		this.colour = Colour.colourful(index, Bot.initialNum);
-		this.rules = Bot.best ? Bot.best.mutatedRules() : Bot.initialRules();
+		this.rules = Bot.best && p(0.1) ? Bot.best.mutatedRules() : Bot.initialRules();
 		this.ruleIndex = 0;
 		this.visited = new Set();
 		this.pos.occupant(this); // Draws bot
@@ -93,11 +95,13 @@ class Bot {
 	// Recreate all Bots according to the screen size
 
 	static reset() {
-		if (Bot.best) Bot.best.show();
+		console.log('best', Bot.best);
 		Bot.initialNum = Math.floor(Grid.numCells * botsPerCell);
 		Bot.all = mapUpTo(Bot.initialNum, i => new Bot(i));
 		Bot.best = undefined;
 	}
+
+	// A rule is just a direction to move
 
 	static initialRules() { return mapUpTo(rand(1, 5), () => Direction.random()).join('') }
 
@@ -106,15 +110,19 @@ class Bot {
 	static step() {
 		Bot.all = Bot.all.filter(b => b.move());
 		// Kill bots with relatively few visits
-		let targetVisits = -9e9;
+		let maxVisits = 0;
 		Bot.all.forEach(b => {
-			b.visitCount = b.visited.size;
-			if (b.visitCount > targetVisits) targetVisits = b.visitCount;
+			if (b.visited.size <= maxVisits) return;
+			maxVisits = b.visited.size;
+			if (!Bot.best || maxVisits > Bot.best.visited.size) Bot.best = b;
 		});
-		if (targetVisits > 1) {
-			targetVisits *= 0.5;
-			console.log('target visits', targetVisits);
-			Bot.all = Bot.all.filter(b => b.visitCount > targetVisits);
+		if (maxVisits > 1) {
+			const targetVisits = maxVisits * 0.5;
+			Bot.all.forEach(b => {
+				b.live = b.visited.size > targetVisits;
+				if (!b.live) b.vacatePos();
+			});
+			Bot.all = Bot.all.filter(b => b.live);
 		}
 		return Bot.all.length;
 	}
@@ -122,22 +130,24 @@ class Bot {
 	// Move bot to next position if empty.  Die if off grid.  Return true if still alive.
 
 	move() {
-		this.visited.add(this.pos.toString);
+		this.visited.add(this.pos.toString());
 		let n = this.getNextPos();
 		const dead = !n;	// Fell off grid and died
 		const targetBot = n && !n.equal(this.pos) && n.occupant();
-		if (dead || ! targetBot) this.pos.occupant(undefined);	// Vacate old pos
-		if (dead || targetBot) return ! dead;
+		if (dead || ! targetBot) this.vacatePos();
+		if (dead || targetBot) return ! dead; // No move
 		this.pos = n;
 		n.occupant(this);
 		return true;
 	}
 
+	vacatePos() { this.pos.occupant(undefined) }
+
 	getNextPos() { return this.pos.cellInDirection(this.getNextRule()) }
 
 	getNextRule() {
 		const { rules, ruleIndex } = this;
-		this.ruleIndex = (ruleIndex + 1) % rules.length; // Point Bot to next rule
+		this.ruleIndex = (ruleIndex + 1) % rules.length; // Next rule
 		return rules[ruleIndex];
 	}
 
@@ -159,8 +169,8 @@ class Bot {
 			{ ok: true,		f: () => s },								// New set
 			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
 			{ ok: n >  1,	f: () => rules.dropAny() },	// Remove a rule
-			{ ok: n < 10,	f: () => rules + s },				// Append some rules
-			{ ok: n <  5,	f: () => rules + rules },		// Duplicate set
+			{ ok: true, 	f: () => rules + s },				// Append some rules
+			{ ok: true, 	f: () => rules + rules },		// Duplicate set
 		].filter(change => change.ok).any().f();
 	}
 
@@ -330,7 +340,7 @@ class Colour {
 
 /// Extend built-in classes /////////////////////////////////////////////////
 
-// Instance methods of MyClass are copied to Class below
+// Properties of MyClass are copied to Class below
 
 class MyArray {
 	// Return a random element of the array
@@ -340,7 +350,20 @@ class MyArray {
 	// Return a random index of the array or zero if it's empty
 
 	anyIndex() { return Math.floor(this.length * Math.random()) }
+
+	// Return the element x with the max f(x)
+
+	withMax(f) {
+		let best;
+		let maxFx;
+		this.forEach(x => {
+			const fx = f(x);
+			if (!best || fx > maxFx) { best = x; maxFx = fx }
+		});
+		return best;
+	}
 }
+
 Object.getOwnPropertyNames(MyArray.prototype)
 	.forEach(method => Array.prototype[method] = MyArray.prototype[method]);
 
