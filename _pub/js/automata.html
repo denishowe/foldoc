@@ -20,8 +20,7 @@ body {
 <script>
 
 const cellSize = 20;
-const botsPerCell = 0.5;
-const maxCycles = 100;
+const botsPerCell = 0.4;
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
@@ -48,7 +47,6 @@ class Run {
 		Cell.reset();
 	  Bot.reset();
   	this.periods = [0, 100, 500];
-  	this.botOldCount = -1;
 	  this.start();
 	}
 
@@ -62,14 +60,8 @@ class Run {
 	static stop() { this.running = false }
 
 	static step() {
-		if (! this.running) return;
-		const botCount = Bot.step();
-		if (botCount !== this.botOldCount) this.t = 0; // Population changed
-		this.botOldCount = botCount;
-		if (!botCount || this.t++ > maxCycles)	{ // Population zero or unchanged for too long
-			// console.log('Population zero or static');
-			return this.reset();
-		}
+		if (!this.running) return;
+		if (!Bot.step()) return this.reset();
 		setTimeout(() => requestAnimationFrame(() => this.step()), this.periods[0]);
 	}
 
@@ -103,22 +95,25 @@ class Bot {
 
 	// A rule is just a direction to move
 
-	static initialRules() { return mapUpTo(rand(1, 5), () => Direction.random()).join('') }
+	static initialRules() { return Direction.random() }
 
 	// Run one step of bot activity and return number left alive
 
 	static step() {
 		Bot.all.forEach(b => b.move());
-		// Kill bot with fewest visits
-		let worstBot;
+		// Find fewest and most visits
+		let minVisits = 9E9;
 		Bot.all.forEach(b => {
 			const visitCount = b.visited.size;
 			if (!Bot.best || visitCount > Bot.best.visited.size) Bot.best = b;
-			if (!worstBot || visitCount < worstBot.visited.size) worstBot = b;
+			if (visitCount < minVisits) minVisits = visitCount;
 		});
-		worstBot.vacatePos();
-		Bot.all = Bot.all.filter(b => b !== worstBot);
-
+		// Kill some bots with fewest visits
+		Bot.all = Bot.all.filter(b => {
+			const dead = b.visited.size === minVisits && p(0.2);
+			if (dead) b.vacatePos();
+			return !dead;
+		});
 		return Bot.all.length;
 	}
 
