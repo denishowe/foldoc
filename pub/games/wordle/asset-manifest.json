@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/pub/games/wordle/static/css/main.dfa94338.css",
+    "main.js": "/pub/games/wordle/static/js/main.cbe0c09b.js",
+    "static/media/Cross.png": "/pub/games/wordle/static/media/Cross.cbf77228e847522eff11.png",
+    "static/media/Success.png": "/pub/games/wordle/static/media/Success.df533be8f86a57bc5946.png",
+    "static/media/Ranade-Variable.ttf": "/pub/games/wordle/static/media/Ranade-Variable.bb177f94a709e8e8f396.ttf",
+    "static/media/WIP3.png": "/pub/games/wordle/static/media/WIP3.184cd6c93fd4f1cddc30.png",
+    "index.html": "/pub/games/wordle/index.html",
+    "static/media/Github.svg": "/pub/games/wordle/static/media/Github.6a9e1709e73c56888979048bb60e60a5.svg",
+    "static/media/Settings.svg": "/pub/games/wordle/static/media/Settings.0808c435ed629b919ffa742a20d897f6.svg",
+    "static/media/Share.svg": "/pub/games/wordle/static/media/Share.5c85cd2f0a64d335b1ca8d94141183af.svg",
+    "static/media/Info.svg": "/pub/games/wordle/static/media/Info.ee717ac430bb01bfbbd42aa3dbffe913.svg",
+    "static/media/Close.svg": "/pub/games/wordle/static/media/Close.f34771d5d250820d8c5ec83c816bf8f5.svg",
+    "main.dfa94338.css.map": "/pub/games/wordle/static/css/main.dfa94338.css.map",
+    "main.cbe0c09b.js.map": "/pub/games/wordle/static/js/main.cbe0c09b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dfa94338.css",
+    "static/js/main.cbe0c09b.js"
+  ]
+}

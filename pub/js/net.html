@@ -24,8 +24,10 @@ const config = {
 	nodesPerRow: rand(20, 100),
 	numColours: rand(1, 20),
 	nodeRadius: 0.1 * rand(3, 5),					// In colWidths
-	pulseRadiusFrac: 0.1 * rand(4, 7),
-	minLoopDelay: 7,
+	pulseRadiusFrac: 0.6,
+	minLoopDelay: 1,
+	slowLoopDelay: 100,
+	goSlow: false,
 	pulseStep: 0.5,												// Pixels
 	probNodeOccupied: 0.333 * rand(0, 3),
 	probAddNode: 0.05,
@@ -119,9 +121,11 @@ class Grid extends Clearable {
 
 	static handle_click(x, y) { this.clicked = {x, y} }
 
-	static handle_key(k) { console.log("Key event", k) }
+	static handle_key(k) {
+		console.log("Key event", k);
+		Node.toggleSpeed();
+	}
 }
-
 
 // Disc ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -136,7 +140,6 @@ class Disc extends Clearable {
 		ctx.closePath();
 	}
 }
-
 
 // Node  /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -189,6 +192,7 @@ class Node extends Disc {
 	}
 
 	static delay() {
+		if (config.goSlow) return config.slowLoopDelay;
 		this.nextRun += this.loopDelay;
 		const t = now();
 		if (this.nextRun < t) {
@@ -201,6 +205,11 @@ class Node extends Disc {
 		const delay = Math.floor(this.nextRun - t);
 		// console.log('delay', delay, '/', Math.floor(this.loopDelay + 0.5));
 		return delay;
+	}
+
+	static toggleSpeed() {
+		config.goSlow = !config.goSlow;
+		console.log('Slow', config.goSlow);
 	}
 
 	static step() {
@@ -482,7 +491,7 @@ class Pulse extends Disc {
 
 	draw() {
 		this.setStyles();
-		const k = 0.07;
+		const k = 0.1;
 		this.circle(1 - k + k * Math.sin(20 * this.frac));
 	}
 }
