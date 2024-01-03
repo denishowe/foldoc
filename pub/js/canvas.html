@@ -4,14 +4,10 @@
 	<meta charset="utf-8">
 	<title>Canvas Demo</title>
 </head>
-	<body>
-<!--
-   start "" "%USERPROFILE%/Projects/FOLDOC/foldoc/pub/js/canvas.html"
-   open ~/Projects/FOLDOC/foldoc/pub/js/canvas.html
-   http://foldoc.org/pub/js/canvas.html
-  -->
-<canvas id="canvas" style="border: solid">No canvas :-(</canvas>
-<script>
+	<body style="overflow: hidden">
+		<canvas id="canvas" style="border: solid">No canvas :-(</canvas>
+		<script>
+
 const d = 1;
 const dc = 0.1;
 let ctx, p;
@@ -21,18 +17,16 @@ function clear()
 {
 	const m = 22; // Min margin with no scroll bars
 	can = document.getElementById("canvas");
-	can.onclick = go_full_screen;
-	window.onresize = go_full_screen;
+	can.onclick = fullScreen;
+	window.onresize = clear;
 	can.width = window.innerWidth - m;
 	can.height = window.innerHeight - m;
 	ctx = can.getContext('2d');
 	reset();
 }
 
-function go_full_screen()
-{
-	// Must be initiated by user action
-	document.documentElement.requestFullScreen();
+function fullScreen() {
+	document.documentElement.requestFullscreen();	// Must be initiated by user action
 	setTimeout(clear, 50);
 };
 
@@ -44,8 +38,7 @@ function rgb(f) { return ['r', 'g', 'b'].map(f) }
 
 function rgbString(p) { return "rgb(" + rgb( c => Math.floor(p[c]) ).join(",") + ")" }
 
-function draw()
-{
+function draw() {
 	for (let i = 0; i < 2000; i++) {
 		ctx.beginPath();
 		ctx.moveTo(p.x, p.y);
@@ -61,6 +54,6 @@ function draw()
 
 draw();
 
-</script>
-</body>
+		</script>
+	</body>
 </html>
