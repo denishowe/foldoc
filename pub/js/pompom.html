@@ -1,18 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
-<!--
-	Bots want to be a certain distance from each other
-
-	Stupid IE needs the above "Mark of the Web" comment - with a fucking
-	trailing \r - to allow JavaScript from a local file.  To protect the \r
-	from delete-trailing-whitespace we have to kill write-contents-functions.
-
-	Local variables:
-	write-contents-functions: nil
-	End:
-
-	start firefox -new-window file:%USERPROFILE%/Projects/FOLDOC/foldoc/pub/js/pompom.html
--->
+<!-- Bots want to be a certain distance from each other -->
 
 <html>
 <head>
@@ -35,7 +22,6 @@
 const TWO_PI = 2*Math.PI;
 const RGB = [0, 1, 2];
 
-
 // Bot  ///////////////////////////////////////////////////////////////////////////////////////////
 
 class Bot extends Object
@@ -52,30 +38,30 @@ class Bot extends Object
 
 	run_bot()
 	{
-		var g = this.group,
-			to_target = p(g.target.p),
-			t = to_target ? g.target : g.bots.any(),
-			x1 = this.x, y1 = this.y,
-			dx = t.x - x1, dy = t.y - y1,					// Vector towards target
-			a = ((dx || dy) ? Math.atan2(dx, dy) : 0) + g.turn,
-			v = g.velocity;
-		if (! to_target && dx*dx + dy*dy < g.d2) v = -v;	// Too close?  Move away.
-		if (g.theta) a = quant(a, g.theta);					// Quantise movement angle
-		var x2 = x1 + v * Math.sin(a) + (Math.random()-0.5), y2 = y1 + v * Math.cos(a);
+		const g = this.group;
+		const to_target = p(g.target.p);
+		const	t = to_target ? g.target : g.bots.any();
+		let	x1 = this.x, y1 = this.y;
+		const	dx = t.x - x1, dy = t.y - y1;								// Vector towards target
+		let a = ((dx || dy) ? Math.atan2(dx, dy) : 0) + g.turn;
+		let v = g.velocity;
+		if (!to_target && dx*dx + dy*dy < g.d2) v = -v;	// Too close?  Move away.
+		if (g.theta) a = quant(a, g.theta);								// Quantise movement angle
+		const x2 = x1 + v * Math.sin(a) + (Math.random()-0.5), y2 = y1 + v * Math.cos(a);
 		this.x = x2; this.y = y2;
 		if (g.delta1) { x1 = quant(x1, g.delta1); y1 = quant(y1, g.delta1) } // Quantise pos
 		if (g.delta2) { x2 = quant(x2, g.delta2); y2 = quant(y2, g.delta2) } // Quantise dest
 
-		var ctx = this.group.field.ctx;
+		const ctx = this.group.field.ctx;
 		ctx.beginPath();
 		ctx.strokeStyle = g.stroke.rgb();
 		if (g.line) { ctx.moveTo(x1, y1); ctx.lineTo(x2, y2) }
 		if (g.fill) ctx.fillStyle = g.fill.rgb()
 		if (g.radius)
 		{
-			var sx = g.start.x, sy = g.start.y,
+			const sx = g.start.x, sy = g.start.y,
 				ox = x1 - sx, oy = y1 - sy;
-			var transforms =
+			const transforms =
 			[
 			  [ 1, 0, 0, 1],
 			  [-1, 0, 0,-1],
@@ -90,7 +76,7 @@ class Bot extends Object
 			  .slice(0, g.reflect)
 			  .forEach(t =>
 			{
-				var x = sx + t[0]*ox + t[1]*oy, y = sy + t[2]*ox + t[3]*oy;
+				const x = sx + t[0]*ox + t[1]*oy, y = sy + t[2]*ox + t[3]*oy;
 				ctx.beginPath();
 				ctx.arc(x, y, g.radius, a, a+TWO_PI);
 				if (g.fill) ctx.fill();
@@ -102,7 +88,6 @@ class Bot extends Object
 		ctx.stroke();
 	}
 }
-
 
 // Group  /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -147,23 +132,23 @@ class Group extends Object
 
 	run_group()
 	{
-		if (this.aged(   37)) this.step_colour();
-		if (this.aged( 6231)) this.set_dt();
-		if (this.aged( 7180)) this.set_velocity();
-		if (this.aged( 9949)) this.set_target();
-		if (this.aged(10234)) this.set_theta();
-		if (this.aged(15337)) this.set_bots();
-		if (this.aged(19423)) this.set_delta();
-		if (this.aged(29700)) this.set_shape();
+		if (this.aged(    67)) this.step_colour();
+		if (this.aged( 62312)) this.set_dt();
+		if (this.aged( 71480)) this.set_velocity();
+		if (this.aged( 99649)) this.set_target();
+		if (this.aged(102434)) this.set_theta();
+		if (this.aged(153437)) this.set_bots();
+		if (this.aged(194423)) this.set_delta();
+		if (this.aged(297701)) this.set_shape();
 		this.age++;
-		this.bots.mapm("run_bot");
+		this.bots.map(b => b.run_bot());
 	}
 
 	aged(n) { return this.age % n == 0 }
 
 	set_shape()
 	{
-		var s = Math.random();
+		const s = Math.random();
 		this.line = s < 0.7;
 		this.radius = ! this.line && s < 0.9 && 0.5 * (1 << rand(0, 5, 4));
 		this.reflect = 1 << rand(0, 3);
@@ -186,16 +171,14 @@ class Group extends Object
 
 	step_colour()	{ this.step("stroke"); this.step("fill") }
 
-	step(property)
-	{
+	step(property) {
 		if (this[property] && this[property].step())
 			this.set_colour(property);
 	}
 
 	// Set new birthplace
 
-	set_start()
-	{
+	set_start()	{
 		this.start = this.field.clicked || this.field.random_pos();
 		this.log("start", show_pos(this.start));
 	}
@@ -243,25 +226,23 @@ class Group extends Object
 
 	set_bots()
 	{
-		if (! this.bots) this.bots = [];
-		var n = rand(10, 500);
+		if (!this.bots) this.bots = [];
+		let n = rand(10, 500);
 		this.log("set from", this.bots.length, "to", n);
 		while (this.bots.length > n) this.kill_bot();
-		if (this.bots.length >= n)
-			return;
+		if (this.bots.length >= n) return;
 		n -= this.bots.length;
-		while (n--) this.bots.push( new Bot(this) );
+		while (n--) this.bots.push(new Bot(this));
 	}
 
 	kill_bot()
 	{
-		var v = Math.floor(this.bots.length * Math.random());
+		const v = Math.floor(this.bots.length * Math.random());
 		this.bots = this.bots.slice(0, v).concat(this.bots.slice(v+1));
 	}
 
 	log() { console.log(this.id + ":", ...arguments) }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -284,14 +265,14 @@ class Field extends Object
 	{
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight;
-		var s = 0.6 * Math.min(this.canvas.width, this.canvas.height);
+		const s = 0.6 * Math.min(this.canvas.width, this.canvas.height);
 		this.d2_max = Math.floor(s * s);
 		this.clear();
 	}
 
 	clear()
 	{
-		var p = rand(1, 10),
+		const p = rand(1, 10),
 		c = new Colour(RGB.map(() => p < 4 ? 0 : p > 7 ? 255 : rand(0, 255)));
 		this.ctx.fillStyle = c.rgb();
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -306,7 +287,7 @@ class Field extends Object
 	fullscreen()
 	{
 		if (document.mozFullScreen) return; // Only works after mouse click, not even keypress
-		var d = document.documentElement,
+		const d = document.documentElement,
 			f = d.webkitRequestFullscreen || d.requestFullscreen ||
 			d.msRequestFullscreen || d.mozRequestFullScreen;
 		if (! f) return console.log('No full screen API');
@@ -327,13 +308,12 @@ class Field extends Object
 
 	run_field()
 	{
-		if (p(0.0001)) this.clear();
+		if (p(5E-5)) this.clear();
 
-		var n = this.groups.length;
-		var g, pm;
-		if (! n || this.clicked || p(5E-5*(5-n)))
-		{
-			var template;
+		const n = this.groups.length;
+		let g, pm;
+		if (!n || this.clicked || p(5E-5*(5-n))) {
+			let template;
 			if (n && p(0.9))
 			{
 					template = this.groups.any(); pm = "cloned";
@@ -344,16 +324,14 @@ class Field extends Object
 			}
 			g = new Group(this, template);
 			this.groups.push(g);
-		}
-		else if (p(0.0002*(n-1)))
-		{
+		} else if (p(0.0002*(n-1)))	{
 			g = (this.groups.splice(Math.floor(n * Math.random()), 1))[0];
 			pm = "removed";
 		}
 		this.clicked = undefined;
 		if (g) console.log(g.id + ": " + pm + " -> " + this.groups.length);
-		this.groups.mapm("run_group");
-		var _this = this;
+		this.groups.map(g => g.run_group());
+		const _this = this;
 		setTimeout(function () {_this.run_field()}, _this.loop_ms[0]);
 	}
 
@@ -368,11 +346,11 @@ class Field extends Object
 
 	handle_click(x, y) { this.clicked = {x, y} }
 
-	// Handle various key presses
+	// Handle constious key presses
 
 	handle_key(k)
 	{
-		var f =
+		const f =
 		{
 			C: () => this.clear(),
 			F: this.fullscreen,
@@ -385,7 +363,6 @@ class Field extends Object
 			"Q: close\nC: clear\nF: fullscreen\nR: reload\nS: change speed");
 	}
 }
-
 
 // Fade  ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -409,7 +386,6 @@ class Fade
 
 	toString() { return this.c.toString() + " -> " + this.next.toString() }
 }
-
 
 // Colour //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -442,20 +418,18 @@ class Colour extends Array
 
 function hex(x) { return ("0" + x.toString(16)).substr(-2).toUpperCase() }
 
-
 // Message /////////////////////////////////////////////////////////////////////////////////////////
 
 class Message
 {
 	static show()
 	{
-		var el = document.getElementById("message");
+		const el = document.getElementById("message");
 		el.innerHTML = Array.from(arguments).join(" ").replace(/\n/g, "<br>");
 		el.style.zIndex = 1;
 		setTimeout(function () { el.style.zIndex = -1 }, 2000);
 	}
 }
-
 
 // Array  //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -465,24 +439,14 @@ Array.prototype.clone = function () { return Object.assign([], this) };
 
 Array.prototype.any = function ()
 {
-	var i = Math.floor(this.length * Math.random());
+	const i = Math.floor(this.length * Math.random());
 
 	return this[i];
 }
 
-// Map a method over an array.  Method will be called like e.method(i, array).
-
-Array.prototype.mapm = function (method)
-{
-	return this.length
-		? this.map(Function.prototype.call.bind(this[0][method]))
-		: [];
-};
-
-
 // Events & Window ////////////////////////////////////////////////////////////////////////////////
 
-var field, moving = false, old_x = 0, old_y;
+let field, moving = false, old_x = 0, old_y;
 
 document.onclick = click;
 document.onmousemove = click;
@@ -492,7 +456,7 @@ function click(e)
 	if (e.buttons == 2) return;			// Ignore right-click
 	// Stationary click -> type 'click'.  Drag -> mousemove.
 	// Ignore first "click" after movement.
-	var click = e.type == 'click' && ! moving;
+	const click = e.type == 'click' && ! moving;
 	if (click) field.fullscreen();
 	// Ignore mouse move unless button pressed and moved > 1 pixel
 	moving = e.type == 'mousemove' && e.buttons && old_x
@@ -504,7 +468,7 @@ function click(e)
 
 // Wait until done resizing
 
-var resize_timeout;
+let resize_timeout;
 window.onresize = function ()			// Not document
 {
 	if (resize_timeout) clearTimeout(resize_timeout);
@@ -515,8 +479,8 @@ window.onresize = function ()			// Not document
 
 window.onkeydown = function (e)			// onkeypress doesn't get ESC
 {
-	var k = e.keyCode;
-	var k = k == 27 ? "Esc" : String.fromCharCode(k);
+	const { keyCode } = e;
+	const k = keyCode == 27 ? "Esc" : String.fromCharCode(keyCode);
 	field.handle_key(k);
 }
 
@@ -534,8 +498,8 @@ function close_window() { window.open(location.href, '_self', '').close() }
 
 function n_results(n, f)
 {
-	var r = [];
-	for (var i = 0; i < n; i++) r.push(f(i));
+	const r = [];
+	for (const i = 0; i < n; i++) r.push(f(i));
 
 	return r;
 }
@@ -548,7 +512,7 @@ function p(x) { return Math.random() < x }
 
 function rand(min, max, pow)
 {
-	var r = Math.random();
+	let r = Math.random();
 	if (pow) r = Math.pow(r, pow);
 	return Math.floor(min + (max+1 - min) * r);
 }
