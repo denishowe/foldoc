@@ -1,0 +1,68 @@
+From: ccox@acorn.co.uk (Chris Cox)
+Newsgroups: comp.sys.acorn.hardware,comp.sys.acorn
+Subject: Re: 700 Upgrade cards
+Date: 21 Apr 1995 16:04:37 +0100
+Organization: Acorn Computers Ltd, Cambridge, England
+NNTP-Posting-Host: acorn.acorn.co.uk
+
+There has been a lot of discussion about the clock speeds and performance of
+the 700 cards. I hope that the following will help clarify some of the
+issues involved.
+
+The ARM700 and ARM710 processors represent a significant improvement over
+the current ARM610 processors. They have a higher maximum clock speed and a
+number of architectural improvements such as double the size of internal
+cache, this means that more of any process can be executed internally
+without accessing the (relatively) slow external memory. Other improvements
+are an improved write buffer and an enlarged Translation Lookaside Buffer in
+the MMU. All of these improvements increase the performance of the system
+and deliver more real performance than a simple comparison of clock speeds
+would indicate. 
+
+For floating point work the FPA11 processor has a peak throughput of up to 5
+MFLOPS (Millions  of FLoating point Operations Per Second) and
+achieves an average throughput in excess of 3 MFLOPS for a range of
+calculations. Applications which make use of the RISC OS Floating Point
+Emulator will automatically use the FPA chip, increasing floating point
+performance by as much as a factor of 50. This will make a huge difference
+in the performance of floating point intensive tasks such as ray tracing. 
+
+The FPA11 is interfaced to the ARM700 over a simple, high-performance
+co-processor bus. The ARM instruction pipeline is mirrored in FPA11 so that
+floating point instructions can be executed directly with minimum
+communication overhead. Pipelining, concurrent execution units and
+speculative execution are all used to improve performance without
+significantly impacting power consumption. The ARM700 processor, which has
+the external coprocessor bus interface, is currently fabricated on a process
+that limits the maximum clock speed to 33MHz. 
+
+The ARM710 has been optimised for integer performance, and of the samples
+that we have evaluated the fastest ran at 55MHz However there is a big
+difference between a prototype based on a sample and a production board.
+When we specify the production boards we have to make sure that they will
+work under all conditions, and for all devices. This means that we have to
+derate the clock speed to allow for a number of different factors:
+
+Fastest ever ARM710 sample seen running in ideal conditions   55MHz   
+
+Allow for power drop to 4.75V eg when HDD spins up            0.97    
+
+Allow for a max chip temp of 70 deg C                         0.9   
+(30deg ambient +15deg inside case +25deg inside chip)    
+
+Process spread from the fastest part                          0.825   
+
+Multiplying these together gives the specification of         40MHz
+
+These are the figures that we use, based on our experience of a number of
+different fabricators. As you can see from the above figures it is
+perfectly possible that with the right crystal, a particular board in a
+particular system might run at 50MHz to 55MHz, but this cannot be
+guaranteed. 
+
+
+
+Chris Cox
+Enthusiasts Sales and Marketing Manager
+
+(Please send Clan related mail to clan@acorn.co.uk thanks)

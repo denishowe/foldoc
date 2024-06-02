@@ -1,0 +1,59 @@
+From janssen@parc.xerox.com Mon Jan 18 15:07:09 1993
+From: janssen@parc.xerox.com (Bill Janssen)
+Newsgroups: alt.binaries.sounds.d
+Subject: Sun & Next Audio Format
+Date: 23 Oct 91 17:43:18 GMT
+Organization: Xerox PARC, Palo Alto, CA
+
+The following is supposedly the sound format used by Sun and Next
+machines:
+
+[ From: mrose@dbc.mtview.ca.us (Marshall Rose) ]
+
+Audio data is encoded in three parts: a header, containing fields that
+describe the audio encoding format; a variable-length information field,
+in which, for instance, ASCII annotation may be stored; and, the actual
+encoded audio.  The header and data fields are written using big-endian
+ordering.
+
+The header part consists of six 32-bit quantities, in this order:
+
+longword	field		description
+--------	-----		-----------
+    0		magic number	the value 0x2e736e64 (ASCII ".snd")
+
+    1		data offset	the offset, in octets, to the data part.
+				The minimum valid number is 24 (decimal).
+
+    2		data size	the size in octets, of the data part.
+				If unknown, the value 0xffffffff should
+				be used.
+
+    3		encoding	the data encoding format:
+
+				    value	format
+				      1		8-bit ISDN u-law
+				      2		8-bit linear PCM [REF-PCM]
+				      3		16-bit linear PCM
+				      4		24-bit linear PCM
+				      5		32-bit linear PCM
+				      6		32-bit IEEE floating point
+				      7		64-bit IEEE floating point
+				     23		8-bit ISDN u-law compressed
+						using the CCITT G.721 ADPCM
+						voice data encoding scheme.
+
+    4		sample rate	the number of samples/second (e.g., 8000)
+
+    5		channels	the number of interleaved channels (e.g., 1)
+
+
+The information part, consists of 0 or more octets, and starts 24 octets
+after the beginning of the header part. The length of the information
+part is calculated by subtracting 24 (decimal) from the data offset
+field in the header part.
+--
+ Bill Janssen      janssen@parc.xerox.com      (415) 812-4763
+ Xerox Palo Alto Research Center      FAX: (415) 812-4777
+ 3333 Coyote Hill Road, Palo Alto, California   94304
+

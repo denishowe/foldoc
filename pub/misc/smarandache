@@ -1,0 +1,450 @@
+From arp@cia-g.com Sat May  9 22:08:28 1998
+Mail-from: From arp@cia-g.com Sat May  9 22:08:28 1998
+Date: Sat, 09 May 1998 15:06:48 -0700
+From: "Dr. J.Castillo" <arp@cia-g.com>
+Reply-To: arp@cia-g.com
+Organization: American Research Press
+X-Mailer: Mozilla 3.0Gold (Win95; I; 16bit)
+MIME-Version: 1.0
+To: Denis Howe <dbh@doc.ic.ac.uk>
+Subject: An original algorithm to multiply two integers
+References: <354D12CE.756E@cia-g.com> <9136.9805082220@wombat.doc.ic.ac.uk>
+Content-Type: multipart/mixed; boundary="------------573A3ECB5495"
+
+This is a multi-part message in MIME format.
+
+--------------573A3ECB5495
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+ASCHII file
+
+J.Castillo
+American Research Press
+I 40 & Window Rock Rd.
+Lupton, Box 199
+AZ 86508, USA
+E-mail: ARP@cia-g.com
+
+--------------573A3ECB5495
+Content-Type: text/plain; charset=us-ascii; name="MULTIPL.SM"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline; filename="MULTIPL.SM"
+
+
+
+                          MULTIPLICATION DUE TO SMARANDACHE
+
+
+     
+     Another algorithm to multiply two integer numbers, A and B:
+       - let k be an integer >= 2;
+       - write A and B on two different vertical columns: c(A), respectively 
+           c(B);
+       - multiply A by k, and write the product A  on the column c(A);
+                                                 1
+       - divide B by k, and write the integer part of the quotient B
+                                                                    1 
+           on the column c(B);
+       ... and so on with the new numbers A  and  B , 
+                                           1       1
+       untill we get a B  < k on the column c(B);
+                        i
+       Then:
+       - write another column c(r), on the right side of c(B), such that:
+           for each number of column c(B), which may be a multiple of k plus 
+           the rest r (where r = 0, 1, 2, ..., k-1),
+           the corresponding number on c(r) will be r;
+       - multiply each number of column A by its corresponding r of c(r),
+           and put the new products on another column c(P) on the right side 
+           of c(r);
+       - finally add all numbers of column c(P).
+       AxB = the sum of all numbers of c(P).
+
+      Remark that any multiplication of integer numbers can be done 
+        only by multiplication with 2, 3, ..., k, divisions by k, and additions.
+
+
+   This is a generalization of Russian multiplication (when k=2).
+
+   Smarandache multiplication is usefull when k is very small, the best values
+   being for k=2 (Russian multiplication -- known since Egyptian time), or k=3. 
+   If k is greater than or equal to min {10, B}, this multiplication is trivial
+   (the obvious multiplication).
+
+
+   Example 1 (if we choose k=3):
+      73x97= ? 
+
+                                     x3  |  /3  |           
+                                  -------|------|-------------
+                                    c(A) | c(B) | c(r) | c(P)
+                                  -------|------|------|------
+                                     73  |  97  |   1  |   73 
+                                    219  |  32  |   2  |  438
+                                    657  |  10  |   1  |  657
+                                   1971  |   3  |   0  |    0
+                                   5913  |   1  |   1  | 5913
+                                  ---------------------|------
+                                                       | 7081 total
+
+      therefore: 73x97=7081.
+      Remark that any multiplication of integer numbers can be done
+        only by multiplication with 2, 3, divisions by 3, and additions.
+
+
+
+   Example 2 (if we choose k=4):
+      73x97= ? 
+
+                                     x4  |  /4  |           
+                                  -------|------|-------------
+                                    c(A) | c(B) | c(r) | c(P)
+                                  -------|------|------|------
+                                     73  |  97  |   1  |   73 
+                                    292  |  24  |   0  |    0
+                                   1168  |   6  |   2  | 2336
+                                   4672  |   1  |   1  | 4672
+                                  ---------------------|------
+                                                       | 7081 total
+
+      therefore: 73x97=7081.
+      Remark that any multiplication of integer numbers can be done
+        only by multiplication with 2, 3, 4, divisions by 4, and additions.
+
+
+
+   Example 3 (if we choose k=5):
+      73x97= ? 
+
+                                     x5  |  /5  |           
+                                  -------|------|-------------
+                                    c(A) | c(B) | c(r) | c(P)
+                                  -------|------|------|------
+                                     73  |  97  |   2  |  146 
+                                    365  |  19  |   4  | 1460
+                                   1825  |   3  |   3  | 5475
+                                  ---------------------|------
+                                                       | 7081 total
+
+      therefore: 73x97=7081.
+      Remark that any multiplication of integer numbers can be done
+        only by multiplication with 2, 3, 4, 5, divisions by 5, and additions.
+ 
+    The Smarandache multiplication becomes less usefull when k increases.
+    Look at another example (4), what happens when k=10:
+      73x97= ? 
+
+                                    x10  | /10  |           
+                                  -------|------|-------------
+                                    c(A) | c(B) | c(r) | c(P)
+                                  -------|------|------|------
+                                     73  |  97  |   7  |  511 (=73x7)   
+                                    730  |   9  |   9  | 6570 (=730x9)
+                                  ---------------------|------
+                                                       | 7081 total
+
+      therefore: 73x97=7081.
+      Remark that any multiplication of integer numbers can be done
+        only by multiplication with 2, 3, ..., 9, 10, divisions by 10, and 
+        additions --
+        hence we obtain just the obvious multiplication!
+ 
+
+
+
+
+[From the book: "Some Notions and Questions in Number Theory", by
+ C.Dumitrescu & V.Seleacu, Erhus Univ. Press, Glendale, 1994,
+ Section #110 ("Smarandache Multiplication").]
+
+--------------573A3ECB5495--
+
+
+
+
+From arp@cia-g.com Sat May  9 22:09:24 1998
+Mail-from: From arp@cia-g.com Sat May  9 22:09:24 1998
+Date: Sat, 09 May 1998 15:07:57 -0700
+From: "Dr. J.Castillo" <arp@cia-g.com>
+Reply-To: arp@cia-g.com
+Organization: American Research Press
+X-Mailer: Mozilla 3.0Gold (Win95; I; 16bit)
+MIME-Version: 1.0
+To: Denis Howe <dbh@doc.ic.ac.uk>
+Subject: An original algorithm to divide an integer to k^n
+References: <354D12CE.756E@cia-g.com> <9136.9805082220@wombat.doc.ic.ac.uk>
+Content-Type: multipart/mixed; boundary="------------4F2265A83860"
+
+This is a multi-part message in MIME format.
+
+--------------4F2265A83860
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+ASCHII file.
+
+J.Castillo
+American Research Press
+I 40 & Window Rock Rd.
+Lupton, Box 199
+AZ 86508, USA
+E-mail: ARP@cia-g.com
+
+--------------4F2265A83860
+Content-Type: text/plain; charset=iso-8859-1; name="DIVISION.SM"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline; filename="DIVISION.SM"
+
+
+                       DIVISION BY k^n DUE TO SMARANDACHE
+
+
+
+
+     Another algorithm to divide an integer numbers A by k^n, where k, n are 
+     integers >= 2:
+       - write A and k^n on two different vertical columns: c(A), respectively 
+           c(k^n);
+       - divide A by k, and write the integer quotient A  on the column c(A);
+                                                        1
+       - divide k^n by k, and write the quotient q  = k^(n-1)
+                                                  1
+           on the column c(k^n);
+
+       ... and so on with the new numbers A  and  q , 
+                                           1       1
+       untill we get q  = 1 (= k^0) on the column c(k^n);
+                      n
+       Then:
+       - write another column c(r), on the left side of c(A), such that:
+           for each number of column c(A), which may be a multiple of k plus 
+           the remainder r (where r = 0, 1, 2, ..., k-1),
+           the corresponding number on c(r) will be r;
+       - write another column c(P), on the left side of c(r), in the following
+           way: the element on line i (except the last line which is 0) will 
+           be k^(i-1);
+       - multiply each number of column c(P) by its corresponding r of c(r),
+           and put the new products on another column c(R) on the left side 
+           of c(P);
+       - finally add all numbers of column c(R) to get the final remainder R ,
+                                                                            n
+         while the final quotient will be stated in front of c(k^n)'s 1.
+       Therefore:
+          A/(k^n) = A  and remainder R .
+                     n                n
+
+      Remark that any division of an integer number by k^n can be done 
+        only by divisions to k, calculations of powers of k, 
+        multiplications with 1, 2, ..., k-1, additions.
+
+
+   Smarandache division is usefull when k is small, the best values being when
+   k is an one-digit number, and n large. 
+   If k is very big and n verry small, this division becomes useless.
+
+
+   Example 1 :
+     1357/(2^7) = ?
+
+
+                                         |  /2  |   /2   |
+                    ---------------------|------|--------|
+                    | c(R) | c(P) | c(r) | c(A) | c(2^7) |
+                    |------|------|------|------|--------|
+                    |   1  | 2^0  |   1  | 1357 |   2^7  |   line_1
+                    |   0  | 2^1  |   0  |  678 |   2^6  |   line_2
+                    |   4  | 2^2  |   1  |  339 |   2^5  |   line_3
+                    |   8  | 2^3  |   1  |  169 |   2^4  |   line_4
+                    |   0  | 2^4  |   0  |   84 |   2^3  |   line_5
+                    |   0  | 2^5  |   0  |   42 |   2^2  |   line_6
+                    |  64  | 2^6  |   1  |   21 |   2^1  |   line_7
+                    |      |      |      --------        |
+                    |      |      |      |   10 |   2^0  |   last_line
+                    |------|-------------|------|---------
+                    |  77  |             
+
+
+       Therefore:  1357/(2^7) = 10 and remainder 77. 
+           
+
+
+      Remark that the division of an integer number by any power of 2 can be 
+        done only by divisions to 2, calculations of powers of 2, 
+        multiplications and additions.
+
+
+
+   Example 2 :
+     19495/(3^8) = ?
+
+
+                                         |  /3   |   /3   |
+                    ---------------------|-------|--------|
+                    | c(R) | c(P) | c(r) |  c(A) | c(3^8) |
+                    |------|------|------|-------|--------|
+                    |    1 | 3^0  |   1  | 19495 |   3^8  |   line_1
+                    |    0 | 3^1  |   0  |  6498 |   3^7  |   line_2
+                    |    0 | 3^2  |   0  |  2166 |   3^6  |   line_3
+                    |   54 | 3^3  |   2  |   722 |   3^5  |   line_4
+                    |    0 | 3^4  |   0  |   240 |   3^4  |   line_5
+                    |  486 | 3^5  |   2  |    80 |   3^3  |   line_6
+                    | 1458 | 3^6  |   2  |    26 |   3^2  |   line_7
+                    | 4374 | 3^7  |   2  |     8 |   3^1  |   line_8
+                    |      |      |      ---------        |
+                    |      |      |      |     2 |   3^0  |   last_line
+                    |------|-------------|-------|---------
+                    | 6373 |             
+
+
+       Therefore:  19495/(3^8) = 2 and remainder 6373. 
+           
+
+      Remark that the division of an integer number by any power of 3 can be 
+        done only by divisions to 3, calculations of powers of 3, 
+        multiplications and additions.
+
+
+
+
+
+>From the book:
+   [1] Dumitrescu, C., Seleacu, V., "Some Notions and Questions in Number
+       Theory", Erhus Univ. Press, Glendale, 1994,
+       Section #111 {"Smarandache Division by k^n, (k, n >= 2)"}.
+
+--------------4F2265A83860--
+
+
+
+
+From arp@cia-g.com Sat May  9 22:10:49 1998
+Mail-from: From arp@cia-g.com Sat May  9 22:10:49 1998
+Date: Sat, 09 May 1998 15:09:23 -0700
+From: "Dr. J.Castillo" <arp@cia-g.com>
+Reply-To: arp@cia-g.com
+Organization: American Research Press
+X-Mailer: Mozilla 3.0Gold (Win95; I; 16bit)
+MIME-Version: 1.0
+To: Denis Howe <dbh@doc.ic.ac.uk>
+Subject: An algorithm for congruences
+References: <354D12CE.756E@cia-g.com> <9136.9805082220@wombat.doc.ic.ac.uk>
+Content-Type: multipart/mixed; boundary="------------1ABF1D03852"
+
+This is a multi-part message in MIME format.
+
+--------------1ABF1D03852
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+ASCHII file.
+
+J.Castillo
+American Research Press
+I 40 & Window Rock Rd.
+Lupton, Box 199
+AZ 86508, USA
+E-mail: ARP@cia-g.com
+
+--------------1ABF1D03852
+Content-Type: text/plain; charset=us-ascii; name="EULER-GN.SM"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline; filename="EULER-GN.SM"
+
+
+
+                A SMARANDACHE GENERALIZATION OF EULER'S THEOREM
+
+
+          Let a, m be integers, m different from 0.  Then:
+
+     phi(m ) + s
+          s                        s
+    a             is congruent to a   (mod m),
+
+    where phi(x) is Euler's Totient Function,
+
+    and s and m  are obtained through the algorithm:
+               s
+
+       ___
+      |    a = a d      ;  (a , m ) = 1;
+      |         0 0          0   0
+  (0) |
+      |    m = m d      ;   d  different from 1;
+      |         0 0          0
+       ---
+
+       ___       1            1
+      |    d  = d d      ;  (d , m ) = 1;
+      |     0    0 1          0   1
+  (1) |
+      |    m  = m d      ;   d  different from 1;
+      |     0    1 1          1
+       ---
+
+  ....................................................
+
+       ___         1              1
+      |    d    = d   d      ;  (d   , m   ) = 1;
+      |     s-2    s-2 s-1        s-2   s-1
+ (s-1)|
+      |    m    = m   d       ;   d    different from 1;
+      |     s-1    s-1 s-1         s-1
+       ---
+
+       ___         1              1
+      |    d    = d   d      ;  (d   , m ) = 1;
+      |     s-1    s-1 s          s-1   s
+ (s)  |
+      |    m    = m d       ;   d  = 1.
+      |     s-1    s s           s
+       ---
+
+Therefore it is not necessary for a and m to be coprime.
+
+            25604
+Example:   6      is congruent to ? (mod 105765).
+           It is not possible to use Fermat's or Euler's theorems,
+           but the Smarandache Congruence Theorem works:
+
+           d  = (6, 105765) = 3   
+            0
+           m  = 105765/3 = 35255
+            0
+           i = 0
+           3 is different from 1
+
+
+           thus i = 0+1 = 1
+           d  = (3, 35255) = 1
+            1
+           m  = 35255/1 = 35255.
+            1
+                      phi(35255)+1                  1
+           therefore 6             is congruent to 6  (mod 105765)
+
+                   25604               4
+           whence 6      is congruent 6  (mod 105765).
+
+
+References:
+
+ [1] Porubsky, Stefan, "On Smarandache's Form of the Individual Fermat-
+      Euler Theorem", <Smarandache Notions Journal>, Vol. 8, No. 1-2-3,
+      Fall 1997, pp. 5-20, ISSN 1084-2810.
+ [2] Porubsky, Stefan, "On Smarandache's Form of the Individual Fermat-
+      Euler Theorem", <Proceedings of the First International Conference
+      on Smarandache type Notions in Number Theory>, University of Craiova,
+      August 21-24, 1997, pp. 163-178, ISBN 1-879585-58-8.
+ [3] Smarandache, Florentin, "Une generalization de theoreme d'Euler"
+      (French), <Buletinul Universitatii Brasov>, Seria C, Vol. XXIII,
+      1981, pp. 7-12, reviewed in Mathematical Reviews: 84j:10006.
+ [4] Smarandache, Florentin, "Collected Papers", Vol. I, Ed. Tempus,
+      Bucharest, 1996, pp. 182-191.
+
+--------------1ABF1D03852--
+
+
+
+

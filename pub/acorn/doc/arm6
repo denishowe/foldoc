@@ -1,0 +1,55 @@
+From bernhard@flipper.pvv.unit.no Mon Jan 18 12:44:10 1993
+From: bernhard@flipper.pvv.unit.no (Kjetil Bernhard Thomassen)
+Newsgroups: comp.sys.acorn
+Subject: GEC-Plessey ARM chips incl. FPA.
+Date: 15 Jan 93 05:47:44 GMT
+Distribution: comp
+Organization: The Norwegian Institute of Technology
+
+I recently received the 1992/93 shortform catalog from GEC-Plessey
+Semiconductors. This has the following ARM chips:
+
+Type                  Max clock freq.       MIPS      Package
+P60ARM(4)                  20 MHz             6         GP100
+P600ARM(4)                 20 MHz            14         GP160
+P610ARM(4)                 20 MHz            14(2)     TQFP144
+PFPA10ARM(3)               20 MHz            N/A        HP64
+
+(1) Manufactured under Licence from Advanced RISC Machines Ltd.
+(2) Approximate speed, assuming use of DRAM for external memory.
+(3) Also requires FPA support code, as some instructions are
+    implemented in software.
+(4) Software Development Toolkit available.
+
+The ARM60 is just an ARM6 macrocell + whatever is needed to get it going.
+The ARM600 is an ARM6 with 4 KB 64-way set-associativ cache, MMU based
+on MEMC2, write buffer (8 words, I think) and coprosessor interface.
+The ARM610 is essantially an ARM600 without coprosessor interface.
+There are a few more differences, and if anyone is interested, I could
+post that too.
+
+VLSI Technology manufactures the ARM61 in addition. This is just an
+ARM2 built around the ARM6 macrocell. 
+
+More information can be obtained from the Local Customer Service
+Centre:
+UK and Scandinavia: Tel: (0793) 518510
+France & BENELUX: Tel: France (1) 64 46 23 45 
+Germany, Austria & Switzerland: Tel: Germany 089/36 0906-0
+Italy: Tel: (02) 33 00 10 44/45
+Japan: Tel: (03) 3296-0281
+North Amerika: Integrated Circuits and Microwave Products, CA, USA,
+                  Tel: (408) 438 2900 ITT
+               Hybrid Products, NY, USA, Tel: (516) 293 8686
+South East Asia: Tel: Singapore (65) 3827708
+Sweden: Tel: 46 8 7228690
+
+I have the data books for the ARM6, ARM60 and ARM610 from GEC-Plessey,
+and the full addresses for the Consumer Service Centres.
+
+Please email me if you want the full adresses for the above. I also
+have adresses to the world wide distributors. 
+
+Kjetil Bernhard Thomassen
+bernhard@pvv.unit.no
+

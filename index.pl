@@ -3,11 +3,11 @@
 # CGI program to search the Free On-line Dictionary of Computing.
 # Invoked as 404 handler via symlink not-found.cgi.
 
-# Denis Howe <dbh@doc.ic.ac.uk>
-# 1999-11-10 - 2018-04-08
+# Denis Howe <denis.howe@gmail.com>
+# 1999-11-10 - 2023-10-16
 
-# SET REQUEST_URI=Charles+W.+Bachman& SET QUERY_STRING=debug& perl index.cgi
-# REQUEST_URI=//cpus QUERY_STRING=debug perl foldoc/index.pl
+# SET REQUEST_URI=Charles+W.+Bachman?debug=& perl index.cgi
+# REQUEST_URI=x%3fx%0Ax?debug= perl foldoc/index.pl
 
 # ############################################################################################### #
 # Dictionary, keys, offsets and contents are in same
@@ -26,18 +26,14 @@ use Foldoc;
 
 $| = 1;
 
-# When handling a 404 the query string is passed
-# in the REQUEST_URI but not in the QUERY_STRING
+# REQUEST_URI includes the query string
 
 $_ = $ENV{REQUEST_URI} || "";
 debug "REQUEST_URI:", $_;
-$_ .= "?$ENV{QUERY_STRING}" if (($ENV{QUERY_STRING} || "") ne "");
 
 # Maybe redirect and exit or leave $_ as query term
-
-debug "URL:", $_;
-
 # Test: http://wombat.doc.ic.ac.uk/foo  --> foldoc.org/foo
+
 $ENV{HTTP_HOST} ||= $server_name;
 if ($ENV{HTTP_HOST} ne $server_name || check_redirect($_)) {
 	s|^/*|$root_url/|

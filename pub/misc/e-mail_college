@@ -1,0 +1,3367 @@
+From dalamb@qucis.queensu.ca Tue Mar  2 10:29:02 1993
+Newsgroups: soc.college,soc.net-people,soc.answers,news.answers
+From: dalamb@qucis.queensu.ca (David Lamb)
+Subject: FAQ: College Email Addresses 1/3 [Monthly posting]
+Followup-To: poster
+Supersedes: <faq1_727708213@qucis.QueensU.CA>
+Reply-To: dalamb@qucis.queensu.ca
+Organization: Computing & Information Science, Queen's University
+Date: Wed, 24 Feb 1993 13:10:20 GMT
+
+Archive-name: college-email/part1
+Last-Modified: Tue Feb 23 17:21:10 1993 by David Lamb
+Version: 3.26
+
+This is a summary of how to find email addresses for undergraduate and
+graduate students, faculty and staff at various colleges and universities. If
+your university is not listed, send me a detailed description of how to find
+email addresses there and I'll add it to this list. Please mail ADDITIONS,
+CORRECTIONS, SUGGESTIONS, and OTHER INFORMATION to me at
+	dalamb@qucis.queensu.ca.
+I will *not* answer requests for help finding a specific address; if the
+school is not listed in this posting, I probably do not have any information
+about the site, and certainly do not have the time to answer the mail.
+
+An updated version of this list is posted every once in a while to the
+newsgroups soc.college, soc.net-people and news.answers.  The version date for
+this list is located at the top of the file. The list is also available via
+anonymous ftp from ftp.qucis.queensu.ca (host 130.15.1.100) in the directory
+pub/dalamb/college-email as the files faq1.text, faq2.text, and faq3.text.
+You can also get the file by anonymous ftp from rtfm.mit.edu (18.172.1.27) in
+the file /pub/usenet/soc.college/Student_Email_Addresses, or by sending a mail
+message to "archive-server@qucis.queensu.ca" with the subject
+	send dalamb/college-email
+or by sending a message to "mail-server@pit-manager.mit.edu" with the subject
+	send usenet/soc.college/Student_Email_Addresses
+
+A copy of this file may be found on the WAIS server at wais.cic.net,
+thanks to Edward Vielmetti (emv@msen.com, emv@cic.net).
+
+After a discussion of general facilities for locating email addresses,
+we present detailed information on locating the email addresses of
+students, faculty and staff at various universities.  As of Feb 1993 I've
+started to tag entries with the date I last changed them, so you have some
+clue as to how stale the information might be.
+
+Disclaimer: Most universities have restrictions on the uses of
+directory information. So don't use this info for commercial purposes
+or whatnot without securing permission from the individual colleges
+and universities.
+
+;;; ********************************
+;;; General Facilities *************
+;;; ********************************
+
+There are several general facilities for locating an email address.
+We concentrate on those usable from the internet.
+
+o  finger
+
+   Finger is a user information lookup program that lists the login name,
+   full name, office location and phone number (if known), login time,
+   idle time, time mail was last read, and the contents of the .plan and
+   .project files from the home directory of current UNIX users. The 
+   information listed varies from site to site, and not all sites allow 
+   remote fingering. [Plan files are "sys$login:plan" on VMS systems.]
+
+   To use finger, simply call finger as follows
+	finger <username>@<machinename>
+   replacing <machinename> with the name of the appropriate machine, and
+   <username> with the name of the person or the person's login ID.
+   For example,
+	
+	% finger mkant@cs.cmu.edu
+	[CS.CMU.EDU]
+
+	[ Forwarding mkant as "mkant+@a.gp.cs.cmu.edu" ]
+
+	[A.GP.CS.CMU.EDU]
+	Login name: mkant                       In real life: Mark Kantrowitz
+	Directory: /usr2/mkant                  Shell: /usr/cs/bin/csh
+	Last login Tue Apr  2 15:21 on ttyQ7 from LION.OZ.CS.CMU.EDU
+	No new mail, last read on Thu Apr 11 16:27
+
+   Notice how fingering my userid at the generic address forwarded the
+   request to the correct machine. Many universities are set up to do
+   forwarding in this manner, so that mail may be sent to the generic
+   address and is automatically forwarded to the maildrop on the machine
+   where the user receives his or her mail.
+
+   Fingering using last names or full names may work, depending on the
+   site:
+	% finger Mark.Kantrowitz@cs.cmu.edu
+	[CS.CMU.EDU]
+	[ Forwarding Mark.Kantrowitz as "mkant+@a.gp.cs.cmu.edu" ]
+
+	% finger kantrowitz@cs.cmu.edu
+	[CS.CMU.EDU]
+	[ Forwarding kantrowitz as "mkant+@a.gp.cs.cmu.edu" ]
+   Some sites with use an underscore (_) instead of a period (.) in the
+   full name (e.g., Mark_Kantrowitz), or require an extra period to
+   specify middle initials (Mark.X.Kantrowitz).
+
+   If fingering using the last name doesn't work, you can try sampling
+   various possibilities for userids. The following are some
+   possibilities. After the description of each possibility, I give
+   an example in square brackets with either the previous maintainer's name
+   (Mark Kantrowitz, no middle initial - his was longer than mine!) or "John C
+   Smith", and a generic acronym for the method, with f's for characters from
+   the firstname, m for the middle initial, and l's for characters from the
+   lastname; these acronyms will be used in the detailed listings section of
+   this file.
+	-  Many UNIX sites limit userids to 8 characters, so try the
+           first 8 characters of the last name. [smith or kantrowi] llllllll
+	-  If there are two people with the same last name, the first
+           initial (and possibly the middle initial as well) are appended
+	   at the front of the name. [jsmith or jcsmith] flllllll fmllllll
+	-  Try appending the initials at the end of the name. [smithj
+ 	   or smithjc] lllllllf llllllfm
+	-  Try the initials of the users name. [jcs] fml
+
+   Unfortunately, you cannot finger to bitnet addresses.
+
+o  whois/nicname				Changed: Tue Feb 23 1993
+   
+   Whois is the internet user name directory service. Do 
+	whois help
+   or
+	nicname -h
+   to get a help message. The whois and nicname programs will check
+   the database maintained by SRI-NIC (Network Information Center
+   at SRI International) for the given names. For example,
+	nicname <name>
+   or
+	whois <name>
+   or
+	whois -h <host> <names>  (e.g., whois -h stanford.edu <names>)
+   This is only useful for people listed in the database. Many regional
+   networks and some universities maintain their own NICs.
+
+   You can also get some of this information by telneting to nic.ddn.mil
+   and running whois and host there.
+
+o  Merit Network NetMail database
+ 
+   Allows one to find the appropriate bitnet, internet or uucp address
+   for a site given part of the address.
+	telnet hermes.merit.edu
+	At the "Which Host?" prompt, type netmailsites
+	then enter any part of the address you want.
+
+o  nslook/nslookup and hostq programs
+   
+   Some sites have programs which will give you information about a host
+   given its name or IP address. Some such programs include nslook,
+   nslookup, and hostq.
+
+o  Netfind
+
+   Use a netfind client or server program to search for
+	name domain
+   where name is the last name of the individual and domain is the
+   domain name. You can use Netfind by telnet/rlogin to
+   bruno.cs.colorado.edu (use userid "netfind" with no password).
+
+o  help/gripe/olc
+
+   If your site has consultants or facilities staff responsible for helping
+   users/fixing bugs/maintaining software, try sending them mail. Often
+   they will be able to help you. If you don't know how to contact these
+   people, ask someone in your department, or try sending mail to the
+   userid 'help'.
+
+o  postmaster						Changed: Tue Feb 23 1993
+
+   Most sites have an individual responsible for network and mail operations
+   at the site, usually with the userid of 'postmaster'. So if you're having
+   trouble with mail, first send mail to postmaster at your site, and if
+   that fails, try sending it to postmaster at the destination site. 
+   Postmasters are usually very busy people, so try not to bother them much.
+   Many postmasters will refuse to answer questions about user identification,
+   for reasons of privacy.
+
+o  /etc/hosts						Changed: Mon Feb 15 1993
+
+   Mail routing on UNIX machines on the internet use to use a large file
+   called /etc/hosts to validate host names.  We used to advise you to examine
+   this file to guess host names when all else fails - but that really isn't
+   useful anymore.  Use one of the above methods instead.
+
+o  LISTSERV
+
+   If the person is subscribed to a mailing list through a LISTSERV server,
+   sending mail to the server with the line
+	WHOIS <name>
+   may catch the person. For example, listserv@buacca.bu.edu. This is an
+   unlikely option. It also does not work with all listserv implementations.
+
+o  Internet to America Online
+
+   Creating the Internet version of an America Online address requires that
+   you know the conversion rule. You ignore the case, remove the spaces, and
+   add "@aol.com" to the end of the address.  Thus, an America Online address
+   "Jane Doe" becomes "janedoe@aol.com" (without the quotes, of course).
+   Internet mail incoming to America Online is trucated at 27 kilobytes.
+
+
+;;; ********************************
+;;; Miscellaneous Notes ************
+;;; ********************************
+
+Addresses on the United Kingdon academic network (JANET) have their components
+reversed. For example, @uk.ac.dund.mcs works on JANET, but in the rest of the
+world use @mcs.dund.ac.uk instead.
+
+;;; ********************************
+;;; Email Database *****************
+;;; ********************************
+
+Amherst College:
+	Students, Faculty, Staff: userid@amherst.edu	
+	Usernames are of the form fmllllll (e.g., jqstudent), but
+	truncated to 12 letters instead of 8.
+
+	Amherst.edu has a finger daemon running, but it requires an exact
+	username match (i.e. finger lastname@amherst.edu) doesn't work, as a
+	rule.  It's also worth trying usernames like flllllll in case the
+	person in question didn't register their middle initial with the
+	College.
+
+
+Antioch College (Yellow Springs, OH):
+
+	Flastname@Antioc.Antioch.Edu
+
+	All students, faculty, administrators, staff, and alum who request
+	accounts can get them.  Almost all follow First Initial lastname
+	setup.  Offices, such as ADMISSIONS, COOP etc have alias accounts.
+	Best bet is to send mail to Postmaster or Laslow.
+
+Arizona State University:
+	Academic Machines: Grad, Undergrad
+	The phone book for ASU's Faculty/Students is available online
+	by telnetting (using the IBM's fullscreen interface using
+	tn3270) to asuvm.inre.asu.edu and logging on as HELLOASU. The
+	phone book has both email addresses for academic machines as
+	well as the phone nos. (602 is the area code for all of Arizona)
+
+	Engineering machines: Grad, Undergrad
+	enuxha.eas.asu.edu   -- Unix -- can finger first/last names or userids
+	enuxva.eas.asu.edu   -- Unix -- same as above 
+	envmsa.eas.asu.edu   -- VMS  -- Only userid fingering works. 
+
+	Usually csc and eee undergrads who use comps get accts on
+	enuxha and almost all grads have accts on enuxha which is the
+	most popular machine due to USENET. 
+
+Auburn University: (Auburn, AL)
+	Engineering: eng.auburn.edu
+	Other departments: ducvax.auburn.edu
+	Try fingering at waterman.eng.auburn.edu, lab1.eng.auburn.edu,
+	newton.eng.auburn.edu or netman.eng.auburn.edu.
+
+Ball State University:
+	University Computing Services: username@bsuvax1.bitnet
+	Some faculty and grad students have accounts on this machine.
+	CS: username@bsu-cs.bsu.edu
+
+Barnard: See Columbia.
+
+Bates College (Lewiston, Maine):
+ 	Students and Faculty: userid@abacus.bates.edu
+	Userids are of the form flllllll.  Numbers are added to the end
+	of the userid in case of name conflicts, e.g. asmith, asmith2, asmith3
+	If the name is unique you can use firstname.lastname@bates.edu
+
+Baylor College of Medicine:
+
+	The central mail server is bcm.tmc.edu and finger user@bcm.tmc.edu will
+	get you any faculty or staff user that makes use of the central mail 
+	facility. finger user@express.bcm.tmc.edu will get you any student that
+	makes use of the student email facility.
+
+	whois -h whois.bcm.tmc.edu gets you the on-line phone/address book.
+	This is directly tied to the BCM personnel database, so the information
+	is as accurate as possible.
+
+	Questions about these facilities should be directed to
+	postmaster@bcm.tmc.edu
+
+Birmingham-Southern College (Birmingham, AL):
+	bsc835!userid@uunet.uu.net where userid are of the form
+	flllllll. Postmaster is bsc835!jbaxter@uunet.uu.net.
+	
+Boston Univ.:
+	Main campus system: acs.bu.edu.  Everyone can get accounts on this
+	machine, but not everyone does. Call the person and ask (they may
+	never log on even if they have an account). Student Directory
+	617-353-3700, Faculty 617-353-2000.  Usernames are any "socially
+	acceptable" 8-character name.
+        Unix accounts: Mail or finger user@bu.edu or first.last@bu.edu.  
+        Mailing user@bu.edu is currently broken but should be fixed soon.
+
+        CS: cs.bu.edu
+	Undergrad CS: csa.bu.edu.
+	Engineering: buenga.bu.edu (faculty/admin)
+	
+	In the fall (of 1992) BU will set up a nameserver on bu.edu.
+
+Bowdoin:					Changed: Mon Feb 15 1993
+	Studnets: fl*@polar.bowdoin.edu, where f is the first initial, l* is
+	  the lastname up to 7 characters.
+	Administrative staff: @henry.bowdoin.edu.  Mailboxes are fl* as above,
+	  or last_first
+	Faculty: either of the above depending on personal preference.
+
+Bradley University:
+	Faculty: bradley.bradley.edu
+	Students: buhub.bradley.edu, camelot.bradley.edu.  Usernames are
+	  chosen by the user and may be from three to eight characters long. 
+	Heartland Freenet: heartland.bradley.edu  Free use to the public, used
+	  mostly by the Peoria public. Use login 'bbguest'. login names are
+	  usually flllllll or fmllllll.
+	Chemistry: chem1.bradley.edu
+	CS: bucs1.bradley.edu, cssun1, cssun2
+	Physics: truth.bradley.edu
+	Physics: beauty.bradley.edu
+
+Brandeis:
+	Undergraduates: pip.cc.brandeis.edu
+		Usernames on pip are of the form STXXYYYY where XX is
+		the year the student entered Brandeis and YYYY is the
+		student's campus mailbox number. Not all students use
+		their accounts, so check with the student before emailing.
+		US mail can be sent to 
+			<Student Name>
+			MB <YYYY>, Brandeis University
+			PO Box 9110
+			Waltham, MA 02254-9110
+
+	For phone information: On-campus students can be reached by dialing an
+	automated "spell-the-name" server at +1 617 736 3000 , 24 hours a day,
+	or during business hours through the Brandeis operator at +1 617 736
+	2000.  Off-campus students' numbers can be obtained through the campus
+	information booth at +1 617 736 4770 during business hours.
+
+	Some undergrads have accounts on a more advanced unix machine,
+	chaos.cs.brandeis.edu.  Userids are chosen by the student; finger
+	{lastname}@chaos.cs.brandeis.edu or mail to
+	postmaster@chaos.cs.brandeis.edu for info.
+
+	Graduate Students: binah.cc.brandeis.edu (brandeis.bitnet).
+	Not all use them; write to postmaster@binah.cc.brandeis.edu
+	for information. Userid is chosen by the student.  A few
+	undergrads have binah accounts.  
+
+	DIRECTIONS to Brandeis can be had 24 hours at +1 617 736 4660.
+
+Brown:
+        You can send mail to Firstname_Lastname@Brown.Edu if the user
+  	uses email and it will forward the mail to him or her. To find
+	out whether the user has an email address, finger their name
+	at brown.edu. This will return their preferred phone number,
+	address, and email address if they use it.
+        
+	You can also try looking for undergrads on: brownvm.brown.edu
+	(brownvm.bitnet) Username is some random alphanumerics.	
+	CS: cs.brown.edu (userids are usually initials)
+
+Bryn Mawr College:
+	F_LLLLLLLLLL@cc.brynmawr.edu (F_LLLLLLLLLL@BRYNMAWR.BITNET)
+	The former is fingerable, unlike the .bitnet address. This
+	machine is mostly used by undergrads.
+
+Bucknell University:
+	general: username@bucknell.edu
+	cs: username@pollux.bucknell.edu
+	usernames are typically last names, but if the last name is
+	4 letters or shorter, the first and middle initials are
+	tacked onto the front.
+
+	First initials are frequently used in usernames.  The
+	first user with any given last name who gets an account gets just
+	his last name as the username.  Every subsequent person with that name
+	gets a first initial and then middle initials are used.
+
+	Example:
+			username	person
+			--------	------
+			murray		Betty Murray, switchboard operator
+			dmurray		David Murray, senior
+			jmurray		Jeff Murray, senior
+			jemurray	Jonathan Murray, freshman
+
+
+California Inst. of Tech:
+	CCO MACHINES (undergrad/grad/general) CCO means campus computing org.
+	  Unix:
+	    tybalt.caltech.edu: also called tybalt.cco.caltech.edu or
+ 	    truebalt. There are about 15 machines on this cluster of
+  	    Suns/NeXTs. The mail server is actually called
+ 	    cobalt.caltech.edu or cobalt.cco.caltech.edu (either one
+	    works).  All of these are equally good. 
+	  VMS: Juliet.caltech.edu.  Also romeo,hamlet,iago,portia.
+	    These are all the same vax cluster. 
+
+	Undergrad Computer Science (also used by a lot of people who don't fit
+	  this discription. a fairly well used cluster. HP Bobcats
+	  running Unix). 
+	    through.ugcs.caltech.edu (aka through.caltech.edu) is the server.
+	    Also, with the same endings: within, above, from, toward,
+	    around, beyond, over, betwixt, inside, near, besides,
+	    beneath, opposite, behind, amongst, atop, astride,
+	    against....., vex,heckle,irk,harry,grate,bullyrag,plague,torment, 
+	    molest, and badger (the irc server).
+
+	CS department (grad/undergrad/fac...not that well used).
+	  csvax.cs.caltech.edu (runs unix).
+
+California Polytechnic State Univ./San Luis Obispo (Cal Poly, SLO):
+	polyslo.CalPoly.edu
+
+California State University/Chico: 	csuchico.edu
+California State University/Sacramento: csus.edu
+
+Calvin College: calvin.edu
+	Use 'finger name@calvin.edu' (eg firstname or lastname) to find
+	  addresses, since userids include parts of student numbers, so are
+	  hard to guess.
+	Students:  flllllnn (first intitial, first 5 of last name,
+	  last 2 digits of student number; except lastnames starting with
+	  Dutch prefixes Van Vander Vande etc., where just the v and first 4
+	  letters of second part of lastname.  Thus Henk Vander Bos, #123456,
+	  becomes hvbos56, Al Shoemaker, #987654, becomes ashoem54)
+	(formerly s0###### where ###### is the student id number)
+	Faculty/staff:	xxxx@calvin.edu where "xxxx" is the standard
+                        faculty abbrevation, often lastname
+
+Carnegie Mellon University:
+	Undergrad: andrew.cmu.edu
+	Grad CS: cs.cmu.edu
+	Grad Robotics: ri.cmu.edu
+	ECE: ece.cmu.edu
+	Mail sent to Fname.MI.Lname@andrew.cmu.edu works, even if the name
+	is slightly misspelled. Andrew usernames are two initials followed
+	by two random characters. Mail to CS/RI may be sent to
+	Fname.Lname@cs.cmu.edu.	CS/RI usernames are arbitrary names selected
+	by the user. If you wish to send to the username, add a + at
+	the end of the name: mkant+@cs.cmu.edu
+	bitnet.cc.cmu.edu (carnegie.bitnet) is the gateway to bitnet.
+	
+	The CMU.EDU domain name has now been enabled for use of the new
+	campus-wide mail/finger service.
+
+Case Western Reserve University, Cleveland:		Changed: Tue Feb 23 1993
+	Use 'whois -h whois.cwru.edu' to find usernames.  It supports
+	  substring and soundex searches.
+	po.cwru.edu is the post office. Every student, professor, and staff
+	  member has access to email through this machine, as do alumni who
+	  activated their accounts while students. (Not everybody activates
+	  their account, however.) User ids are of the form fml##, where ## is
+	  a number, probably less than 30. The number is omitted if equal to
+	  1. If there's no middle initial, m is an 'x'.
+	skybridge.scl.cwru.edu is the server for the undergraduate Unix lab.
+	  The user ids on that machine are the full last name, for the most
+	  part. (Mainly Computer Engineering and EE's on this machine.)
+
+Catholic University of America
+	username@cua.edu (Internet)
+	username@cua.bitnet (BITNet)
+	All usernames are limited to 12 characters.  For students, names are 2
+	digits followed by lastname.  For faculty and staff, usernames are the
+	last name, occasionally with the first initial tacked on at the end.
+
+City University of New York (CUNY):
+	cunyvm.bitnet
+	Userids:
+ 		Students:  A99SC
+ 		Faculty:  AAASC
+ 		Liasons: LIASC
+ 
+ 	Where A is any letter from A to Z
+ 	Where 9 is any number from 1 to 9
+ 	And SC is the initals for the college within City University.
+ 
+ 	For example:    HC - Hunter College
+ 			QC - Queens College
+		 	BC - Brooklyn College
+		 	SI - College of Staten Island
+		 	LG - Laguardia Community College
+		 	BB - Bernard Baruch College.
+		 	YC - York College
+
+
+Claremont McKenna College, Claremont, CA:
+	flast@cmcvx1.claremont.edu	(VAX-VMS)
+
+Clark College:
+ 	firstname.lastname@clark.edu, or userid@clark.edu.  Send
+	mail to postmaster@clark.edu if you have difficulty.
+	Note: this is not Clark University (clarku.edu). 
+
+Clark University:
+	vax.clarku.edu and black.clarku.edu
+
+Clarkson University:
+     craft.camp.clarkson.edu    _ALL_ students are given an account
+				on this machine.
+     sun.soe.clarkson.edu       School of Engineering Sun server. A lot
+				of students doing research have accounts
+				on this machine.
+     clvm.clarkson.edu          Administrative computer. Fairly isolated.
+				Profs. and Admin. have accounts on this
+				computer for things like class lists.
+				(I'm not sure how much use this is because
+				it seems that all you can do is find out
+				if someone is logged in or not.)
+
+     craft.camp and sun.soe are very usefull for finding students and
+     many faculty also have accounts on these machines.
+
+Clemson University:
+	clemson.clemson.edu (VMS)
+	Engineering: eng.clemson.edu
+
+Cleveland State University:			Changed: Mon Feb 15 1993
+	CIS faculty may be reached at lastname@cis.csuohio.edu.
+
+	Engineering students with an account on the vax cluster may be reached
+	at the following address: xxx9999@csvaxd.csuohio.edu, where xxx is the
+	first three letters of their last name and 9999 is the last four
+	digits of their social security number.
+
+	A possible person to ask for help might be Linda Herrington at
+	linda@csvaxd.csuohio.edu.
+
+Colby:
+	f_m_lastname@colby.edu
+	You can figure username, firstname, or lastname.
+
+College of William & Mary (Williamsburg, VA):
+	fmllll@news.cc.wm.edu 
+
+Colorado College:
+	Students: F_LLLLLLLL%CCNODE@vaxf.colorado.edu
+	Faculty: FLLLLLL%CCNODE@vaxf.colorado.edu.
+	This does not support finger since it is not a real internet node.
+
+Columbia:
+	Undergrads, Grads: cunix{a,b,f}.cc.columbia.edu
+	Columbia students [only] can get free accounts. Anybody
+	affiliated with Columbia, Barnard, and Teachers College can
+	pay for an account which has less limitations than the free
+	ones. The best way to finger them is name@cunix.cc.columbia.edu.
+
+	CS Grads and Faculty: cs.columbia.edu (also, some cs undergrads)
+
+        Astrophysics people can be found at cuphyd.phys.columbia.edu
+
+	Also try: ctr.columbia.edu. This has EE faculty and students who
+	are affiliated with the Center for Telecommunications Research.
+
+	Law School (Students): student@lawmail.law.columbia.edu
+           The students e-mail name is there lastname plus the first
+	   initial oftheir first name, so long as this is 8 characters
+	   or less. Otherwise it is their FML initials. Duplication is 
+           distinguished by appending a number, such as the graduation year.
+
+	All faculty and staff are also located on lawmail.law.columbia.edu
+
+	lawmail.law.columbia.edu currently does not respond to finger
+	inquiries.  Any questions regarding mail addressing should be
+	directed to:  postmaster@lawmail.law.columbia.edu
+	General access questions can be sent to:
+	   culaw-cc@lawmail.law.columbia.edu  
+	which will reach the law school computer center operations desk.
+
+	Mailing lists are serviced by listserv.law.columbia.edu
+	Current lists served are:
+
+	lawplacement        issues relating to career oppurtunities
+	calr                computer aided legal research
+	foreignlaw
+	clerkship           issues relating to federal clerkships oppurtunities
+	legal-history
+	death-penalty
+	crimlaw-enforcement issues to criminal cases in the news
+	conlaw              constitutional law issues
+	public-intlaw       public intrest law
+	eastern-europe      privatizations issues in Eastern europe and legal 
+			    reform
+
+	Request to subscribe should be sent to:
+		request-maillist@sparc-1.law.columbia.edu
+	Some lists are restricted.
+
+Cornell College (Mount Vernon, Iowa)
+	Most Usernames are FLLLLLL, some may be LLLLLL or FFFFFF.
+	Mail to username@cornell-iowa.edu
+	Finger: CS:	turing.csc.cornell-iowa.edu
+		Others:	hera.acn.cornell-iowa.edu
+			zeus.acn.cornell-iowa.edu
+
+Cornell University (Ithaca, New York):
+	Anyone associated with Cornell full-time can get a CIT account
+	(CIT manages the computing facilities on campus).  Not everybody 
+	does so. 
+	
+	As off fall 1992, undergrads are no longer given CornellA or
+	Vax5 accounts as they were in the past.  Instead, incoming students
+	are given "network ids", which consist of first, middle and last
+	initials, plus a number.  Mail should be sent to 
+	network_id@cornell.edu.  If the person's name is unique, mail can
+	also be sent to firstname.lastname@cornell.edu.
+	
+	Email addresses can be searched by using finger on qi.cornell.edu. 
+	Use variations such as  finger lastname@qi.cornell.edu    or
+				finger "firstname lastname"@qi.cornell.edu.
+
+	Many upperclassmen have not switched over to the new mail system.
+	These students still use mail on cornella.cit.cornell.edu or
+	vax5.cit.cornell.edu.  Usernames on these systems are randomly 
+	generated 3 or 4 character IDs, which do not resemble real names.
+	[Actually, they are an (unknown) hash function of the student's
+	social security number.]
+	
+	Some upperclass students who have network ids still only check mail
+	on cornella and vax5.  If they haven't set up autoforwarding, they 
+	will not receive mail sent to cornell.edu.  
+
+	Undergrads: crux1.cit.cornell.edu, crux2.cit.cornell.edu,
+		    crux3.cit.cornell.edu, vax5.cit.cornell.edu, 
+		    cornella.cit.cornell.edu
+	
+	Faculty and staff may ask to have a 3-character username of their
+	choice.  Faculty are typically on cornella and staff on cornellc, but
+	there are many exceptions.
+	
+	Faculty and administrators who use QuickMail can generally be found
+	as first_last@qmrelay.mail.cornell.edu.
+	
+	Postmaster won't give out addresses.  Administrators do not give 
+	out usernames over the phone.
+				       
+	Students' street addresses and phone numbers, as well as
+	voluntarily-supplied email addresses (faculty and staff only), can 
+	be looked up in CUINFO.  Telnet to cornellc.cit.cornell.edu, port 300,
+	and type DIRECT.
+
+	AIX/370 folks: eagle.tc.cornell.edu
+	CS: cs.cornell.edu, svax.cs.cornell.edu, cornellf.tc.cornell.edu, or 
+	    theory.tc.cornell.edu (supercomputing center)
+	EE: ee.cornell.edu
+	
+	Bitnet: cornella.bitnet, crnlvax5.bitnet, cornellc.bitnet (gateway).
+
+Dakota State University (Madison, SD):
+	
+	finger dsuvax.dsu.edu for electronic mail addresses for any
+	member of the faculty, staff, or student body.  Addresses
+	are typically the first seven characters of the person's last
+	name plus the first character of the person's first name.
+
+	Please address questions to postmaster@dsuvax.dsu.edu.
+
+Dartmouth:
+	Send mail to fname.lname@dartmouth.edu (or fname.mi.lname if
+	it is a very common name). If the name is ambiguous, you might 
+	want to finger fname.mi.lname@dartmouth.edu for info about
+	exact mail address. Dartmouth.Edu resolves all mail through
+	the Dartmouth Name Directory, which stores preferred email
+	addresses for all students, faculty, and staff members.
+	If the name is unique, you can even send mail to
+	name@dartmouth.edu. Most undergrads have accounts on
+	mac.dartmouth.edu. Students who don't use any email address 
+	get the automatic default, @hinman.dartmouth.edu, which
+	prints out the email and drops it into campus mail.
+
+Drake University:
+	Host acad.drake.edu.  'finger' works but unfortunately userids don't
+	closely correspond to names and you can't 'finger part-of-name' to
+	guess the userid.
+
+Drew University (Madison, NJ):
+	All students, faculty, and staff have accounts on drew.drew.edu
+	(drew.bitnet). Whether they use them is another matter. Account
+	names are usually of the form flllllll. In case of name collision,
+	try fmllllll or fllllll#
+
+Drexel University
+  	General Computing Services: userid@duvm.ocs.drexel.edu
+	  consultant's desk telephone 215.895.2698
+  	Math and Computer Science : userid@mcs.drexel.edu
+       	  where userid is of the form <prefix>fllllll; the prefix is u for
+	  undergraduate, g for graduate, or t for temporary.
+
+Duke:
+	Undergrads, Grads, and many Faculty/Staff:
+	  The mail server is bacchus.acpub.duke.edu. Mail to other machines
+	  will get forwarded to it. For usernames, people are allowed to
+	  select their own.  However, the Engineering school has taken to
+	  setting up accounts for its students, grads, and ugrads, and uses
+	  initials (fml) with possibly a number in case of name conflict.
+	  Everyone else could have anything as their userid, though people are
+	  encouraged to use their first initial and last name.
+	Bitnet gateway: dukemvs.bitnet (dukemvs.ac.duke.edu)
+	Math profs are probably {initials}@math.duke.edu
+	Physics profs are probably {initials}@physics.duke.edu
+	Other machines: cs.duke.edu, egr.duke.edu, psych.duke.edu
+	Duke Law School is under the address charon.law.duke.edu, which is
+	  fingerable, but student.law.duke.edu seems to be the better mailing
+	  address.  Usernames can be hard to discover;
+	  postmaster@faculty.law.duke.edu has volunteered to forward mail to
+	  Law School faculty and staff, and suggest
+	  postmaster@student.law.duke.edu might be willing to do the same for
+	  students.
+
+Earlham:
+	Students, faculty, staff:    FFFFFFFL@yang.earlham.edu
+	Administration:              FFFFFFFL@yin.earlham.edu
+	Advanced computing students: FFFFFFFL@math.earlham.edu
+	  in the case of an 8-character first name, the userid is FFFFFFFF
+	  in the case of conflicts, the userid is FFFFFFLL, FFFFFLLL, etc.
+	  increasingly, students are being assigned userid's in the format:
+		xxyz@yang.earlham.edu, where
+	  xx is the first two letters of the first name,
+	   y is the middle initial,
+	   z is the last name initial.
+	Information can be sought via E-Mail from opr@yang.earlham.edu
+	opr can get you directory info, or user info.
+
+Florida Atlantic University				Changed: Mon Feb 15 1993
+	The local ACM chapter runs cybernet.cse.fau.edu, on which everyone can
+	  get accounts, and many FAU students (and some faculty) use it.
+
+Florida State University
+	A very low percentage of students and faculty outside the science
+	departments have accounts of any kind.  Those that do are spread out
+	on many servers with the fsu.edu domain.
+
+	Most new non-science accounts are being created on
+	garnet.acns.fsu.edu, though few students (or even faculty) are aware
+	that they could get an account.
+
+	To find a student or faculty member, two systems have been set up.
+	Unfortunately, neither is working all the time and neither correctly
+	locates all accounts.
+	  1: email whitepages@wp.fsu.edu with the words
+		whois "name"
+	     in the subject line, with no message body
+	  2: whois -h mailer.cc.fsu.edu "name"
+	Other than these two methods, it's very difficult to track someone
+	down unless you know which server they're on (there are more than 50
+	of them).
+
+Gallaudet University (for the Deaf), Washington, DC  20002
+   GALLUA.GALLAUDET.EDU  a VAX/VMS machine.  Student usernames typically start
+                         with 11, 12, 13 or 14, with 11 being the most common.
+                         The rest of the username is first initial last name.
+                         Faculty and staff are typically first initial, middle
+                         initial, last name.  The node is also reachable as
+                         GALLUA.BITNET.
+   GALLUX.GALLAUDET.EDU  a VAX/Ultrix (UNIX) machine.  Not nearly as many users
+                         on this machine.  Name conventions are the same as for
+                         GALLUA.
+ 
+Georgia Institute of Technology (Georgia Tech):		Changed: Mon Feb 15 1993
+	All Users: prism.gatech.edu (aka hydra.gatech.edu)
+	  Prism is a Yellow Pages/Mail domain to which all students, faculty
+	  and staff have access through accounts issued by the computer
+	  center. A number of users, especially faculty and graduate students
+	  in Computer Science, have access to departmental resources which are
+	  not part of the Prism domain. They may get their mail there, though
+	  typically people use prism as their main mail drop and forward it
+	  from there to their home systems.
+	CS Dept (Faculty, staff, PhD students): gatech.edu, boa.gatech.edu
+	user@cc.gatech.edu. (cc = College of Computing)
+
+	Usernames:
+	  students: gtXXXXy (example: gt6953b), where XXXX = last 4 digits
+	    of Campus PO Box, y = A-E to make it unique (PO Boxes are shared)
+	  faculty/staff: firstname.lastname@department.gatech.edu
+	Also try: username@hydra.gatech.edu, 
+
+Glassboro State College:
+	
+    Below is a list of computers and who uses them. For help, send mail
+    to postmaster on whichever one seems the most appropriate. If you're
+    not sure, send it to postmaster@saturn.glassboro.edu. For those with
+    access to gopher you can find current email info on our server. It 
+    includes most of the electronic mail addresses on campus.
+ 
+ 
+    heroes.glassboro.edu        administrative departments
+                                secretaries
+                                some faculty
+ 
+    saturn.glassboro.edu        Academic Computing
+                                students
+                                faculty
+ 
+    elan.glassboro.edu          all School of Business faculty
+                                students
+ 
+    irp.glassboro.edu           Institutional Research and Planning
+ 
+    gboro.glassboro.edu         Computer Science faculty
+                                students
+
+    Most students are accessible via <username>%saturn.dnet@glassboro.edu.  
+    Student usernames are last name, with first initial added to the end if
+    needed.
+
+	Note that you cannot finger glassboro.edu at present,
+	but should be able to by July or August 1991.
+
+
+Grinnell College, Iowa:
+	Addresses at Grinnell College are of the following format:
+ 
+        username@nodename       e.g., POSTMASTER@GRIN1.bitnet
+                                  or  POSTMASTER@GRIN2.bitnet
+
+	Usernames are typically the first 8 letters of the person's last name,
+	frequently with the first initial or first and middle added at the end
+	(e.g., WILLIAMS, MILLERM, JOHNSOAS).  As a result, it would be
+	difficult to guess someone's username.  The nodename is GRIN1.bitnet
+	for all students and faculty; GRIN2.bitnet is for administrative
+	staff.  If you do not know the address of someone at Grinnell,
+	please send a message to POSTMASTER@GRIN1.bitnet asking for help.
+ 
+	Grinnell College now has an Internet connection - ac.grin.edu.
+
+Hampshire College (Amherst, MA):
+	username@hamp.hampshire.edu, where username is of the form fllllll
+
+Haverford:
+	Students: acc.haverford.edu
+
+Harvard:					Changed: Mon Feb 15 1993
+	Finger @husc.harvard.edu to find mail destinations.
+	husc{8,9,10,11}.harvard.edu are Unix machines, which is what most
+	  people use for e-mail.  husc{3,4,6,7,12}.harvard.edu are VMS
+	  machines, used a bit for mail, but more for application server for
+	  the MAC/PC networks, etc.
+	Undergrads: @husc.harvard.edu, @husc9.uucp
+	Username is lastname, with a number appended in case of duplicates.
+	During Summer '90, Harvard moved most undergrad and grad
+	  accounts to husc9 instead of husc4.
+
+	All Harvard Medical School students now have accounts on
+	  student.med.harvard.edu.  The system is relatively new, however, and
+	  the number who actually use them now appears to be small.  The
+	  usernames are of the form fllllll@student.med.harvard.edu. This is a
+	  distributed PC system, and users are not fingerable.
+	Harvard Law School students may have accounts on
+	  hulaw{1,2}.harvard.edu. These machines are fingerable, but usernames
+	  must be matched exactly to be found.
+
+Harvey Mudd, Claremont CA: 
+	Undergrads: flastname@hmcvax.claremont.edu or
+	    flllllll@jarthur.claremont.edu; in case of name conflicts
+	    more letters of firstname are used.   hmcvax is more
+	    likely for class of '94 and before; jarthur for '95 and up.
+	CS faculty: lastname@jarthur.claremont.edu
+	Other faculty: lastname@hmcvax.claremont.edu
+	Administration: flastname@hmcadm.claremont.edu
+	finger fullname@jarthur.claremont.edu usually works, but users
+	    can change their fullnames to anything
+
+Illinois Institute of Technology
+	Domain IIT.EDU has servers on iitmax.iit.edu and karl.iit.edu.	So far
+	no one from there has volunteered how to deduce user names.  One
+	correspondent said: "try lastname@IITVAX1.BITNET@UICVM.UIC.EDU"
+
+Illinois State University (Bloomington, Illinois)
+	FMLastname@ilstu.edu.  Most students do not have internet access.
+	Finger works.
+
+Indiana University:
+
+	Faculty, Staff, Students: username@ucs.indiana.edu
+	Usernames are portions of the person's real name. 8 characters,
+	usually the last name plus maybe a few initials.
+
+	Student/Staff VAX/VMS machines: (main nodes)
+		gold.ucs.indiana.edu, aqua.ucs.indiana.edu,
+		jade.ucs.indiana.edu, amber.ucs.indiana.edu,
+		rose.ucs.indiana.edu  
+
+	silver.ucs.indiana.edu  -- Unix,  All students ( mostly CS undergrads)
+	copper.ucs.indiana.edu  -- These two are VAXen running Ultrix
+				   (UNIX) They're student machines.
+	bronze.ucs.indiana.edu  -- This is  DEC RISC (Not a VAX)
+				   running Ultrix. Staff only...
+	iuvax.cs.indiana.edu     -- Unix,  CS students  ( mostly grad students
+					and faculty )
+
+	The email address of any student, faculty, or staff member at Indiana
+	can be found out by doing a 
+		"finger lastname@indiana.edu" or
+		"whois -h indiana.edu lastname" or 
+		"whois -h iugate.ucs.indiana.edu lastname"
+	Type "finger help@indiana.edu" or "whois -h indiana.edu help" for
+	more information about the service.
+	
+Instituto Tecnologico y de Estudios Superiores de Monterrey (ITESM):
+	Students: mtecv2.mty.itesm.mx	(vax machine)
+		  academ01.mty.itesm.mx (RS/6000)
+
+		  Userids begin with BL plus the id number of the
+                  student, i.e., bl205102. 
+
+	Every student can ask for an account on the vax machine. There
+	are other computing facilities as well.
+
+Iowa State University:	fname_mi_lastname@iastate.edu
+
+Johns Hopkins:
+	Accounts are located on
+		jhunix.hcf.jhu.edu
+		jhuvms.hcf.jhu.edu
+		jhuvm.hcf.jhu.edu
+	All are on bitnet.
+
+	The default userid is of the form lllll_fm or llllll_f. However,
+	students may choose whatever userid they wish, which can be just
+	about anything.
+
+Kalamazoo College:
+	fllllll@kzoo.edu
+
+Kansas State Univ.:					Changed: Mon Feb 15 1993
+	VM/XA: ksuvm.ksu.edu.  All students, faculty, and staff.  This is by
+	  far the most popular machine.
+	KSUVM has a homebrewed finger server that allows you to search
+	  for KSU students, faculty, and staff.  Usage is 
+		"finger	lastname,firstname@ksuvm.ksu.edu"
+	  This does a fuzzy lookup so you don't have to get the spelling exact
+	  and returns the KSUVM userid (if any) plus name, address, phone
+	  number, major (if student), and classification.  If you know the
+	  KSUVM userid you can look that up with
+		"finger userid-xxx@ksuvm.ksu.edu"
+	  (where "xxx" is the userid you want to find). 
+	Unix:
+	  matt.ksu.ksu.edu      All students, faculty, and staff.
+	  depot.cis.ksu.edu	CS faculty, staff, and grads.
+	  cygnus.cis.ksu.edu	CS undergrads.
+	  eece.ksu.edu          EE grads and faculty.
+	  math.ksu.edu          Math staff, faculty, grads, and some undergrads.
+
+Kenyon College: 
+	username@kenyon.edu
+	Username is usually the last name, sometimes with initials
+	tacked onto the end. 
+
+LaSalle University (Philadelphia, Pennsylvania)
+	Host hp800.lasalle.edu
+	Faculty, Staff, and student staff: use last name, eg. jones (llllllll)
+	Course accounts: xnnn0mmm or xnnnamm, where x is 1-letter course name
+	  (e.g. c for computer science), nnn is 3 digit course id, 0 or a is
+	  entered exactly as shown, and mmm or mm is the student's individual
+	  number within the course)
+	Incoming finger (from the Internet) does not yet work.
+
+Lehigh University:
+	Undergrads: username@lehigh.edu (ns1.cc.lehigh.edu)
+	Help with specific userids can be obtained from
+	lucc@ns1.cc.lehigh.edu.
+
+	Lehigh has installed "white pages" server on lehigh.edu.
+	Fingering for a person's first or last name (case insensitive)
+	at lehigh.edu will return all relavant user info (email
+	address, full name etc.) 
+
+Lenoir-Rhyne College (Hickory, NC 28603):
+	E-mail address is username@alice.lrc.edu or Username@mike.lrc.edu.
+
+
+Louisiana State University (Baton Rouge):
+	CS: csvax.csc.lsu.edu
+	EE: max.ee.lsu.edu
+	SNCC (S/m Network Comp Center): lsu500.sncc.lsu.edu
+
+Macalester College (Saint Paul):
+
+	Every student and faculty member has an account on the college's VAX
+	system.  Many students have additional accounts on departmental
+	machines.  These instructions are for finding someone on the VAX.
+	Finger userid@macalstr.edu, where userid is of the form
+	flllllll for students, and lname for faculty. Numbers are added
+	to the end of the userid in case of name conflicts.
+
+
+McGill University:
+
+     Computer Science profs, grads, and ugrads have mail forwarded from
+     login_name@cs.mcgill.ca to the correct machine.  Currently all
+     profs have their accounts on opus.cs.mcgill.ca, and grads and
+     undergraduates have accounts on binkley.cs.mcgill.ca.
+
+
+Memphis State University:
+	Undergrads: memstvx1.memst.edu (memstvx1.bitnet)
+	   memstvx1 is a VAX connected to both internet and bitnet,
+	       and also serves as the domain name server for memst.edu
+	       While it does support Finger, it only reports users
+	       currently logged on.
+	   All instructional account usernames are dependent on the
+	       course title  (e.g. MATH1234567 would be an account
+	       for a Math class)
+	   Grads and Staff accounts are usually First_InitialLastname
+	       e.g. JSMITH for John Smith (but there are exceptions)
+
+	Some departments have their own machines, but the majority of
+	accounts are on the VAX.
+
+Merrimack College: (inquiries to postmaster@merrimack.edu welcome)
+	Faculty: except in extraordinary circumstances lastname@merrimack.edu
+	Undergrads: Aliases exist for most students as
+	First.MI.Last@merrimack.edu
+	REAL ids are usually lastnamefirstinitial@merrimack.edu with dups
+	getting lastfirstinitmiddleinit@merrimack.edu
+	For example:
+	Jane A. Smith	-> jane.a.smith and smithj@merrimack.edu
+	Joe L. Smith    -> joe.l.smith and smithjl@merrimack.edu
+
+Millsaps College:
+        All faculty, staff, and students are userid@okra01.millsaps.edu.
+        Userid is produced from first five letters of last name, first two
+        initials - merged without spaces.  In case of no middle initial, 
+        nothing is used.  In case of name conflicts, numbers are added to 
+        the end to produce unique userid's.
+
+Massachusetts Institute of Technology (MIT):
+	Finger name@mit.edu for info about the person and mail
+	address. This is the same info that's used to create the
+	MIT phonebook, so it is as accurate. (One can finger
+	help@mit.edu for instructions in using this service.)
+
+	All students and faculty may get an account from Project
+	Athena. Their mail address will be @athena.mit.edu, even
+	though athena is a distributed workstation environment.
+
+	Finger @ai.mit.edu for AI graduate students, faculty, and
+	some undergrads. Also try @media-lab.mit.edu 
+	(= media-lab.media.mit.edu) for the MIT Media Lab.
+	Try @lcs.mit.edu for Laboratory of Computer Science faculty, staff,
+	and students.
+
+	Also, MIT math professors can be found on math.mit.edu (a.k.a.
+	bourbaki.mit.edu; however, this information is already accessible
+	from fingering mit.edu information.
+
+	MITVMA.MIT.EDU is the gateway to bitnet.
+
+Michigan State Univ.:
+	@frith.egr.msu.edu @eecae.ee.msu.edu, @kira.ee.msu.edu
+	@cpsin.cps.msu.edu @cpsvax.cps.msu.edu  
+	All college of Engineering students and faculty (includes CPS
+	students) that have requested an account will have the address:
+		user@egr.msu.edu (user@msuegr.bitnet)
+	where "user" is usually the last name, but is often some other
+	combination of first name, initials, etc to provide uniqueness
+	throughout the college.
+
+	In Addition, CPS students and faculty can receive mail at
+		user@cps.msu.edu
+	with the rules for "user" being the same as above.  As far as I know,
+	the same user-id is used on both "egr.msu.edu" and "cps.msu.edu".
+
+	General EMAIL accounts are available on Computer Center machines,
+	usually the IBM3090.
+	   user@ibm.cl.msu.edu user@msu.bitnet
+	and also the Convex
+	   user@convex.cl.msu.edu
+	I don't know what the rules are for determining user IDs for Computer
+	Center machines.
+
+	MSU Information is (517) 355-1855.
+
+
+Michigan Technological University:
+	mtus5.cts.mtu.edu or mtus5.bitnet
+        most students have accounts with the format FMLASTNA
+        First initial-Middle initial-LASTNAMe  (8 letters total)
+	finger does not work on these machines.
+
+Minnesota State University System:
+	Faculty (all campuses): userid@msus1.bitnet
+	Faculty/Students (Mankato State Univ.): userid@vax1.mankato.msus.edu
+
+Mississippi State univ.  Mail in the form fml#@ra.msstate.edu or
+            fml#@isis.msstate.edu..  The Number will normally range
+            1 and 4, it stands for the student number (First one with
+            given set of initials to apply for internet access)
+
+Mount Holyoke College:
+	"mhc." may be omitted:
+		a.  flllllll@mhc.mtholyoke.edu
+		b.  fmllllll@mhc.mtholyoke.edu
+		c.  llllllll@mhc.mtholyoke.edu
+
+Mount Royal:
+	mtroyal.ab.ca
+	Student's userids are of the form llllll#### where # are the
+	first four digits of the student id. Staff userids are of the
+	form flastname.
+
+Entries beginning with N may be found in the next posting
+(file .../college-email/faq2.text via anonymous FTP).
+
+;;; *EOF*
+-- 
+Software Technology Laboratory      dalamb@qucis.queensu.ca (David Alex Lamb)
+Computing and Information Science   phone: (613) 545-6067
+Queen's University, Kingston, Ontario, Canada K7L 3N6	
+
+From dalamb@qucis.queensu.ca Tue Mar  2 10:29:09 1993
+Newsgroups: soc.college,soc.net-people,soc.answers,news.answers
+From: dalamb@qucis.queensu.ca (David Lamb)
+Subject: FAQ: College Email Addresses 2/3 [Monthly posting]
+Followup-To: poster
+Supersedes: <faq2_727708213@qucis.QueensU.CA>
+Reply-To: dalamb@qucis.queensu.ca
+Organization: Computing & Information Science, Queen's University
+Date: Wed, 24 Feb 1993 13:10:26 GMT
+
+Archive-name: college-email/part2
+Last-Modified: Tue Feb 23 16:55:30 1993 by David Lamb
+Version: 3.26
+
+This is the second third of the summary of how to find email addresses
+for undergraduate and graduate students, faculty and staff at various
+colleges and universities. 
+
+;;; ********************************
+;;; Email Database: N-T, U to Univ of 
+;;; ********************************
+
+	
+New Jersey Institute of Technology:
+	Newark NJ 07021
+	CS PhD Studs: user@newark.njit.edu
+	Grad Studs:   user@hertz.njit.edu (ultrix), user@tesla.njit.edu (vms)
+
+New Mexico Institute Of Mining And Technology:
+	Try finger name@nmt.edu or finger name@jupiter.nmt.edu.  Jupiter is
+	the main server;  CS students generally have accounts on
+	minos.nmt.edu.  Accounts generally seem to be of the form FLLLLLLL.
+
+New Mexico State Univ.:
+	Virtually all email addresses are of the form fllllll@nmsu.edu. Finger
+	is not well supported. Mail to postmaster should help. (Also, if you
+	have an account, there is a postmaster program.)
+
+New York University (NYU)
+	Addresses for students at NYU are fml####@acfcluster.nyu.edu, where f,
+	m, l are first, middle, last initials and #### are the last four
+	digits of the social security number.  All students and staff can get
+	limited mail accounts by requesting them.  Some users have nicknames:
+	lastname, or lllllf, or lllllff.
+
+North Carolina State University, Raleigh, NC:
+	Whois server on gyro.cc.ncsu.edu also accepts requests via finger
+	All whois entries have Snail addresses, some have e-mail.
+
+North Dakota Network
+	This section describes how to find email addresses for students who
+	attend Public Colleges and Universities in North Dakota.
+
+	ND HECN PLAINS  (@plains.bitnet) -or- (@plains.nodak.edu)
+	This is a Unix system.  All userids are given out according to last
+	name or possibly a first initial added in front.  You are able to
+	finger these accounts.
+
+	ND HECN CMS  (@ndsuvm1.bitnet) -or- (@vm1.nodak.edu)
+	This is a VM/SP (CMS) system. Userids are a bit more complicated here...
+	The ND HECN (No-Dak Higher Education Computer Network) consists of the
+	following schools..  Their 2-letter school code follows.
+	   Bismarck State College (BJ)      North Dakota State University (NU)
+	   University of North Dakota (UD)  Dickinson State College (DS)
+	   Williston State College (WS)     Bottineau State College (BT)
+	   Lake Region Community College (LR)  Valley City State College (VC)
+	   Mayville State College (MV)      Minot State College (MN)
+	   State School of Science (SS)
+	Userids given out prior to (approximately) August 1991 are assigned a
+	userid according to the following:  Userids are in the form of
+	LL######.  LL is the "School Code" (see above).  The #'s are the first
+	6 digits of the user's NAID number.
+
+	Userids given out after August 1991 are assigned according to last
+	name, or with part of their first name in front if the account is
+	already taken.  They are trying to give you the same userid as your
+	plain's id (if you have one). Also, people with the 'old id' can
+	request to have their account renamed to the new format.  You are able
+	to finger accounts on ndsuvm1, but as of 02-26-92 student names are
+	not yet available to finger. (It will tell you if the account at least
+	exists tho).  Faculty/Staff names are available to finger.  Each
+	college has an 'administrative' account with the form LL0ADMIN.  (LL =
+	School Code).  I don't know if they will give out userids, but it's
+	worth a try.
+
+	UND School of Medicine: try First.Last@medicine.und.nodak.edu for
+	staff and faculty;  no student accounts as of Fall 1992.  For help
+	finding someone, try 'finger' or contact
+	postmaster@medicine.und.nodak.edu
+
+Northeastern:
+	The engineering postmaster is postmaster@nueng.coe.northeastern.edu.
+	For other mail, try postmaster@northeastern.edu
+
+Northern Arizona University (Flagstaff, Arizona, USA)
+	You can use any of the following ways to locate people at Northern
+	Arizona University.  If one doesn't work, try the next.  NOTE: not
+	everyone at NAU has an electronic mailbox.
+	1. finger PERSON@info.nau.edu
+	   where PERSON is any part of a person's name that you know.  You may
+	   have to use quotes, as in: finger "Jane Doe"@info.nau.edu. This is a
+	   "white pages" style database.  For more help on this system: finger
+	   @info.nau.edu
+	2. mail FIRSTNAME.LASTNAME@nau.edu
+	   where FIRSTNAME and LASTNAME are the person you're trying to reach.
+	   You may need to specify FIRSTNAME.MIDDLEINITIAL.LASTNAME
+	3. send mail to the site postmaster:  mail postmaster@nau.edu
+	   Some subdomains have postmasters e.g. postmaster@cse.nau.edu for
+	   the Computer Science and Engineering department.  
+
+Northwestern:					Changed: Tue Feb 23 1993
+	General e-mail services are shared by casbah.acns.nwu.edu
+	  (129.105.113.52) and merle.acns.nwu.edu (129.105.113.57).  Merle is
+	  in full production as of the beginning of 1993, although there are
+	  not yet that many accounts on it.  This will change.  Both Casbah
+	  and Merle support finger requests.
+	If you have access to a PH electronic database client, you can use
+	  ns.nwu.edu for a ph-nameserver.  Users must personally register an
+	  e-mail address in this database for a query to provide one -- it is
+	  not done automatically.  If you do not have access to a PH client,
+	  the default PH-based address is <alias@nwu.edu> where the default
+	  alias is f-lastname (first initial-last name).  Many people choose
+	  to remove the hyphen or replace the default alias with their
+	  initials, or just about anything else.  The default is a good thing
+	  to try, because if it fails for any reason, PH responds with fairly
+	  complete information, in plain english, including other possible
+	  aliases, if there is a conflict.
+
+Norwegian Institute of Technology: see University of Trondheim
+
+NCSU:
+	Faculty/Staff: accounts on adm.csc.ncsu.edu. No specific naming
+	convention for faculty accounts.
+
+	Graduate Students: accounts on druid.csc.ncsu.edu. login names are 
+	gr-xxx where xxx are the initials of the person. However, using the
+	person first or last name will also work. 
+
+	All engineers have accounts on eos.ncsu.edu
+
+	Most undergraduate id's are fmllllll@eos.ncsu.edu
+
+	College of textiles comp. center: fmllllll@unity.ncsu.edu
+
+
+Oberlin:
+	Many students and faculty have accounts on ocvax{a,b}, which
+	can be reached as oberlin.bitnet and ocvaxa.cc.oberlin.edu.
+	Student User IDs are of the form:  S+first & last initials
+	+ last 4 digits of the student ID (e.g. SDG1234)
+	Faculty IDs are of the form: F + lastname. 
+	Best bet is to send mail to postmaster@oberlin.bitnet
+
+	CS students/faculty: occs.cs.oberlin.edu (student usernames
+	are mostly last names, occasionally with a first initial to
+	disambiguate; faculty and staff are generally 3 initials).
+	You can also send mail to postmaster.
+
+Ohio State University: 
+	Faculty, Staff, Graduate students: flllllll@magnus.acs.ohio-state.edu
+	CS Students, Faculty and Staff: cis.ohio-state.edu, with
+	username lastname, fllllll, llllll-f, fml, firstname or lllll-fm.
+	Faculty and staff are mostly first or last name.
+
+	Also, some students have their accounts aliased so that
+	you can send mail/finger to lastname.#@osu.edu
+	where # is required and is anything from 1 on up to infinity
+	(these numbers can get very large for names like Smith, i.e. in
+	the thousands). "whois -h osu.edu" and telneting to osu.edu should
+        also work.
+
+Ohio University (Athens OH):
+	CS (UNIX): fllll@oucsace.cs.ohiou.edu
+	CS (VMS): oucsduce.cs.ohiou.edu
+	EE (grad students): fllll@bobcat.ent.ohiou.edu, @redskins.ent.ohiou.edu
+	Undergrads (class accounts): OUACCVMB.BITNET    
+	Faculty: OUACCVMA.BITNET
+
+Oklahoma State/Stillwater:
+	userid@rsc.ceat.okstate.edu
+
+Oregon Graduate Institute of Science and Technology:
+	Only Graduate Students. Their host, ogccse, is @cse.ogc.edu.
+	This recently changed to cse.ogi.edu.
+
+Oregon State: 
+	CS: mist.cs.orst.edu, prism.cs.orst.edu
+
+Penn State Univ.:					Changed: Tue Feb 23 1993
+	Domain: psu.edu
+	The Electronic Bulletin Board contains, among many other things, the
+	  entire student, staff, and faculty directory.  To use EBB, connect
+	  to psuvm.psu.edu from an Internet-connected site using tn3270 (You
+	  can also telnet to cac3270.psu.edu if you do not have a 3270
+	  emulator, but will have to supply a terminal type).  After the
+	  initial logon screen appears, type the RETURN key and the screen
+	  will clear.  Type "ebb" and hit RETURN, and you will get the
+	  top-level EBB menu, one item of which is "DIRECTORY".  Typing "dir"
+	  and RETURN will select the university directory.  The rest should be
+	  obvious, but for a couple of other points: EBB assumes you're using
+	  an IBM terminal, and displays help in the form of PF keys to move
+	  around, etc.  A simple "+" serves to scroll ahead, and "-" moves
+	  backward. Typing the RETURN key alone will back up one level of
+	  menus, so typing RETURN repeatedly will ultimately close the
+	  connection.
+
+Polytechnic University (New York)
+	This is a listing for Brooklyn and Farmingdale Campuses
+	Code    System Name             Comments
+	----    -----------             ----------------
+	F       borg
+	X       galileo
+	F W     george                  Farmingdale
+	F W     gracie                  Farmingdale
+	F       icon
+	F W     ishara                  Brooklyn
+	F       pixel
+	F       Poly-TS                 Polytech Information Server
+	F       prism
+	F       pucatt
+	F       puscs
+	X       rabbit
+	X       stealth
+	F       spark
+	F       sprite
+	F       tasha                   Farmingdale
+	F       thermal1
+	X       vacuum
+	X       vm
+	F W     worf                    Brooklyn
+	X       wri
+	Legend: F = Fingerable          X = Nonfingerable
+		W = At login: prompt typing in 'who' will list parties logged on
+	All system names end with ".poly.edu", e.g.  'finger @Poly-TS.poly.edu'
+	Most login names begin with first initial then first seven character
+	  of last name.  Most undergrad users would be on george, gracie,
+	  ishara, tasha and worf systems.
+
+Pomona College (Claremont, CA):
+	Internet: fllllll@pomona.claremont.edu (bitnet flllll@pomona.bitnet)
+
+        Usernames are the first character of the first name, followed
+	by the full last name (John Doe would be JDOE).  In case of conflicts, 
+	the middle initial is used between first and last name. (If JDOE 
+	already has an account, James A. Doe would be JADOE).  Finger works.
+
+Portland State University (Portland, Oregon): 
+	Students: odin.cc.pdx.edu
+
+Princeton:
+	Undergrads: phoenix.princeton.edu, pucc.princeton.edu (VM)
+	pucc.bitnet. (Both phoenix and pucc are now fingerable.)
+	CS Grad Studs/Faculty: cs.princeton.edu
+	CogSci Lab: clarity.princeton.edu
+	Math Dept: math.princeton.edu
+
+	You can also try fingering at princeton.edu.
+
+	Some people also have accounts on gauguin.princeton.edu 
+
+	Usernames are usually FMLLLLLL.
+
+Purdue:
+	At Purdue, engineering students (undergrad/grad) have accounts
+	on machines on the Engineering Computer Network (ECN).  There
+	are hundreds of machines, but the main ones are named according
+	to a fairly discernible system, i.e.
+
+	e?.ecn.purdue.edu = Electrical	c?.ecn.purdue.edu = Civil
+	k?.ecn.purdue.edu = Chemical	g?.ecn.purdue.edu = Nuclear/Aero
+	m?.ecn.purdue.edu = Mechanical	p?.ecn.purdue.edu = Potter Library
+
+	In each case, "?" is one of 'a', 'b', 'c', etc..check your
+	local host tables or nameserver for a current list.
+	Undergrads usually end up on the 'n' series of machines... en,
+	mn, cn, and gn.
+
+	Effective 10/16/90, mail to ecn hosts need only be labeled
+	with the local domain. For example, user@ecn.purdue.edu. Mail
+	sent there will automatically be forwarded to the users mailbox.
+
+	Usernames on ecn machines are assigned according to user
+	preferences. Try the usual (initials, fllllll, first name,
+	last name, etc.). You can send mail to ecn.purdue.edu (which
+	will forward it to the appropriate machine). Also, if your
+	finger supports arguments, doing a 'finger -l lastname' will
+	find people by name regardless of account.
+
+        Other students (CS, math/stat, and science majors) usually have
+        accounts on machines operated by the Purdue University Computing
+        Center (PUCC).  These machines are all in the ".cc.purdue.edu"
+        subdomain.  Many usernames are based on the user's last name and
+        initials, but many still use three letter/number combinations which
+        have nothing to do with the user's name.  Computing center staff
+        usernames are either a name chosen by the user, or a three-letter
+        combination beginning with "a".  Additionally, "finger" with a
+        name argument will find all people with that name, so try
+        "finger -l lastname".
+
+	Students are found on the 'instructional' machines; the
+	distribution of major courses is approximately like this:
+
+	expert  = low-level courses for non CS or EE majors, some CS courses
+	sage    = more low-level courses, first semester CS
+	feserve = freshman engineering courses and some CS courses
+	sonata  = some Math and CS courses
+	mentor  = most other CS courses
+
+	Students not in one of these courses may still have an account on
+	one of these machines, since there are many smaller groups to 
+	which accounts are issued.  Also, any Purdue student may obtain
+	a student personal account on one of these machines.
+
+	Research users are found scattered around all the PUCC
+	machines, but mace, boiler, and j are the most likely places
+	to find them. Staff can always be reached through 'staff'
+	regardless of where they have their accounts.
+
+	In addition to those, there is an IBM mainframe which is found
+	on the Internet as vm.cc.purdue.edu or on BITNET as PURCCVM.
+	It is used primarily by research users and Computer Technology
+	majors.  Some student personal accounts are also on this machine
+	Usernames are either based on the person's real name or Xyyy 
+	where yyy is a 3-character PUCC ID.
+
+	Graduate CS students are found on machines in the ".cs.purdue.edu"
+	subdomain, including "arthur", "mordred", "merlin", and other
+	machines named after characters from the Arthurian legends.
+	Mail to cs.purdue.edu usually works.
+
+	Veterinary students are found on machines in the ".vet.purdue.edu"
+	subdomain; these machines are named after animals or other vet
+	terms e.g. "dog", "goat", "pharm"...Agricultural/Agronomy Engineering
+	students are found on machines in the ".acn.purdue.edu" subdomain;
+	these include "harvest", "barn", etc...Some folks in chemistry
+	can be found on machines in the ".chem.purdue.edu" subdomain;
+	many of these are named after items from the Dr. Who series,
+	e.g. "doctor", "tardis", "k9"...Some folks in psychology can be
+	found on machines in the ".psych.purdue.edu" subdomain; these
+	machines are named after Latin/South American countries,
+	e.g. "peru", "brazil", "mexico", "panama"...Some folks in
+	biology can be found on machines in the ".bio.purdue.edu" subdomain;
+	some of these machines are named after Tolkien characters,
+	e.g. "bilbo", "gollum"...Some folks in physics can be found on
+	machines in the ".physics.purdue.edu" subdomain; these machines
+	are named after physicists, e.g. "maxwell", "newton"... The
+	Krannert School of Management is in the .mgmt subdomain, with
+	hosts zeus and hera. Most management students will be found on
+	a PUCC machine.
+
+Queen's University, Kingston, Ontario, Canada
+	Faculty and staff: firstname.initial.lastname@queensu.ca.
+	  Unfortunately you have to spell the name exactly as in the Personnel
+	  records.  This is an IBM mainframe machine with no Finger server.
+	Computing and Information Science: finger x@qucis.queensu.ca, where x
+	  is lastname or firstname.
+
+Reed College:
+	username@reed.edu, where username is of the form flllllll
+
+Rice:
+	Mail may be sent to <username>@rice.edu.  You can't finger this
+	  machine. Rice students now have off-campus electronic access (email,
+	  netnews), so long as it is for educational purposes only.
+	Owlnet accounts are provided for undergraduate and graduate engineers.
+	  Non-engineers are given accounts when needed for a class, and then the
+	  accounts are deleted after the class is over. A general address for
+	  these accounts is @owlnet.rice.edu.
+	All students are given accounts on the rice mainframe computer, though
+	  off-campus access is still restricted for these accounts unless given
+	  permission.  The address is @ricevm1.rice.edu and userid's are of the
+	  form fllll00, so John Smith is JSMIT00@ricevm1.rice.edu.
+	Here's a small list of machines to try when searching for a user.
+	  Department machines are generally for MS/PhD graduate students,
+	  faculty, and staff. The OWLNET machines are used for classes. (Thus
+	  the user population on OWLNET machines consists primarily of
+	  undergraduates and graduate students in professional degree plans such
+	  as Master of Computer Science.)
+	All the names given should have ".rice.edu" appended to them.
+	Department				   Machine Names
+	========================================== ==========================
+	Computer Science: 			   titan, iapetus
+	Electrical and Computer Engineering:       mu, zeta, eta, kappa, tavi
+	Math: 			     	           math1
+	Mathematical Sciences: 		           masc1, masc6
+	Mechanical Engineering: 		   caesar
+	Space Physics and Astronomy                spacsun (ID usually initials)
+						   spacvax (ID usually lastname)
+	Statistics: 				   stat1
+	Office of Networking and Computer Systems: brazos, uncle-bens
+	OWLNET:		 			   great-horned, marsh, snowy, 
+						   pygmy, great-gray
+
+Rensselaer Polytechnic Inst. (RPI): 
+
+   Department					Machine or Domain Names
+   ==========================================   ==========================
+   Computer Science: 				cs.rpi.edu
+   Electrical and Computer Engineering: 	ecse.rpi.edu
+   Mechanical Engineering: 			meche.rpi.edu
+   Design Reseach Center:			rdrc.rpi.edu
+   Robotics Automation Lab:			ral.rpi.edu
+   Image Processing Lab:			ipl.rpi.edu
+   Center for Advanced Technology:		cat.rpi.edu
+   Integrated Electronic Arts Studio:		iear.arts.rpi.edu
+   Engineering Computing Services:		vm.ecs.rpi.edu,
+						vms.ecs.rpi.edu
+
+   Rensselaer Computing System:			rpi.edu
+   Open to all students, faculty and staff. 
+   Userids are lllllf@rpi.edu with digits added to break ties.
+   finger lastname@rpi.edu to verify userid only.
+   but finger  @rpi.edu doesn't yield any login information.
+
+Rochester Institute of Technology (RIT):
+	ritvax.bitnet
+	aaaXXXX@ritvax.isc.rit.edu, where aaa is users initials, XXXX is last 4
+	  digits of Social Security Number (SSN)
+	Computer Science: aaaXXXX@cs.rit.edu.  Sometimes anaXXXX where
+	   n appears literally and means "no middle initial".  Profs'
+	   accounts omit the XXXX.
+	Rumour has it that some UNIX accounts on other machines within
+	the rit.edu domain use just last 4 digits of SSN, but recent
+	correspondents from RIT don't know of any such machines.
+
+Rose-Hulman Institute of Technology: Terre Haute, IN
+        There are three major systems on which students are given accounts:
+          - Academic VAXcluster: rosevc.rose-hulman.edu
+                All students have accounts.
+          - NeXT workstation network: nextwork.rose-hulman.edu
+                All students have accounts.
+          - CS department network: cs.rose-hulman.edu
+                Any student can get an account upon request.
+        Student usernames are consistent across the systems, in the form
+        llllllfm.  Mail addresses of the form: first.m.last@rose-hulman.edu
+        are also accepted; mail is directed to a preferred address.
+
+Rutgers:					Changed: Mon Feb 15 1993
+	Rutgers has a whitepages server, so you can do whois -h
+	whitepages.rutgers.edu "fname lname" to find email addresses.  If the
+	user has an email address it will explicitly indicate "Email:".  The
+	"Userid" field is *NOT* an email address. (Note that not all people
+	with email addresses have put them in the directory.)
+
+	Other ways to find email addresses at Rutgers: There are many
+	departmental machines, but these are a few common ones.  Usernames are
+	usually "llllllll" but some are "fllllll" etc.
+
+	General Student: trident.usacs.rutgers.edu (New Bruns. undergrad),
+		andromeda.rutgers.edu (Newark undergrad--all students),
+		draco.rutgers.edu (Newark grad--all students)
+		clam.rutgers.edu (Camden undergrad),
+	* not all New Bruns undergrads have accounts
+	CS: remus.rutgers.edu (undergrad), paul.rutgers.edu (grad),
+	    cs.rutgers.edu (faculty), pyrite.rutgers.edu (grad/fac)
+	Math: gauss.rutgers.edu (undergrad), math.rutgers.edu (grad/fac),
+	      hilbert.rutgers.edu (fac), dimacs.rutgers.edu (fac)
+	Engineering: pisces.rutgers.edu (ug), jove.rutgers.edu(g/fac),
+		     caip.rutgers.edu (g/fac)
+	Student consultants: gandalf.rutgers.edu
+	McCormick Hall residents: dorm.rutgers.edu
+	Statistics: stat.rutgers.edu (fac)
+	Physics: physics.rutgers.edu 
+	Systems Staff: klinzhai.rutgers.edu, cs.rutgers.edu,
+		       hardees.rutgers.edu, gandalf.rutgers.edu
+
+        There is a machine, pilot.njin.net, which is available to any
+        Faculty/Staff member at any New Jersey college by request. As
+        such, using finger lastname@pilot.njin.net may be useful in finding
+        someone at any of the non-Rutgers colleges in NJ.
+
+
+Saint Anselm College:
+	Students, Faculty, Staff: anselm!username@dartmouth.edu
+	Usernames are of the form flllllll, where f is the first letter of the
+	first name and lllllll are the first seven letters of the last name.
+	If a last name has less than 7 letters, the entire last name is used.
+
+	Saint Anselm College is a UUCP client of dartvax, the Dartmouth
+	College system.  All news and email is fed via a data transmission
+	made twice daily (1am and 1pm).
+
+San Diego State University:
+	Faculty and Staff:  flastname@sciences.sdsu.edu where f is the
+	first initial followed by the last name.
+
+	To access the campus phone directory:
+	(1) whois -h sciences.sdsu.edu name
+	    where name is the last name of the person you want.
+
+	(2) telnet to sciences.sdsu.edu and log in as whois
+		telnet sciences.sdsu.edu
+		SunOS UNIX (sciences)
+		login: whois
+
+		     ***** College of Sciences Online Phone Directory *****
+		You may:
+		  *  Enter a name the way you think it is spelled.
+		  *  Enter '=' followed by the first part of a correctly
+		     spelled name. 
+		  *  Enter '+' followed by an E-mail address.
+		  *  Enter '#' followed by a telephone number.
+		  *  Enter '*' followed by any part of a name.
+		  *  Enter '$' followed by a first name (sound alike)
+		  *  Enter '!' followed by a first name.
+		  *  Enter '?' or 'help' to display this message.
+		  *  Enter ^D or a blank line to terminate.
+
+Santa Clara University:
+
+	Students and faculty with accounts there, at least in some cases, may
+	be reached as FLLLLLLL@scuacc.scu.edu, where FLLLLLLLL is the first
+	initial and LLLLLLL is the last name (or perhaps the first n
+	characters of the last name).
+
+	The IP address for SCUACC.SCU.EDU is 129.210.8.1.
+
+	You might want to contact the postmaster there for further
+	information.  The telephone number for the Acedemic Computer Center is
+	408/554-4082
+
+Scripps College, Claremont, CA:
+    	Mail to: flast@scripps.claremont.edu	(Novell network)
+	Finger at: charon.claremont.edu		(Charon mail server)
+	Charon knows nothing about users unless they're logged in (and
+	crashes regularly).
+
+Seattle University:
+	Everybody (students and faculty) are on the same machine, 
+	@seattleu.edu
+
+Simon Fraser University			Changed: Mon Feb 15 1993
+	All students, staff and faculty have accounts on the campus computing
+	  network (CCN).  The domain name is @sfu.ca.  User information is
+	  available through an X.500 directory service, which can be accessed
+	  via the finger program: finger f_l@whistler.sfu.ca, where f is the
+	  first name and l is the last name.
+	Computing Science and allied units also maintain a separate subdomain
+	  cs.sfu.ca (Centre for Systems Science).  Users generally have the
+	  same accounts on this domain as they do on the CCN. 
+	
+Skidmore College, Saratoga Springs, NY, 12866   (518) 584-5000
+  Internet domain name:      skidmore.edu
+  Bitnet node name:          skidmore
+
+  All e-mail is collected by  scott.skidmore.edu (141.222.1.4)
+
+  Usernames normally take the form  first initial and first seven 
+  characters of the last name.  You can also employ "fname.lname",
+  giving the complete first and last names separated by a dot.
+
+  Contact LDG@SCOTT.SKIDMORE.EDU for any delivery problems or other
+  questions about the College.
+
+Smith: smith.smith.edu
+
+Sonoma State University: fname.lname@sonoma.edu
+
+Southwest Texas State University:
+
+	cs and math faculty or grad students: @swtexas.bitnet
+		(most user IDs are cs_lastname or ma_lastname)
+
+Stanford:				Changed: Mon Feb 15 1993
+	Stanford has implemented a finger service for its whois database.  Try
+	"finger name@stanford.edu" first -- most students and lots of staff
+	and faculty now have their e-mail addresses registered with this
+	service.  Name can be lastname, or for better results flllll or
+	fmllllll.
+
+	Alternatively, this service can be accessed via whois:
+
+	whois -h stanford.edu name
+
+	If that doesn't work, most students (and lots of staff and faculty)
+	have accounts on leland.stanford.edu.  The finger daemon on leland
+	was turned off by December 1992;  try its various clients: elaine0
+	through elaine53(.stanford.edu)
+
+	A couple of other machines to try:
+
+	CS (Grad and undergrad): xenon.stanford.edu
+	Geology/Earth sciences: pangea.stanford.edu
+	EE: sierra.stanford.edu
+
+St. Olaf College (Northfield, MN):
+
+     UNIX accounts are created for all students upon their admission to the
+     College.  Not all faculty and staff have accounts yet, but we're
+     working on that.
+
+	General address form:	lname@stolaf.edu
+	Last name conflicts are usually resolved by adding first
+	and/or middle initials to the end of the last name.
+
+	Try fingering Lname@stolaf.edu (note the capital letter).
+
+	Try using the St. Olaf Gopher information server at gopher.stolaf.edu.
+	Phonebook information can be found under "St. Olaf Information".
+
+	Try sending email to postmaster@stolaf.edu describing the
+	person you're trying to contact.
+
+	CSO phone book server at cso.stolaf.edu.
+
+SUNY/Alfred (Alfred, NY)
+	(SUNY College of Technology at Alfred)
+	Students and faculty: llllllfm@snyalfva.cc.alfredtech.edu
+	   (lastname, firstname, middlename, though middle name sometimes
+	    isn't used.
+
+SUNY/Binghamton: (Binghamton, NY)
+
+	In order to contact someone at SUNY-Binghamton you'll have to
+	give them a call; there is no way of figuring out a student's
+	address given their name, as the mapping is random (sequential
+	in the order people apply for accounts).
+
+	Undergrads: bXNNNNN@HOSTNAME.cc.binghamton.edu where X is a
+		letter depending on what year they got their account:
+		91/92: A 92/93: B(?); NNNNN are random digits, almost
+		always starting with 0; HOSTNAME is either bingvaxa
+		(VMS), bingvaxu (Unix), bingsuns (SunOS), bingvmb
+		(IBM), or bingtjw (IBM).  Older userids are of the
+		form vyNNNN@bingvaxa, vuNNNN@bingvaxu, and
+		bgNNNN@bingvmb.
+
+	Interested undergrads tend to have accounts on bingvaxa,
+	though those in Math/CS classes will have accounts on
+	bingsuns.  
+
+	An e-mail directory for some faculty and staff is available;
+	telnet to bingvmb.cc.binghamton.edu
+	DIAL VTAM
+	ELIXIR
+	Choose from menu.
+
+SUNY/Buffalo:
+	Grads, Undergrads: username@ubvms.cc.buffalo.edu [finger not possible]
+		Userids of the form VNNNXXXX where NNN are the first
+		3 digits of one's social security number, and XXXX are
+		4 alphanumerics representing the rest of the social
+		security number. 
+	General Computing Center (students): username@acsu.buffalo.edu
+
+	ubvms is a VAX, and most students had accounts there.
+	Recently, however, more people are getting accounts on acsu,
+	the Unix system.	
+
+	Engineering Students: username@eng.buffalo.edu
+	EE Students: username@beatrix.eng.buffalo.edu
+	CS Dept: username@cs.buffalo.edu (username@sunybcs.bitnet)
+	
+	The usernames for the acsu, cs (and possibly eng) seems to be formed
+	by something appoximating the following rules: 
+	  1) If lastname is <=8 character, 
+		  1.1) if it does not already exist as a username, 
+			  then username=lastname. (eg. smith)
+		  1.2) else 
+			  username is first initial + lastname (eg. jsmith)
+	  2) If lastname is too long, and a middle initial exists, 
+		  then username is initials (eg. jcs)
+	  3) If lastname is too long but no middle initial exists, 
+		  then username is the first 5 chars of the last name, a -, and
+		  then the initial. (eg. James Smithenson would be smith-j).
+
+	The cs and acsu domains share mail alias files, so mail to a username
+	at either cs.buffalo.edu or acsu.buffalo.edu will arrive at the user
+	in the same mailbox.
+
+	There are also geog (Geography), arch (Architecture) and med
+	(Medicine) domains.
+
+SUNY/Canton
+	students: llllllll@scanva.bitnet, also try @snycanva.bitnet
+
+SUNY/Geneseo
+	students: fmlyy@geneseo.bitnet .. yy is graduation year
+	I dont know about faculty, it might be on @snygenva.bitnet.
+
+SUNY/Potsdam
+	students: llllllss@snypotvb.bitnet .. where ss are last 2 digits of SS#
+	faculty: llllllfm@snypotva.bitnet
+
+SUNY/Stony Brook:
+	Undergraduates: flllllll@ccvm.sunysb.edu (sbccvm.bitnet)
+		        flllllll@ccmail.sunysb.edu (sbccmail.bitnet)
+			(servers ccsinc.bitnet and ccnova.bitnet)
+			flllllll@ic.sunysb.edu (servers are libserv1,
+			csserv1, csserv2, eeserv1; can't finger).
+	CS Folks: cs.sunysb.edu (cs is an alias to the host sbcs)
+	You can also use the campus "white pages", whois -h sunysb.edu ...
+	or try fingering at fllll@sunysb.edu
+
+Syracuse Univ.:
+     	CompSci Grads/Faculty: top.cis.syr.edu
+      	   Many CompSci graduates and faculty have accounts on this
+      	   machine; the usual username pattern is "lastname@top.cis.syr.edu"
+	Some faculty and staff:
+	   SUADMIN.bitnet (suadmin.syr.edu)
+     	Other students and faculty:
+      	    mailbox.syr.edu
+            sunrise.syr.edu (VAX 8820/VMS)
+            suvm.acs.syr.edu    (IBM 3090/CMS)
+	suvm.acs.syr.edu and sunrise.syr.edu are run by the SU Computing
+	  Services. Undergrads usually have accounts on sunrise (which is a
+	  VAX VMS cluster). Both hosts are on bitnet as suvm and sunrise.
+      	The pattern for all these hosts is: first-initial + middle-initial +
+	  as much of the last name as possible. 
+
+     	White-Pages: "finger name@syr.edu" will search the online catalog
+	  white pages for a registered user that has his/her information public.
+	  Mutliple matches produces multiple output.  "finger @syr.edu" for more
+	  details.  The same information is available via a BITNET directory
+	  server (NSERVE@SUVM.BITNET), through PSI's X.500 project, and through
+	  whois -h syr.edu
+     	Phone Book: The Syracuse Phone book has the same e-mail addresses as
+	  are available in the White pages, but as it's only printed once a
+	  year they are usually out of date.  Dialing (315) 443-1870 is campus
+	  information;  if the userid exists in the phonebook, the people
+	  there will be happy to give it out.
+     	consult@mailbox.syr.edu  -- If the username exists, and that person
+	  doesn't mind having it handed out, this userid will check into it
+	  beforehand and reply via mail.
+
+Swarthmore:
+        All Students/Faculty/Staff: FLLLLLLN@cc.swarthmore.edu, where
+	  F is the user's first initial, and LLLLLL is the first six letters
+	  of their last name.  A '1' (one) is appended in most cases, though
+	  for duplicates the number is incremented. To find people, send mail
+	  to postmaster. You can also finger people by their last name.
+        CS: Usually, lastname@cs.swarthmore.edu
+	Engineering: usually lastname@engin.swarthmore.edu
+
+	[The following is the old info, which still holds for some people:
+	 All Students: xxxYY@swat.swarthmore.edu, where xxx is the
+		student's initials, YY the year of graduation.
+		In case of duplicates, extra "x" are added between
+		the initials and year. If there are triplicates, they
+		keep on adding x's. You can also use
+		campus.swarthmore.edu (swarthmr.bitnet). If they have
+		no middle name, use "_" instead of the middle initial.
+		To find people, send mail to postmaster.
+	 Faculty and staff have usernames as their last names on
+	 campus.swarthmore.edu.]
+
+Texas A&M University:
+
+	All students can have an account on a VAX cluster, a heterogeneous
+	set of UNIX boxes, or a VM/CMS machine. Probably less than
+	30% of the student body (40K students) takes advantage of this. The
+	format of the usernames is FML#### where fml are the initials and ####
+	is the last four digits of the SSN.  If a student has no middle
+	initial then '0' (Zero) is used.  These domain is "tamu.edu" and the
+	machine could be any of several choices like venus, rigel, summa,
+	sigma, etc.
+		General Unix: 		tamuts.tamu.edu, tamaix.tamu.edu,
+					tamsun.tamu.edu
+		General VAX/VMS: 	zeus.tamu.edu, venus.tamu.edu, 
+					summa.tamu.edu, sigma.tamu.edu,
+					rigel.tamu.edu
+                General VM/CMS:         tamvm1.tamu.edu
+
+	Finding addresses:
+		Try fingering lastname@tamsun.tamu.edu or lastname@tamu.edu.
+		(tamu.edu uses ph, the CSO Nameserver)
+
+	The computer science department's domain is "cs.tamu.edu".  The
+	statistics dept is "stat.tamu.edu".  The username format on these
+	machines is usually fffffffl or flllllll.  Some old accounts may have
+	first names or last names only.
+	The math department's domain is math.tamu.edu.
+
+	There are about a million other departmental machines with varying
+	names but I believe they are all in the form "xxx.tamu.edu".
+
+Trinity College (Hartford CT):
+	Students, staff, and faculty: firstname.lastname@mail.trincoll.edu
+	mail.trincoll.edu is currently equivalent to trincoll.edu
+
+Tufts University:
+	tufts.edu, tufts.bitnet
+
+United States Air Force Academy
+	Cadets: CDTnnnn@saturn.usafa.af.mil
+	Computer science: host kirk.usafa.af.mil
+	Finger works at both sites.
+
+Univ. of Aalborg: @iesd.auc.dk
+
+Univ. of Akron:
+	
+	Academic Machines: Faculty, Grad, Undergrad
+		vax1.cc.uakron.edu (vax, so finger works)
+		vm1.cc.uakron.edu (vms, so finger doesn't work) 
+		vm1 is also known as akronvm.bitnet
+	Most students and faculty have accounts on either of these machines.
+	Usernames are usually r1 for faculty, r2 for graduate
+	students, and r3 for undergrads, followed by first, middle,
+	and last initials. (If the student doesn't have a middle
+	initial it is omitted.) Naming conflicts are resolved by
+	adding a digit to the end of the userid (e.g., 1, 2, ... 9).
+
+	for example: mine is r2sk9@vax1.cc.uakron.edu...
+
+	Engineering Machines: Grad, undergrad
+		file01.ecgf.uakron.edu (unix, but no fingering)
+		file02.ecgf.uakron.edu (unix, but no fingering)
+	Userid's normally begin with the first two letters of the
+	person's major (el = electrical, me = mechanical) followed by
+	4 digits to make 6 digit userid. Undergrads are given id's of
+	form bsxxxx. 
+
+	Math Department machines: Faculty, Grad, Undergrad
+		vonneuman.cs.uakron.edu (unix and fingering works)
+	Only math students or students enrolled in courses offered by
+	math dept have accounts. finger works with first,lastnames or
+	userid's. 
+
+	userid's for grads and faculty are by their last names.
+	undergrads and class accounts begin with sun followed by three
+	digits making 6 letter userid. 
+
+	Mechanical Engineering Machines: Grad,faculty
+	Any grad engineering student can have an account. 
+	Finger doesn't work for these machines.
+		starshine.mech.uakron.edu
+		sunshine.mech.uakron.edu  
+		moonshine.mech.uakron.edu 
+	Userid's are first names.
+
+Univ. of Alabama at Huntsville:
+
+	Domain:  uah.edu 
+	         asn.net (asnuah.asn.net)
+	
+	School of Engineering: xxx..x@ebs330.eb.uah.edu
+	CS dept : xxx..x@uahcs2.cs.uah.edu
+	Math dept: xxx.x@sun3.math.uah.edu
+	Grad std/Research : xxx.x@asnuah.asn.net
+                    
+Univ. of Alabama at Tuscaloosa:
+
+	Domain: ua.edu
+	College of Engineering: flastname@buster.eng.ua.edu 
+        Seebeck Computing Center: flllllln@ua1vm.ua.edu, where n is 1 for
+		an undergraduate, 3 for a graduate student, and black for
+		faculty/staff
+	Others: cs.ua.edu, asncray.asc.edu etc.
+	Help: postmaster@ua1vm.ua.edu
+
+Univ. of Alaska
+	Bitnet: username@alaska.bitnet  Internet: username@acadO.alaska.edu
+	Usernames are of the form CTFMLN where:
+	C=Campus
+	    A is U of A Anchorage
+	    D is for Kodiak College
+	    F is for U of A Fairbanks
+	    I is for Kenai Peninsula College
+	    J is for U of A Southeast (in Juneau)
+	    K is for U of A Southeast (Ketchikan branch)
+	    P is for Mat-Su College (in Palmer)
+	    T is for U of A Southeast (Sitka branch)
+	    V is for Prince William Sound Community College (in Valdez)
+	T is for usage type.
+	    S is for an undergraduate student
+	    T is for a graduate student
+	    F is for faculty
+	    N is for staff.
+	    X is for consultants
+	FML is the initials of first, middle, and last names, respectively.
+	N is a number, and is only given (and then it starts from one) if
+	  there are more than one person at the same school with the same
+	  status and initials
+	O is the computer that the person is on.
+	  1 is Southeast and affiliated schools (don't know C letters for them)
+	  2 is Anchorage and its affiliates (Kodiak, Kenai, Mat-Su, and Prince
+	    William Sound)
+	  3 is Fairbanks and affiliates
+	However, a person with enough access can use other campus' computers.
+
+Univ. of Arizona:
+	Historically computer access at the UA had been limited to students,
+	faculty and staff who had either a job, or a class which required a
+	computer. Recently the Unix Users Group at the University of Arizona
+	began providing General Access Systems for no charge to UA students.
+
+	The machines are configured from donated, loaned and retired equipment
+	and managed by volunteer effort. As a volunteer effort, there is not
+	time to respond to postmaster requests for usernames so please do not
+	send address requests to the postmaster. Use the finger utility
+	instead; it will respond to "real name" requests (in the following
+	"gas" means "gas.uug.arizona.edu"):
+
+	finger -l kennedy@gas gotobed@gas |grep "Login name:"
+	Login name: bjk       			In real life: Brian J. Kennedy
+	Login name: kennedys  			In real life: Steven A Kennedy 
+	Login name: jgotobed  			In real life: Joe Gotobed
+
+	While we are attempting to support a rational username policy, it is
+	not foolproof as this example shows. If the finger info returns
+	nothing, the person has no account on these systems.
+
+	Due to limited disk capacity, ( < 1Mb per account) the usage is
+	limited primarily to internet news, telnet, ftp and email.  There are
+	currently about 500 students and a capacity of about 3,000 accounts.
+	While accounts are currently limited to students, we expect to provide
+	access to the general staff & faculty sometime in the spring of 1993.
+
+	There are nearly a hundred subdomains at the University, each with
+	their own access policies, username assignments and email schemes. If
+	the finger utility does not reveal the address of a friend, a phone
+	call to them asking for their address is probably the most efficient
+	way to discover it.
+
+	Many faculty and staff are on ccit.arizona.edu.  If someone tells you
+	they are on "cosy" or "icosy," forget it; you can't send mail to them
+	(although they can send mail to you).
+
+	Undergrads in Computer Science are on caslon.cs.arizona.edu.
+	Undergrads in Engineering are on a cluster of Suns; try
+	evax2.engr.arizona.edu.
+
+	Grad students and Faculty are usually given accounts on their
+	department/college systems.  Try math.arizona.edu;
+	physics.arizona.edu; mis.arizona.edu; cs.arizona.edu, etc.
+
+	In the School of Business, you can try FirstinitialLastname (e.g.
+	RReagan) @bpa.arizona.edu with very good success.  If
+	FirstinitialLastname is ambiguous, a username might be
+	LastnameFirstinitial instead. (Main site was mis.arizona.edu until
+	late 1992).  On BITNET send mail to username@arizbpa.bitnet
+
+	Arizona.EDU is the campus mail gateway, but only those who ask get
+	aliases on Arizona.EDU.  You could try last-name@Arizona.EDU if you
+	suspect the person you want uses EMAIL a lot.
+
+Univ. of Atlanta: @auc.UUCP
+
+Univ. of British Columbia (Vancouver, BC, Canada)
+	Domain ubc.ca.  Public accounts might be on unixg.ubc.ca.
+	Computer Science is cs.ubc.ca
+
+University of Calgary
+        General (Students/Faculty): @acs.ucalgary.ca
+	CS students/faculty: @cpsc.ucalgary.ca
+	for all faculty,  staff,  grads,  undergrads
+	- often last name, or first name, or initials. or last name
+	followed by initials. 
+
+Univ. of California/Berkeley: Many different accounts on many machines. 
+	Undergraduates in General: ocf.berkeley.edu
+	Faculty, staff, and graduate students can also get accounts on
+	ocf.berkeley.edu.
+
+	Undergrad CS/EE, 1st Year Grad: cory.berkeley.edu (This is for
+	undergrad juniors and seniors and first year graduate
+	students. Most other graduate students have their own
+	workstations. For freshmen and sophomores, one must look for a
+	class account or ocf public cluster. Undergrads now have to
+	pay for accounts on cory, so fewer people will be using it.)
+	First Year Graduate CS students: try cory.berkeley.edu or
+	xcssun.berkeley.edu. antipodes.berkeley.edu
+
+	CS Faculty, Grads, Staff: cs.berkeley.edu (aliases mail address)
+	CS Grad Students: snake.cs.berkeley.edu
+		Good systems to try are (all .cs.berkeley.edu
+		or .berkeley.edu) sprite, harmony, sequoia, larch,
+		robotics, postgres, and ginger.
+		tenet.icsi.berkeley.edu also has some CS grad students on 
+		it.  Many machines in the department are now
+		foo.cs.berkeley.edu, but not all are.
+	EE Faculty: esvax, ic, cad, or a workstation
+
+	Janus will be going away soon, as will ucbarpa.  Many csgrads will
+	have mail aliases on cs.berkeley.edu, which will eventually support
+	finger.  Systems to try for grad students are (all .berkeley.edu):
+	sprite, harmony, sequoia, yew, larch, robotics, postgres, and ginger.
+	Soon, these will be moved into the cs.berkeley.edu subdomain instead
+	of berkeley.edu subdomain (ie, you'd finger @sprite.cs.berkeley.edu).
+	This will happen soon, but hasn't happened yet.
+
+	Names for the above accounts are usually, but not always,
+	combinations of the user's real first, middle and last names
+	and/or initials. However, finger will search the "real name"
+	field as well as the account name.
+
+	There are many class accounts (which all students get). These
+	are found on web.berkeley.edu,bard.berkeley.edu, and
+	xcssun.berkeley.edu.  
+	zooey, buddy, franny, and seymour too, except they're being
+	retired. Danube, amazon, congo, po, and volga and a cluster of stars
+	(named after stars) are supposed to be the replacements. 
+	web and buddy hold classes that freshmen and sophomores often take.
+	seymour and franny are often used for classes for business majors. 
+
+	Class account usernames are typically cnnn-mxx or ennn-mxx, where
+	'c' or 'e' denotes CS or EE, nnn is the course number, m is the
+	section number (not always used), and xx are two letters.
+
+	Statistics class accounts are of the form s#xxxx, where # is
+	the class number and xxxx is some string of alphabetic characters.
+	These accounts live on gandalf.berkeley.edu. Statistics
+	cluster computers are named after Tolkien characters.
+
+	qal.berkeley.edu is used for courses in "practical computer use"
+	(taught by the anthropology department).  Account names are
+	193xxx, where xxx is the last name of the user.
+
+	Math (Graduate and Faculty): math.berkeley.edu 
+	Stat Department: stat.berkeley.edu
+	Physics Grads and Undergrads: physics.berkeley.edu
+	Mech. E Profs & Grads: euler.berkeley.edu, tycho.berkeley.edu
+	Public Cluster (some undergrads): ocf.berkeley.edu
+	School of Education:  soe.berkeley.edu
+	Other machines to try: ucbvax.berkeley.edu  
+
+	garnet.berkeley.edu and violet.berkeley.edu are the most
+	likely place for a pay-for-use account. Some departments
+	maintain accounts on these machines for faculty, though,
+	so these machines are the place to try for faculty affiliated
+	with departments that have no real computing facilities.
+	Almost anyone on campus can pay for an account on these machines.
+
+	Some of the class accounts are also on congo. Generally
+	addresses for the first semester classes are:
+	CS 60A - c60a-__@danube
+	CS 3 - c3-1a__@amazon or c3-1b__@congo
+
+	postmaster@nettlesome.berkeley.edu should be considered as a last
+	choice when looking from someone electronically. 
+
+Univ. of California/Davis: 
+	@ucdavis.edu -- works if you know their account name
+	   userids are of the form fmlllll.
+	@clover.ucdavis.edu -- works for anyone in the CS department
+		whois -h ucdavis.edu <name>
+	CS: First.Last@cs.ucdavis.edu
+	Engineering/CS: First.Last@ee.ucdavis.edu 
+			or First.Last@eecs.ucdavis.edu
+
+Univ. of California/Irvine:
+	CS Undergrads: bonnie.ics.uci.edu
+	    Mail sometimes restricted; policy has changed several times.
+	    Userid usually FLLLLLLL (8 char max); sometimes FFFFFFFL.
+	CS Grads/Staff/Faculty: ics.uci.edu
+	    Faculty userids are usually their last names, sometimes
+	    initials, a few firstname only.  Grads usually FLLLLLLL,
+	    some lastname only.  Staff sometimes firstname, sometimes lastname.
+	Other departments: mostly grads; userids usually lastname.
+	   Biology dept: sanger.bio.uci.edu
+	   EE: balboa.eng.uci.edu
+	   Physics dept: skid.ps.uci.edu
+	   Social sciences: ss.uci.edu
+	Try fingering fname-lname@XX.uci.edu (for XX=ics,sanger.bio, etc.)
+
+	There are two types of accunts on orion.oac.uci.edu:
+	(1) Staff in the Office of Academic Computing
+	(2) Students
+	Staff userids on orion are usually FLLLLLLL, 8 char max.  The student
+	accounts on orion are different, though.  Any student can get an orion
+	account, but not a lot do.  The userids for these accounts are seven
+	characters as follows: first "ea", then two characters representing
+        major and grad vs. undergrad status, respectively, 
+	(e.g., i = information & computer science, u = undergrad),
+	then three random digits.  Non-staff orion users tend to use
+	their accounts infrequently because of usage limits.
+
+Univ. of California/Los Angeles (UCLA):
+	CS: @cs.ucla.edu @oahu.cs.ucla.edu
+      MATH: @math.ucla.edu, @sonia.math.ucla.edu, @oak.math.ucla.edu
+		(graduate students, staff, faculty)
+	EE grads & faculty: ee.ucla.edu (network of RTs and SUNs
+	   running unix. Each machine has the name of a famous
+	   engineer:  watt.ee.ucla.edu, joule.ee.ucla.edu, etc)
+	   Usernames vary; try fname, lastname,...
+	AGSM: @agsm.ucla.edu  @uclagsm
+	      (Anderson Graduate School of Management)
+	      All of students , staffs and faculty have their user ID.
+	      User ID: FLLLLLLL (max 8 characters)
+	Class Accounts: pic.ucla.edu (PIC = program in computing)
+	   These get cleared every quarter. Account names are usually
+	   the course number followed by three letters chosen by the student.
+	   If you finger @laguna.pic.ucla.edu, you get more detailed
+	   info, such as when the user last logged on, etc.
+	Engineering: seas.ucla.edu  This is a server for a network for
+	   the school of engineering and applied sciences. Any engineering
+	   graduate student can get an account on it, and many undergrads
+	   have accounts on it for classes. This machine has access to
+	   USENET.
+	Anybody: oac.ucla.edu  An IBM 3090.  Anyone in UCLA can get an
+	   open access account on this to send mail, etc.  Account
+	   names on this machine are terribly cryptic (such as IZZYR33). 
+
+Univ. of California/Santa Cruz:
+	Undergrads: ucscb.ucsc.edu
+	Other hosts include ucsc{c-e,o}.ucsc.edu, ucscvm.ucsc.edu, etc.  All
+	these hosts (except for ucscb) are on bitnet as the first part of
+	their domain name.
+	A new host, cats.ucsc.edu, has been added as the mail address for
+	UCSC's version of Athena. Users can be fingered by username, first
+	name, or last name. Undergrads, grads, faculty, and some staff may
+	have accounts on cats.  Users choose their own IDs, so you must use
+	finger to get an account name.
+	As of late fall 1992, the name space of cats and ucscb have been
+	merged, so that almost all students have the same userid on both
+	systems.  However, there are (and will likely always be) separate
+	accounts on the 2 systmes that use the same name - so there will
+	remain differences between mailing to SomeAddress@cats and
+	SomeAddress@ucscb.
+
+Univ. of California/San Diego (UCSD):
+	The primary mail gateway is ucsd.edu. This machine also has a
+	smart finger program, which will look up names that sound similar
+	to the one you fingered. Just "finger name@ucsd.edu".
+
+	Most usernames are the initial of the first name followed by the
+	last name, truncated to 8 characters, ie. "jfowler@ucsd.edu", but
+	this is not always the case (because most people don't like their
+	names truncated).
+
+	Machine sdcc13 houses the student personal accounts at present, but
+	mail to ucsd.edu will reach (almost) everyone on sdcc13.ucsd.edu.
+
+	If the person is a graduate student, faculty member, or staff
+	member try: weber (social sciences), cogsci (guess), bend
+	(linguistics), crl (some developmental psychology people).
+
+	Many, many other machines house course, faculty, staff, and research
+	accounts.  Your best bet is to look the name up at ucsd.edu.
+
+Univ. of Central Florida (Orlando)
+	CS dept: only grad students are given accounts. finger
+	  lastname@eola.cs.ucf.edu
+	Engineering: finger initials@apocalypse.engr.ucf.edu
+	General: ucf1vm.cc.ucf.edu.  (A bitnet node, so you cannot finger)
+
+Univ. of Chicago:
+	Undergraduates: midway.uchicago.edu (formerly tank.uchicago.edu)
+	  (midway.uchicago.edu serves as a mail server for machines
+	  named quads.uchicago.edu and ellis.uchicago.edu. When midway
+	  refuses connections, finger at quad or ellis.)	
+	Grads and faculty may also be on quads and ellis.
+	CS Grads: gargoyle.uchicago.edu
+	Math: zaphod.uchicago.edu
+	Education: paideia.uchicago.edu
+	Chemistry: pico.uchicago.edu
+	Astronomy: oddjob.uchicago.edu (finger lastname)
+	Social sciences (Economics, History, Sociology, Political Science):
+	  cicero.spc.uchicago.edu [also accepts 'finger']
+	Also Try: uchep.uchicago.edu
+
+	Many researchers have accounts on rainbow.uchicago.edu, in
+	  addition to having accounts on their own workstations.
+	The University of Chicago now (fall91) runs the ph mail
+	  system, so sending mail to finitial-lastname@uchicago.edu will
+	  work if they've entered a real mailbox into their ph entry. 
+	  In case of name conflict, add additional initials beyond the
+	  first. Questions should be directed to advisor@midway.uchicago.edu.
+	  Unfortunately few people bother to input their e-mail addresses.
+
+Univ. of Chile (Universidad de Chile) (in Santiago, Chile, South America):
+	Mathematics and Physical Sciences Campus (includes engineering)	
+ 	  All students that ask for an account can get one on araucaria:
+ 	    araucaria.cec.uchile.cl (Sun 690MP), uchcecvm.bitnet (IBM 390)
+ 	  All students that have a class involving computers get an account on:
+ 	    cipres.cec.uchile.cl    (Sun 690MP)
+	  Professors, researchers, and research assistents:
+	    tamarugo.cec.uchile.cl  (Sun 690MP)
+	Computer Science (Departamento Ciencia de la Computacion)
+	  All Computer Science students and professors have an account on:
+	    dcc.uchile.cl           (Sun 4/470)
+	  Professors, researchers, and grad students of Computer Science
+	    tortel.dcc.uchile.cl    (Sun SS II)
+	  For more information access the gopher server (using normal gopher
+	  access or telnet/rlogin with login name "gopher") on tortel.
+
+Univ. of Colorado/Boulder:			Changed: Tue Feb 23 1993
+	Finger name@colorado.edu, where name is lastname, firstname, or
+	  firstname-lastname.  At the upper right of the directory information
+	  is a username and machine; their address is then
+	  username@machine.colorado.edu
+	Telnet to directory.colorado.edu, using username "directory".
+	This lets you access the online phonebook/email address book.
+
+Univ. of Connecticut:
+	uconn.edu
+	userid@nicky.uconn.edu
+	CS Undergrads: ug1.eng1.uconn.edu
+	CS Grads and Faculty: cse1.cse.uconn.edu 
+	CS Research and Grads: sparc0.brc.uconn.edu
+
+Entries beginning with Univ. of D may be found in the next posting
+(file .../college-email/faq3.text via anonymous FTP).
+
+;;; *EOF*
+-- 
+Software Technology Laboratory      dalamb@qucis.queensu.ca (David Alex Lamb)
+Computing and Information Science   phone: (613) 545-6067
+Queen's University, Kingston, Ontario, Canada K7L 3N6	
+
+From dalamb@qucis.queensu.ca Tue Mar  2 10:29:15 1993
+Newsgroups: soc.college,soc.net-people,soc.answers,news.answers
+From: dalamb@qucis.queensu.ca (David Lamb)
+Subject: FAQ: College Email Addresses 3/3 [Monthly posting]
+Followup-To: poster
+Supersedes: <faq3_727708213@qucis.QueensU.CA>
+Reply-To: dalamb@qucis.queensu.ca
+Organization: Computing & Information Science, Queen's University
+Date: Wed, 24 Feb 1993 13:10:32 GMT
+
+Archive-name: college-email/part3
+Last-Modified: Tue Feb 23 16:53:32 1993 by David Lamb
+Version: 3.26
+
+This is the last third of the summary of how to find email addresses
+for undergraduate and graduate students, faculty and staff at various
+colleges and universities. 
+
+;;; ********************************
+;;; Email Database: U-Z ************
+;;; ********************************
+
+Univ. of Dayton (Ohio):
+	School of Engineering: udecc.engr.udayton.edu
+	CPS: udcps3.cps.udayton.edu
+	General: udavxb.oca.udayton.edu
+
+Univ. of Delaware:
+	All undergraduate students, graduate students and faculty have
+	accounts on the university system. The computer name is 
+	   brahms.udel.edu
+	also there are chopin.udel.edu, bach.udel.edu and ravel.udel.edu, but
+	these are redundant because they share accounts and files with brahms.
+	The login name is a random 5-digit number until the user changes it,
+	then it is whatever the user picks. Fingering last names will work to
+	find the login name, but since there are thousands of accounts, it may
+	produce an overload of information.
+
+	The College of Marine Studies maintains a computer system. Students
+	and faculty have accounts with login names of their choosing on
+	several computers, such as
+	   earthview.cms.udel.edu
+	   mingming.cms.udel.edu
+	   chester.cms.udel.edu
+	There are several other sparcstations around but they share accounts
+	with the ones named above. 
+
+Univ. of Florida (Gainesville, FL):
+	Finger lastname@wasp.eng.ufl.edu. Contains complete listings
+	for people in the College of Engineering, and some listings
+	for people in other departments.
+
+Univ. of Houston (Houston, Texas)			Changed: Mon Feb 15 1993
+	Host: cs.uh.edu.: All graduate students, staff, and faculty in the CS
+	  dept.  have accounts on cs.uh.edu. Undergrads have accounts on
+	  either menudo.uh.edu (Unix) or jetson.uh.edu (VAX).
+	Try "finger lastname@cs.uh.edu" for information on graduate students,
+	  staff, or faculty. Use "finger lastname@menudo.uh.edu" or "finger
+	  lastname@jetson.uh.edu" for undergrads.
+	Anonymous ftp host: beethoven.cs.uh.edu (129.7.5.180)
+	Undergraduate and graduate information can be found under pub/gradinfo.
+	To request for information and/or application forms, send name and
+	  address to gradinfo@cs.uh.edu
+
+Univ. of Illinois, Urbana-Champaign:		Changed: Tue Feb 23 1993
+	In general, finger name@uicc.edu, where name can be firstname,
+	  lastname, or firstname-lastname
+	CS: try mail to lastname@cs.uiuc.edu or flastname@cs.uiuc.edu
+	Campus: try mail to f-lastname@uiuc.edu and firstname-lastname@uiuc.edu 
+	Student Accounts: As of Fall 1992: ux4.cso.uicc.edu (those entering
+	  before then have accounts on uxa.cso.uiuc.edu)  Every freshman gets
+	  an account on this machine. Usernames are usually flastname (old
+	  accounts were the user's three initials, followed by five random
+	  characters.)
+	CS/Grad Stud Research: m.cs.uiuc.edu (Encore Multimax)
+	Math (Grads, Faculty, Staff): lastname@math.uiuc.edu
+	Classes: ux1.cso.uiuc.edu, hendrix.ece.uiuc.edu
+	   (Purely instructional. 1 semester accounts on this machine.)
+	Faculty: are mostly on ux1.cso.uiuc.edu
+		whois -h uiuc.edu <names>
+
+	It is usually possible to send mail to f-lastname@uiuc.edu or
+	firstname-lastname@uiuc.edu. If that fails, you will get a
+	message which tells you why the email could not be sent.
+
+	From BITNET, it is possible to get information about any student by
+	executing the command 'TELL PHSERVE AT UIUCVMD firstname
+	lastname RETURN ALL.'
+
+Univ. of Illinois/Chicago: uicvm.cc.uic.edu (userids of the form Uxxxxx)
+
+Univ. of Iowa:
+	Engineers - on the Apollo ring
+	          - @icaen.uiowa.edu
+	          - First Inital Middle Initial Last Name        
+	Others    - @weeg.uiowa.edu        
+
+
+Univ. of Kansas:
+	Student Accounts: kuhub.cc.ukans.edu
+	Most user ID's are their last names (first 6 letters).
+
+Univ. of Kentucky:
+       The WHOIS server at UK maintains user databases for the following 
+       Kentucky universities:
+
+	University of Kentucky, Lexington, KY
+	University of Louisville, Louisville, KY
+	Morehead State University, Morehead, KY
+	Murray State University, Murray, KY
+	Transylvania University, Lexington, KY
+	Western Kentucky University, Bowling Green, KY
+	Eastern Kentucky University, Richmond, KY
+	Northern Kentucky University, Highland Heights, KY
+
+       SENDING COMMANDS TO WHOIS
+       =========================
+
+       If you have BITNET access, you can query the WHOIS server interactively,
+       using the TELL command.  For instance:
+	       TELL WHOIS AT UKCC WHOIS FOOBLE
+		    or
+	       TELL WHOIS AT UKCC GUESS AT NKU BOOGLE
+
+       If you don't have access to BITNET, you can query the WHOIS server via 
+       electronic mail.  Send your email to whois@ukcc.uky.edu, and place your
+       commands in the body (NOT the Subject line) of the message. The HELP
+       command will send you back a full list of commands.
+
+
+UNLV:
+	Student Accounts: redrock.nevada.edu
+	uns-helios.nevada.edu is used by some students, but may be
+	changing into a research machine.
+
+Univ. of Louisville: @ULKYVX.BITNET
+
+Univ. of Maine:
+	Campus mainframe: username@maine.bitnet
+	CS Faculty and Students: userid@gandalf.umcs.maine.edu
+
+Univ. of Maryland:
+
+	All students (grad and undergrad) may request an account on
+	wam.umd.edu (Workstations At Maryland).  All undergrads (and
+	probably graduate students too) may request accounts on
+	eng.umd.edu; most engineering graduate students have accounts
+	on eng.umd.edu. Finger using the lastname at these hosts.
+
+	CS Faculty/Staff/Graduate Students: cs.umd.edu
+
+	telnet info.umd.edu and login as lookup for faculty/staff
+	E-mail directory.  Campus has universal faculty/staff E-mail
+	on info.umd.edu (aka umail.umd.edu).  Whois and finger do not
+	work off campus for this computer, though.  If you know the name, try 
+	firstname_lastname@umail.umd.edu.
+ 
+Univ. of Massachusetts/Amherst:
+	Students/Faculty: first.{mi.}last@student.umass.edu (This is
+	on the CDC Cyber NOS/VE system.) Another common format is
+	first.{mi.}last@saturn.ucc.umass.edu. Saturn is the name
+	of the computer. Many people, especially faculty, have a 
+	departmental abbreviation in place of "student" or
+	"saturn.ucc".
+	Graduate CS students: cs.umass.edu Username is person's lastname.
+	Intro CS courses: S#######@tethys.ucc.umass.edu, where #######
+	is a 7-digit student number. 
+	Engineering: {fi}lastname@ecs.umass.edu. Names defaults to
+	last name, but may include the first initial if the last name
+	is not unique.
+	Student directory service: (413)-545-1515 for finding a phone number.
+
+Univ. of Massachusetts/Lowell:
+	All CS students and University UNIX users are generally
+	addressable as flllllll@cs.ulowell.edu. Adjustments are made
+	for conflicts such as adding the middle initial after the
+	first, or adding additional letters from the first name.
+
+	Not all students automatically get accounts on the VMS system,
+	but if they do they can be addressed as llllllf@woods.ulowell.edu.
+	Finger works on this machine, but isn't very informative. If there is 
+	a name conflict, they will add letters from the first name or numeric
+	digits (1, 2, etc.) until it is unique.
+
+
+Univ. of Michigan:
+	The best place to try to find an e-mail address for a faculty,
+	students, and staff at U-M is via the X.500 White Pages service.
+	There are many ways in which this can be accessed, but one easy
+	way is through finger (finger firstname.lastname@umich.edu).
+	(The X.500 Directory also contains business addresses, business
+	phone numbers, titles, and home addresses and phone numbers in
+	the case where the person has granted such permission.)
+	If the person has registered an e-mail address, it will appear;
+	if the person has not, follow the advice of the X.500 server and
+	try fingering the person at um.cc.umich.edu (the mainframe),
+	caen.engin.umich.edu (the College of Engineering mail hub), or
+	med.umich.edu (the Medical Campus mail hub).
+
+	People with accounts on um.cc.umich.edu also have a Bitnet
+	address:  USERxxx@UMICHUM.BITNET where 'xxxx' is the person's
+	account on the mainframe.
+
+	A database of U of Michigan student and faculty phone numbers
+	and addresses (not email addresses, just phones) is available through
+	the "gopher" server running at gopher.uis.itd.umich.edu port 70, also 
+	available via telnet to gopher.micro.umn.edu (login: gopher) in the
+	"Other gophers" menu or the "phone books" menu. This gopher
+	phone number database has been changed to access X.500.
+
+	Grad students in EECS get accounts on eecs.umich.edu. (The
+	specific machine names are dip and zip, but eecs forwards
+	appropriately.)
+
+	Usernames are either lastname, or of the form Fname_Lname.
+	313- ann arbor info 764-1817 998-7999
+
+	If all else fails, you can always mail the request to the U-M
+	postmaster at postmaster@umich.edu.
+
+	Alternately:
+		telnet to 35.1.48.149 35.1.48.150 or hermes.merit.edu
+		press return until you get a "Which Host?" prompt
+		type FINGER UM <return> NAME <return>
+		to get finger information for NAME
+
+Univ. of Minnesota:				Changed: Mon Feb 15 1993
+	In general, try fingering fname.mname.lname@umn.edu.
+
+	CS Grad students: @cs.umn.edu.  General policy is "last name as
+	account name, plus first and middle initials if that's not unique",
+	but there *are* exceptions.
+
+	Undergrads in technical majors will have temporary accounts on
+	staff.tc.umn.edu or vx.cis.umn.edu.  The account names are serialized
+	so aren't useful in finding out names.  Recently (as of late 1992)
+	most class accounts are on mermaid.micro.umn.edu, and are named.  All
+	Twin Cities campus students have e-mail on student.tc.umn.edu, whether
+	they know it or not.
+
+	Chemistry (faculty, staff, grads): lname@chemsun.chem.umn.edu
+	The login is usually the person's last name, although there
+	are some exceptions.
+
+	Statistics: umnstat.stat.umn.edu.  Userid varies; use finger.
+
+Univ. of Missouri/Rolla:
+	cs.umr.edu
+
+Univ. of Missouri/St. Louis:
+	CS: arch.umsl.edu 
+	    This machine isn't fingerable, but its address info is
+	    available by fingering at aber.umsl.edu.
+
+	Undergrads: clemens.umsl.edu, twain.umsl.edu
+	The id can be obtained by fingering either of these machines using the
+	last name of the student.
+
+Univ. of Montreal				Changed: Mon Feb 15 1993
+	General: username@ere.umontreal.ca
+	Usernames are typically last names (maximum = 8 letters).
+
+Univ. of Nebraska at Omaha:
+       Undergraduate Students and Faculty: zeus.unomaha.edu (unoma1.bitnet)
+	 Main academic VAX running VMS.
+	 All computer science students receive academic accounts of the
+	 form CCXXX where CC is a 2-character class code and XXX is a number
+	 from 000 (usually the instructor) up to 999 (usually smaller than
+	 050 in practice).  These accounts are reset each semester
+       
+	 Permanent accounts are also on Zeus, usually a last name or
+	 nickname.  Permanent student accounts are of the form ZAXXX
+	 for unaffiliated students, or organizational forms like ACMXXX
+	 and IEEEXXX for members of their respective student organizations.
+
+	 Any undergraduate student who asks nicely can get a ZA account,
+	 or an organizational account if they are a member.
+
+      Graduate Students and Faculty: odin.unomaha.edu
+	Main campus Unix workstation (running DEC Ultrix)
+	Finger by login ID (usually some form of the name) or by proper name.
+
+	Any graduate student or senior undergrad pursuing an academic
+	project can get an Odin account.
+
+      Math/CS Students and Faculty: unocss.unomaha.edu (not fingerable)
+
+      UNO Chapter of the Association for Computing Machinery: acm.unomaha.edu
+	All members have accounts, usually some form of the name (not 
+	fingerable, this computer is also the former unocss.unomaha.edu in
+	case you haven't guessed).  Polite mail to postmaster@acm.unomaha.edu
+	may yield information about an ACM member or math/CS student.
+
+Univ. of Nebraska at Lincoln:
+	Engineering: engvms.unl.edu
+	Computing Staff and some students: crcvms.unl.edu
+	CS students: cse.unl.edu
+
+	All students above the classification of sophomore have name accounts
+	on cse.unl.edu (first initial appended to the last name) but you can
+	also finger the machine.
+
+Univ. of New Brunswick: (Fredericton, NB, Canada)
+
+	Computing Services: csd.unb.ca
+
+	All students are automatically given MUSIC accounts on the VM
+	service and can send and receive mail, however, there is at
+	present no easy way to determine the MUSIC id knowing the name
+	of the student.  Depending on course requirements, students may
+	also have accounts on the MVS or UNIX systems.
+
+	Requests for non-student userids can be sent to our on-line
+	directory server.  Send mail to Directry@UNB.Ca, If the 1st
+	non-blank line of the mail is Help or Find name, the name will be
+	searched and the results mailed back to the address in the From:
+	field of the mail.  The server is bilingual (English/French) and
+	will also respond to the commands Aide or Recherche name.
+
+	MVS machine:	unbmvs1.csd.UNB.ca
+	VM machine:	unbvm1.csd.UNB.ca
+	UNIX machine:	jupiter.sun.csd.UNB.ca	(finger works)
+
+
+Univ. of New Hampshire:
+	
+	General university users: unhh.unh.edu (same as
+	hilbert.unh.edu).  User names, both student and staff, are
+	generally of the form F_LAST where F is the person's first
+	initial and LAST is the person's last name.  
+
+	CS class accounts and undergrad CS: kepler.unh.edu.  User
+	names are usually the person's initials (sometimes postfixed
+	by a 3 digit course number for intro classes).
+
+	Grad CS and Faculty:  cs.unh.edu.  With only a few exceptions,
+	all logins are the person's initials.
+
+Univ. of New Mexico
+	Try finger lastname@carina.unm.edu.  User names are usually of the
+	form FLLLLLLL (8 characters max).  Accounts may be on many different
+	hosts within unm.edu but the finger database on carina seems to know
+	where all the accounts are.  If carina is unavailable try vesta.
+
+Univ. of North Carolina at Chapel Hill:
+	CS: All CS students get an account on the network of workstations.
+	The login is usually just the first 8 characters of the student's
+	last name. Name conflicts are usually resolved by appending
+	the first initial and/or the middle initial to the last name.
+	Mail may be sent to username@cs.unc.edu. You may finger both by
+	userid and real name at cs.unc.edu.
+	Faculty and Staff: One can get an email address from the online
+	phonebook. 
+	   telnet to 128.109.157.1
+	   login as info
+	   follow the menus to Campus Directory
+	OR
+	   telnet to 128.109.157.150
+   	   a couple of returns
+ 	   at '#' prompt type info
+	   follow menus to Campus Directory
+	Medical School: students, staff, and faculty.
+		finger name@boone.med.unc.edu 
+		finger name@winton.med.unc.edu 
+	(They alternate each incoming year between the 2 servers to 
+	parcel out disk space better, so fingering @med.unc.edu won't
+	work. However, once you know the user id, send mail to
+	user@med.unc.edu.) 
+
+
+Univ. of North Carolina at Charlotte:
+ 	userid@mosaic.uncc.edu
+	Userids are of the form fmlastname.
+
+Univ. of North Dakota: see North Dakota Network
+
+Univ. of North Florida
+	CS undergrads, grads, faculty: flast@unf6.cis.unf.edu, where last may
+	  be limited to 6-8 characters.
+	Information Science undergrads: unf1vm.cis.unf.edu.  Unfortunately
+	  names are assigned randomly, so it's nearly impossible to guess
+	  unless you already have contact with someone.
+	Others generally don't have accounts unless they ask for them.
+
+Univ. of Notre Dame:
+
+	The University of Notre Dame now supports full name human readable
+	e-mail addresses, such as John.Q.Student.1@nd.edu.  All members
+	of the Notre Dame community have e-mail addresses on nd.edu; however,
+	at this time (June, 1992) the vast majority of them are
+	"uninitialized".  This means the user has not specifically told the
+	server how to deliver e-mail to this user, so e-mail to this user will
+	fail.
+
+	All members of the Notre Dame community also have userids in our AFS
+	file space.  Userids in this file space tend to be of the form
+	flllllll or flllllln.  Some users who use the AFS file system might
+	not have initialized their entries on the nd.edu name server;
+	conversely, many community members who can receive mail via nd.edu
+	ignore their AFS userids.
+
+	Notre Dame also has many other central and departmental computer
+	systems which can send and receive e-mail.  As more and more users
+	initialize their nameserver accounts there will be less need to
+	remember these specific local systems and userids.  However, for the
+	time being, they are often the best addresses for some members
+	of the Notre Dame community.
+
+	All students are given accounts on darwin.cc.nd.edu, but not
+	all students use them. Usernames are of the form flllllll. In
+	case of name conflicts, numbers are added to the end to disambiguate.
+
+	Questions can be sent to info@nd.edu.
+
+Univ. of Oklahoma/Norman:
+	flllllll@uokmax.ecn.uoknor.edu
+
+Univ. of Oregon:
+	CS Grads and Faculty: <username>@cs.uoregon.edu
+	CS Undergrads/CIE: <username>@cie.uoregon.edu (this is only
+	for CS undergrads subscribing to the campus information
+	exchange) 
+	Others?: fmlast@oregon.uoregon.edu for those with email accounts
+	U-mail:	first.middle.last@oregon.uoregon.edu for those without
+	email. Such letters are printed out with a cover sheet and
+	delivered through the normal campus mail system (graduate
+	students, staff, and faculty only -- undergrads do not have
+	on-campus addresses).
+
+Univ. of Pennsylvania:
+	Undergrad engineering, SEAS course accounts: eniac.seas.upenn.edu
+	Undergrad/Grad Business: wharton.upenn.edu
+ 	  (all business students can get an account if they want one)
+	  Lastname plus two number identification string (arbitrary)
+  	Grad CS: grad1.cis.upenn.edu
+	CS faculty/staff: central.cis.upenn.edu
+	Medical School: lastname_firstinitial@a1.mscf.upenn.edu
+		Medical students, biomed grad students, and some faculty
+		have accounts on this system.
+
+	Try whois -h whois.upenn.edu lname, or
+	    whois -h whois.upenn.edu ?      for help.
+
+Univ. of Pittsburgh: 
+	Students get their choice of Unix or VMS accounts, addressed
+	as user@unix.cis.pitt.edu and user@vms.cis.pitt.edu,
+	respectively. Student user names are of the form fmlst, where
+	fml are their initials and "st" stands for "student". To
+	finger the VMS accounts you must finger at vm1.cis.pitt.edu or
+	vm2.cis.pitt.edu. Mail addressed to user@cis.pitt.edu won't be
+	rejected, but doesn't seem to be readable for the user's VMS account.
+	Computer Science	: cs.pitt.edu
+	Electrical Eng		: ee.pitt.edu
+	Library & Info Science  : lis.pitt.edu
+	Medical School          : med.pitt.edu
+
+Univ. of Rochester:
+	Undergraduate, Student Staff, and a few others: uhura.cc.rochester.edu 
+	    (fingerd has been re-enabled on uhura, but will be permanently
+	     disabled if finger attacks resume)
+	All incoming students now receive accounts on uhura - but whether they
+	    use them is another matter.
+	Graduate CS: cs.rochester.edu 	
+	Class Accounts, Faculty, and Graduate:  troi.cc.rochester.edu 	
+	Psychology: prodigal.psych.rochester.edu
+
+	Anyone _who does not already have an account on another
+	machine_ can also get an account on db1.cc.rochester.edu (vax). 
+ 
+	Whois server: whois -h db1.cc.rochester.edu <name> 
+		Gives phone but not email for most faculty and staff at the
+		University of Rochester and Strong Memorial Hospital.
+
+	Userids are set up as follows: (Where xxxx is a 4 letter code based on
+	your name, yyy is a 3 character random code and DPCRN is
+	DePartment, Course Reference Number)
+	   xxxx_ltd:  Standard account before August 1992; anyone can get one 
+	   flnnnx:    Standard accounts for incoming students and all new
+	              limited accounts. (fl initials, nnn a number, x a letter)
+	   xxxx_ss:   Student Staff
+	   xxxx_eng:  Some english accounts
+	   xxxx:      Usually system staff or administrators
+	   yyydpcrn:  Class accounts (I.E. aa1CS100 would be a computer science
+		      100 class account, aa1eg150 would be English 150, etc...)
+
+	Anyone who has an account on db1 can also mail/post from the following
+	hosts: db{2,3,4,5,6,7}.cc.rochester.edu
+
+Univ. of Saskatchewan:
+	Whois server available on access.usask.ca. Not a definitive 
+	list. Undergraduates generally do not have mail access and are
+	not registered with the whois server.
+	Other queries should be addressed to postmaster@sask.usask.ca.
+
+Univ. of Scranton, (Scranton, PA):
+
+	All students are entitled to free accounts, many students don't
+	use them.  Generally, all math, CS, engineering, accounting and
+	psychology majors use VAX accounts. Fingering by first and last
+	names works.
+
+	Students:  fmlxx@jaguar.uofs.edu   where f is first initial, m is
+	middle initial and l is last initial, and XX is a number usually
+	between 1 and 20, but sometimes higher.
+
+	Faculty:  lastname@jaguar.uofs.edu  lastname is sometimes followed
+	by a number but usually not.
+
+Univ. of South Carolina (Columbia, SC):
+
+	Graduate CS : usceast.cs.scarolina.edu,calvin.cs.scarolina.edu
+	Graduate ECE: charlie.ece.scarolina.edu
+
+Univ. of Southern California:
+	General: usc.edu
+	Undergrad: aludra.usc.edu
+		   nunki.usc.edu
+		   usc.edu
+		   girtab.usc.edu
+		   phakt.usc.edu
+	Graduate:  pollux.usc.edu
+		   chaph.usc.edu
+	Robotics:  iris.usc.edu
+	Faculty:   pollux.usc.edu
+	Computing Staff:     skat.usc.edu
+	Others: merlin.usc.edu and castor.usc.edu 
+
+Univ. of Southwestern Louisiana:
+
+	The entire campus population has the option to participate in
+	electronic mail.  One system is reserved for campus communications,
+	but users can recieve mail directly at other machines without
+	participating in the centralized system.
+
+	Name look-up:
+	   telnet usl.edu     -or-   telnet bss.usl.edu
+	   login as user "motd"
+	   select terminal type - type dumb exists if you must!
+	   select motd program - "mail-directory"
+	   for name search - n <CR>
+	   enter partial name then <CR>
+	   use "f" and "b" to flip pages
+	   second column is user mail address
+	   enter "a" or "c" to end program
+
+	Sending mail:
+	   mail to address  abc1234@usl.edu
+	   accounts typically are initials and last four digits of
+	   university ID # 
+
+	Users can also have easy to remember aliases setup, ask when you make
+	contact.  Users receiving mail at usl.edu may forward their mail to a
+	machine they use more often, you will be notified after 24 hours if
+	usl.edu can not forward the mail to its destination.
+	
+	Users who do not participate in the centralized mail system can have
+	independant mail address on campus.  Typically locations are ...
+
+	CS/CE Grads:              gator.cacs.usl.edu, swamp@cacs.usl.edu
+	CE Grads:                 a2fay.cacs.usl.edu
+	Undergrads & other grads: ucs.usl.edu, ea.usl.edu
+
+Univ. of Texas/Austin:
+	Student/Faculty/Staff: walt.cc.utexas.edu, happy.cc.utexas.edu
+	(these are NFS Sun2's).
+	Class Accounts: ix1.cc.utexas.edu, ix2.cc.utexas.edu,
+	emx.utexas.edu
+	CS: cs.utexas.edu
+	ECE Research Group: unga-gw.ece.utexas.edu, ece.utexas.edu
+	Chemical Engineering (Grads, Faculty): che.utexas.edu
+
+	The University of Texas at Austin maintains an online database which
+	contains, among other things, a Faculty/Staff/Student directory.
+	Telnet to utcat.utexas.edu to log on, hit a couple of returns, and
+	just follow the prompt to get to the directory.
+
+Univ. of Texas/Dallas:					Changed: Tue Feb 23 1993
+	fllllll@utdallas.edu
+	finger <part of person's name>@utdallas.edu
+	  lists all the matching full names and the corresponding user ids.
+	For more information about most of the graduate students (irrespetive
+	of major), staff and professors, use:
+	  finger <user id>@apache.utdallas.edu
+
+Univ. of Texas/San Antonio:
+	Student/Faculty/Staff: lonestar.utsa.edu
+	CS: ringer.cs.utsa.edu
+	Usernames are typically first initial last name except 
+	for faculty usernames on ringer which are last name only.
+
+Univ. of Toronto: (Toronto, Ontario, Canada)
+        The University has two domains: toronto.edu and utoronto.ca.
+	  Generally, undergraduates are not given free accounts unless if
+	  they are in Engineering or Computer Science.  Undergraduates that
+	  do research with any of the departments listed below will usually
+	  get an e-mail account.  Fingering is available in almost every site.
+	Astronomy Department: astro.utoronto.ca
+	Botany Department: botany.utoronto.ca
+	Chemistry Department: alchemy.chem.utoronto.ca
+        Computer Science Department: cs.utoronto.ca
+        Computer Systems Research Institute: csri.utoronto.ca
+        C.S. Undergrads (Computing Disciplines Facility): cdf.utoronto.ca
+        Engineering Computing Facility: ecf.utoronto.ca
+	Geography Department: geog.utoronto.ca
+	Geophysics Department: mantle.physics.utoronto.ca
+	Geology Department: geology.utoronto.ca
+	Library and Information Science: flis.utoronto.ca
+	Mechanical Engineering: me.utoronto.ca
+	Mathematics Department: math.utoronto.ca
+	Pharmacy/Medicine: phm.utoronto.ca, med.utoronto.ca
+	Physics Department: physics.utoronto.ca
+	Psychology Department: psych.utoronto.ca
+	Scarborough College: scar.utoronto.ca
+	Statistics Graduates and Professors: utstat.utoronto.ca
+	Zoology: zoo.utoronto.ca
+
+Univ. of Trondheim (Norway)
+	Students at the University of Trondheim can be reached at the
+	following mail adresses:
+	  NTH (Norw. Inst of Techn.) : userid@solan.unit.no
+	  AVH (Coll. of Arts and Science) firstname.lastname@avh.unit.no
+	A postmaster service exists at both sites.  Employees and
+	students at AVH can also be found in the EAN Directory Service.
+
+	The Norwegian Institute of Technology, aka NTH (Norges Tekniske
+	Hoegskole).  All students at NTH have the right to open an account on
+	the the email machines, but this right is not very heavily advertized,
+	so most people don't use the machines.  Login names may be FLLLLLLL,
+	LLLLLLLL, FFFFFFFF, FMLLLLLL, or (for people with very common first
+	and last names) MMMMMMMM (8 characters maximum).  FLLLLLLL is probably
+	the most common; MMMMMMMM and especially FMLLLLLL is probably quite
+	rare.  LLLLLLLL and FFFFFFFFF may be used if the user's last or first
+	names are not not very common, especially if they are foreign.
+
+Univ. of the Pacific:
+	@madvax.uop.edu, @uop.uop.edu
+	Usernames are a name and an initial (in any order) or just a
+	name (i.e., Joe Smith could be jsmith, joes, or joe). Contact
+	postmaster for help with finding someone.
+
+Univ. of Ulm (Ulm, Baden-Wuerttemberg, Germany):
+	Main campus system: rzmain.rz.uni-ulm.de. Everyone can get accounts on
+	  this VAX-cluster, but not everyone does.
+	  Students: S_lastname@rzmain.rz.uni-ulm.de
+	  Other: Lastname@rzmain.rz.uni-ulm.de
+	  Contact address: system@rzmain.rz.uni-ulm.de
+	Computer Science:
+	  Undergraduates: login@pcpool1.informatik.uni-ulm.de; login names
+	    consists of maximal 6 letters of the last name and the first and
+	    last letter of the first name, e.g. muellehs for Hans Mueller
+	  Contact address: patzel@informatik.uni-ulm.de
+	  Graduate Students and Faculty: lastname@informatik.uni-ulm.de
+	  Neuroinformatik: lastname@neuro.informatik.uni-ulm.de
+	Mathematics:
+	  Undergraduates: CFLLLLLL@colossix.mathematik.uni-ulm.de: C
+	    represents the course (P: Programmieren, S: Software, W:
+	    Wahlpflicht, F: Fan), F the first letter of the first name, and
+	    LLLLLL up to six letters of the last name
+	  Graduate Students and Faculty: lastname@mathematik.uni-ulm.de and
+	    firstname.lastname@mathematik.uni-ulm.de; finger
+	    lastname@laborix.mathematik.uni-ulm.de is possible
+	  Contact address: borchert@mathematik.uni-ulm.de
+	Botanical Science: Contact address: hoppe@rzmain.rz.uni-ulm.de
+	School of Medical Documentation:
+	  Students: logins are owned by groups of two students each:
+	    FFFFSSSS@smdmv2.klinik.uni-ulm.de, FFFF represents the first four
+	    letters of the first member and SSSS of the second member of a group
+	  finger lastname@smdmv2.klinik.uni-ulm.de is supported
+	  Contact address: smd@smd.klinik.uni-ulm.de
+
+Univ. of Utah: 
+      For accounts being managed by the University of Utah Computer Center,
+      and any accounts that the department have turned in to the center, the
+      directory is on
+	 PH.CC.UTAH.EDU
+      and is accessible via the internet PH protocol.  It is also accessible
+      via the GOPHER program and it's related protocols.  A limited version
+      is availiable via the finger server at PH.CC.UTAH.EDU It is from this
+      directory that the printed e-mail directory is made.
+
+	CS Graduate Students: asylum.utah.edu
+	CS Undergraduate Students: peruvian.utah.edu
+	Pre-majors: cadehp0.eng.utah.edu
+	CS Department: cs.utah.edu is the cs department main machine,
+	  for faculty, staff, and grads.
+
+	Lots of departments have machines: [Very incomplete list]
+	Elec. Eng.: 	ee.utah.edu
+	Mathematics: 	math.utah.edu
+	Physics: 	physics.utah.edu
+	Chemistry:	chemistry.utah.edu    
+	Chem. Eng.:	che.utah.edu
+	Mech. Eng.:	mech.utah.edu
+	Civ. Eng.:	civil.utah.edu
+	Biology:	biology.utah.edu
+	Mining:		mines.utah.edu
+
+	postmaster@xanadu.cc.utah.edu  is the postmaster for more than half of
+		  the email accounts on campus, but not any cs machines.
+	postmaster@cs.utah.edu   is postmaster for CS machines
+	postmaster@m.cc.utah.edu is postmaster for most unassigned students
+	postmaster@science.utah.edu  is postmaster for College of
+		Science Machines. 
+	postmaster@cc.utah.edu gets most unassigned departments.
+	postmaster@m.cc.utah.edu gets most unassigned students.
+	postmaster@cave.cc.utah.edu  gets cavers and most imaginary users.
+
+	The medical center handles their own stuff separately, but
+	they often appear in the online directory at ph.cc.utah.edu
+
+Univ. of Vermont:
+	There are two main computing organizations on campus: 
+	UCS (University Computing Services) and
+	EMBA-CF (Division of Engineering, Mathematics, and Business
+	Administration, Computer Facility).  As a general rule, 
+	people with accounts at EMBA-CF do not bother to obtain accounts at
+	UCS.  UVM's domain name is `uvm.edu', and sub-domains are not
+	generally used.  Most of the UVM network has most TCP ports blocked
+	off, but one machine, emily.uvm.edu, can serve as a gateway for, for
+	example, the finger program,  (i.e., finger
+	someone@somehost@emily.uvm.edu.) 
+
+	UCS has three main machines: uvmvax.uvm.edu (UVMVAX.BITNET),
+	uvmvm.uvm.edu (UVMVM.BITNET), and UVMADMIN.BITNET.  Accounts on UVMVAX
+	(a VMS system) are generally of the form Lastname_F; accounts on
+	UVMVM and UVMADMIN don't seem to follow any particular scheme, but
+	Lastname and LastnameF seem to be popular.  Many UCS staff people use
+	their initials.  UVMVAX supports unspecified finger only; UVMVM
+	doesn't support finger at all.
+
+	EMBA-CF supports computing for the departments of Math/Stat, Business
+	Administration, CS/EE, and Civil/Mechanical Engineering, as well as
+	the administration of the College of Engineering and Mathematics; all
+	students, faculty, and staff in the Division are entitled to an
+	account, although many students do not bother to get a
+	non-class account. Sometimes, other people may be given
+	accounts on EMBA-CF machines. 
+
+	EMBA-CF has three separate mail-spool servers, and users are free
+	to forward their mail to whichever one they happen to prefer; these
+	machines are uvm-gen.uvm.edu, hal.uvm.edu, and trantor.uvm.edu.
+	uvm-gen is also known as just plain UVM.EDU, and most faculty and
+	staff with accounts at EMBA-CF have a alias of the form
+	Firstname{.M}.Lastname installed at uvm-gen.  All other users, except
+	for class and staff accounts, are assigned by last name, with a
+	numeric suffix in case of collision.  Staff accounts for work-study
+	employees are usually of the form operfml.  Class accounts are of the
+	form ddNNNfml, where dd is the department
+	(cs,ce,me,ee,ma,st,ba) and NNN is the class number; in case of
+	collision, the class number or middle initial may be changed.
+
+	There are two sub-domains: msg.uvm.edu belongs to Mach Systems Group,
+	a group of graduate students involved porting operating systems (most
+	notably, Mach 2.5 and 3.0) to local hardware; and med.uvm.edu belongs
+	to the UVM School of Medicine, which is not very well networked as
+	yet.
+
+Univ. of Virginia:
+	More or less all students, faculty, and staff can have
+	accounts that at least receive mail, but most people don't
+	ever bother to get or use an account.  People in the School of
+	Engineering are most likely to be accessible via e-mail.  The
+	school's primary connections are Internet links to SURAnet
+	(local NSF Regional network), but there is also a single
+	BITNET link.  Almost any user can be located using the
+	Internet standard whois program and the whois database that
+	is kept on the system named: whois.virginia.edu
+	You can also try fingering lname@virginia.edu.
+
+Univ. of Washington, Seattle:
+	CS Grads and Faculty: lastname@cs.washington.edu
+
+	Most folks are on milton.u.washington.edu, which is the same as
+	u.washington.edu. Usernames can be anything. Mail sent via
+	u.washington.edu will forward to the appropriate account.
+
+	CS students, grads, and faculty can generally be looked up by last
+	name at cs.washington.edu; if not, try june.cs.washington.edu for
+	grads and faculty, and wolf.cs.washington.edu for undergrads.
+
+Univ. of Waterloo, Ontario: 
+    Userids are of of the form <initials>+<surname> (e.g. mbmulroney, ghwbush),
+	and may be any length (for most machines; some still restrict them to
+	8 characters.  Mail servers send you back a list of possible userids
+	if the one you tried doesn't match any known user.
+    Math/CS undergraduates: undergrad.math.uwaterloo.ca
+    CS graduate students: neumann.uwaterloo.ca
+    CS and Math Graduate Students: violet.uwaterloo.ca and jeeves.uwaterloo.ca
+    CS faculty may be found on one or more of the primary machines
+	{watdragon, maytag, watcgl, daisy, jeeves, grand, poppy, vlsi, watmsg,
+	  math, watserv1}.uwaterloo.ca (there are lots more)
+    Engineering undergraduate students: userid usually of form
+	<surname>+<initials> or <initials>+<surname>, at one of
+	{chemical, civil, electrical, mechanical}.watstar.uwaterloo.ca
+  	Also try @1302 and @108 for chemical, civil, electrical and mechanical
+	engineering -- these are used mainly for lower-year students
+	from all engineering departments.
+    Systems Design Engineering: watnow.uwaterloo.ca
+    Physics students: physics.watstar.uwaterloo.ca.
+    Art Students:  artspas.watstar.uwaterloo.ca.
+
+Univ. of Western Ontario, London, Ontario:
+	Computing and Communications Services operates a campus directory
+	service as well as a campus E-mail forwarding service. This covers
+	all of the faculty and staff listed in the campus telephone directory
+	as well as many students. Registration is voluntary but for faculty
+	and staff is reasonably complete and accurate.
+	  % whois -h whohost.uwo.ca name
+	  eg. whois -h whohost.uwo.ca smith
+	  eg. whois -h whohost.uwo.ca j.smith
+	  eg. whois -h whohost.uwo.ca john.smith
+	The mail forwarding service works for common names as well:
+	  % mail common-name@uwo.ca
+	  eg. mail smith@uwo.ca
+	  eg. mail j.smith@uwo.ca
+	  eg. mail john.smith@uwo.ca
+	Mail will either be forwarded to the user with that common name, or
+	if the name is not unique, you will receive a returned message listing
+	all users with that common name.
+
+Univ. of Wisconsin/La Crosse: 
+	username@uwlax.edu 
+	Usernames are arbitrary. Try fingering by the lastname.
+
+Univ. of Wisconsin/Madison:
+	Phone book server (staff only): finger lname@wisc.edu
+	CS: cs.wisc.edu
+	Engineering: cae.wisc.edu
+	Undergrads: Class accounts based on first and last name,
+	  @garfield.cs.wisc.edu.
+	For other departments, you can sometimes guess the hostname
+	  from the department name.  Thus: meteor.wisc.edu for
+	  Meteorology, math.wisc.edu for Mathematics.
+
+Univ. of Wisconsin - Milwaukee:
+   Many students - csd4.csd.uwm.edu, convex.csd.uwm.edu
+   EE ugrad and grad - ee.uwm.edu
+   CS grad - point.cs.uwm.edu
+   CS fac - blatz.cs.uwm.edu
+   Students taking Comp Sci Classes: miller.cs.uwm.edu
+
+   In fact if you finger cs.uwm.edu you get:
+
+   Computer Science users at UWM are normally on workstations or
+   other backbone computing machines. To locate a faculty member,
+   graduate student or undergraduate student, you can use the
+   finger program.
+
+   The finger program can help you locate a user who is known to the CS
+   machines at UWM. To locate a user do
+
+	   finger person-X@cs.uwm.edu
+
+	   Where   X=F|f   if the person is a CS faculty member
+		   X=G|g   if the person is a CS grad student
+		   X=U|u   if the person is a CS undergraduate student
+		   X=E|e   if the person is an Engineering student
+		   X=O|o   Other University machines(Just some of them!)
+
+   Undergraduates are for the most part on miller.cs.uwm.edu. Graduate
+   students are usually on cvax.cs.uwm.edu. To get a complete list of
+   cs-faculty, finger csfac@cs.uwm.edu.
+	
+
+Univ. of Wisconsin - River Falls:
+	uwrf.bitnet
+
+Utah State University:
+	cc.usu.edu - This is the MAIN VAX. A Vax 6510 that is usually the
+		     system that everyone uses for most purposes. Our
+		     usenet news is on this computer as well as other 
+		     utilities. This is also the system that is a bitnet
+		     node (USU). So mail can be sent to usu.bitnet as well.
+       mua.usu.edu - This is our Micro-VAX that is running ultrix. Because
+		     this is the popular domain for TinyTALK and TinyFUGUE
+		     programs, the active Gamers use this system. 
+
+	You can finger both systems, the account names are given in a random
+	fashion that consists of a five letter code. The first two
+	letters usually denoting whether the user is a student or a
+	faculty member. SL___ account belong to students and FA___
+	accounts belong to faculty members.  The easiest way to locate
+	a user is to send mail to OPERATOR@cc.usu.edu or, if your
+	system supports the bitnet SEND command, use SEND OPERATOR@USU
+	and ask them to look up the name for you.
+
+Vanderbilt University:
+	Engineering faculty and grad students: @vuse.vanderbilt.edu
+	  (most user IDs are the three initials)
+
+	Undergrads and other grad students: @ctrvax.vanderbilt.edu
+	  Most user IDs are llllllfm (8 chars max).  You can't finger
+	  on this VAX cluster; try sending mail to
+	  userserv@ctrvax.vanderbilt.edu; you should get a response
+	  within a business day or so.
+
+Vassar:
+	Students: FMLLLLLLLLLL@vaxsar.vassar.edu. (Every student is given
+	a VAX account, but few actually use them.)
+	Faculty: Faculty must request an account in order to get it,
+	but most of those who have accounts use them. Faculty
+	usernames are lastnames followed by enough letters of the
+	first name to ensure uniqueness. Their accounts are also on
+	vaxsar.vassar.edu. Fingering with the username or the lastname
+	will usually work.
+
+Virginia Tech:
+
+	Computer Science students at Virginia Tech (aka VPI or VPI&SU for
+	Virginia Polytechnic Institute and State University, normally just
+	Virginia Tech, though) can be found at:
+
+	EE: vtccts1.cc.vt.edu, eddie.ee.vt.edu
+	CS: csugrad.cs.vt.edu
+
+	Undergraduates: userid@csugrad.cs.vt.edu
+	Graduate Students: userid@csgrad.cs.vt.edu
+	Faculty: userid@vtopus.cs.vt.edu
+
+	There is also the SSI Mail account. If a person has an SSI Mail
+	account it will be: firstInitialLastName@vtssi.vt.edu. It is common
+	for undergrad students (especially non-CS) to get an SSI Mail account
+	rather than a CSU account because it doesn't cost any money.
+
+Wake Forest University:
+	llllllfm@wfunet.wfu.edu
+
+Washington University, St. Louis MO: 
+	Arts&Sciences undergrads: fmllllll@pear.wustl.edu
+	Undergrad Engineers: All have accounts on cec1.wustl.edu and
+	  cec2.wustl.edu (cec2.uucp).  Userids are the user's three initials
+	  followed by a single digit for disambiguating name conflicts. If
+	  there is no name conflict, the extra digit is a 1. Fingering from
+	  outside the university sometimes works. Also, some computer science
+	  students have accounts on wucs1, and anyone (including people
+	  outside W.U.) can have an account on maria. On these machines, the
+	  user chooses his/her own login name to be enabled. Usernames for
+	  engineering faculty are just their three initials.
+	Other Undergrads: Try wugold.bitnet
+
+Wayne State University, Detroit MI
+	All students in the University, regardless of their major or college
+	  can have access to an account.
+	Engineering: ss0.eng.wayne.edu (or nova, or ece, or any solar planet,
+	  e.g. sun, venus, ...)
+	CS: jupiter.cs.wayne.edu, zeus.cs.wayne.edu
+	These machines support finger.  Most other students' accounts
+	  are on wu.cc.wayne.edu; try 'finger partial-name@wu.cc.wayne.edu'
+	  to find information about anyone with "partial-name" in their name.
+
+Wellesley College (Wellesley, Massachusetts)
+	FLastname#@lucy.wellesley.edu, where F is first initial, and digit #
+	is used only to disambiguate (e.g. JSMITH1).  Finger not accepted from
+	remote sites.  Faculty names never get the #.
+
+Wesleyan:
+	Accounts are on eagle.wesleyan.edu. The username is of the
+	form FLname, where F is the first initial and Lname is the
+	lastname of the individual.
+
+West Chester University:
+	Users (at least undergraduates, if not others) are given 
+	accounts on a machine whose name is the same as the first
+	letter of their last name. Usernames are of the form fllllll.
+	So John Doe would be jdoe%d%wcu@isn.wcupa.edu. Send mail
+	to postmaster@isn.wcupa.edu if you have questions.
+
+West Point, the United States Military Academy
+	Host names are of the form usmaX.usma.edu, for X from 1 to 18.
+	Try 'finger lastname@host', starting with usma18 (since lower-numbered
+	machines tend to refuse a finger connection).  Actual mailboxes for
+	cadets are of the form xYNNNNCC where x is the letter x, Y is last
+	digit of graduating year (e.g. 6 for 1996), NNNN is a student ID code,
+	and CC is company (letter-digit, e.g. D4).
+
+Western Montana College
+	Try f_llllllll@wmc.edu.  This site has no finger server.
+	Address: 710 S. Pacific, Dillon, MT 59725
+
+Wheaton College:
+	UUCP: tellab5!wheaton!fmllllll
+
+Widener University:
+	General: First.Last@cyber.widener.edu (it may also need a
+	middle initial)
+	CS: lastname@cs.widener.edu
+
+Willamette University, Salem OR:
+	userid is <first initial><lastname> (e.g. ksmith) 
+	up to 8 characters
+
+	all students, faculty and staff
+	<userid>@willamette.edu
+
+Williams College:
+	williams.bitnet. Username is YYFML (YY = year, F = first
+	initial, M = middle initial, L = last initial). Some usernames
+	have a _C postpended (YYFML_C).
+	I believe this machine is vax.cc.williams.edu.
+	Williams' postmaster will not give out user ids to outside
+	requests.
+
+Worcester Polytechnic Institute: 
+	@wpi.wpi.edu
+
+Yale:
+	Fingering name@directory.yale.edu will give you all Unix people's
+	email addresses, as well as their phone numbers.  Finger
+	Finger@directory.yale.edu for further directions.
+
+	Grad CS, Undergrad CS: lastname-firstname@cs.yale.edu (yalecs.bitnet)
+
+	Undergrad Accounts (plus faculty & grad students in many non-CS
+	Graduate School depts.): LLLFFFM@yalevm.ycc.yale.edu (or
+	LLLFFFM@yalevm.bitnet). LLL is the first 3 letters of the last name,
+	FFF is the first 3 letters of the first name, and M is the middle
+	initial. Users can also request custom names.  Mail queries can go to
+	consult@yalevm.bitnet or postmaster@cs.yale.edu, as appropriate. Some
+	non-CS undergrads can be reached at lastname@minerva.cs.yale.edu.
+
+	Medical School: yalemed.bitnet
+
+York University (Toronto, Ontario)			Changed: Mon Feb 15 1993
+	Try ``finger name@yorku.ca''  using first name, last name and probable
+	  userid.  Also try ``whois -h horton.yorku.ca name'', also with first
+	  and last names. The faculty and staff phone book is available on
+	  gopher from gopher.yorku.ca and experimentally by ph from the same
+	  machine.
+	About 1/3 of the faculty and staff have email, and perhaps 1/8 of the
+	  students.
+	Faculty, Staff: userid@yorku.ca or userid@faculty.yorku.ca
+	  Userids are often first-initial last-name, but do vary.
+	Student userids do not follow a simple pattern. Students with email
+	  are on ariel,yorku.ca (computer science), glade.yorku.ca (cs and
+	  part-time students), writer.yorku.ca (computer aided writing centre)
+	  and calumet.yorku.ca. Most of these clusters are fingerable. 
+	Questions can be sent to postmaster@yorku.ca;  they're not too useful
+	  when searching for students, as there is no student phonebook.
+	  However ``whois -h horton.yorku.ca name''  discovers many student
+	  adresses.
+
+=======
+
+;;; *EOF*
+-- 
+Software Technology Laboratory      dalamb@qucis.queensu.ca (David Alex Lamb)
+Computing and Information Science   phone: (613) 545-6067
+Queen's University, Kingston, Ontario, Canada K7L 3N6	
+

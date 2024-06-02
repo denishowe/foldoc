@@ -1,0 +1,77 @@
+From bcockburn@acorn.co.uk Tue May 11 09:35:21 1993
+From: bcockburn@acorn.co.uk (Bruce Cockburn)
+Newsgroups: comp.sys.acorn
+Subject: Re: ARM-code random number generator?
+Date: 10 May 93 20:57:44 GMT
+Organization: Acorn Computers Ltd, Cambridge, England
+
+Graham,
+
+  Here is one that has been published with every ARM CPU data sheet that I
+can remember (I think it was written by Roger Wilson).
+
+        ;       Enter with seed in R0 (32 bits), R1 (1 bit in R1 lsb)
+        ;       Uses R2
+
+        TST     r1, r1 LSR #1           ; Top bit into carry
+        MOVS    r2, r0, RRX #23         ; 32 bit rotate right
+        ADC     r1, r1, r1              ; Carry into lsb of R1
+        EOR     r2, r2, r0, LSL #12     ; (Involved!)
+        EOR     r0, r2, r2, LSR #20     ; (Whew!)
+
+        ;       New seed in R0, R1 as before.
+
+  Cheers, Bruce.
+
+Any views expressed are my own and are not necessarily those     _--_|\ 
+of Acorn. Any factual information is given in good faith and    /      \
+neither I, nor Acorn can accept liability for loss or damage    \_.--._/
+resulting from its use.                                               v 
+
+From djaggar@armltd.uucp Wed May 12 18:10:17 1993
+From: djaggar@armltd.uucp (Dave Jaggar)
+Newsgroups: comp.sys.acorn
+Subject: Re: ARM-code random number generator?
+Date: 11 May 93 08:48:06 GMT
+Organization: Advanced RISC Machines Ltd
+
+bcockburn@acorn.co.uk (Bruce Cockburn) writes:
+
+>Graham,
+
+>  Here is one that has been published with every ARM CPU data sheet that I
+>can remember (I think it was written by Roger Wilson).
+
+>        ;       Enter with seed in R0 (32 bits), R1 (1 bit in R1 lsb)
+>        ;       Uses R2
+
+>        TST     r1, r1 LSR #1           ; Top bit into carry
+>        MOVS    r2, r0, RRX #23         ; 32 bit rotate right
+
+Bruce
+
+You can only execute a 
+	MOVS	r2, r0, RRX #23 
+on ARM800's graphics acceleration co-processor. The ARM core only do RRX
+by a single bit (encoded as ROR #0)
+
+Thus, for ARM7 and earlier processors, use
+	MOVS	r2, r0, RRX
+
+
+>        ADC     r1, r1, r1              ; Carry into lsb of R1
+>        EOR     r2, r2, r0, LSL #12     ; (Involved!)
+>        EOR     r0, r2, r2, LSR #20     ; (Whew!)
+
+
+FYI : This code also appears in the latest VLSI and GEC Plessey datasheets.
+
+Dave
+
+--------------------------------------------------------------------------
+Dave Jaggar					Advanced RISC Machines Ltd
+djaggar@armltd.co.uk				Swaffham Bulbeck
+Phone: +44 223 813 000 Ext 210			Cambridge CB5 0NA
+Fax: +44 223 812 800				England
+--------------------------------------------------------------------------
+

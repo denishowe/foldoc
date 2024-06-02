@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<!--
+Display a countdown from a number of seconds given in a query string
+containing any sequence of numbers (with optional decimal point)
+optionally followed by units - s (default), m, h, d, w, mo (30 days),
+y - in any case.  Non-number, non-letter characters are ignored.
+-->
+
+<html>
+<head>
+	<title>Timer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="https://foldoc.org/pub/js/timer/">
+	<style type="text/css">
+
+body {
+  overflow: hidden; /* Prevent scrollbars with no margin */
+  font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+
+.controls {
+	line-height: 40pt;
+	font-size: 2.5vw;
+}
+
+.controls .options {
+	font-size: 2.8vw;
+	padding-top: 2.5px;
+}
+
+@keyframes change { to { transform: rotate(360deg); color: red } }
+
+.pulsing {
+	left: 65px;
+	font-size: 3.5vw;
+  animation-name: change;
+  animation-duration: 2s;
+	animation-timing-function: linear;
+	/* animation-direction: alternate; */
+  animation-iteration-count: infinite;
+}
+
+.controls span {
+  display: inline-block;
+	height: 52px;
+  width: 200px;
+  text-align: center;
+  margin: 12px 6px;
+  border: 2px solid grey;
+  padding: 5px;
+  border-radius: 12px;
+  background-color: #fef;
+}
+
+.timer {
+  display: none;
+  width: 100%;
+}
+
+.time {
+  font-size: 18vw;
+  text-align: center;
+  color: darkblue;
+}
+
+.sep {
+  font-size: 6vw;
+}
+
+	</style>
+</head>
+<body>
+<div class="controls">
+	<span class="options" data-x="options">&#9881;</span>
+	<span data-x="clear">clear</span>
+	<span data-x="5">5 sec</span>
+	<span data-x="10">10 sec</span>
+	<span data-x="20">20 sec</span>
+	<span data-x="30">30 sec</span>
+	<span data-x="3600">1 hour</span>
+	<br>
+	<span data-x="60">1 min</span>
+	<span data-x="120">2 min</span>
+	<span data-x="300">5 min</span>
+	<span data-x="600">10 min</span>
+	<span data-x="1200">20 min</span>
+	<span data-x="1800">30 min</span>
+	<span data-x="86400">1 day</span>
+</div>
+<div class="timer"><div class="time"></div></div>
+<script>
+
+class Timer {
+	constructor() {
+		this.allowNotify();
+		this.bindMethods();
+
+		this.optionsIcon = this.el('.options');
+		this.el('.controls').onclick = this.controlsClicked;
+
+		// chrome://flags/#autoplay-policy
+		this.audio = new Audio('ding.wav');
+		this.dingsTotal = 3;
+
+		const qs = this.queryString();
+		if (qs) this.setOrAdd(qs);
+	}
+
+	bindMethods() {
+		['alert', 'controlsClicked', 'update']
+			.forEach(m => this[m] = this[m].bind(this));
+	}
+
+	controlsClicked(event) {
+		this.alerting = false;
+		this.toggleTitle('Timer');
+		const button = event.target.dataset.x;
+		switch (button) {
+			case 'options':
+				this.toggleTimes();
+				return;
+			case 'clear':
+				this.endMs = undefined;
+				this.show('.timer', false);
+				return;
+		}
+		this.setOrAdd(button);
+	}
+
+	setOrAdd(string) {
+		const secs = this.parseQueryString(string);
+		// If timer is set, add secs, else set it
+		const wasSet = this.endMs;
+		this.endMs = wasSet ? this.endMs + 1E3 * secs : 1E3 * Math.floor(Date.now()/1E3 + secs + 1);
+		if (!wasSet) this.startCountdown();
+		this.hideTimesLater();
+	}
+
+	startCountdown() {
+		this.show('.timer', true);
+		this.scheduleUpdate();
+	}
+
+	// Hide the time buttons after a pause
+
+	hideTimesLater() {
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(() => this.toggleTimes(false), 2E3);
+	}
+
+	scheduleUpdate() {
+		const msToNextSecond = 1E3 - Date.now() % 1E3;
+		setTimeout(this.update, msToNextSecond);
+	}
+
+	update() {
+		if (!this.endMs) return;
+		const secsLeft = Math.floor((this.endMs - Date.now() + 999) / 1E3); // Seconds to go
+		if (secsLeft < 0) { this.startAlert(true); return }
+		const s = this.secsToString(secsLeft);
+		this.toggleTitle(s.replace('<br>', ' ').replace(/ : /g, ':'));
+		const htmlTime = s.replace(/(\D+)/g, '<span class="sep">$1</span>');
+		this.els('.time').forEach(e => e.innerHTML = htmlTime);
+		this.scheduleUpdate();
+	}
+
+	startAlert(on) {
+		this.animateOptionsButton(on);
+		this.notify(on);
+		this.dings = on ? this.dingsTotal : 0;
+		this.alerting = on;
+		if (on) { this.alert() } else { this.toggleTitle('Timer') }
+	}
+
+	alert() {
+		if (!this.alerting) { this.startAlert(false); return };
+		if (--this.dings >= 0)
+			this.audio.play().catch(e => {});	// Catch Chrome fail
+		this.toggleTitle();
+		setTimeout(this.alert, 2E3);
+	}
+
+	toggleTimes(show = !this.showTimes) {
+		this.show('.controls :not(.options)', this.showTimes = show);
+	}
+
+	queryString() { return decodeURI(location.search.substr(1)) }
+
+	secsToString(n) {
+		const bases = [Infinity, 12, 30, 24, 60, 60];  // Modulos for y, m, d, h, m, s
+		const seps = [ 'y ', 'm ', 'd<br>', ' : ', ' : ', '' ];
+		let s = '';
+		do {
+			s = seps.pop() + s;
+			const base = bases.pop();
+			const part = n % base;
+			s = (base <= 60 && part < 10 ? '0' : '') + part + s;
+			n = Math.floor(n / base);
+		} while (n);
+
+		return s;
+	}
+
+	// Return a number of seconds given a query string
+
+	unitSeconds = (() => {
+		const m = 60;
+		const h = 60 * m;
+		const d = 24 * h;
+		const mo = 30*d;
+
+		return { s: 1, m, h, d, w: 7*d, mo, y: 12*mo };
+	})();
+
+	parseQueryString(s) {
+		let t = 0;
+		s = s.toLowerCase();
+		while (true) {
+			const matchNumber = s.match(/^.*?([\d.]+)/);
+			if (!matchNumber) return t;
+			let number = parseFloat(matchNumber[1]);
+			s = s.substr(matchNumber[0].length);
+			const matchUnits = s.match(/^[^0-9.a-z]*?(s|mo?|h|d|w|y)[a-z]*/);
+			if (matchUnits) {
+				number *= this.unitSeconds[matchUnits[1]];
+				s = s.substr(matchUnits[0].length);
+			}
+			t += number;
+		}
+	}
+
+	show(sel, showHide) {
+		this.els(sel).forEach(e => e.style.display = showHide ? 'inline-block' : 'none');
+	}
+
+	els(selector) { return document.querySelectorAll(selector) }
+
+	el(selector) { return this.els(selector)[0] }
+
+	// https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API/
+
+	allowNotify() {
+		if (Notification.permission !== 'granted')
+			Notification.requestPermission();
+	}
+
+	notify(on) {
+		if (!on) { this.notification?.close(); return }
+		this.notification = new Notification('Timer expired', { body: "Time's up!", icon: 'reaper.jpg' });
+		this.notification.onclick = () => this.alerting = false;
+		// There's no way to tell whether onclose was the user
+		// closing a notification or Firefox autoclosing it after 10s
+	}
+
+	toggleTitle(title) {
+		this.titleState = ! this.titleState;
+		document.title = title || (this.titleState ? 'time up' : 'TIME UP');
+	}
+
+	animateOptionsButton(on) {
+		const method = on ? 'add' : 'remove';
+		this.optionsIcon.classList[method]('pulsing');
+	}
+}
+
+new Timer();
+
+</script>
+</body>
+</html>

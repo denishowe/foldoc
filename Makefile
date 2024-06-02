@@ -6,7 +6,7 @@
 
 # Run in the document root
 
-default: $(HOSTNAME)
+default: $(HOSTNAME) # foldoc
 
 logged:
 	$(MAKE) > make.out 2>&1
@@ -21,10 +21,8 @@ date:
 
 # List built HTML explicitly
 
-DISTFILES = Dictionary Makefile *.gif *.png *.jpg \
-	index.pl build.pl Foldoc.pm *.html \
-	about.html contents.html contributors.html help.html \
-	home.html missing.html sitemap.txt source.html
+DISTFILES = Dictionary Makefile *.gif *.png *.jpg index.pl build.pl Foldoc.pm about.html \
+  contents.html contributors.html help.html home.html missing.html new.html sitemap.txt source.html
 
 foldoc.tar.gz: $(DISTFILES)
 	tar cfz $@ $(DISTFILES)

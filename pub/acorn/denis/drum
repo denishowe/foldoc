@@ -1,0 +1,140 @@
+REM > Drum   Copyright © Denis Howe 1992
+REM You may copy this program as long as you do not charge for it.
+REM 18-May-1992 0.00 Written by Denis Howe <dbh@doc.ic.ac.uk>
+
+REM Set Midi%=FALSE to use internal sounds or TRUE to use MIDI
+Midi%=FALSE
+
+MODE 0:OFF
+BL%=10      :REM cs per beat
+Magic%=&4321bbbb
+File$="DrumFile"
+MidiChan%=7 :REM MIDI channel to transmit on (0-15)
+MT%=63
+IF Midi% MSound%=FNExternal ELSE MSound%=FNInternal
+H%=(1024-33) DIV (MSound%+1) AND NOT 3
+W%=1276 DIV (MT%+1) AND NOT 3
+
+PRINT TAB(70,16);"Save";
+FOR C%=0 TO MSound%:FOR T%=0 TO MT%:PROCSet(T%,C%,0):NEXT,
+PROCLoad
+ 
+MOUSE ON
+TIME=0
+PB%=0
+N$="C C#D D#E F F#G G#A A#B "
+IF Midi% PROCOff
+ON ERROR PROCErr
+REPEAT
+  FOR T%=0 TO MT%
+    REPEAT UNTIL TIME>=0:TIME=-BL%
+    FOR C%=0 TO MSound%
+      IF FNSet(T%,C%) THEN
+        IF Midi% SYS TxOn%,36+C%,63 ELSE SOUND C%+1,-15,&2000,1
+      ENDIF
+    NEXT
+    MOUSE X%,Y%,B%
+    TT%=X% DIV W%
+    IF TT%>MT% THEN
+      IF B% PROCSave
+    ELSE
+      PRINT TAB(15,0);"T:";TT%;" ";
+      C%=Y% DIV H%:IF C%>MSound% C%=MSound%
+      IF Midi% PRINT TAB(30,0);MID$(N$,2*(C%MOD12)+1,2);C%DIV12+1;"  ";
+      PRINT TAB(40,0); SPACE40; TAB(40,0); N$(C%);
+      IF B%>PB% PROCSet(TT%,C%,FNSet(TT%,C%) EOR 127)
+    ENDIF
+    PB%=B%
+  NEXT
+UNTIL FALSE
+
+DEF PROCOff
+IF Midi% SYS "MIDI_TxAllNotesOff"
+ENDPROC
+
+DEF PROCErr
+ON ERROR OFF
+PROCOff
+IF ERR<>0 AND ERR<>17 PRINT REPORT$; " at "; ERL
+END
+
+DEF PROCLoad
+LOCAL F%,T%,C%
+F%=OPENIN(File$)
+IF F%=0 ENDPROC
+INPUT #F%,T%,C%
+REPEAT
+  INPUT #F%,C%,T%
+  IF (C% AND &F0) = &90 PROCSet(T% DIV BL%,(C%>>8 AND &FF) - 36,127)
+UNTIL C%=0
+CLOSE #F%
+ENDPROC
+
+DEF PROCSave
+LOCAL F%,T%,C%
+F%=OPENOUT(File$)
+PRINT #F%,Magic% :REM !MS format
+PRINT #F%,8*BL%
+PRINT #F%,8,MidiChan%
+FOR T%=0 TO MT%
+  FOR C%=0 TO MSound%
+    IF FNSet(T%,C%) PRINT #F%, &37F2490+MidiChan%+(C%<<8),T%*BL%
+  NEXT
+NEXT
+PRINT #F%, 0,0
+CLOSE #F%
+ENDPROC
+
+DEF PROCSet(T%,C%,G%)
+GCOL G%:RECTANGLE FILL W%*T%,H%*C%, W%,H%
+GCOL 127:RECTANGLE W%*T%,H%*C%, W%,H%
+ENDPROC
+
+DEF FNSet(T%,C%)=POINT(W%*T%+4,H%*C%+4)
+
+DEF FNExternal
+REM Different sounds are on different MIDI note numbers.
+LOCAL S%
+MSound%=60
+DIM N$(MSound%)
+FOR S%=0 TO MSound%:READ N$(S%):NEXT
+SYS "MIDI_SetTxChannel",MidiChan%+1
+SYS "OS_SWINumberFromString",0,"MIDI_TxNoteOn" TO TxOn%
+=MSound% :REM max sound no.
+
+REM Yamaha SY22 Voice P88 instruments C1-C6 (note numbers 36-96)
+DATA Bass Drum 1,Tri Closed,SnareDrum1,Triang Opn
+DATA ETom 1,ETom 2,ETom 3,ETom 4
+DATA Bass Drum 2,Bass Drum 3,Stick
+DATA Tom 1,Tom 2,SnareDrum2,Tom 3,Rim,SnareDrum3
+DATA Tom 4,Claps,LowCowbell,Shaker,HiHat Clsd,Crash 1,HiHat Open,Crash 2
+DATA Splash,Cup,Ride,Low Conga,High Conga,Mute Conga,DigiAttack,Ooo!
+DATA LowTimbale,Hi Timbale,Tambourine,FingerSnap,Claves,Low Agogo
+DATA High Agogo,Low Cuica,High Cuica,LowWhistle,Hi Whistle,Bamboo
+DATA Bottle,Hi Cowbell,Crash 3,SnareDrum4,LowScratch,SnareDrum5
+DATA Hi Scratch,Rev Cymbal,Low Slam,Coin,High Slam,Water Drop,LowTimpani
+DATA Cracker,Hi Timpani,Metal Hit
+
+DEF FNInternal
+REM Different internal sounds are on different channels.
+LOCAL C%,I%,N%,SS%,SP%,Attached%
+REM Read no. of channels
+REM SYS "Sound_Configure",1,208,48 TO N%,SS%,SP% :REM set default, read old
+REM SYS "Sound_Configure",N%,SS%,SP%             :REM restore old
+N%=8:VOICES N% :REM Let's have 'em all
+DIM N$(N%-1)
+Attached%=1 :REM Mask of voices attached to channels
+FOR C%=1 TO N%
+  SYS "Sound_ReadControlBlock",C%,0 TO ,,I%
+  I%=I%>>8 AND 255 :REM Index to voice table (0 => no voice)
+  IF Attached% AND 1<<I% THEN
+    REM unused channel or reused voice - find unused voice
+    I%=1:WHILE Attached% AND 1<<I%:I%+=1:ENDWHILE
+    SYS "Sound_AttachVoice",C%,I%
+  ENDIF
+  Attached%+=1<<I%
+  SYS "Sound_InstallVoice",,I% TO P% :REM Get voice name
+  N$="":WHILE ?P%>=ASC" ":N$+=CHR$?P%:P%+=1:ENDWHILE
+  N$(C%-1)=N$
+NEXT
+=N%-1 :REM Max sound no.

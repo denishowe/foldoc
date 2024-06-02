@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<!--
+	@license Copyright (c) 2017, Peter Marks.  Available via the MIT license.
+	Copied from http://art.spluko.com/aa/
+-->
+  <head>
+    <title>Accelerated Art</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <style>
+      html, body {
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: 'Roboto mono', monospace;
+        font-size: 13px;
+      }
+      input, textarea {
+        outline: none;
+        background: transparent;
+        font: inherit;
+        color: inherit;
+        border: none;
+      }
+      textarea {
+        resize: none;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background-color: rgba(20,20,20,0.3);
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #404040;
+      }
+      ::-webkit-scrollbar-button {
+        display: none;
+      }
+      ::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+      #c {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+      #ui {
+        width: 750px;
+        height: 400px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom:0;
+        right: 0;
+        z-index: 2;
+        margin: auto;
+        padding: 6px;
+        background-color: rgba(20,20,20,0.7);
+        color: #bbbbbb;
+        display: flex;
+        flex-flow: column;
+        transition: opacity 1s;
+      }
+      #errors {
+        flex: 0 1 auto;
+        background-color: rgba(255,0,0,0.8);
+      }
+      #code {
+        width: 100%;
+        flex: 1 1 auto;
+        box-sizing: border-box;         /* For IE and modern versions of Chrome */
+        -moz-box-sizing: border-box;    /* For Firefox                          */
+        -webkit-box-sizing: border-box; /* For Safari                           */
+      }
+      .hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div id="ui">
+      <div id="errors"></div>
+      <textarea id="code" spellcheck="false"></textarea>
+    </div>
+    <script id="vs" type="x-shader/x-vertex">
+      attribute vec4 position;
+
+      void main() {
+        gl_Position = position;
+      }
+    </script>
+    <script id="fs" type="x-shader/x-fragment">/* Esc toggles UI */
+precision mediump float;
+uniform float time;
+uniform vec2 resolution;
+void main(void)
+{
+  vec2 p = gl_FragCoord.xy/resolution-0.5;
+  float x = p.x, y = p.y;
+  float t = 2.0 * time;
+  float k = 10.0 + (10.0*sin(t));
+  float r = 0.5 + 0.5 * sin(23.0*k*x*sin(t) + t) * sin(31.0*k*y*cos(t) + t);
+  float g = 0.5 + 0.5 * sin(37.0*k*x*sin(t) - t) * sin(19.0*k*y*cos(t) - t);
+  float b = 0.5 + 0.5 * sin(29.0*k*x*sin(t) + t) * sin(41.0*k*y*cos(t) + t);
+  gl_FragColor = vec4(r, g, b, 1.0);
+}
+	</script>
+    <script language="javascript" src="https://twgljs.org/dist/2.x/twgl-full.min.js"></script>
+    <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+    <script>
+      "use strict";
+      var gl = twgl.getWebGLContext(document.getElementById("c"));
+      var ui = document.getElementById("ui");
+      var code = document.getElementById("code");
+      var errors = document.getElementById("errors");
+      var selStart = 0;
+      var selEnd = 0;
+      var programInfo;
+      var bufferInfo;
+      var timer;
+
+      function compileError(e) {
+        errors.innerText = e.split("*** Error compiling shader: ")[1].slice(0,-2);
+      }
+
+      function init() {
+        var pi = twgl.createProgramInfo(gl, ["vs", code.value], compileError);
+
+        if (!pi) {
+          return false;
+        }
+
+        errors.innerText = "";
+        programInfo = pi;
+        var arrays = {
+          position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0],
+        };
+        bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);
+        gl.useProgram(programInfo.program);
+        twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
+        resize();
+        return true;
+      }
+
+      function resize() {
+        twgl.resizeCanvasToDisplaySize(gl.canvas);
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+        twgl.setUniforms(programInfo, {resolution: [gl.canvas.width, gl.canvas.height]});
+      }
+
+      function render(time) {
+        twgl.setUniforms(programInfo, {time: time * 0.001});
+        twgl.drawBufferInfo(gl, bufferInfo);
+
+        requestAnimationFrame(render);
+      }
+
+      function updateShader() {
+        if (init()) {
+          onhashchange = () => {onhashchange = navigate;}; // this is a scripted change
+          location.hash = LZString.compressToEncodedURIComponent(code.value);
+        }
+      }
+
+      function update() {
+        clearTimeout(timer);
+        timer = setTimeout(updateShader, 500);
+      }
+
+      function navigate() {
+        if (location.hash) {
+          code.value = LZString.decompressFromEncodedURIComponent(location.hash.slice(1));
+        } else {
+          code.value = document.getElementById("fs").text;
+        }
+        init();
+      }
+
+      function tab(shiftKey) {
+        document.execCommand("insertText", false, "  ");
+      }
+
+      function toggleUI() {
+        ui.classList.toggle("hidden");
+        if (code.hasAttribute("disabled")) {
+          code.removeAttribute("disabled");
+          code.focus();
+          code.setSelectionRange(selStart, selEnd);
+        } else {
+          if (code.selectionStart) {
+            selStart = code.selectionStart;
+            selEnd = code.selectionEnd;
+          } else {
+            selStart = 0;
+            selEnd = 0;
+          }
+          code.setAttribute("disabled", true);
+        }
+      }
+
+      onresize = resize;
+      code.oninput = update;
+      code.onkeydown = (e) => {if(e.keyCode == 9) {e.preventDefault(); tab(e.shiftKey);}};
+      if (!location.search) toggleUI();
+      onkeydown = (e) => {if(e.keyCode == 27) toggleUI();};
+      navigate();
+      requestAnimationFrame(render);
+    </script>
+  </body>
+</html>

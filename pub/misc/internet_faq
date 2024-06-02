@@ -1,0 +1,393 @@
+        Frequently Asked Questions (FAQ's) on the usenet.                       
+                                                                                
+This file contains some of the more frequently asked questions on the net.      
+These are the questions answered in this FAQ. If you have any questions,        
+comments or criticism, please e-mail me at stan@vm.temple.edu.  This            
+file is also available via anonymous ftp from ftp.temple.edu.                   
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+        1) What is archie ?                                                     
+        2) What is telnet ?                                                     
+        3) What is FTP ?                                                        
+        4) What are USENET/BITNET/FREENET/FIDONET/UUNET ?                       
+        5) What are *.tar files and what can we do with them ?                  
+        6) How can we get to compuserve/MCI mail from the internet ?            
+        7) What is the LISTSERV service ?                                       
+        8) How can I find someone's e-mail address ?                            
+        9) What are the *.gif files and how can we view them ?                  
+       10) How can I add my "signature" to outgoing mail ?                      
+       11) Interactive commands to write and talk to other users.               
+       12) What is gopher & irc ?                                               
+       13) Books and Periodicals that may be of use.                            
+       14) VMS, BITFTP, and those pesky binary files                            
+                                                                                
+------------------------------------------------------------------------------  
+1) What is Archie ?                                                             
+                                                                                
+        Archie is an experimental search engine and database for locating       
+sources on the Internet. In other words, if you know what you are looking for   
+and it is not on your system, then archie provides a way to find out where      
+you can get the file from.                                                      
+                                                                                
+        There are many ways of accessing archie. If there's an archie client    
+running on your machine, then all you need to do is type "archie" and it will   
+show you the syntax of the command.  Otherwise you may telnet to                
+archie.ans.net and login as archie and follow the instructions.                 
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+2) What is telnet ?                                                             
+                                                                                
+        Telnet is used to communicate with another host computer using the      
+telnet protocol. For example, if I would like to use the University of Mich.    
+weather underground service, I would type                                       
+        % telnet downwind.sprl.umich.edu 3000                                   
+The most common use of telnet is to login to another machine which also has     
+telnet software.  Telnet is not operating system dependant.                     
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+3) What is FTP ?                                                                
+                                                                                
+        FTP stands for File Transfer Protocol, and as its name implies it is    
+used to transfer files from one computer to another connected over a network.   
+For exmple, if you have an account on a machine and would like to get or put    
+your file there, then you would type                                            
+        %ftp <name.of.your.machine>                                             
+and at the password prompt, type in your password and then type "get file" to   
+obtain a file and "put file" to transfer a file there. Typing ftp without the   
+address of the machine would go into its command mode and have a "ftp>" prompt. 
+To get help at that prompt type "?".                                            
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+4) What are USENET/BITNET/FREENET/FIDONET/UUNET ?                               
+                                                                                
+USENET:                                                                         
+                                                                                
+USENET is the set of machines that exchange articles tagged with one or         
+more universally-recognized labels, called newsgroups.                          
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+BITNET:                                                                         
+                                                                                
+BITnet (Because It's Time Network) is a service of CREN (Corporation for        
+Research and Educational Networking) and consists of computers called nodes     
+at many locations including major educational, research, and corporate          
+institutions in all 50 states and 32 foreign countries. Using BITnet will       
+enable one to communicate electronically with users at any of the other         
+member institutions.                                                            
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+FREENET:                                                                        
+                                                                                
+Freenets are open-access, free, community computer systems. One such system     
+is the Cleveland Freenet. sponsored by CWRU (Case Western Reserve               
+University). Anyone and everyone is welcome to join and take part in the        
+exciting project -...... There's no charge for the registration process and     
+no charge to use the system.                                                    
+*** To register, telnet to any one of :                                         
+freenet-in-a.cwru.edu                                                           
+freenet-in-b.cwru.edu                                                           
+freenet-In-c.cwru.edu                                                           
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+FIDONET:                                                                        
+                                                                                
+An e-mail group of bbs operators.  They operate somewhat like a                 
+usenet group with various echoes or conferences on different subjects.          
+People call their local BBS with fidonet and leave messages.  The local         
+BBS relays these messages to the net so there is world-wide distribution.       
+This is by phone-line and not instantaneous like an internet connection.        
+                                                                                
+Mail routing is normally done for 1 hour each day.  Thus, it sometimes takes    
+quite a while for messages to travel long distances.  But, the system is        
+pretty cheap, so many BBSes are starting to offer it.  You may become a "point" 
+off of your local fidonet BBS by just asking the sysop.  When you're a point,   
+you can receive mail directed to you personally (like having your own           
+internet/bitnet address).  Until then, you can just read the echoes, which are  
+basically just discussion groups under Fidonet.                                 
+                                                                                
+To send mail from the Internet you need the Fidonet zone, area and node         
+Check my signature file below notice that format for fidonet mail.  If you      
+want to mail to someone you need that number on the lesft which you then        
+translate to the format on the right.........Good luck!                         
+                                                                                
+*  Fidonet:  1:273/203        Joe.Johnston@f203.n273.z1.fidonet.org   *         
+                                                                                
+For anyone interested in FidoNet, there is a whole subdirectory called          
+FIDO in the MSDOS directory on SIMTEL20, containing extensive information,      
+including explanation of FidoNet, guide for its nodes, latest Fido BBS, and     
+gateways between FidoNet and Internet (Text files), in addition to programs     
+and utilities (Binary files).                                                   
+                                                                                
+To get these files, either FTP to WSMR-SIMTEL20.Army.Mil (192.88.110.20)        
+or send e-mail (with no subject) directly to:                                   
+                                                                                
+BITNET:    LISTSERV@NDSUVM1        or  LISTSERV@RPIECS                          
+Internet:  LISTSERV@VM1.NODAK.EDU  or  LISTSERV@VM.ECS.RPI.EDU                  
+                                                                                
+In the body of the mail message write the command:                              
+                                                                                
+/PDGET format PD:<MSDOS.FIDO>filename.filetype encoding                         
+                                                                                
+where: format is MAIL, NETDATA, BITSEND, or PUNCH.                              
+       encoding is ASIS, TRANSLATE, UUENCODE, OLDUUE, or XXENCODE.              
+       filename.filetype is the name and extension of the file to get.          
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+UUNET:                                                                          
+                                                                                
+UUNET is basically the collection of hosts which connect the internet via       
+modem connections and UUCP software.  Its a poor mans internet.  Often          
+Usenet news is transferred to some sites via UUCP.                              
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+5) What are *.tar files and what can we do with them ?                          
+                                                                                
+        *.tar files are tape archive files that are in an archived format to    
+be stored on tape or some other medium. They allow one to store may files,      
+directories and subdirectories in just one file. Usually they are compressed    
+*.tar.Z and one has to first uncompress (using %uncompress <name>) them         
+and then                                                                        
+                                                                                
+        prompt% tar -xvf name.tar                                               
+                                                                                
+to extract the files from the tar file. The option x is for extraction, v is    
+for verbose and f is for file name (rather than a tape device).                 
+If you need more detailed information do a man tar.                             
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+6) How can we get to compuserve/MCI mail from the internet ?                    
+                                                                                
+COMPUSERVE:                                                                     
+                                                                                
+To e-mail to someone who has a compuserve account from the internet,            
+you should just type mail account_number@compuserve.com at the prompt. For      
+example, if you know that the account # is 12345,6789 then                      
+                                                                                
+        prompt% mail 12345,6789@compuserve.com                                  
+                                                                                
+would do. To access compuserve through the internet, telnet to hermes.merit.edu 
+and type compuserve at the prompt. There is a fee for this internet access      
+which gets added to your compuserve bill.                                       
+                                                                                
+MCIMAIL:                                                                        
+                                                                                
+A basic mailbox for MCIMail is $35.00 per year and allows unlimited             
+receipt of Internet mail. So getting that file to my Mac cost me just the       
+dime a day basic mailbox charge from MCI!  Call MCIMail at 1-800-444-6245       
+if you want more info on this.                                                  
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+7) What is the LISTSERV service ?                                               
+                                                                                
+        Listservs are programs that act as distribution centers for mail        
+messages and documents.  These lists generally focus on a specific topic,       
+often indicated by the name of a list.                                          
+                                                                                
+Almost anyone can access a general listserv.  Some listservs, due to nature of  
+the topics that they cover, are restricted access, and a prospective subscriber 
+must apply for access.  Listservs are handled via the BITNET links.  Many       
+internet users also are able to access Listservs via various gateways.          
+                                                                                
+There are a number of commands you can send to listserv which will give you     
+information about a list.  To review listserv commands send e-mail to           
+listserv@vm.temple.edu (which is the one you seem to know), and in the body     
+of your mail type:                                                              
+                                                                                
+GET LISTSERV REFCARD                                                            
+                                                                                
+Listserv will send you a reference card of its commands.  Pay particular        
+attention to the LIST command which is how you get information about lists.     
+                                                                                
+You can obtain a list of the  available archive files by sending an "INDEX      
+HELP-NET" command to LISTSERV@TEMPLEVM.  These files  can  then  be retrieved   
+by  means  of a  "GET HELP-NET  filetype"  command,  or  using  the  database   
+search  facilities  of LISTSERV. Send an "INFO DATABASE" command for more       
+information on the latter.                                                      
+                                                                                
+  More  information  on  LISTSERV  commands   can  be  found  in  the  "General 
+Introduction  guide", which  you can  retrieve  by sending  an "INFO  GENINTRO" 
+command to LISTSERV@TEMPLEVM.                                                   
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+8) How can I find someone's e-mail address ?                                    
+                                                                                
+        To find someone's email address, the best thing to do is to find the    
+address directly from that person. If you cannot do this, then try the whois    
+database of nic.ddn.mil which has the addresses of many military personnel, as  
+well as some prominent net personalities. To do this type                       
+                                                                                
+                %prompt whois <name>                                            
+                                                                                
+If you dont have a "whois" program on your system then you can telnet to        
+nic.ddn.mil and run the command "whois" once you are logged in. Help is         
+available.                                                                      
+                                                                                
+Also, you can use the "netfind" service provided by telneting to                
+bruno.cs.colorado.edu and login as netfind.  Menus guide you through            
+the process.                                                                    
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+9) What are the *.gif files and how can we view them ?                          
+                                                                                
+        GIF stands for Compuserve's Graphic Interchange Format. It is a         
+format for storing images. In order to view these *.gif files, one can either   
+get a gif viewing utility for pc's or view them using xv,xgif,xloadimage on     
+X-stations.                                                                     
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+10) How can you add "signatures" to your mail ?                                 
+                                                                                
+        If you are using elm mailer on unix systems, then all you have 1)  put  
+your signature in a .signature file using a text editor and 2) modify your      
+elmrc file so that the parameters "localsignature" and remote "signature" are   
+set to the right files.                                                         
+                                                                                
+        To add a signature automatically to outgoing mail in CMS, use the new   
+mail92 feature. When you type mail92 <name@addr> you will get into a screen     
+which has the options menu on the title bar. In the "Options" menu, choose      
+"send" and then "settings" and change the "Signature?" option to "automatic",   
+and the "Signature File" option to the name of your signature file.             
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+11) Interactive commands (Tell, write, talk)                                    
+                                                                                
+        Tell is the command that is used on CMS machines to write a message     
+to the terminal of aother user who is also logged on to the system. The syntax  
+                                                                                
+        TELL userid message                                                     
+                                                                                
+is as shown above. It will write a one-line message if the other user is        
+logged in. On unix systems the command is                                       
+                                                                                
+        write username <tty> message                                            
+        [Control-D]                                                             
+                                                                                
+The above command will write a message until you type <Control-D> on a line     
+by itself. The tty is necessary if the user is logged in more than once.        
+To "talk" to another user do just that. Just type %talk username <tty>          
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+12) What are gopher, irc ?                                                      
+                                                                                
+        IRC is an full-screen interface to the internet relay chat system.      
+It lets people talk to others around the world who are on the internet through  
+specialized interest groups.                                                    
+                                                                                
+     The Internet Gopher is a distributed document delivery service.  It        
+allows a neophyte user to access various types of data residing on multiple     
+hosts in a seamless fashion.  This is accomplished by presenting the user a     
+hierarchicalarrangement of documents and by using a client-server communi-      
+cations model.  The Internet Gopher Server accepts simple queries, and          
+responds by sending the client a document. Gophers frequently include such      
+services as archive ftp searches, on-line books through project gutenberg,      
+News and Phone directories of many universities.                                
+                                                                                
+------------------------------------------------------------------------------  
+                                                                                
+                                                                                
+13) Useful Books:                                                               
+                                                                                
+  Order direct by calling 800-998-9938.  (About $25.00)                         
+  The Whole Internet User's Guide and Catalog, by Ed Krol, O'Reilly and         
+  Associates                                                                    
+                                                                                
+ "Zen and the Art of the Internet, A beginners guide", 2nd edition,             
+ ISBN 0-13-010778-6, by Brendan Kehoe, is available from Computer Literacy      
+ in California for $22 US (softbound)  You can contact them by:                 
+ Phone:   408-435-0744   Fax:   408-435-1823    Email:  info@.clbooks.com       
+ US Mail:  2590 North 1st Street, San Jose, CA 95131                            
+                                                                                
+ This book is also in the $25,00 range.                                         
+ "Nysernet: New Users Guide to Useful and Unique Resources on the Internet."    
+ NYSERNet, 111 College Place, Syracuse, NY 13244-4100, Attn: Joyce Vandenberg   
+                                                                                
+                                                                                
+Useful Periodicals:                                                             
+                                                                                
+ Boardwatch Magazine (5970 S. Vivian St., Littleton, CO 80127 - editorial;      
+     7586 West Jewell Ave, Suite 200, Lakewood, CO  80232 - subscription)       
+     Subscriptions: 1-800-933-6038; subscribe online at 303-973-4222,           
+     monthly, $36/year.  Good coverage of bulletin board systems;  some         
+     coverage of Internet.  Internet (ed.): jack.richard@boardwatch.com         
+                                                                                
+ Computer Underground Digest;  "An open forum dedicated to sharing              
+     information among computerists and to the presentation and                 
+     debate of diverse views."  Very good articles on a variety                 
+     of subjects.  Issues posted in Usenet's alt.society.cu-                    
+     digest newsgroup;  can also subscribe by sending mail to                   
+     TK0JUT2@NIU.BITNET.  Back issues available via anonymous FTP               
+     from chsun1.spc.uchicago.edu which also has other online                   
+     periodicals.                                                               
+                                                                                
+ Electronic Networking: Research, Applications and Policy (Meckler              
+     Corp., 11 Ferry Lane West, Westport, CT 06880), quarterly,                 
+     $35/year for individual;  research oriented.                               
+                                                                                
+ Matrix News (Suite 500, 701 Brazos, Austin, TX 78701-3243),                    
+     monthly, $30/year ($20 for students; $40 overseas).                        
+     Voice: 512-329-1087, FAX: 512-327-1274, Email: mids@tic.com                
+     Emphasizes Internet information, policy-oriented.                          
+                                                                                
+ "Netmonth."  This is "the independent guide to Bitnet."                        
+     It is an electronic monthly magazine. To subscribe, send                   
+     email to LISTSERV@MARIST and in the body, type SUBSCRIBE                   
+     NETMONTH Your_real-name, replacing Your_real_name by your                  
+     name--not your userid or account name.                                     
+                                                                                
+A list of the currently available mailing lists is available in at least        
+two places: the first is in a file on ftp.nisc.sri.com called 'interest-groups' 
+under the netinfo/ directory.  It's upadated fairly regularly, but is large     
+(around 840K), so only get it every once in a while.  The other list is         
+maintained by Gene Spafford and is posted in parts to the newsgroup news.lists  
+semi-regularly"                                                                 
+                                                                                
+--------------------------------------------------------------------------      
+                                                                                
+14) VMS, BITFTP, and those pesky binary files.                                  
+                                                                                
+     Well I found this to be a significant problem, also. The help file         
+the BITFTP@PUCC ships out tells you about how to fix it. I personally           
+found this rather tedious, so I decided to automate the process by              
+writing a small DCL program to do it for me (I am lazy by nature).              
+                                                                                
+     The problem has to do with the VMS carriage_control attribute              
+getting mangled when the file is sent through other computer types. It          
+MUST be 'none' for the file to be usable on a PC or a MVS machine.              
+                                                                                
+     The DCL program does it all for you! Once the file that you                
+requested from BITFTP@PUCC gets into your RECEIVE directory -- you would        
+type --> @FB. Then it'll create and/or move to a directory called [.FB]         
+and do all of it's work there -- heck it even cleans up it's mess. The          
+only problem with it is that you need double the room of the file, but          
+you would if you were doing it by hand. The process has to make a               
+brand-new file. Sorry, I can't do anything about it.....                        
+                                                                                
+     The program also has more 'how-to' info (1 or 2 pages inside the file)     
+than the actual code that does the conversion (about 26 lines). You may         
+feel free to contact me if you have any difficulties with it.                   
+                                                                                
+The command to get this DCL program is (VMS)                                    
+                                                                                
+        send listserv@templevm get fb com help-net                              
+                                                                                
+I hope that it helps you fokls out!                                             
+                                                                                
+Bob Martin -- acsmartin@eku.bitnet or acsmartin@acs.eku.edu                     
+-----------------------------------------------------------------------         
+                                                                                

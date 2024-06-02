@@ -1,0 +1,148 @@
+From D.S.Walker@bradford.ac.uk Mon Jan 18 15:12:35 1993
+From: D.S.Walker@bradford.ac.uk (Simeon Walker)
+Newsgroups: comp.sys.acorn
+Subject: Re: Arc sound - impedance matching
+Keywords: audio, impedance
+Date: 14 Mar 92 14:26:17 GMT
+Organization: University of Bradford, UK
+Originator: 91909178@ccw403
+Nntp-Posting-Host: ccw403
+
+In article <1992Mar13.013055.11591@citec.oz.au> sgccreg@citec.oz.au (Rob Geraghty) writes:
+>Do we have any engineers in comp.sys.acorn?
+>
+>I have my Arc connected to the auxilliary inputs on the stereo.
+>The Arc sound output is designed to drive 30 Ohm headphones.
+>The aux in is 47KOhm.
+>(no lectures about the difference between input and output impedance please)
+>
+>Does anyone have a circuit diagram to impedance match this connection?
+>
+
+I used to drive the AUX input on my Creek amp from the Arc headphone
+output and had no problem. As for impedance matching, transmission lines
+were never a strong point of mine.
+
+>The high end of the Arc sound seems to get lost in the translation - judging
+>by the difference in the sound coming from the Arc speaker compared to the
+>sound from the stereo.
+>
+
+I think the problem here is that since the speaker in the Arc is so poor
+at the low end it gives the impression of having a better response than
+your stereo at the high end. Also, I do know that the headphone output
+first passes through a low-pass filter to remove any unwanted high
+frequency components caused by the digital to analogue conversion.
+Unfortunately the filter may be a bit severe hence the dull sound. I don't
+know if the sound for the internal speaker is passed through this filter.
+
+It is, however, possible to bypass this filter. Inside the Arc (400 series
+at least) there is a 2x5 array of pins near the headphone socket which
+provides an unfiltered audio output. I now feed this signal to my amp
+which gives a much better sound, most of the time. Sometimes a bit of
+high frequency noise is noticable. I can find out the exact pin numbers
+if you want.
+
+>Also I suspect the levels need matching as well.  I think the Arc sound is
+>getting distorted by the amp input stage - this makes a lot of sense since
+>the voltage to drive a pair of headphones would be a *lot* higher than
+>standard phono line-level.  I just hope the Arc isn't likely to produce
+>anything that would damage the inputs on the amp!
+>
+
+I'm confused now, are you using a sensitive phono input or a normal line
+level input. I wouldn't even think about using any phono input. You should
+be able to use a tape,tuner,CD or Aux input with no problems. That is
+unless your amp has very low overload margins on those inputs.
+
+>Ideas anyone? (there may be an article from a mag I've missed somewhere...)
+>
+>TIA
+>
+>Rob G
+
+-- 
+Sim. ----------------------------------------------------------- Simeon Walker,
+----------------------------------------- Department of Electrical Engineering,
+D.S.Walker@bradford.ac.uk -------------------- University of Bradford, England.
+
+From julian@bridge.welly.gen.nz Mon Jan 18 15:12:48 1993
+From: julian@bridge.welly.gen.nz (Julian Wright)
+Newsgroups: comp.sys.acorn
+Subject: Re: Arc sound - impedance matching
+Keywords: audio, impedance
+Date: Sun, 15 Mar 1992 00:47:06 +1300
+Reply-To: wright_j@kosmos.wcc.govt.nz (Julian Wright)
+Organization: USS Enterprise, NCC 1701a
+
+sgccreg@citec.oz.au (Rob Geraghty) writes:
+
+> Do we have any engineers in comp.sys.acorn?
+
+Well I'm not an engineer, so I accept no responsibility for whatever happens
+to you or your machine if you do the following (I imagine it will void your
+warrantee too, if you still have one), but...
+
+The Problem:
+> I have my Arc connected to the auxilliary inputs on the stereo.
+
+The Symptom:
+> The high end of the Arc sound seems to get lost in the translation
+
+The Cause:
+Low Pass filter present.
+
+The Solution:
+Tap sound output before it reaches the Low Pass filter.
+
+The Method:
+
+- Open your 300, 400(/1), 500, or 5000 series machine up, and find a 5x2 pin
+  connector somewhere in the video circuitry. There's only one, and on the
+  310's I have seen it is near the back-right corner of the circuit board.
+  On the 5000 it is around the back-center of the board I think (it's the
+  only such connector that I can see on the board). It looks something like:
+
+    9 . .
+      . .
+      . .
+      . .
+    1 . .
+
+- All the pins on the right (even numbered ones) are ground. Pin 1 is LEFT
+  sound output and pin 9 is RIGHT sound output. I have no proof but guess
+  that pins 3, 5, and 7 are raw R, G, and B video signals respectively.
+
+- Attach a 3.5" socket to a short length of ribbon cable and clamp a 5x2 IDC
+  plug on the other end. (Much better than soldering wires directly to the
+  pins). I use pin 8 for ground but in theory any even numbered one will do)
+  I assume you know the layout of a 3.5" socket 'cos I can't for the life of
+  me remember it at the moment! It's in the User Guide in one of the
+  appendices anyway...
+
+- Dangle the socket out the back through one of the cracks (if there are
+  any...) or better still, drill a new hole in the bottom back panel right
+  next to the current headphone socket hole and mount the new 3.5" socket in
+  it. You now have TWO output sockets, one filtered, one unfiltered.
+
+- Attach your stereo to the new socket, which works equally well as a
+  headphone socket or a line out.
+
+I find that without the filter STMs sound much better, but low grade samples sound a lot more scratchy. This is understandable, as STMs are played at
+29KHz, while low grade samples are less than 20KHz, usually 13 or 10KHz.
+
+Apparently the filter is there to make the sound from the internal speaker
+sound reasonable. Shame it also affects the standard external connector,
+otherwise all this hacking around wouldn't be necessary.
+
+This "upgrade" is also possible on the A3000, but you have to hook into a
+couple of resister legs (I don't know which ones sorry) as the 3000 doesn't
+have the 5x2 connector on the circuit board.
+
+    Cheers, Julian.
+--
+----------------------------| RO2:SYS 68,59243844 |--------------------------
+wright_j@kosmos.wcc.govt.nz |---------------------| "I'm sig of sicknatures!"
+----------------------------| RO3:SYS 68,60816742 |--------------------------
+--
+

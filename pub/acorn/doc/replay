@@ -1,0 +1,72 @@
+From RWilson Fri Nov 26 13:13:24 1993
+Path: doc.ic.ac.uk!uknet!acorn!not-for-mail
+From: RWilson
+Newsgroups: comp.sys.acorn
+Subject: Replay/ARMovie corrections
+Date: 26 Nov 1993 11:03:33 -0000
+Organization: "Acorn Computers Ltd, Cambridge, England"
+Lines: 59
+Sender: rwilson@acorn.co.uk
+Message-ID: <2d4nq5$51q@acorn.acorn.co.uk>
+NNTP-Posting-Host: acorn.acorn.co.uk
+
+Recently Adam Curtin (hi, Adam) {adam@ifeng.demon.co.uk} said:
+
+> I don't know where you got the bit about sending the video to Eidos to be
+> compressed - you just plug your VCR into Compressor and click the record
+> button ... the compression's 25fps in real-time. Perhaps we lent nott.ac.uk
+> an Optima but not a compressor back in the dim distant past, or maybe you're
+> thinking of Acorn's Moving Lines compression for Replay, where you have to
+> take your video to specially appointed compression centres - because Moving
+> Lines compression takes several seconds per frame (what is it now Roger? 5s?
+> 30s?) and requires an Arc hooked up to a tape machine with transport control
+> so it can make the necessary twelve zillion passes through the tape.
+
+which I feel puts a very unfair light on the current state of making Replay
+files, even though it was true two years ago.
+
+Both Irlam and Computer Concepts sell hardware which records direct to disc
+16 bit per pixel live video with stereo sound at (say) 160x128 12.5fps (CC's
+hardware is more flexible than Irlam's which is fixed at this size) with
+optional hardware antialiasing as the video is scaled from the original
+capture. This makes an ARMovie file which can immediately be replayed, but
+is kind of large (between 6 bits per pixel and 10 bits per pixel depending
+on how you set the capture options).
+
+Both companies supply the Acorn designed 'MovingLines' compressor which can
+be as quick as 3-4 seconds per frame (33MHz ARM3, compressor in 'quality'
+state) or as slow as 10-30 seconds per frame (slow CPU, compressor in CD-ROM
+bandwidth limited state). The movie can be taken down to around 3 bits per
+pixel without noticeable loss and to between 1.5-2.5 with what I'd call
+'acceptable degradation' (you KNOW its compressed, but it doesn't detract
+>from the sequence's impact). Sequences on the Acorn VideoClip collection 1
+CD-ROM have, of course, been compressed for CD-ROM bandwidth.
+
+Uniqueway still provide the capability to do this for you - they have higher
+quality capture systems and gallons of video processing hardware - if you
+want something different.
+
+Replay decompression can be on any machine with more than 1.4M (or
+thereabouts) free. The decompressor (!ARMovie directory) is supplied by
+Acorn and is capable of painting onto 1-24bpp screen depths and of following
+shaped output (e.g. the movie is decompressed onto a rotating 3d model of an
+acorn). Decompression is more efficient than compression or capture: the
+movies at Acorn World were 320x200 pixels at 15fps, decompressed with 2:1
+scaling. On 16 and 24 bpp displays, bilinear interpolation is used to
+improve the quality of the 2:1 scaling. Apart from device drivers that hog
+the CPU (no names, no packdrill), decompression works from any storage media
+that has sufficient bandwidth: CD-ROM, IDE, SCSI, NFS, AUN Ethernet... ARM2
+machines (A3000, A3010) can handle 12.5 fps (A3000 in mode 15, A3010 in mode
+28). ARM3 machines can handle 25 fps (8MHz MEMC in mode 15, 12MHz MEMC in
+mode 28).
+
+Replay sound is available in mono/stereo, 4 bit ADPCM, 8 bit signed linear,
+8 bit unsigned linear, 8 bit VIDC exponential format, 16 bi linear. Movies
+can have any number of sound tracks, the first one being played by default.
+
+Demos available, but not over the Internet: a 1 minute compressed movie can
+be 7-15 MBytes (depending on picture size, frame rate and quality).
+
+--Roger
+
+

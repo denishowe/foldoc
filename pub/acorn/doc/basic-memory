@@ -1,0 +1,27 @@
+HIMEM  |         
+       | libs    
+       |         
+                 
+HIMEM' |         
+       | stack   
+       |         
+                 
+       |         
+       | free    
+       |            
+END    | rounded up to word
+
+       |
+       | variables, DIMs, strings
+       |
+LOMEM  | = TOP rounded up to word
+
+TOP    |
+       | program
+       |
+PAGE   | rounded up to word
+
+END=x sets HIMEM and WimpSlot to x rounded up to
+page size (8k per M of RAM)
+
+HIMEM=x sets HIMEM to x rounded down to word.

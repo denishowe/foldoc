@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+	Medical conditions and their treatments
+-->
+
+<html>
+<head>
+<title>Doctor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="http://foldoc.org/pub/js/doctor.html">
+</head>
+<body style="overflow: hidden; margin: 30px; font-size: 3vw">
+<div style="margin-top: -8px; margin-left: -8px">
+	<p><span>Patient is suffering from:</span> <b><span id="condition"></span></b></p>
+	<p><span>Treatment:</span>
+    <select id="treatment" style="font-size: 2vw;">
+      <option selected disabled hidden>Choose a treatment</option>
+    </select>
+  </p>
+  <div id="result"></div>
+</div>
+<script>
+"use strict";
+
+const conditions = parseConditions`
+Measles: Asprin: 50, Bed Rest: 10, Zovirax: 1
+Nervous Tension: Bed Rest: 90, Psychotherapy: 80
+Community Acquired Pneumonia: Amoxicillin: 66
+Pylonephritis: Hypnotherapy: 6
+Appendicitis: Appendectomy: 100
+Carbon Monoxide Poisoning: CPAP: 66
+Neck of Femur Fracture: Splint: 50
+`;
+
+function parseConditions([css]) {
+  const cs = {};
+  css.split('\n').map(s => s.trim()).filter(s => s).forEach(s => {
+    const [, c, ts] = s.match(/(.*?):\s*(.*)/) || [, s, ''];
+    cs[c] = parseTreatments(ts);
+  });
+  return cs;
+}
+
+function parseTreatments(tss) {
+  const ts = {};
+  if (tss) {
+    tss.split(/,\s*/).forEach(s => {
+      const [, t, e] = s.match(/(.*?):\s*(.*)/);
+      ts[t] = e;
+    });
+  }
+  return ts;
+}
+
+function run() {
+  const condition = Object.keys(conditions).any();
+  const treatments = [...new Set(Object.values(conditions).map(Object.keys).flat())].sort();
+  const treatmentElement = el('treatment');
+  treatmentElement.selectedIndex = 0;
+  treatments.forEach(treatment => {
+    const opt = document.createElement('option');
+    opt.innerHTML = treatment;
+    treatmentElement.appendChild(opt);
+  })
+  el('condition', condition);
+  treatmentElement.addEventListener('change', event => {
+    const treatment = event.target.value;
+    const eff = conditions[condition][treatment] || 0;
+    el('result', `Treating <b>${condition}</b> with <b>${treatment}</b> is <b>${eff}%</b> effective.`);
+  })
+}
+
+Array.prototype.any = function () { return this[Math.floor(this.length * Math.random())] }
+
+function el(id, text) {
+  const e = document.getElementById(id);
+  if (text !== undefined) e.innerHTML = text;
+
+  return e;
+}
+
+run();
+</script>
+</body>
+</html>

@@ -1,0 +1,1825 @@
+From j.oregan@cs.ucc.ie Thu Aug 19 18:50:39 1999
+MIME-Version: 1.0
+Content-type: TEXT/PLAIN; charset=US-ASCII
+X-Coding-System: undecided-unix
+Return-path: <j.oregan@cs.ucc.ie>
+Envelope-to: dbh@doc.ic.ac.uk
+Delivery-date: Thu, 19 Aug 1999 18:50:39 +0100
+X-Authentication-Warning: exile.ucc.ie: oregan owned process doing -bs
+Date: Thu, 19 Aug 1999 18:39:37 +0100 (IST)
+From: "John O'Regan" <j.oregan@cs.ucc.ie>
+X-Sender: oregan@exile.ucc.ie
+To: Denis Howe <dbh@doc.ic.ac.uk>
+Subject: musty old file
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+
+Dear Denis,
+
+  I was clearing out an old account and found the file included below.  It
+dates from 1992.  I thought you might like to see it in case you're in any
+way nostalgic,
+
+yours sincerely,
+John O'Regan.
+
+
+PS: FOLDOC is an excellent service.  Keep up the good work!
+
+- - - -
+
+	Programming Languages, Architectures and Domain Theory
+
+			Glossary
+
+Updated 29-Oct-1992	Copyright (c) Denis Howe 1992
+
+You may copy this file freely but you must not charge for it and
+you must not remove this notice.  All corrections and additions
+gratefully accepted.   Denis Howe <dbh@doc.ic.ac.uk>
+
+
+			Notation
+
+Where possible ASCII characters are used to represent mathematical
+symbols.  Some LaTeX commands (beginning with "\") are used.  They are
+described in the glossary in their alphabetic positions.
+
+\
+	A lower-case lambda.  Used in lambda calculus to define
+	functions.  Used in this document to introduce LaTeX commands
+	for certain symbols.
+
+Abstract interpretation
+	A partial execution of a program which gains information about
+	the control structure and flow of information without performing
+	all the calculations.
+
+Algol
+	Algorithmic Language.
+	One of the first structured procedural languages, designed about
+	1960.
+
+Alice
+	Parallel graph rewriting machine developed by Imperial College,
+	Edinburgh University and ICL.
+
+Alpha conversion
+	In lambda calculus, the renaming of a formal parameter in a
+	lambda abstraction without changing the meaning of the
+	abstraction.  For example:
+
+		\x. x+1  <-->  \y . y+1
+
+	If the argument to a lambda abstraction contains instances of
+	the formal parameter of the lambda abstraction then it is
+	necessary to rename the parameter before applying the lambda
+	abstraction. 
+	See also reduction.
+
+Amber
+	A functional programming language which generalises ML's type
+	system.
+
+Antisymmetric
+	A relation R is antisymmetric if, for all x and y,
+	x R y  and  y R x  =>  x = y.
+
+APL
+	A Programming Language.
+	A procedural language based on composition of functions.
+
+Applicative language
+	Synonym for "functional language".  Often used loosely for any
+	declarative language though logic programming languages are
+	declarative but not applicative.
+
+Applicative order reduction
+	Under this evaluation strategy, an expression is evaluated by
+	repeated.
+ly evaluating its leftmost innermost redex.  This
+	means that a function's arguments are evaluated before the
+	function is applied.  This method will not terminate if a
+	function is given a non-terminating expression as an argument
+	even if the function is not strict in that argument.  Also
+	known as call by value since the values of arguments are
+	passed rather than their names.  This is the evaluation
+	strategy used by ML, Scheme, Hope, and most procedural
+	languages such as C and Pascal.
+	See also Strict, Normal order reduction, Parallel reduction.
+
+Assignment
+	Storing the value of an expression in a variable.
+	Assignment is not allowed in functional languages, it is a side
+	effect which could cause a function to return different results
+	for the same arguments depending on the value of a variable.
+	In a functional language assignment of different values to a
+	variable would be replaced by a reference to a list of values.
+	See also Single assignment, Zero assignment.
+
+Atomic
+	An atomic data type is one which has a flat domain as its
+	usual interpretation (all elements are equally defined).
+	Integers and booleans are two examples.
+
+Backtracking
+	Algorithm used by Prolog to find all possible ways of proving a
+	goal.
+
+Backward chaining
+	In backward chaining one attempts to prove a goal by recursively
+	braking down a goal into sub-goals and trying to prove these
+	until facts are reached. Facts are goals with no sub-goals which
+	are therefore always true.
+	See also Forward chaining, Prolog.
+
+BCPL
+	A forerunner of C.
+
+Bernstein condition
+	Processes cannot execute in parallel if one effects values used
+	by the other. Nor can they execute in parallel if any subsequent
+	process uses data effected by both, ie. whoses value might
+	depend on the order of execution.
+
+Beta conversion
+	In lambda calculus, the rule for beta conversion says that a
+	lambda abstraction applied to an argument is equivalent to an
+	instance of the body of the lambda abstraction with free
+	occurrences .
+of the formal parameter in the body replaced by
+	copies of the argument.  For example:
+
+		(\x . x+1) 4  -->  4+1
+
+	This is an example of beta reduction.  The other kind of beta
+	conversion is the reverse of this and is called beta
+	abstraction.  An example of beta abstraction would be:
+
+		4+1 <- (\x . + 4 1) 4
+
+	See also Reduction.
+
+\big
+	Prefix of several LaTeX commands implying a larger symbol.
+	See the command without "big".  Often used to convert a dyadic
+	operator into a function which operates on a set.  Eg. \sqcup,
+	\bigsqcup.
+
+Bijection
+	A function is bijective or a bijection or a one-to-one
+	correspondence if it is both injective (no two values map to
+	the same value) and surjective (for every element of the
+	codomain there is some element of the domain which maps to
+	it).  Only bijective functions have inverses f' where
+	f(f'(x)) = f'(f(x)) = x.
+	See also Injection, Surjection.
+
+Bipartite
+	See complete graph.
+
+Bottom
+	The least defined element in a given domain.  Usually written
+	as an inverted T.
+
+Bound variable
+	A bound variable in a function definition represents a dummy
+	argument which will be replaced by the actual argument when the
+	function is called. In logic a bound variable is a quantified
+	variable.
+	See also Free variable, Quantifier, Scope.
+
+Bracket abstraction
+	The result of using bracket abstraction on term T with respect 
+	to variable v, written as [v]T, is a term containing no 
+	occurences of v and denoting a function f such that f v = T.
+	This defines the function (\v . T).
+	Using bracket abstraction and currying we can define a language
+	without bound variables in which the only operation is monadic 
+	function application.
+
+Call by name
+	An evaluation strategy where the address of an argument
+	variable is passed to a function or procedure rather than the
+	value of that variable.  Execution of the function or
+	procedure may have side effects on the actual argument as seen
+	by the caller.
+	See also Call by value, Call by need.
+
+Call by nee.
+d
+	See Lazy evaluation.
+
+Call by value
+	An evaluation strategy where arguments are evaluated before
+	the function or procedure is entered.  Only the values of the
+	arguments are passed and changes to the arguments within the
+	called procedure have no effect on the arguments as seen by
+	the caller.
+	See Applicative order reduction, Strict evaluation.
+
+Cambridge Lisp
+	A flavour of Lisp using BCPL. Sources owned by Fitznorman
+	partners.
+
+Church-Rosser Theorem
+	This property of a reduction system states that if an
+	expression can be reduced by zero or more reduction steps to
+	either expression M or expression N then there exists some
+	other expression to which both M and N can be reduced.  This
+	implies that there is a unique normal form for any expression
+	since M and N cannot be different normal forms because the
+	threorem says they can be reduced to some other expression and
+	normal forms are irreducible by definition.  It does not imply
+	that a normal form is reachable, only that if reduction
+	terminates it will reach a unique normal form.
+
+Clean
+	A lazy higher-order functional programming language based on
+	functional graph rewriting systems.
+
+Closure
+	In reduction systems, a closure is a data structure that holds
+	an expression and an environment of variable bindings in which
+	that expression is to be evaluated.  The variables may be
+	local or global.  Closures are used in implementing lazy
+	evaluation to represent unevaluated expressions.  In a real
+	implementation, both expression and environment are
+	represented by pointers.
+
+	In domain theory, given a poset D and a subset X \subseteq D,
+	the upward closure of X in D, written \uparrow_{D} X, is the
+	union over all x in X of the sets of all d in D such that x
+	\sqsubseteq d.  The downward closure is similar but with d
+	\sqsubseteq x.  Thus the upward (downward) closure of X
+	contains all of X plus any greater (lesser) element of D.
+
+Codomain
+	A set containing the values of a function applied to elements
+	of its .
+domain (qv).
+
+Combination
+	In the theory of combinators a combination denotes an expression
+	in which function application is the only operation.
+
+Combinator
+	A function with no free variables.  A system for reducing the
+	operational notation of logic, mathematics or a functional
+	language to a sequence of modifications to the input data
+	structure.  First introduced by Curry and Feys in 1958.  A
+	term is either a constant or variable or of the form A B
+	denoting the application of term A (a monadic function) to
+	term B.  Juxtaposition associates to the left in the absence
+	of parentheses.  All combinators can be defined from two basic
+	combinators - S and K.  These two and a third, I are defined
+	thus:
+
+		S f g x	= f x (g x)
+		K x y	= x
+		I x	= x
+
+	Other combinators were added by David Turner in 1979 when he
+	used combinators to implement SASL:
+
+		B f g x = f (g (x)
+		C f g x = f x g
+		S' c f g x = c (f x) (g x)
+		B* c f g x = c (f (g x))
+		C' c f g x = c (f x) g
+
+	See Supercombinators, Curried function.
+
+Common Lisp
+	A dialect of Lisp defined by a consortium of companies brought
+	together by the Defence Advanced Research Projects Agency
+	(DARPA). Companies included Symbolics, Lisp Machines Inc.,
+	Digital Equipment Corp., Bell Labs., Xerox, Hewlett-Packard,
+	Lawrence Livermore Labs., Carnegie-Mellon Univ., Stanford Univ.,
+	Yale, MIT and UC Berkeley.
+	Based on ZetaLisp, it is lexically scoped but can be
+	dynamically scoped.  According to Martin Evans it is big and
+	clumsy, not very efficient and there is no DIY kit available.
+
+Complete graph
+	A graph which has a link between every pair of nodes.  A
+	complete bipartite graph can be partitioned into two subsets
+	of nodes such that each node is joined to every node in the
+	other subset.
+
+Complete lattice
+	A lattice in which all subsets have a meet and a join.  A
+	lattice is a poset in which all finite subsets have a meet and
+	a join whereas a complete lattice also has meets and joins for
+	infinite subsets.  Note that e.
+very finite lattice is complete.
+
+Complete partial ordering (CPO)
+	A CPO or Domain is a partial ordering which includes a least
+	element, bottom (\perp) and in which any increasing sequence
+	has a least upper bound.
+
+Connected graph
+	A set of nodes (eg. processors) connected by links such that
+	there is a path between any pair of nodes.
+
+Connective
+	An operator used in logic to combine two logical formulas.
+	See First order logic.
+
+Conservative evaluation
+	Under this parallel evaluation strategy, no evaluation is
+	started unless it is known to be needed.
+	Opposite of speculative evaluation.
+
+Constant folding
+	A compiler optimisation technique where constant
+	subexpressions are evaluated at compile time.  This is usually
+	only applied to built-in numerical and boolean operators
+	whereas partial evaluation is more general in that expressions
+	involving user-defined functions may also be evaluated at
+	compile time.
+
+Continental drift
+	In 1980 Professor David Turner remarked that KRC ran "at the
+	speed of the continental drift".
+
+Continuation
+	A function which is passed as an argument to some other
+	function, f say.  When f would normally return a result
+	instead, it calls the continuation with the result as an
+	argument.  Some examples:
+
+	normal		    -->		continuation passing
+
+	square x = x * x		square x k = k (x*x)
+
+	g (square 23)			square 23 g
+
+	(square 3) + 1			square 3 ( \s . s+1 )
+
+CPS
+	Continuation passing style.  The style of programming where
+	every function takes a continuation as an argument.
+	See continuation.
+
+C-Prolog
+	See Prolog.
+
+
+Critical section
+	A non-reentrant piece of code that can only be executed by one
+	process at a time. It will usually terminate in finite time and
+	a process will only have to wait a finite time to enter it.
+
+CSP
+	Communicating Sequential Processes.
+	Hoare's precursor to OCCAM.
+
+Curried function
+	A function of several arguments can be transformed into a
+	function of one argument which returns another function of one
+	argument.  .
+Eg. in Haskell we can define:
+
+		average :: num -> (num -> num)
+
+	(The parentheses are optional).  A partial application of
+	average,
+
+		average 4
+
+	returns a function which averages its argument with 4.  Named
+	after the logician Haskell B Curry but first refered to in
+	M Schoenfinkel, "Uber die Bausteine der mathematischen Logik",
+	Mathematische Annalen. Vol 92 (1924).
+
+Currying
+	See Curried function.
+
+DACTL
+	Declarative Alvey Compiler Target Language.
+	Intermediate language used in the Flagship project. Based on
+	a form of graph rewriting which can be used to implement
+	functional, logic and imperative languauges.
+
+Data abstraction
+	Implementation of a data type in such a way that operations on
+	it can be defined in terms of lower level operations without
+	knowing the details of how it is stored or how the low level
+	operations are implemented.
+
+Data driven
+	A data driven architecture/language performs computations in an
+	order dictated by data dependencies. Two kinds of data driven
+	computation are data flow and demand driven.
+
+Data flow
+	A data flow architecture/language performs a computation when
+	all the operands are available. Eg. MIT's VAL machine.
+	See also Demand driven.
+
+Data flow analysis
+	The order of execution in a data-flow language is determined
+	solely by dependencies between different data.  Data-flow
+	analysis is the analysis needed to determine those
+	dependencies.  For example, given
+
+		1. X = A + B
+		2. B = 2 + 2
+		3. A = 3 + 4
+
+	a data-flow analysis would find that 2 and 3 must be evaluated
+	before 1.  Since there are no data dependencies between 2 and
+	3, they may be evaluated in parallel.
+
+Declarative language
+	A general term for relational languages and functional
+	languages, as opposed to imperative languages. Imperative
+	languages specify procedures for solving problems, while in
+	declarative languages you specify what kind of solution you are
+	seeking. For example, to find the cube of 7 in an imperative
+	language, you might perform the.
+ following
+
+		CUBE = 1
+		CUBE = CUBE * 7
+		CUBE = CUBE * 7
+		CUBE = CUBE * 7
+
+	In a declarative language you would define what cube means and
+	then ask what the cube of 7 is.
+
+Deductive tableau
+	A theorem proof system consisting of a table whose rows contain
+	assertions or goals. Variables in assertions are implicitly
+	universally quantified and variables in goals are implicitly
+	existentially quantified. The declarative meaning of a tableau
+	is that if every instance of every assertion is true then some
+	instance of at least one of the goals is true.
+
+Definite clause
+	See Horn clause.
+
+Definite sentence
+	A collection of definite clauses.
+
+Degree
+	(or valency) of a node in a network is the number of links
+	joined to it.
+
+Delta conversion
+	In lambda calculus, delta reduction replaces a mathematical
+	function applied to the required number of argument
+	expressions by its result.  Eg. plus 2 3  -->  5.
+	See Reduction.
+
+Demand driven
+	A demand driven architecture/language performs computations when
+	the result is required by some other computation.
+	Eg. Imperial College's ALICE running HOPE.
+	See also Data flow, Lazy evaluation, Reduction.
+
+Diameter
+	of a graph is the maximum value of the minimum distance between
+	any two nodes.
+
+Directed graph
+	(or digraph) A graph with one-way links.
+
+Display
+	A data structure used in Algol implementations containing
+	pointers to variables which are kept on the stack.
+
+Distributive lattice
+	A lattice for which the meet and join operators distribute
+	over one another so that
+		a join (b meet c) == (a meet c) join (a meet b)
+	and similarly with meet and join interchanged.
+
+Domain
+	In the theory of functions, the set of argument values for
+	which a function is defined.
+
+Downward closure
+	See Closure.
+
+Dynamic programming
+
+Dynamic scoping
+	If the definition of procedure 'P' contains a variable 'v' then
+	procedure 'Q' called by P can refer to v by name without it
+	being declared as an argument. Opposite of lexical scoping.
+	A common implem.
+entation of dynamic scoping is shallow binding.
+
+Eager evaluation
+	Under an eager evaluation strategy, evaluation of some
+	function arguments is started before their value is required.
+	Opposite of Lazy evaluation.
+	See also Speculative evaluation, Conservative evaluation,
+	Strict evaluation.
+
+Elephant
+	Large, grey, four-legged mammal.
+
+EQLOG
+	Equality, types and generic modules for logic programming.
+	A language using Horn clauses.
+	Goguen J.A., Meseguer J.
+
+Eta conversion
+	In lambda calculus, the eta conversion rule states
+
+		\x . f x  <-->  f
+
+	provided x does not occur free in f and f is a function.
+	See also Reduction.
+
+Evaluator
+	Geoff Burn defines evaluators E0, E1, E2 and E3 which when
+	applied to an expression, reduce it to varying degrees.  E0
+	does no evaluation, E1 evaluates to weak head normal form
+	(WHNF), E2 evaluates the structure of a list, ie. it evaluates
+	it either to NIL or evaluates it to a CONS and then applies E2
+	to the second argumant of the CONS.  E3 evaluates the structure
+	of a list and evaluates each element of the list to WHNF.
+
+Extensional equality
+
+	Functions, f and g are extensionally equal if and only if
+		f x = g x  for all x.
+	Two functions may be extensionally equal but not
+	interconvertible.  Eg. \x . x+x  <-/->  \x . 2*x.
+
+Extensionality
+	See Extensional equality.
+
+FGL
+	Function Graph Language (or possibly Flow-Graph Lisp).
+
+First order logic
+	The language describing the truth of mathematical formulas.
+	Formulas describe properties of terms and have a truth value.
+	The following are atomic formulas:
+
+	True
+	False
+	p(t1,..tn)	where t1,..,tn are terms and p is a predicate.
+
+	If F1, F2 and F3 are formulas and v is a variable then the
+	following are compound formulas:
+
+	F1 ^ F2		conjunction - true if both F1 and F2 are true,
+	F1 V F2		disjunction - true if either or both are true,
+	F1 => F2	implication - true if F1 is false or F2 is true, 
+			F1 is the antecedant, F2 is the consequent
+			(sometimes written with a thin arrow),
+	F1 .
+<= F2	true if F1 is true or F2 is false,
+	F1 == F2	true if F1 and F2 are both true or both false
+			(normally written with a three line equivalence
+			symbol)
+	~F1		negation - true if f1 is false (normally written 
+			with a not symbol).
+	(Av)F		universal quantification - true if F is true for 
+			all values of v (normally written with an
+			inverted A).
+	(Ev)F		existential quentification - true if there
+			exists some value of v for which F is true.
+			(Normally written with a reversed E).
+
+	The operators ^ V => <= == ~ are called connectives.
+	A and E are quantifiers whose scope is F. 
+	A term is a mathematical expression involving numbers,
+	operators, functions and variables.
+
+Fixed point
+	The fixed point of a function, f is any value, x for which
+	f(x) = x.  A recursive function can be expressed as the fixed
+	point of a higher order function, eg.
+
+		FAC = \n . (... FAC ...)
+
+		    = (\f . (\n . (... f ...))) FAC
+
+		    = H FAC
+
+		where H = \f . (\n . (... f ...))
+
+	FAC is a fixed point of H.  A function may have more than one
+	fixed point.
+	See least fixed point.
+
+Fixed point combinator (Y)
+	Y is a function which takes a function and returns the fixed
+	point of that function.  It has the property that
+
+		Y H = H (Y H)
+
+	Y can be defined as a non-recursive lambda abstraction:
+
+	Y = (\h . (\x . h (x x)) (\x . h (x x)))
+
+Fixpoint
+	Fixed point.
+
+Flat
+	A flat domain is one where all elements except bottom are
+	incomparable (equally well defined).  Eg. the integers.
+
+Formal methods
+	Referentially transparent languages are amenable to symbolic
+	manipulation allowing program transformation (eg. clear
+	inefficient specification -> obscure efficient program) and
+	proof of correctness.
+
+Formula
+	In logic, a sequence of symbols representing terms, predicates, 
+	connectives and quantifiers which is either true or false.
+
+Forth
+	Interpreted stack-based language where programs are built from 
+	"words" (procedures) which are defined in terms of other words, 
+	down to a small se.
+t of predefined words.
+
+Forward chaining
+	A data-driven technique used in constructing goals or reaching
+	inferences derived from a set of data.
+	See also Backward chaining.
+
+FP
+	Functional programming.  Also a functional language which
+	stresses functional level reasoning.
+
+FP2
+	Functional Parallel Programming.  A language combining
+	functional and parallel programming through a unified
+	approach. Every object is a term and every computation is done
+	by rewriting.
+
+Free variable
+	1. In a function, a variable which is not an argument of the
+	function.
+	2. In logic, a variable which is not quantified.
+	See also Bound variable, Quantifier, Scope.
+
+Franz Lisp
+	A dialect of Lisp developed by DEC, (source in C) often
+	distributed with Berkley UNIX.
+
+Full laziness
+	An optimisation of lambda lifting where maximal free
+	expressions are shared in an attempt to minimise the amount of
+	recalculation.
+
+Function
+	If D and C are sets (the domain and codomain (qv)) then a
+	function f : D -> C is a subset of D x C such that
+	1. for each d in D there exists c in C such that (d,c) in f. 
+	2. for each d in D, c1 and c2 in C, if both (d,c1) in f and
+	(d,c2) in f then c1 = c2.
+	This says that the function is uniquely defined for every
+	element of D.
+
+Functional
+	A higher order function.
+
+Function Graph Language (FGL)
+	Used as the machine language for the AMPS (Applicative
+	Multi-Processing System) proposed by Robert Keller, Gary
+	Lindstrom and Suhas Patil at the University of Utah.
+
+Functional language
+	A functional language consists of, reasonably enough, functions
+	and arguments to those functions that uniquely identify the
+	program output. For example, plus(4,5) returns 9 and only 9.
+	This implies that there are no side-effects to function calls.
+	The order of evaluation is irrelevant in a functional language.
+	Hope and FP are examples of functional languages.
+
+Garbage collection
+	The process by which no longer used storage is reclaimed during
+	the evaluation of an expression in a ce.
+ll and pointer based
+	memory system.
+	In a system like Lisp which uses dynamic storage allocation and
+	where expressions are represented as graphs containing pointers
+	to cells or similar data structures it is necessary to reclaim
+	space used by subexpressions but which is no longer referenced
+	or pointed to by anything.
+	The three main methods are:
+	1. Mark-sweep
+		Each cell has a bit reserved for marking which is clear
+		initially. During garbage collection all active cells
+		are traced from the root and marked. Then all cells are
+		examined. Unmarked cells are freed.
+	2. Reference count
+		Each cell contains a count of the number of other cells
+		which point to it. If this count reaches zero the cell
+		is freed and its pointers to other cells are deleted.
+	3. Copying
+		Memory is divided into two spaces. Garbage collection
+		involves copying active cells from one space to the
+		other and leaving behind an invisible pointer from the
+		old position to the new copy. Once all active cells have
+		been copied in one direction, the spaces are swapped and
+		the process repeated in the opposite direction.
+
+GHC
+	Guarded horn clauses.
+
+Graph
+	A collection of nodes and links.
+	See also connected graph, degree, directed graph, Moore bound,
+	regular graph.
+
+Graph reduction
+	An expression is represented as an inverted tree.  Each node
+	represents a function call and its subtrees represent the
+	arguments to that function.  Subtrees are replaced by the
+	expansion or value of the function they represent.  This is
+	repeated until the tree has been reduced to a value with no
+	more function calls.  Graph reduction has the advantage that
+	common subexpressions are represented as pointers to a single
+	instance of the expression which is only reduced once.
+	See Lazy evaluation, String reduction.
+
+Graph rewriting system
+	An extension of a term rewriting system where terms are
+	replaced by directed graphs to avoid duplication of work by
+	sharing expressions.
+
+Greatest lower bound (GLB)
+ 	Th.
+e dual to Least upper bound.  The greatest lower bound or
+	meet of two elements, a and b, written a \sqcap b, is an
+	element c such that c \sqsubseteq a and c \sqsubseteq b and if
+	there is any other lower bound c' then c' \sqsubseteq c.  The
+	greatest lower bound of a set S, written \bigsqcap S, is the
+	greatest element b such that for all s \in S, b \sqsubseteq s.
+	Also known as the meet.
+
+GRIP
+	Graph Reduction In Parallel.  Simon Peyton Jones's GRIP
+	machine built at UCL, now at Glasgow.  Many processors (68020
+	or other) on Futurebus with intelligent memory units.
+
+Guard
+	In functional programming, a boolean expression appended to a
+	function definition specifying when (for what arguments) that 
+	definition is appropriate.
+	In (parallel) logic programming, a boolean expression which is
+	used to select a clause from several alternative clauses.
+	See Guarded Horn Clauses.
+
+Guarded horn clauses
+	A parallel dialect of Prolog in which each clause has a guard.
+	When several clauses match a goal, their guards are evaluated in
+	parallel and the first clause whose guard is found to be true is
+	used and others are rejected.
+
+Head normal form
+	In graph reduction, an expression is in head normal form if its
+	top level is either a variable, a data item or a function with
+	insuffucuent arguments, ie. the top level is irreducible.
+	See also Normal form, Weak head normal form.
+
+Help
+	(Help Est un Lisp Paresseux - Help Is a Lazy Lisp).
+	A lazy version of Scheme with strictness annotations by Thomas
+	Schiex <schiex@europe.cert.fr>
+
+Higher order function
+	A function that can take one or more functions as argument or
+	return a function as its value.  Eg. map in
+		map f l
+	which returns the list of values returned when function f is
+	applied to each of the elements of list l.
+	See also Curried function.
+
+Hope
+	A functional programming language designed by Burstall, MacQuenn
+	and Sannella at Edinburgh. A large language supporting user
+	defined prefix, infix or disfix operators. Hope .
+has polymorphic
+	typing and allows overloading of operators which requires
+	explicit type declarations.
+
+Hope+
+	An extension of Hope implemented in the Flagship project.
+	Hope+ has vectors, real numbers, best fit pattern matching and
+	lazy data constructors.  It has an I/O system which is both
+	referentially transparent and capable of handling all common
+	I/O tasks such as terminal and file I/O, signal handling,
+	interprocess communications.
+
+Horn clause
+	Also known as a definite clause.
+	A set of atomic literals with one positive literal. Usually
+	written L <- L1, ..., Ln where n>=0. If L is false the clause is
+	regarded as a goal. Horn clauses can express a subset of
+	statements of first order logic.
+
+ID
+	Irvine Dataflow language.
+
+IDEAL
+	Ideal DEductive Applicative Language
+	A language by Pier Bosco and Elio Giovannetti combining Miranda
+	and Prolog. Function definitions can have a guard condition
+	(introduced by ":-") which is a conjunction of equalities
+	between arbitrary terms, including functions. These guards are
+	solved by normal Prolog resolution and unification. At present
+	(Nov '86) it is compiled into C-Prolog but eventually will be
+	compiled to K-leaf.
+
+Image
+	The image (or range) of a function is the set of values of
+	that function applied to all elements of its domain.  So, if
+	f : D -> C then the set f(D) = { f(d) | d in D } is the image
+	of D under f.  The image is a subset of C, the codomain (qv).
+
+\in
+	A lower case epsilon.
+	In set theory, the "is an element of" relation.
+
+Injection
+	A function, f : A -> B, is injective or one-one, or is an
+	injection, if for all a,b in A, f(a) = f(b) => a = b.  This
+	means that no two elements of A map to the same element of B
+	(contrast many-to-one).  Sometimes called an embedding.
+	Only injective functions have left inverses f' where
+	f'(f(x)) = x or f'. f = i, the identity function since, if f
+	were not an injection, there would be elements of B for which
+	the value of f' was not unique.
+	See also Bijection, .
+Surjection.
+
+InterLisp
+	A dialect of Lisp developed in 1967 by Bolt, Beranek and Newman
+	(Cambridge, MA) emphasising user interfaces. Currently supported
+	by Xerox PARC.
+
+J
+	A functional programming language by Kenneth Iverson.
+	Referred to as "an exciting advance in programming languages"
+	in a posting to comp.lang.functional from Eugene E McDonnell
+	<eem@ipsaint.ipsa.reuter.com> 19 Septemper 1992.
+
+Join
+	See Least upper bound.
+
+KRC
+	A functional programming language designed by Professor David
+	Turner.
+
+Lambda calculus
+	The basis of Lisp and functional programming languages.  A
+	branch of mathematical logic dealing with the application of
+	functions to their arguments.  The pure lambda calculus
+	contains no constants - neither numbers nor mathematical
+	functions such as plus and is untyped.  Constants and types
+	are commonly added to make the calculus more useful for
+	describing functional programs.
+	See Lambda expression, Reduction.
+
+Lambda expression
+	An expression in the lambda calculus denoting an unnamed
+	function, a variable or (optionally) a constant.  A function
+	begins with a lower-case lambda (represented as "\" in this
+	document), followed by a variable name, a full stop and a
+	lambda expression (the body).  The body is taken to extend as
+	far to the right as possible so, for example an expression,
+		\x . \y . x+y
+	is read as
+		\x . (\y . x+y).
+	Application is represented by juxtaposition so
+		(\x . x) 42
+	represents the identity function applied to the constant 42.
+	Lambda expressions in Haskell are written with "->" instead of
+	"." eg. \x -> x
+
+Last call optimisation
+	Normally when procedure A calls procedures B, C, .., Z, the
+	environment of procedure A is only discarded when procedure Z
+	returns and procedure A itself terminates.  Using last call
+	optimisation, A's environment is discarded as Z is called.
+	This allows arbitrarily deep nesting of procedure calls
+	without consuming memory to store useless environments.
+
+	A special case of this is tail.
+ recursion optimisation where
+	the last procedure called is the calling procedure itself.
+
+Lattice
+	In domain theory, a poset in which all finite subsets have a
+	meet and a join.
+	See also Complete lattice
+
+Lazy evaluation
+	An evaluation strategy where an expression is evaluated only
+	when some other expression needs its value (Normal order
+	evaluation).  Shared expressions are only evaluated once and
+	the result is reused.  This is often implemented by graph
+	reduction.  Lazy evaluation is one evaluation strategy which
+	is used to implement non-strict functions.  It allows
+	functions to be defined which return an infinite list of
+	results which are evaluated one at a time as needed.
+	Opposite of Eager evaluation.
+	See Full laziness.
+
+Lazy list
+	A list whose elements are lazily evaluated.  Ie. the list is
+	only defined for those elements whose values are needed by the
+	program, the tail is represented as a closure.
+
+LCF
+
+Least fixed point
+	The least defined fixed point of a function.  There can be
+	many fixed points of a function but there is only one least
+	fixed point.
+
+Least upper bound (LUB)
+	The dual to greatest lower bound.  The least upper bound of
+	two elements a and b, written a \sqcup b, is an element c such
+	that a \sqsubseteq c and b \sqsubseteq c and if there is any
+	other upper bound c' then c \sqsubseteq c'.  The least upper
+	bound of a set S, written \bigsqcup S, is the least element b
+	such that for all s \in S, s \sqsubseteq b.
+	Also known as the join.
+
+Lenient evaluation
+	Under a lenient evaluation strategy, [Traub, FPCA 89], all
+	redexes are evaluated in parallel except inside the arms of
+	conditionals and inside lambdas.
+
+Lexical scoping
+	Variable names in a procedure, P are independent from names of
+	free variables in procedures called by P.  Opposite of Dynamic
+	scoping.
+
+Lisp
+	List processing.
+	A language based on lambda calculus.
+	Data objects in Lisp are lists and atoms. Lists may contain
+	lists and atoms. Atoms are either numbers or symbol.
+s. Programs
+	in Lisp are themselves lists of symbols which can be treated as
+	data. Most implementations of Lisp allow functions with
+	side-effects but there is a core of Lisp which is purely
+	functional.
+	See also Common Lisp, Franz Lisp, MacLisp, Portable Standard
+	Lisp, InterLisp.
+
+Lispkit
+	A functional programming language designed by Peter Henderson
+	with Lisp syntax. Designed for portability. The Lispkit
+	implementation is an extension to Landin's SECD machine that
+	supports lazy evaluation.
+	See also Stack environment control dump machine.
+
+List comprehension
+	An expression in a functional language denoting the results of
+	some operation on (selected) members of one or more lists.  An
+	example in Haskell:
+
+	[ (x,y) | x <- [1 .. 6], y <- [1 .. x], x+y < 10]
+
+	This returns all pairs of numbers (x,y) where x and y are
+	elements of the list 1, 2, ..., 10, y <= x and their sum is
+	less than 10.
+
+	A list comprehension is simply "syntactic sugar" for a
+	combination of applications of the higher order functions,
+	concat, map and filter.  For instance the above example could
+	be written:
+
+	filter p (concat (map f [1 .. 6]))
+	where	p (x,y) = x+y < 10
+		f x	= map g [1 .. x]
+			  where g y = (x,y)
+
+	According to a note by Rishiyur Nikhil <nikhil@crl.dec.com>,
+	August 1992:
+
+	The term itself seems to have been coined by Phil Wadler circa
+	1983-1985, although the programming construct itself goes back
+	much further (most likely Jack Schwartz and the SETL
+	language).
+
+	The term "list comprehension" appears in the following:
+
+	    "The OL Manual"
+	    Philip Wadler, Quentin Miller and Martin Raskovsky
+	    Probably 1983-1985 (my copy is undated)
+	and
+	    "How to Replace Failure by a List of Successes"
+	    FPCA September 1985, Nancy, France, pp 113-146
+
+	The earliest reference to the notation is in Rod Burstall and
+	John Darlington's description of their language, NPL.
+
+	David Turner subsequently adopted this notation in his
+	languages SASL, KRC and Miranda, where he has ca.
+lled them "ZF
+	expressions", set-abstractions and list-abstractions (in his
+	1985 FPCA paper [Miranda: A Non-Strict Functional Language
+	with Polymorphic Types]).
+
+LML
+	Lazy ML.
+	ML with lazy semantics.  A compiler, LMLC, based on the
+	G-Machine was written at the Chalmers University of Technology
+	by Thomas Johnsson and Lennart Augustsson.
+
+Locality
+	(1). In sequential architectures programs tend to access data
+	that has been accessed recently (temporal locality) or that is 
+	at an address near recently referenced data (spatial locality). 
+	This is the basis for the speed-up obtained with a cache memory. 
+	(2). In a multi-processor architecture with distributed memory
+	it takes longer to access the memory attached to a different
+	processor. This overhead increases with the number of
+	communicating processors. Thus to efficiently employ many
+	processors on a problem we must increase the proportion of
+	references which are to local memory.
+
+Logic Programming
+	See Prolog.
+
+LOGLisp
+	A version of Prolog implemented by Robinson in Lisp which allows 
+	Prolog programs to call Lisp and vice versa.
+
+MacLisp
+	A dialect of Lisp developed at MIT in 1966, known for its
+	efficiency and programming facilities.
+
+MALI
+	A memory for logic programming with real time garbage
+	collection.
+
+Meet
+	See Greatest lower bound.
+
+MIMD
+	Multiple Instruction Multiple Data
+	The class of parallel processor where many functional units
+	perform different operations on different data.  The term was
+	invented by Flynn.
+	See SIMD.
+
+Miranda
+	A functional programming language and interpreter designed and
+	sold by Professor David Turner's company, Research Software,
+	Ltd..  It combines the main features of KRC and SASL with a
+	strong type discipline similar to that of ML.  The type of an
+	expression is inferred from the source by the compiler but
+	explicit type declarations are also allowed.  Implemented for
+	UNIX by Allan Grimeley, Computer Lab., UKC.
+
+ML
+	Originally designed as part of the Edinburgh LCF .
+project.  It
+	was the first language to include polymorphic typing.  It is
+	now being significantly redesigned to produce Standard ML.
+	See also Lazy ML.
+
+Monotonic
+	In domain theory, a function f : D -> C is monotonic if for
+	all x,y in D, x \sqsubseteq y => f(x) \sqsubseteq f(y).
+
+Moore bound
+	An upper limit on the number of nodes in a regular graph of
+	degree d>2 and diameter k:
+				k
+		N(d,k) <= d(d-1) - 2
+			  ----------
+			      d-2
+
+Moore graph
+	A graph which achieves the Moore bound. These are complete
+	graphs, polygon graphs (regular, degree 2 graphs) and three
+	others: (nodes, degree, diameter) = (10,3,2), (50,7,2) and the
+	possible but undiscovered (3250,57,2).
+
+Most general unifier
+	If U is the most general unifier of a set of expressions then
+	any other unifier, V, can be expressed as V = UW, where W is
+	another substitutiion.
+	See Unification, Unifier.
+
+MultiLisp
+	An extension of the Lisp dialect Scheme with additional
+	operators and semantics for parallelism.
+
+Narrowing
+
+Negation by failure
+	An extralogical feature of Prolog in which failure of
+	unification is treated as establishing the negation of a
+	relation. For example, if Ronald Reagan is not in our database
+	and we asked if he was an american, Prolog would answer "no".
+
+Nondeterminism
+
+Normal form
+	In reduction systems, a graph is in normal form when it
+	contains no reducible expressions.
+	See also Head normal form, Weak head normal form.
+
+Normal order reduction.
+	Under this evaluation strategy an expression is evaluated by
+	reducing the leftmost outermost redex first.  This method will
+	terminate for any expression for which termination is
+	possible, whereas applicative order reduction may not.  This
+	method is equivalent to passing arguments unevaluated because
+	arguments are initially to the right of functions applied to
+	them.
+	See Applicative order reduction.
+
+NPL
+	A functional language designed by Rod Burstall and John
+	Darlington.  The language allowed certain sets and logic
+	constructs .
+to appear on the right hand side of definitions,
+	Eg.
+
+        setofeven(X) <= <:x: x in X & even(x) :>
+
+	The NPL interpreter evaluates the list of generators from left
+	to right so conditions can mention any bound variables that
+	occur to their left.
+
+	The language is described in
+
+	    John Darlington, "Program Transformation and Synthesis:
+	    Present Capabilities", Research Report No. 77/43, Dept. of
+	    Computing and Control, Imperial College of Science and
+	    Technology, London September 1977.
+
+	See also: List comprehension.
+
+Occam
+	A language based on C A R Hoare's CSP.  Named after William of
+	Occam who propounded Occam's Razor - that entities should not be
+	multiplied more than necessary.
+	The Occam language was designed by David May to easily describe
+	concurrent processes which communicate via one-way channels.
+	It was developed to run on INMOS Transputer but compilers are
+	available for Vax, Sun and Intel MDS, inter alia.
+	The basic entity in Occam is the process of which there are four
+	fundamental types, assignment, input, output, and wait.  More
+	complex processes are constructed from these using SEQ to
+	specify sequential execution, PAR to specify parallel execution
+	and ALT where each process is associated with an input from a
+	channel.  The process whose channel inputs first is executed.
+	The fourth constructor is IF with a list of conditions and
+	associated processes.  The process executed is the one with the
+	first true condition in textual order.
+
+OPS5
+	A production system used for knowledge representation.
+	See production system.
+
+Order-embedding
+	A function f : D -> C is order-embedding iff for all x,y in
+	D, f(x) \sqsubseteq f(y) <=> x \sqsubseteq y.  A function
+	which is order-embedding is monotonic and one-to-one and an
+	injection.
+
+Ordering
+	A relation.
+	See Partial ordering, Pre-order, Total ordering.
+
+Orwell
+	A functional language.
+
+Overloading of operators
+	Use of a single symbol to represent operators with different
+	arguments, eg..
+ '-', used either, as a monadic operator to negate
+	an expression, or as a dyadic operator to return the difference
+	between two expressions. Another example is '+' used to add
+	either integers or floating point numbers.
+
+Parallel reduction
+	A form of applicative order reduction in which all redexes in an
+	expression are reduced simultaneously.  Variants include parallel
+	outermost reduction and lenient reduction.
+	See Normal order reduction.
+
+Paramodulation
+
+Partial evaluation
+	An optimisation technique where the compiler evaluates some
+	subexpressions at compile time.  Eg.
+
+		pow x 0 = 1
+		pow x n = if even n
+			  then pxn2 * pxn2
+			  else x * pow x (n-1)
+				where pxn2 = pow x (n/2)
+		f x = pow x 5
+
+	Since n is known we can unfold the definition of pow at
+	compile time giving:
+
+		f x = x * x2 where x2 = x * x
+
+	It is important that the partial evaluation algorithm should
+	terminate.  This is not guaranteed in the presence of
+	recursive function definitions.  For example, if partial
+	evaluation were applied to the right hand side of the second
+	clause for pow above, it would never terminate because the
+	value of n is not known.
+
+	A more subtle point is that partial evaluation might change
+	the termination properties of the program.  For example, if
+	the expression (x * 0) was reduced to 0 it would terminate
+	even if x (and thus x * 0) did not.
+
+	Constant folding is a limited form of partial evaluation.
+
+Partial function
+	A function which is not defined for all values of its arguments.
+	Eg. f(x) = 1/x  if x <> 0.
+
+Partial ordering
+	A relation R is a partial ordering if it is reflexive,
+	antisymmetric and transitive.
+	See also Pre-order, Total ordering.
+
+	In domain theory, if D is a set of values plus the undefined
+	value (\perp) then we can define a relation \sqsubseteq on D by
+
+		x \sqsubseteq y if x = \perp or x = y.
+
+	The constructed set D x D contains the very undefined element,
+	(\perp, \perp) and the not so undefined elements, (x, \perp)
+	and (\perp, x).  Th.
+e partial ordering on D x D is then
+
+		(x1,y1) \sqsubseteq (x2,y2) if x1 \sqsubseteq x2 and
+					       y1 \sqsubseteq y2.
+
+	The partial ordering on D -> D is defined by
+
+		f \sqsubseteq g  if  f(x) \sqsubseteq g(x)
+					for all x in D.
+
+	Ie. f is not more defined than g if no application of f is
+	more defined than the application of g to the same argument.
+
+Pattern matching
+	A function is defined to take arguments of a particular type,
+	form or value. When applying the function to its actual
+	arguments it is necessary to match the type, form or value of
+	the actual arguments against the formal arguments in some
+	definition.
+
+\perp
+	An inverted T.
+	Used in domain theory to represent the least defined
+	(undefined) element of a domain.  Read as "bottom".
+
+Ping-pong
+	An phenomenon which can occur in a multi-processor system with 
+	private caches where two processors are alternately caching a
+	shared location. Each time one writes to it it invalidates the
+	other's copy.
+
+Polymorphic typing
+	Concept developed by Hindley and Milner allowing types such as
+	list of anything.  Eg. in Haskell:
+
+		length :: [*] -> num
+
+	a function which operates on a list of objects of any type.
+	Thus we can have type checking as well as generic functions.
+
+Ponder
+	A functional programming language designed by Fairbairn with an
+	interesting generalisation of ML's type system.
+
+Portable Standard Lisp
+	A dialect of Lisp from Utah University. Available as a kit for
+	68000. Runs on VAX. Compiles Lisp to C-code virtual machine
+	language.
+
+Poset
+	Partially ordered set.
+	See Partial ordering.
+
+Pre-order
+	In domain theory, a relation is a pre-order if it is
+	reflexive and transitive.
+	See also Partial ordering, Total ordering.
+
+Production system
+	A production system consists of a collection of productions 
+	(rules). A rule becomes eligable to fire when its conditions
+	match some set of elements currently in working memory. A
+	confict resolution strategy determines which of several eligable 
+	rules fir.
+es next. A condition is a list of symbols which
+	represent constants, which must be matched exactly; variables
+	which bind to the thing they match and "<> symbol" which matches
+	a field not equal to symbol.
+
+Projection
+	In domain theory, a function, f, which is (a) idempotent, ie.
+	f(f(x))=x and (b) whose result is no more defined than its
+	argument.  E.g. F(x)=bottom or F(x)=x.
+
+	In reduction systems, a function which returns part of its
+	argument.  In a graph reduction system the function can just
+	return a pointer to part of its argument and does not need to
+	build any new graph.  Eg. head, tail, \(x,y) . x.
+
+Prolog
+	Programming in Logic.
+	A relational language based on first order logic.
+	The basic operation of Prolog is goal proving by backward
+	chaining. The program is written as a database of facts and
+	rules. A fact is something that is always true whereas a rule
+	specifies that a proposition or goal is true if certain
+	sub-goals are all true.
+	Facts and rules may contain variables which take on any value
+	necessary to make the fact or rule succeed. Prolog will try all
+	possible combinations of values for variables to satisfy a goal.
+	If a goal fails then Prolog backtracks to try alternative
+	solutions of goals further up the tree.
+	The user supplies the first goal and Prolog attempts to prove it
+	by searching the database for any fact or rule that matches the
+	goal (it attempts to "unify" the goal with a clause in the
+	database). If the goal unifies with the head of a rule Prolog
+	then attempts to prove the sub-goals of the rule in the same
+	(recursive) way as for the first goal.
+	The user is informed of the success or failure of his first goal
+	and if it succeeds and contains variables he is told what values
+	of those variables caused it to succeed. He can also ask for
+	alternative solutions.
+	See also Backtracking, First order logic, Unification,
+		Negation by failure.
+
+Proof theory
+	The branch of logic describing procedures for combining logical
+	stateme.
+nts to show, by a series of truth-preserving
+	transformations, that one statement is a consequence of some
+	other statement or group of statements.
+
+PSL
+	Portable Standard Lisp.
+
+Pure Lisp
+	A subset of Lisp with no side-effects. A functional language.
+
+Quantifier
+	An operator in logic specifying for which values of a variable a
+	formula is true. Universally quantified means "for all values"
+	(written with an inverted A) and existentially quantified means
+	"there exists some value" (written with a reversed E). If a
+	variable is not quantified then it is free.
+	See also Bound variable, First order logic, Free variable,
+		Scope.
+
+QLOG
+	A version of Prolog implemented in Lisp which allows Prolog
+	programs to call Lisp and vice versa.
+
+Range
+	See Image.
+
+Rational tree
+
+Recipe
+	See Suspension.
+
+Redex
+	Reducible Expression.
+	An expression matching the left hand side of a rule or
+	defintion.
+	See Reduction.
+
+Reduction
+	The process of transforming an expression according to certain
+	reduction rules.  The most important forms are beta reduction
+	(application of a lambda abstraction to one or more argument
+	expressions) and delta reduction (application of a
+	mathematical function to the required number of arguments).
+	There are many different stratgies for choosing which part of
+	an expression (which redex) to reduce first.
+	See Graph reduction, Reduction strategy, String reduction,
+	Normal order reduction, Applicative order reduction, Parallel
+	reduction Alpha conversion, Beta conversion, Delta conversion,
+	Eta conversion.
+
+Reduction strategy
+	An algorithm for deciding which redex(es) to reduce next.
+	Different strategies have different termination properties in
+	the presence of recursive functions or values.
+	See String reduction, Normal order reduction, Applicative
+	order reduction, Parallel reduction
+
+Referential transparency
+	A program is referentially transparent if it prohibits assigning
+	different values to the same named variable during the same run.
+	This means that .
+a function and its value are interchangeable.
+	Referentially transparent programs are amenable to formal
+	methods.
+	Functional languages achieve this by using only named constants
+	whose values are passed as data at run time. Relational
+	languages permit the use of variables but require the program to
+	be, in effect, rerun for each different value returned.
+
+Reflexive
+	A relation R is reflexive if, for all x, x R x.
+
+Regular graph
+	A graph with all nodes of the same degree.
+
+Relational language
+	Relational languages specify output in terms of some property
+	and some arguments. For example, if Tom has two brothers, Dick and
+	Harry, a relational language will respond to the query "Who is
+	Tom's brother ?" with either Dick or Harry. Notice that unlike
+	functional languages, relational languages do not require a
+	unique output for each predicate/argument pair. Prolog is the
+	best known relational language.
+
+Resolution
+	A mechanical method for proving statements of first order
+	logic, introduced by J A Robinson in 1965.  Resolution is
+	applied to two clauses in a sentence.  It eliminates, by
+	unification, a literal that occurs positive in one and
+	negative in the other to produce a new clause, the resolvent,
+	which is added to the sentence.  Resolution with backtracking
+	is the basic control mechanism of Prolog.
+	See also SLD Resolution.
+
+SASL
+	Single ASsignment Language.  A functional programming language
+	designed by Professor David Turner.  Example syntax:
+	
+		def fac n =
+		   n = 0 -> 1 ; n x fac(n-1)
+
+Scheme
+	A dialect of Lisp from MIT.
+
+Scope
+	The scope of a variable is that region of a program source
+	within which it represents one thing.  Within its scope a
+	variable can be replaced by any other variable without
+	altering its meaning (barring name clashes).
+	See also Lexical scoping, Dynamic scoping.
+
+SECD machine
+	Stack Environment Control Dump machine.  One of the first
+	abstract machines for graph reduction.  Described by Landin.
+
+Sentence
+	In logic, a collect.
+ion of clauses.
+
+SETL
+	A language by Jack Schwartz.  Possibly the first use of list
+	comprehension notation.
+
+Shallow binding
+	A method of storing variable bindings where the current vaule of
+	a variable can be found at at a known location rather than by
+	searching an environment or association list. When a new binding
+	is made, the old value is copied into the environment.
+
+Skolemization
+	A means of removing quantifiers from first order logic formulas.
+
+Side effect
+	Statements that modify the current state of the system rather
+	than simply adding more to what was already there are said to
+	have side effects. Side-effects include assignment and I/O.
+
+SIMD
+	Single Instruction Multiple Data
+	The class of parallel processor where many functional units
+	perform the same operations on different data. The term was
+	invented by Flynn.
+	See MIMD.
+
+Single assignment
+	If a variable is only assigned a value once then an instance
+	of that variable is equivalent to the value and can be
+	considered as a function which returns that value.  Thus a
+	single assignment language is a functional language.
+	See zero assignment.
+
+SISAL
+	A functional programming language originating from data-flow
+	languages, targeted at numerical computation.  Developed
+	(around 1985) by Manchester University, MIT, DEC and Lawrence
+	Livermore National Lab.  One major objective was the efficient
+	handling of arrays.  Not to be confused with SASL.
+
+S-K reduction machine
+	An abstract machine defined by Professor David Turner to
+	evaluate combinator expressions represented as binary graphs.
+	Named after the two basic combinators, S and K.
+
+SLD resolution
+	Linear resolution with a selection function for definite
+	sentences.
+	A definite sentence has exactly one positive literal in each
+	clause and this literal is selected to be resolved upon, ie.
+	replaced in the goal clause by the conjunction of negative
+	literals which form the body of the clause.
+
+SML
+	Standard ML.  A descendent of ML.  SML of New Jersey (SM.
+L-NJ)
+	is a popular version.
+
+Speculative evaluation
+	Under speculative evaluation some evaluation may be started
+	before it is known whether it is needed (Eager evaluation).
+	This may result in some wasted processing and may introduce
+	unnecessary non-terminating processes but it can reduce the
+	overall run-time by making some needed results available
+	earlier than they would be otherwise.
+	Opposite of Conservative evaluation.
+
+Spice Lisp
+	A flavour of Lisp the sources of which (in Lisp) are available
+	from CMU.
+
+\sqcup
+	A square U.  Used for the Least upper bound.
+
+\sqsubseteq
+	Like a capital E with its middle line moved below its bottom.
+	In domain theory, x \sqsubseteq y if x is no more defined that
+	y.
+
+STAB
+	A decendent of BCPL
+
+Stack environment control dump machine (SECD machine)
+	The first abstract machine for reducing lambda calculus 
+	expressions invented by P.J.Landin.
+	The machine has four registers holding pointers to linked lists
+	operated as push-down stacks which hold the information
+	required for the evaluation of an expression.
+	The registers point to (1) Stack which holds the arguments of
+	partially evaluated expressions and results of completely
+	evaluated ones, (2) Environment where the current expression
+	being evaluated is stored, (3) Control which holds the machine
+	instructions that manipulate the contents of the four registers
+	that represent the expression being evaluated, (4) Dump on which
+	the state of the machine is temporarily saved during the
+	evaluation of expressions.
+	See also Lispkit.
+
+Strength reduction
+	A compiler optimisation.
+
+Strict
+	A function is strict in an argument if the result of the
+	function application is bottom whenever that argument is
+	bottom.  In other words, the result depends on the argument.
+	See also Strict evaluation.
+
+Strict evaluation
+	Call by value evaluation order is sometimes called ``strict
+	evaluation'' because, in a sequential system, it makes
+	functions behave as though they were strict, in the sen.
+se that
+	evaluation of a function application cannot terminate before
+	evaluation of the argument.  Similarly, languages are called
+	strict if they use call by value.
+	See Eager evaluation, Lazy evaluation.
+
+String reduction
+	An expression is represented as a string of function names and
+	constants.  It is reduced by substituting values for parts of
+	the string into the string or a copy of it.
+	See Graph reduction.
+
+Structured language
+	A language where the program may be broken down into blocks or
+	procedures which can be written without detailed knowledge of
+	the inner workings of other blocks, thus allowing a
+	top-down-design approach.
+
+\subseteq
+	Like a U on its right side with a line under it.
+	For sets x and y, x \subseteq y if all elements of x are also
+	elements of y.
+
+Supercombinators
+	Combinators with coarser granularity than those proposed by
+	Turner.  A functional program is translated to a set of functions
+	without free variables.  The members of the set are selected to
+	be optimal for that program.  Supercombinators were proposed by
+	John Hughes at Edinburgh University.
+
+Surjection
+	A function f : A -> B is surjective or onto or a surjection if
+	f(A) = B.  This means that its image is its codomain.  Only
+	surjective functions have right inverses, f' where f(f'(x)) = x
+	or f . f' = i, the identity function since if f were not a
+	surjection there would be elements of the codomain for which
+	f' was not defined.
+	See also Bijection, Injection.
+
+Suspension
+	In lazy evaluation, a suspension (or in Henderson's
+	terminology, a recipe) is a closure with a flag indicating
+	whether the expression has been evaluated or not.  When the
+	expression is evaluated the first time, this flag is set.
+	Subsequent requests for the value of the expression will not
+	attempt to re-evaluate it.
+
+Symmetric
+	A relation R is symmetric if, for all x and y, a R b => b R a.
+
+TABLOG
+	A programming language based on first order predicate logic
+	with equality that combines realtional and.
+ functional
+	programming.  It has functional notation and unification as
+	its binding mechanism.  TABLOG supports a more general subset
+	of standard first order logic than Prolog.  It employs the
+	Manna-Waldinger 'deductive-tableau' proof system as an
+	interpreter instead of resolution.
+
+T Lisp
+	A dialect of Lisp from Yale.  Used as the basis for the Yale
+	Haskell system.
+
+Tail recursion optimisation (TRO)
+
+	When the last thing a procedure does is to call itself, it is
+	not necessary to retain the calling invocation's environment.
+	This is important when a procedure calls itself recursively
+	many times for, without tail recursion optimisation, the
+	environments of earlier invocations would fill up the memory
+	only to be discarded when (if) the last call terminated.
+
+	Tail recursion optimisation is a special case of last call
+	optimisation but it allows the further optimisation that some
+	arguments may be passed in situ, possibly in registers.
+
+TEMPLOG
+	Extension of Prolog to handle temporal logic proposed by M Abadi
+	and Z Manna of Stanford University.
+
+Temporal logic
+	Temporal logic is an extension of predicate calculus which includes
+	notation for arguing about when statements are true. Time is
+	discrete, linear and extends indefinately into the future. Three
+	prefix operators, represented by a circle, square and diamond mean
+	"is true at the next time instant", "is true from now on" and
+	"is eventually true".
+		x U y
+	means x is true until y is true.
+		x P y
+	means x precedes y.
+
+Term rewriting system
+	A computational paradigm consisting of a collection of rewrite
+	rules to transform terms (expressions, strings in some formal
+	language) into equivalent terms.
+	See reduction.
+
+Threaded code
+	An instruction/op-code represents the address of some (lower
+	level) code to perform the required operation.
+	Used by Forth.
+
+Total ordering
+	A relation R on a set A is a total ordering if the relation is
+	reflexive, transitive, antisymmetric and for any two elements
+	x and y .
+in A, either x R y or y R x.
+
+Transformation
+	The systematic development of efficient programs from high-level
+	specifications by meaning-preserving program manipulations.
+
+Transitive
+	A relation R is transitive if x R y  and  y R z  =>  x R z.
+
+Transitive closure
+	The transitive closure R* of a relation R is defined by
+
+		x R y => x R* y
+		x R y  and  y R* z => x R* z
+
+	Ie. elements are related by R* if they are related by R
+	directly or through some sequence of intermediate related
+	elements.
+
+	Eg. in graph theory, if R is the relation on nodes "has an
+	edge leading to" then the transitive closure of R is the
+	relation "has a path of zero or more edges to".
+
+Tree
+	A graph containing no cycles. ie. there is only one route
+	between any pair of nodes.
+
+Unification
+	The generalisation of pattern matching that is the logic
+	programming equivalent of instantiation in logic.
+	When two terms are to be unified, they are compared. If they are
+	both constants then the result of unification is success if they
+	are equal else failure. If one is a variable then it is bound to
+	the other, which may be a variable, constant or structure and
+	the unification succeeds. If both terms are structures then each
+	pair of sub-terms is unified recursively and the unification
+	succeeds if all the sub-terms unifiy.
+	The result of unification is either failure or success with a
+	set of variable bindings.
+	See Unifier.
+
+Unifier
+	The unifier of a set of expressions is a set of substitutions of
+	terms for variables such that the expressions are all equal.
+	See Most general unifier, Unification.
+
+\uparrow
+	An upward pointing arrow.  See Closure.
+
+Upward closure
+	See Closure.
+
+VAL
+	Value Algorithmic Language.
+	A dataflow language.
+
+Valency
+	See degree.
+
+WHNF
+	Weak head normal form
+
+Weak head normal form
+	A term coined by Simon Peyton-Jones to make explicit the
+	difference between head normal form (HNF) and what graph
+	reducers produce in practice.  A lambda expression is in weak
+	head normal form .
+(but not HNF) even if its top level is a
+	lamdba abstraction with a reducible body.  Hence, the
+	expression
+
+		\x . ((\y . y+x) 2)
+
+	is in WHNF but not HNF.  To Reduce this expression to HNF
+	would require reduction of the inner application
+
+		(\y . y+x) 2  -->  2+x
+
+	Conversion to WHNF avoids the need for alpha conversion of an
+	inner lambda abstraction and so is prefered in practical graph
+	rediction systems.
+
+Y
+	See Fixed-point combinator.
+
+Zeta Lisp
+	A dialect of Lisp originally derived from MacLisp and currently
+	supported by Lisp Machines Inc. and Symbolics.
+
+Zero assignment
+	A zero assignment language is a language where there are no
+	variables but only functions.
+	See single assignment.
+
+ZAPP
+	Zero Assignment Parallel Processor.
+	A virtual tree machine architecture in which a process tree is
+	dynamically mapped onto a fixed, strongly connected network of
+	processors communicating by message passing. The basic operation
+	of each node is to apply a divide and conquor function which
+	takes four arguments: (1) a function 'primitive' which takes a
+	problem description (PD) and returns true if it can be solved
+	without division, (2) a function 'solve' which takes a primitive
+	PD and returns its solution, (3) a function 'divide' which takes
+	a PD and returns a list of PDs of smaller problems and (4) a
+	function 'combine' which returns the solution to a problem by 
+	combining a list of solutions of subproblems.
+	Each node has a copy of the code and one is given the initial
+	problem description. Task distribution is by process stealing in
+	which a process constructs a descriptor for each subtask and
+	idle (lightly loaded) processors can steal a descriptor from a
+	physically connected neighbour.
+
+ZF expression
+	See list comprehension.
+
+

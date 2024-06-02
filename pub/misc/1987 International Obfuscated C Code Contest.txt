@@ -1,0 +1,643 @@
+From uucp Wed Jul  1 13:21 BST 1987
+>From denis Wed Jul  1 13:08:19 1987 remote from gec-rl-hrc
+Date:     Wed, 1 Jul 87 13:08:07 BST
+From:     denis@gec-rl-hrc
+To:       denis
+Message-ID:  <8707011308.aa14397@lemon.gec-rl-hrc.co.uk>
+
+Path: hrc63!ukc!mcvax!seismo!ll-xn!cit-vax!amdahl!chongo
+From: chongo@amdahl.amdahl.com (Landon Curt Noll)
+Newsgroups: comp.lang.c,comp.unix.wizards
+Subject: The 1987 International Obfuscated C Code Contest Winners
+Keywords: 1987 winners, 1988 contest rules
+Message-ID: <9185@amdahl.amdahl.com>
+Date: 24 Jun 87 12:39:29 GMT
+Organization: Amdahl Coup, UTS Products Hen house
+Lines: 624
+Xref: hrc63 comp.lang.c:2107 comp.unix.wizards:2265
+
+
+:
+# This is a shell archive.  Remove anything before this line, then
+# unpack it by saving it in a file and typing "sh file".  (Files
+# unpacked will be owned by you and have default permissions.)
+#
+# This archive contains:
+# winners rules
+
+echo x - winners
+sed -e 's/^X//' > "winners" << '//E*O*F winners//'
+X
+X
+X          1987 International Obfuscated C Code Contest Winners
+X
+X
+XObfuscate:  tr.v.  -cated, -cating, -cates.  1. a.  To render obscure.
+X	b.  To darken.  2. To confuse:  his emotions obfuscated his
+X	judgement.  [LLat. obfuscare, to darken : ob(intensive) +
+X	Lat. fuscare, to darken < fuscus, dark.] -obfuscation n.
+X	obfuscatory adj.
+X
+XWe recommend that you first try to understand the program from just
+Xreading the source and the comments above each entry.  Then you should
+Xtry running the program.  If you are still confused, try sending the
+Xsource through the C Preprocessor, or a good C beautifier, unlike the
+XBSD indent(1) program which dumped core processing some of the
+Xentries.  Lastly, you might look at the clues given at the end of this
+Xarticle.  Happy pondering.
+X
+XSome categorizations are appropriately obfuscatory.
+X
+XUTS (System V for Amdahl mainframes) lint is a stronger version of the
+Xstandard System V lint; it even works!  BSD lint was performed on a
+XSymmetric S/375.  In some cases, the lint library of standard
+Xfunctions was ignored to avoid problems with conflicts between BSD and
+XSystem V.  Assume entries did not pass lint unless stated otherwise.
+X
+X============================================================
+X
+XBest Obfuscator of Programs
+X
+X	Paul Heckbert
+X	...!ucbvax!pixar!ph
+X	Pixar
+X	System(s): vax 780, unix 4.3bsd
+X
+XOn SysV systems, compile with: -Dindex=strchr.
+XTo compile on a 16 bit machine, change 300000's to 30000.
+XPasses BSD lint.
+X
+X------------------------------------------------------------
+X#include <ctype.h>
+X#include <stdio.h>
+X#define _ define
+X#_ A putchar
+X#_ B return
+X#_ C index
+Xchar*r,c[300001],*d=">=<=!===||&&->++-->><<",*i,*l,*j,*m,*k,*n,*h,*y;e,u=1,v,w,
+Xf=1,p,s,x;main(a,b)char**b;{p=a>1?atoi(b[1]):79;r=c+read(0,j=l=i=c,300000);v=g(
+Xj,&m);for(k=m;v!=2;j=k,m=n,v=w,k=m){w=g(k,&n);if(v==1&&m-j==1&&*j==35)e&&A(10),
+Xe=f=0;if(!f&&v==3&&(char*)C(j,10)<m)A(10),e=0,f=1;else if(v>2&&(u||w)&&(f||u)&&
+X(l-i>1||*i!=61||n-k>1||!C("-*&",*k)))continue;else if(v==3)if(f&&e+1+n-k>p&&e)A
+X(10),e=0;else A(32),e++;else{if(f&&e+m-j>p&&e)A(10),e=0;e+=m-j;k=j;while(k<m)A(
+X*k++);}i=j;l=m;u=v;}e&&A(10);}g(j,m)char*j,**m;{if(j>=r)B*m=j,2;s=isdigit(*j)||
+X*j==46&&isdigit(j[1]);for(h=j;h<r;h++)if(!isalnum(*h)&&*h!=95&&(!s||*h!=46)&&(!
+Xs||h[-1]!=101&&h[-1]!=69||!C("+-",*h)))break;if(h>j)B*m=h,0;x=1;for(h=j;h<r&&C(
+X" \t\n",*h);h++);if(h>j)h--,x=3;if(*j==34||*j==39)for(h=j+1;h<r&&*h!=*j;h++)if(
+X*h==92)h++;for(y=d;*y&&strncmp(y,j,2);y+=2);if(*y)h=j+1;if(!strncmp("/*",j,2)){
+Xh=j+2;while(*++h!=42||*++h!=47);x=4;}*m=h+1;B x;}
+X============================================================
+X
+XMost Useful Obfuscation
+X
+X	Larry Wall
+X	...!{allegra,burdvax,cbosgd,ihnp4}!sdcrdcf!lwall
+X	Unisys - System Development Group Santa Monica
+X	9132 Kester Ave
+X	Panorama City, CA  91402  USA
+X	System(s): 4.2bsd Vax 11/780, Sun 2/120
+X
+XThe last 13 lines should be joined into one single line.
+XPasses BSD and UTS lint.
+X
+X------------------------------------------------------------
+X#define iv 4 
+X#define v ;(void
+X#define XI(xi)int xi[iv*'V'];
+X#define L(c,l,i)c(){d(l);m(i);}
+X#include <stdio.h>
+Xint*cc,c,i,ix='\t',exit(),X='\n'*'\d';XI(VI)XI(xi)extern(*vi[])(),(*
+Xsignal())();char*V,cm,D['x'],M='\n',I,*gets();L(MV,V,(c+='d',ix))m(x){v)
+Xsignal(X/'I',vi[x]);}d(x)char*x;{v)write(i,x,i);}L(MC,V,M+I)xv(){c>=i?m(
+Xc/M/M+M):(d(&M),m(cm));}L(mi,V+cm,M)L(md,V,M)MM(){c=c*M%X;V-=cm;m(ix);}
+XLXX(){gets(D)||(vi[iv])();c=atoi(D);while(c>=X){c-=X;d("m");}V="ivxlcdm"
+X+iv;m(ix);}LV(){c-=c;while((i=cc[*D=getchar()])>-I)i?(c?(c<i&&l(-c-c,
+X"%d"),l(i,"+%d")):l(i,"(%d")):(c&&l(M,")"),l(*D,"%c")),c=i;c&&l(X,")"),l
+X(-i,"%c");m(iv-!(i&I));}L(ml,V,'\f')li(){m(cm+!isatty(i=I));}ii(){m(c=cm
+X=++I)v)pipe(VI);cc=xi+cm++;for(V="jWYmDEnX";*V;V++)xi[*V^' ']=c,xi[*V++]
+X=c,c*=M,xi[*V^' ']=xi[*V]=c>>I;cc[-I]-=ix v)close(*VI);cc[M]-=M;}main(){
+X(*vi)();for(;v)write(VI[I],V,M));}l(xl,lx)char*lx;{v)printf(lx,xl)v)
+Xfflush(stdout);}L(xx,V+I,(c-=X/cm,ix))int(*vi[])()={ii,li,LXX,LV,exit,l,
+Xd,l,d,xv,MM,md,MC,ml,MV,xx,xx,xx,xx,MV,mi};
+X============================================================
+X
+XBest Layout
+X
+X	Brian Westley (aka Merlyn Leroy on usenet)
+X	...!rutgers!dayton!rosevax!rose3!starfire!merlyn
+X	Starfire Consulting
+X	1121 Hamline Ave. N. #17
+X	St. Paul, MN  55108  USA
+X	System(s): Sys V rel 2 & variant of Sys III
+X
+XPutchar must exist in the C library and not just as a macro.
+XIf it fails to compile, add the line:  #include <stdio.h>  at the
+Xtop of the program.
+XPassed BSD lint (probably due to a bug in BSD lint).
+X
+X------------------------------------------------------------
+X				char rahc
+X				   [ ]
+X				    =
+X				  "\n/"
+X				    ,
+X				redivider
+X				   [ ]
+X				    =
+X		       "Able was I ere I saw elbA"
+X				    ,
+X				    *
+X			     deliver,reviled
+X				    =
+X				   1+1
+X				    ,
+X			       niam ; main
+X				   ( )
+X				  {/*\}
+X				   \*/
+X				 int tni
+X				    =
+X				   0x0
+X				    ,
+X			     rahctup,putchar
+X				   ( )
+X		           ,LACEDx0 = 0xDECAL,
+X				rof ; for
+X			     (;(int) (tni);)
+X			       (int) (tni)
+X			  = reviled ; deliver =
+X				redivider
+X				    ;
+Xfor ((int)(tni)++,++reviled;reviled* *deliver;deliver++,++(int)(tni)) rof
+X			            =
+X			     (int) -1- (tni)
+X		          ;reviled--;--deliver;
+X			     (tni)  =  (int)
+X			  - 0xDECAL + LACEDx0 -
+X				rof ; for
+X       (reviled--,(int)--(tni);(int) (tni);(int)--(tni),--deliver)
+X			    rahctup = putchar
+X			   (reviled* *deliver)
+X				    ;
+X			    rahctup * putchar
+X			    ((char) * (rahc))
+X				    ;
+X				   /*\
+X				  {\*/}
+X============================================================
+X
+XBest One Liner
+X
+X	David Korn
+X	...!ihnp4!ulysses!dgk
+X	AT&T Bell Labs
+X	MH 3C-526B, AT&T Bell Labs
+X	Murray Hill, NJ  07974  USA
+X	System(s):  UN*X
+X
+XPasses BSD and UTS lint.
+X
+X------------------------------------------------------------
+X	main() { printf(&unix["\021%six\012\0"],(unix)["have"]+"fun"-0x60);}
+X============================================================
+X
+XBest Abuse Of The Rules
+X
+X	Mark Biggar
+X	...!sdcrdcf!markb
+X	UNiSYS - System Development Group, Santa Monica
+X	2525 Colorado AV MD 91-01
+X	Santa Monica, CA 90406
+X	Generic UNIX
+X
+XCompile with:
+X	cc -DC="R>0" -DI="if(T)O" -DO="c=write(1,&c,1);" -DP="main(){X}"\
+X	-DR="read(0,&c,1)" -DT="c!=015" -DW="while(C)I" -DX="char c;W" markb.c
+X
+XPasses BSD and UTS lint.  At least one version of lint is thrown into
+Xan infinite loop by this entry.
+X
+X------------------------------------------------------------
+XP;
+X============================================================
+X
+XWorst Style
+X
+X	Spencer Hines
+X	avalon@grebyn.com, ...!seismo!decuac!grebyn!avalon
+X	OnLine Computer Systems
+X	4200 Farragut Street
+X	Hyattsville, MD  20781  USA
+X	System(s):  BSD 4.3, Microsoft C 4.0
+X
+X------------------------------------------------------------
+X#include <stdio.h>
+X#include <malloc.h>
+Xmain(togo,toog)
+Xint togo;
+Xchar *toog[];
+X{char *ogto,   tgoo[80];FILE  *ogot;  int    oogt=0, ootg,  otog=79,
+Xottg=1;if (    togo==  ottg)   goto   gogo;  goto    goog;  ggot:
+Xif (   fgets(  tgoo,   otog,   ogot)) goto   gtgo;   goto   gott;
+Xgtot:  exit(); ogtg: ++oogt;   goto   ogoo;  togg:   if (   ootg > 0)
+Xgoto   oggt;   goto    ggot;   ogog:  if (  !ogot)   goto   gogo;
+Xgoto   ggto;   gtto:   printf( "%d    goto   \'s\n", oogt); goto
+Xgtot;  oggt:   if (   !memcmp( ogto, "goto", 4))     goto   otgg;
+Xgoto   gooo;   gogo:   exit(   ottg); tggo:  ootg=   strlen(tgoo);
+Xgoto   tgog;   oogo: --ootg;   goto   togg;  gooo: ++ogto;  goto
+Xoogo;  gott:   fclose( ogot);  goto   gtto;  otgg:   ogto=  ogto +3;
+Xgoto   ogtg;   tgog:   ootg-=4;goto   togg;  gtgo:   ogto=  tgoo;
+Xgoto   tggo;   ogoo:   ootg-=3;goto   gooo;  goog:   ogot=  fopen(
+Xtoog[  ottg],  "r");   goto    ogog;  ggto:  ogto=   tgoo;  goto
+Xggot;}
+X============================================================
+X
+XGrand Prize for Most Well Rounded Confusion
+X
+X	Roemer B. Lievaart
+X	rblieva@cs.vu.nl, ...!seismo!mcvax!botter!rblieva
+X	VU Informatica
+X	Churchilllaan 173-IV
+X	Amsterdam, The Netherlands
+X	System(s):  Unix 4.1BSD
+X
+XPasses BSD lint.
+X
+X------------------------------------------------------------
+X#define D define
+X#D Y return
+X#D R for
+X#D e while
+X#D I printf
+X#D l int
+X#D C y=v+111;H(x,v)*y++= *x
+X#D H(a,b)R(a=b+11;a<b+89;a++)
+X#D s(a)t=scanf("%d",&a)
+Xl V[1100],u,r[]={-1,-11,-10,-9,1,11,10,9},h[]={11,18,81,88},ih[]={22,27,72,77},
+Xbz,lv=60,*x,*y,m,t;S(d,v,f,a,b)l*v;{l c=0,*n=v+100,bw=d<u-1?a:-9000,w,z,i,zb,q=
+X3-f;if(d>u){R(w=i=0;i<4;i++)w+=(m=v[h[i]])==f?300:m==q?-300:(t=v[ih[i]])==f?-50
+X:t==q?50:0;return w;}H(z,0){if(GZ(v,z,f,100)){c++;w= -S(d+1,n,q,-b,-bw);if(w>bw
+X){zb=z;bw=w;if(w>=b||w>=8003)Y w;}}}if(!c){bz=0;C;Y-S(d+1,n,q,-b,-bw);}bz=zb;Y
+Xd>=u-1?bw+(c<<3):bw;}main(){R(;t<1100;t+=100)R(m=0;m<100;m++)V[t+m]=m<11||m>88
+X||(m+1)%10<2?3:0;V[44]=V[55]=1;V[45]=V[54]=2;I("Level:");s(u);e(lv>0){do{I("Yo\
+Xu:");s(m);}e(!GZ(V,m,2,0)&&m!=99);if(m!=99)lv--;if(lv<15&&u<10)u+=2;I("Wait\n")
+X;I("Value:%d\n",S(0,V,1,-9000,9000));I("move: %d\n",(lv-=GZ(V,bz,1,0),bz));}}GZ
+X(v,z,f,o)l*v;{l*j,q=3-f,g=0,i,h,*k=v+z;if(*k==0)R(i=7;i>=0;i--){j=k+(h=r[i]);e(
+X*j==q)j+=h;if(*j==f&&j-h!=k){if(!g){g=1;C;}e(j!=k)*((j-=h)+o)=f;}}Y g;}
+X============================================================
+X
+XJudges' Hints and Comments:
+X
+XNote:  Programs are given names taken from the Author's login,
+X       and assumed to be compiled in the standard way.  See comments
+X       above each entry for special compilation instructions.
+X
+X------------------------------------------------------------
+X
+XPaul Heckbert <pixar!ph>: Best Obfuscator of Programs
+X
+XTry: ph 40 < ph.c > foo.c; cc foo.c -o ph
+X     ph 20 < a_C_prog.c > bar.c; cc bar.c
+X
+XRead and compile foo.c.  We used this program to help us examine contest
+Xentries that caused BSD's fold(1) program to choke.  Thank you Paul,
+XI have added your program to our obfuscated C contest tool set.
+X
+X------------------------------------------------------------
+X
+XLarry Wall <sdcrdcf!lwall>:  Most Useful Obfuscation
+X
+XTry:	lwall | bc | lwall
+Xinput:	x*x
+Xinput:	c^2
+X
+XAlso try:  lwall | bc   and   lwall | cat
+X
+XFor a good time, try to understand why Larry calls the signal routine
+Xin this program.  Larry gives some credit to his brother-in-law, Mark Biggar,
+Xfor this crazy use of signals.
+X
+X------------------------------------------------------------
+X
+XBrian Westley <starfire!merlyn>:  Best Layout
+X
+XLine by line symmetry performed better than any C beautifier.
+XThink of if it as a C Ink blot.  :-)
+X
+X------------------------------------------------------------
+X
+XDavid Korn <ulysses!dgk>:  Best One Liner
+X
+XCompile on a UN*X system, or at least using a C implementation
+Xthat fakes it.  This program may not be valid under the proposed
+XANSI C standard.  See if your can understand what is does before you
+Xrun the program.
+X
+XLandon interviewed someone who claimed to be a hot C programmer.  After 
+Xreviewing this little program, the person cooled his reputation a bit.  :-)
+X
+XFYI: David Korn's /bin/ksh provides us with a greatly improved version of 
+Xthe /bin/sh.  The source for v7's /bin/sh greatly inspired this contest.
+X
+X------------------------------------------------------------
+XMark Biggar <sdcrdcf!markb>:  Best Abuse of the Rules
+X
+XTry:  ... | markb | od -c	(remember to compile as indicated above)
+X
+XBy changing the compile line you can make this program do anything you
+Xwant.  This is a very efficient way to transfer source, though it
+Xincreases the size of Makefiles.
+X
+XWith only slight variations, this program can be set to many uses.
+XConsider how easy it would be to release Un*x source in this form;
+Xso what if the make files increase a bit!  :-) 
+X
+XOne vendor's lint got hung in an infinite loop over this entry!
+X
+XFYI:  We will let Mark get away with this truely sick entry this time, but 
+X      in the future on we have placed a limit on the size of a compile line.
+X
+XAlso see our comment on Larry Wall's entry.
+X
+X------------------------------------------------------------
+X
+XSpencer Hines <grebyn!avalon>:  Worst Style
+X
+XTry:  avalon avalon.c
+X
+XSpecifically designed to maximize the bother function for structured
+Xprogrammers.  This program takes goto statements to their logical
+Xconclusion.  The layout and choice of names are classic.
+X
+XWe consider this to be a beautiful counter-example for Frank Rubin's
+Xletter to ACM form titled: `` "GOTO Considered Harmful" Considered Harmful ''.
+XSee the Communications of the ACM, March 1987, Page 195-196.
+X
+X------------------------------------------------------------
+X
+XRoemer B. Lievaart <botter!rblieva>:  Grand Prize
+X
+XSample session (user input surrounded by angle brackets `<' and `>'):
+X
+X	Level:<2>		(value from 0 to 10)
+X	You:<34>		(value from 11 to 88)
+X	Wait
+X	Value:-16
+X	move:33
+X	You:<43>
+X	Wait
+X	Value:-32
+X	move:35
+X	You:<36>
+X	Wait
+X	Value:16
+X	move:64
+X	You:<65>
+X	Wait
+X	Value:0
+X	move:37
+X	...
+X
+XContinue as needed, if you get stuck, try 99.
+X
+XIn case your are really stuck, rot13 the following from the Author.
+XThat is, pass it thru:  tr 'a-zA-Z' 'n-za-mN-ZA-M'   -or on some systems-
+X                        tr '[a-zA-Z]' '[n-za-mN-ZA-M]'
+X
+XGuvf Cynlf gur tnzr bs erirefv! (Bguryyb.) Pbzcvyr naq eha. Vg gura nfxf
+Xsbe n cynlvat yriry. Ragre 0-10 (rnfl-uneq). Vg gura nfxf sbe lbhe
+Xzbir. N zbir vf n ahzore jvguva 11-88, be n 99 gb cnff. Vyyrtny zbirf
+X(rkprcg sbe na vyyrtny cnff) ner erwrpgrq. Gura gur pbzchgre qbrf vgf
+Xzbir (be n 0 gb cnff), hagvy gur obneq vf shyy. Vg cynlf engure tbbq,
+Xsbe fhpu n fznyy cebtenz! V unq gb yrnir bhg gur obneq-cevagvat ebhgvar, 
+Xfb lbh'yy unir gb gnxr n erny-tnzr obneq gb cynl vg. ...
+XNyfb qhr gb fcnpr-yvzvgngvbaf, V gbbx bhg gur cnffvat-unaqyre,
+Xjuvpu znxrf vgf raqvat-tnzr engure cbbe. Ohg shegure vg xabjf nyy
+Xgur ehyrf, hfrf nycun-orgn-cehavat, naq vg cynlf s.v. ba zbovyvgl(!).
+XZbfg vzcbegnag: vg pna cynl n cerggl tbbq tnzr bs Erirefv!
+X
+XThis program is confusing in what it looks like, what is does and how
+Xit does it.  This is yet another winner from The Netherlands!
+X
+X============================================================
+X
+XThank you to all persons who entered the contest.  We hope you will try
+Xagain next year.
+X
+XThis years winning programs will be published in the Micro/Systems Journal
+Xand perhaps in an up coming book.  See ...!seismo!nbs-amrf!libes for
+Xdetails about the Journal.
+X
+X
+XLandon Curt Noll	seismo!amdahl!chongo
+XLarry Bassel		{hplabs,amdahl!unixprt}!oblio!lab
+//E*O*F winners//
+
+echo x - rules
+sed -e 's/^X//' > "rules" << '//E*O*F rules//'
+XSubject: 5th International Obfuscated C Code Contest Rules
+XNewsgroups: comp.lang.c,comp.unix.wizards
+XKeywords: rules,1988,obfuscate,contest
+X
+X	Obfuscate:  tr.v.  -cated, -cating, -cates.  1. a.  To render obscure.
+X		b.  To darken.  2. To confuse:  his emotions obfuscated his
+X		judgement.  [LLat. obfuscare, to darken : ob(intensive) +
+X		Lat. fuscare, to darken < fuscus, dark.] -obfuscation n.
+X		obfuscatory adj.
+X
+XGOALS OF THE CONTEST:
+X
+X	* To write the most Obscure/Obfuscated C program under the rules below.
+X	* To show what should NOT be done in C programs.
+X	* To provide a safe forum for poor C code.  :-)
+X
+XRULES:
+X
+X	To help us handle the vast volume of entries, we ask that you
+X	follow the rules below.  Sorry for the length, but we need all
+X	the help we can get!
+X
+X	1) Your source must be 1536 bytes or less, and it must be a complete
+X	   program, not just a subroutine.
+X
+X	2) To help us process your entries, we ask that you submit entries
+X	   in the following format.  Please be sure to include the --- lines,
+X	   otherwise our extraction program may skip your entry!
+X
+X---header items---
+Xname:    	Your name, of course!
+Xorg:		School/Company/Organization
+Xemail address:	Email address from a well known site
+Xpostal address:	Postal address, include your country as well
+Xenvironment:	Indicate the Hardware & OS under which your program was tested
+Xremarks:		<Only Item that is Required: see below>
+X---how to compile---
+XX Give the command(s) needed to compile your program.
+XX Follow the same rules as given for the program below except that the
+XX command size must be 160 characters or less.
+X---program---
+XX Place obfuscated source of 1536 characters or less in this section.
+XX Add a leading X to each line to avoid problems with mailers.
+XX Some mailers don't like files with very long lines.  If your entry contains C
+XC    lines longer 80 chars we ask you to form continuation line sets.  To form C
+XC    a continuation line set, place a 'C' character at the point of a split C
+XC    and place a C (instead of an X) at the beginning of the next line. C
+XC    Finally, end the continuation line set as normal.
+XX The C\nC's and leading X's will be removed prior to extraction and thus C
+XC    they don't contribute toward the source character count.  All other C
+XC    characters are considered to be source.
+XX Newlines count as 1 character.  Assume a standard 8 character tab stop.
+X---end---
+X
+X	3) Regarding the header items:
+X
+X	    * Any text outside of the above format will be kept confidential.
+X	      The form of the header items is not strict.
+X
+X	    * The 'remarks' item is not optional.  Please include:
+X		- what this program does
+X		- why you think the program is obfuscated
+X		- any indicate remarks you wish to make
+X
+X	4) Your entry should be written in common C. (K&R + common extensions)
+X
+X	5) The program must be of original work.  All programs must be
+X	   in the public domain.  All copyrighted programs will be rejected.
+X
+X	6) Entries must be received between 25-Mar-88 0:00 GMT and 
+X	   25-May-88 0:00 GMT.  Email your entries to:
+X	   
+X			...!amdahl!obfuscate
+X
+X	   Amdahl talks to hplabs, decwrl, pyramid, seismo and cbosgd.
+X	   We will attempt to Email a confirmation of receipt of contest
+X	   entries, however since Email is not reliable you may not receive it.
+X	   People are encouraged to submit entries via Email, however
+X	   one may mail entries the following postal address:
+X
+X		Landon Curt Noll
+X		Amdahl Corp.
+X		1250 E. Arques Ave.   M/S 316
+X		P.O. Box 3470
+X		Sunnyvale, CA
+X		94088-3470
+X		U.S.A.
+X
+X	  Write the words: "International Obfuscated C Code Contest" near the
+X	  bottom left corner of the envelope.
+X
+X	7) Each person may submit up to 5 entries.  Multiple entries must
+X	   be sent in separate Email letters or postal envelopes.
+X
+X
+XANNOUNCEMENT OF WINNERS:
+X
+X	* First announcement will be at the Summer 88 Usenix BOF.
+X
+X	* An announcement will be posted to mod.announce near
+X	  mid June 1988 stating to which newsgroup the winners
+X	  have been posted.
+X
+X	* An article containing the winning entries will be published
+X	  in a future issue of the "Micro/Systems Journal".
+X
+X	* Winners receive international fame and flames!  :-)
+X
+X
+XJUDGING:
+X
+X	Awards will be given to the best entry in a number of categories.
+X	The actual category list will vary depending on the types of entries
+X	we receive.  As a guide, consider using the following:
+X
+X		* The best small one line program
+X		* The most obscure algorithm
+X		* The strangest source layout
+X		* The most useful obfuscated program
+X		* The most creatively obfuscated program
+X		* <anything else so strange that it deserves an award>
+X
+XPOINTS TO PONDER:
+X
+X	People are encouraged to examine winners of the previous contests.  
+X	A copy of these entries was posted to mod.sources on or about 12-Mar-87.
+X	Contact the mod.sources moderator if you missed that article.  Keep in 
+X	mind that rules change from year to year, so some winning entries may 
+X	not be valid entries this year.  What was unique and novel one year 
+X	might be 'old' the next year, use your judgement.
+X
+X	We examine each entry on several levels of confusion.  For example
+X	each entry is judged when we:
+X
+X		* look at the original source
+X		* run it through;  sed -e ',^#[	 ]*define,d' | /lib/cpp
+X		* run it through a C beautifier
+X		* examine the algorithm
+X		* compile and lint it
+X		* execute it
+X	
+X	One line programs are best when they are short, obscure and concise.
+X
+X	We tend to dislike programs that:
+X
+X		* are very hardware specific
+X		* are very OS or Un*x version specific
+X		     (index/strchr differences are ok, but 
+X		      socket/streams specific code is likely not to be)
+X		* dump core or have compiler warnings
+X		     (it is ok only if you warn us in the 'remark' header item)
+X		* won't compile under both BSD or SYS V Un*x
+X		* use an excessively long compile line to get around the
+X		     size limit
+X		* simply carries an idea to excess without reason
+X		* are similar to previous winners
+X		* are similar to previous losers  :-)
+X
+X	Simply abusing #defines or -Dfoo=bar won't go as far as a more
+X	well rounded program.
+X
+X	We like programs that:
+X
+X		* do something quasi-interesting
+X		* pass lint without complaint
+X		* are portable
+X		* are unique or novel in their obfuscation style
+X		* are concise
+X		* use size to do something interesting or that use size
+X		  to introduce several different types of obfuscation
+X		* make us laugh or throw up  :-)
+X
+X	Some types of programs can't excel in some areas.  We try to account
+X	for this by giving awards to programs in a number of areas.  Of course,
+X	your program doesn't have to excel in all areas, but doing well in a
+X	few helps.
+X
+X	Be creative!
+X
+X	The Judging will be done by Landon Noll and Larry Bassel.  If you have
+X	any QUESTIONS or COMMENTS, please feel free to send them to:
+X
+X			 ...!amdahl!judges
+X
+X
+Xchongo <Landon Curt Noll> /\cc/\  	seismo!amdahl!chongo
+XLarry Bassel			  	{hplabs,amdahl,unixprt}!oblio!lab
+X
+X
+Xp.s. The 1988 contest has been dedicated to Bill the Cat.  *Ackpt!*
+//E*O*F rules//
+
+echo Possible errors detected by \'wc\' [hopefully none]:
+temp=/tmp/shar$$
+trap "rm -f $temp; exit" 0 1 2 3 15
+cat > $temp <<\!!!
+    404   1581  14171 winners
+    190   1144   6936 rules
+    594   2725  21107 total
+!!!
+wc  winners rules | sed 's=[^ ]*/==' | diff -b $temp -
+exit 0
+-- 
+[views above shouldn't be viewed as Amdahl views, or as views from Amdahl, or
+ as Amdahl views views, or as views by Mr. Amdahl, or as views from his house]
+

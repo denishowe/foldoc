@@ -1,0 +1,152 @@
+<html>
+<head>
+	<title>2D Transform</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="canonical" href="https://foldoc.org/pub/js/transform-2d.html">
+</head>
+<body>
+<!--
+
+Transform (1, 0) to (a, c) and  (0, 1) to (b, d)
+
+[a b] (1)  =  (a)      [a b] (0)  =  (b)
+[c d] (0)     (c)      [c d] (1)     (d)
+
+
+  -->
+<div style="float: left; width: 50%">
+	<canvas id="left" style="border: solid"></canvas>
+</div>
+<div style="position: relative; float: left; width: 50%">
+	<canvas id="right" style="border: solid"></canvas>
+	<canvas id="right2" style="position: absolute; top: 0"></canvas>
+</div>
+<script>
+
+var canvas_left, canvas_right, ctx_left, ctx_right;
+var black = [0, 0, 0, 255];
+
+//  Called on load or after resize
+
+function restart()
+{
+	canvas_left  = canvas("left");
+	ctx_left = canvas_left.getContext('2d');
+	canvas_right = canvas("right");
+	ctx_right = canvas_right.getContext('2d');
+	canvas_right2 = canvas("right2");
+
+	// load image from data url
+    var im = new Image();
+    // http://media.philly.com/images/youre-awesome.jpg
+    im.src = "youre-awesome.jpg";
+    im.onload = draw;
+}
+
+function draw()
+{
+	var im = this;
+
+	// Center the source image in the left-hand canvas
+
+	var w = canvas_left.width, h = canvas_left.height;
+	var im_x0 = (w - im.width)/2, im_y0 = (h - im.height)/2;
+	ctx_left.drawImage(im, im_x0, im_y0);
+
+	// Get the pixels of the source canvas
+
+	var dl = ctx_left.getImageData(0, 0, w, h).data;
+
+	// Set the forward transform matrix and find its inverse
+
+	var a = 1.1, b = 0.1,
+		c = -0.2, d = 0.7;
+	var det = 1/(a*d - b*c)
+	var ai =  d*det, bi = -b*det,
+		ci = -c*det, di =  a*det;
+
+	// Set each target pixel of the right-hand canvas
+	// to the corresponding source pixel on the left
+
+	var x0 = w/2, y0 = h/2;				// Centre of canvas
+	var dr = new Uint8ClampedArray(dl.length);
+	var i = 0;							// ImageData pointer
+	for (yt = 0; yt < h; yt++)			// Top down
+	{
+		for (xt = 0; xt < w; xt++)
+		{
+			// Calculate source coords using inverse transform
+
+			var x = xt-x0, y = yt-y0;
+			var xs = Math.floor(x0 + ai*x + bi*y + 0.5),
+				ys = Math.floor(y0 + ci*x + di*y + 0.5);
+
+			var pr = rgb(dl, w, h, xs, ys);
+			dr[i]   = pr[0];			// red
+			dr[i+1] = pr[1];			// green
+			dr[i+2] = pr[2];			// blue
+			dr[i+3] = pr[3];			// alpha
+			i += 4;
+		}
+	}
+	ctx_right.putImageData(new ImageData(dr, w, h), 0, 0);
+}
+
+// Draw a circle on context ctx at x, y
+
+function circle(ctx, x, y)
+{
+	ctx.beginPath();
+    ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#003300';
+    ctx.stroke();
+}
+
+// Return [r,g,b,a] at (x, y) in ImageData.data d of width w
+
+function rgb(d, w, h, x, y)
+{
+	if (x < 0 || x >= w || y < 0 || y >= h)
+		return black;					// No source pixel
+
+	var i = 4 * (w * y + x);
+
+	return [d[i], d[i+1], d[i+2], d[i+3]];
+}
+
+// Return the canvas with id, resized to fit the window
+
+function canvas(id)
+{
+	can = document.getElementById(id);
+	can.width = 0.5 * window.innerWidth - 16;
+	can.height = window.innerHeight - 26;
+
+	return can;
+}
+
+// Restart on load and whenever they stop resizing
+
+var resize_timeout;
+
+window.onresize = function ()
+{
+	if (resize_timeout) clearTimeout(resize_timeout);
+	resize_timeout = setTimeout(restart, 500);
+};
+
+window.onresize();
+
+// unison -batch imperial
+
+// Local variables:
+// compile-command: "http://foldoc.org/pub/js/transform-2d.html"
+// End:
+
+</script>
+</body>
+</html>
