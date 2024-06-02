@@ -1,17 +1,22 @@
 use TAP::Harness;
-use Test::More tests => 22;
+use Test::More tests => 24;
 use lib "../lib";
-use Test::Web; # C:/Strawberry/perl/site/lib
+use Test::Web;		# ~/Projects/Perl/Test
 
+# Windows: run under cmd, not bash
 # cpan install TAP::Harness
 # cd foldoc && prove
 
 $ENV{RUN}++ or TAP::Harness->new->runtests(<*.t>);
 
-my $origin =  "http://foldoc.org";
-my $t = Test::Web->new(url => $origin);
+my $t = Test::Web->new(url => "http://foldoc.org");
 
 # Home
+
+my $home = "https://foldoc.org";
+$t->redirects('/', "$home/", "Redirect HTTP to HTTPS");
+
+$t = Test::Web->new(url => $home);
 
 $t->get_ok("/")->contains("<title>FOLDOC - Computing Dictionary</title>", "Home title");
 
@@ -38,7 +43,7 @@ $t->get_ok("/?query=foo&action=Search", "legacy query param", 301)
 	->header_is(Location => $t->absolute("/foo"), "Query param redirect");
 
 # Test: http://foldoc.org//Fairchild
-$t->get_ok("//Fairchild", "Query starts with /");
+$t->redirects("//Fairchild", "/Fairchild", "Query starts with /");
 
 # Test: http://foldoc.org/%2fdev%2fnull
 
