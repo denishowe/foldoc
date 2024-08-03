@@ -67,9 +67,7 @@ sub check_redirect
 
 	s|^/||;									# Drop normal initial /
 
-	# Drop extra initial "/"s (except /dev/null) and redirect
-	# Test: http://foldoc.org//Fairchild
-	# Test: http://foldoc.org/%2fdev%2fnull
+	# Drop extra initial "/"s and redirect (except /dev/null)
 	s|^/+([^d])|$1| && return 1;
 
 	# Drop trailing /s except "/", "s///"
@@ -411,12 +409,14 @@ sub target_entry
 
 sub anchor
 {
-	local ($_) = @_;					# $_ used for URL
+	local ($_) = @_;								# $_ used for URL
 
 	my $label = text2html($_);			# Visible string
-	s/\n/ /g;
-	$_ = html2text($_);					# Restore "&amp;" etc.
-	$_ = "/" . text2url($_);			# Encode as URL
+	s/\n/ /g;												# Cross-ref may include line break
+	$_ = html2text($_);							# Restore "&amp;" etc.
+	$_ = text2url($_);							# Encode as relative URL
+	$_ = "/$_";											# Make host-relative
+	$_ = "/.$_" if (m|^//|);				# "//dev/null" => https://dev/null so hide the "//"
 	$_ = qq(<a href="$_">$label</a>);
 
 	return $_;

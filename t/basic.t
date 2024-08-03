@@ -1,11 +1,12 @@
 use TAP::Harness;
-use Test::More tests => 24;
+use Test::More tests => 26;
 use lib "../lib";
 use Test::Web;		# ~/Projects/Perl/Test
 
-# Windows: run under cmd, not bash
 # cpan install TAP::Harness
-# cd foldoc && prove
+
+# Windows: run under cmd, not bash
+# cd Projects\FOLDOC\foldoc & cls & prove
 
 $ENV{RUN}++ or TAP::Harness->new->runtests(<*.t>);
 
@@ -42,10 +43,10 @@ $t->get_ok("/contents/music.html", "music subject")
 $t->get_ok("/?query=foo&action=Search", "legacy query param", 301)
 	->header_is(Location => $t->absolute("/foo"), "Query param redirect");
 
-# Test: http://foldoc.org//Fairchild
 $t->redirects("//Fairchild", "/Fairchild", "Query starts with /");
 
-# Test: http://foldoc.org/%2fdev%2fnull
+$t->get_ok("//dev/null", "Term starts with /")
+	->contains("<h2>/dev/null</h2>");
 
 # Entry with image
 

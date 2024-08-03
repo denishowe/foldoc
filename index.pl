@@ -167,7 +167,7 @@ sub listneighbors
 	my ($index) = @_;
 
 	my ($len, @a) = 0;
-	# Add term after, before, 2 after, 2 before, ...
+	# Add term after, before, 2 after, 2 before, etc. until string fills width
 	for (my $offset = 0; $len < 60; $offset = ($offset > 0 ? 0 : 1) - $offset)
 	{
 		my $i = $index+$offset;
