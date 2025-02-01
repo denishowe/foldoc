@@ -334,13 +334,9 @@ sub missing
 
 <p>
 The following terms are not defined in the dictionary.
-The numbers show how often they have been looked
-for.  New terms are added almost every day.
+The numbers show how often they have been looked for.
 </p>
 
-<p>
-Feel free to <a href="help.html">send new definitions</a>.
-</p>
 } . $missing;
 	template("missing.html");
 
@@ -554,12 +550,6 @@ The following terms were recently added or changed:\n<p>\n",
 	$ENV{LASTBUILDDATE} = $date{$head[0]}; # Date of latest term
 	$ENV{DESCRIPTION} = join "", map $date{$_} . " " . rss_entry($_), @head;
 	template("rss.xml", "$dicdir/rss-template.xml");
-
-	use Twitter;
-	$_ = $head[0]; s/ /+/g;
-	my $ret = tweet("Latest FOLDOC update: $root_url/$_");
-	print STDERR "Tweeted at ", ($ret->{created_at} || "??"),
-		($@ && " ($@)"), "\n";
 }
 
 sub rss_entry
