@@ -15,7 +15,7 @@ body {
 </style>
 </head>
 <body>
-<!--http://foldoc.org/pub/js/automata.html -->
+<!-- file:///C:/Users/denis/Projects/FOLDOC/foldoc/pub/js/automata.html -->
 <canvas id="canvas" />
 <script>
 
@@ -28,7 +28,7 @@ window.onkeydown = function keyDown(e) {
 	if (kc == 17 || kc == 18) return;			// Ignore Alt keys
 	if (kc == 27) return close_window();	// Esc key --> close window
 	if (ks == ' ') return Run.startStop();
-	if (ks == 'S') return Run.changeSpeed();
+	if (ks == 'S') return console.log('Period', Run.period.next());
 }
 
 /// Run ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,9 +44,9 @@ class Run {
 	// Start or all dead
 
 	static reset() {
+  	this.period = [0, 100, 200, 500];
 		Cell.reset();
 	  Bot.reset();
-  	this.periods = [0, 100, 500];
 	  this.start();
 	}
 
@@ -54,32 +54,33 @@ class Run {
 
 	static start() {
 		this.running = true;
-		this.step();
+		this.run();
 	}
 
 	static stop() { this.running = false }
 
-	static step() {
-		if (!this.running) return;
-		if (!Bot.step()) return this.reset();
-		setTimeout(() => requestAnimationFrame(() => this.step()), this.periods[0]);
-	}
-
-	static changeSpeed() {
-		this.periods.push(this.periods.shift());
-		console.log('period', this.periods[0]);
+	static run() {
+		const g = () => setTimeout(
+			() => requestAnimationFrame(
+				() => {
+					Bot.step();
+					if (this.running && Bot.count()) { g() } else { this.reset() }
+				}
+			), this.period.current());
+		g();
 	}
 }
 
-/// Bot ////////////////////////////////////////////////////////////////////////////////////////////
+/// Bot ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Bot {
 	constructor(index) {
 	  this.pos = Grid.anyEmpty();
  		if (! this.pos) return;
 		this.colour = Colour.colourful(index, Bot.initialNum);
+		// Rules are Arrays of characters
 		this.rules = Bot.best && p(0.1) ? Bot.best.mutatedRules() : Bot.initialRules();
-		this.ruleIndex = this.rules.anyIndex();
+		this.rules.index = this.rules.anyIndex();
 		this.visited = new Set();
 		this.pos.occupant(this); // Draws bot
 	}
@@ -87,17 +88,13 @@ class Bot {
 	// Recreate all Bots according to the screen size
 
 	static reset() {
-		console.log('best', Bot.best);
+		console.log('best', Bot.best?.toString());
 		Bot.initialNum = Math.floor(Grid.numCells * botsPerCell);
 		Bot.all = mapUpTo(Bot.initialNum, i => new Bot(i));
 		Bot.best = undefined;
 	}
 
-	// A rule is just a direction to move
-
-	static initialRules() { return Direction.random() }
-
-	// Run one step of bot activity and return number left alive
+	// Run one step of bot activity
 
 	static step() {
 		Bot.all.forEach(b => b.move());
@@ -109,13 +106,12 @@ class Bot {
 			if (visitCount < minVisits) minVisits = visitCount;
 		});
 		// Kill some bots with fewest visits
-		Bot.all = Bot.all.filter(b => {
-			const dead = b.visited.size === minVisits && p(0.2);
-			if (dead) b.vacatePos();
-			return !dead;
-		});
-		return Bot.all.length;
+		const dead = Bot.all.filter(b => b.visited.size === minVisits && p(0.2));
+		dead.forEach(b => { b.vacatePos(); b.dead = true });
+		Bot.all = Bot.all.filter(b => !b.dead);
 	}
+
+	static count() { return Bot.all.length }
 
 	// Move bot to next position if empty
 
@@ -130,19 +126,17 @@ class Bot {
 
 	vacatePos() { this.pos.occupant(undefined) }
 
-	getNextPos() { return this.pos.cellInDirection(this.getNextRule()) }
-
-	getNextRule() {
-		const { rules, ruleIndex } = this;
-		this.ruleIndex = (ruleIndex + 1) % rules.length; // Next rule
-		return rules[ruleIndex];
-	}
+	getNextPos() { return this.pos.cellInDirection(this.rules.bump()) }
 
 	show() {
 		const bs = this.toString();
 		const c = this.colour.toString();
 		console.log('%cbest%c %s', `color: ${ c }`, 'color: black', bs);
 	}
+
+	// A rule is just a direction to move
+
+	static initialRules() { return [Direction.random()] }
 
 	// Return a randomly modified copy of the Bot's rules
 
@@ -152,17 +146,18 @@ class Bot {
 		const d = Direction.random();
 		const s = Bot.initialRules();
 		return [
-			{ ok: true,		f: () => rules },						// No change
-			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
-			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
-			{ ok: true,		f: () => rules.setAny(d) },	// Change a rule
-			{ ok: n >  1,	f: () => rules.dropAny() },	// Remove a rule
-			{ ok: n < 20, f: () => rules + s },				// Append some rules
-			{ ok: n < 20, f: () => rules + rules },		// Duplicate set
+			{ ok: true,		f: () => rules },									// No change
+			{ ok: true,		f: () => rules },									// No change
+			{ ok: true,		f: () => rules.setAny(d) },				// Change one
+			{ ok: true,		f: () => rules.setAny(d) },				// Change one
+			{ ok: true,		f: () => rules.setAny(d) },				// Change one
+			{ ok: n >  1,	f: () => rules.setAny() },				// Remove one
+			{ ok: n < 20, f: () => [...rules, ...s] },			// Append some
+			{ ok: n < 20, f: () => [...rules, ...rules] },	// Duplicate
 		].filter(change => change.ok).any().f();
 	}
 
-	toString() { return this.rules }
+	toString() { return this.rules.join('') + ' ' + this.visited.size + ' visits' }
 }
 
 /// Direction ///////////////////////////////////////////////////////////////
@@ -178,7 +173,7 @@ class Direction {
 		};
 	}
 
-	static random() { return 'NESWOOOO'.any() }
+	static random() { return [...'NESWOOOO'].any() }
 }
 
 /// Grid ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,50 +323,30 @@ class Colour {
 
 /// Extend built-in classes /////////////////////////////////////////////////
 
-// Properties of MyClass are copied to Class below
+// Extend both Array class
 
-class MyArray {
-	// Return a random element of the array
-
-	any() { return this[this.anyIndex()] }
-
-	// Return a random index of the array or zero if it's empty
-
-	anyIndex() { return Math.floor(this.length * Math.random()) }
-
-	// Return the element x with the max f(x)
-
-	withMax(f) {
-		let best;
-		let maxFx;
-		this.forEach(x => {
-			const fx = f(x);
-			if (!best || fx > maxFx) { best = x; maxFx = fx }
-		});
-		return best;
-	}
-}
-
-Object.getOwnPropertyNames(MyArray.prototype)
-	.forEach(method => Array.prototype[method] = MyArray.prototype[method]);
-
-class MyString {
-	anyIndex() { return Math.floor(this.length * Math.random()) }
+class Sequence {
+	// Return a random element
 
 	any() { return this[this.anyIndex()] }
 
-	dropAny() { return this.setAny() }
+	// Return a random index or zero if it's empty
 
-	setAny(x = '') {
-		const i = this.anyIndex();
+	anyIndex() { return Math.floor(this.length * Math.random()) }
 
-		return this.slice(0, i) + x + this.slice(i + 1);
-	}
+	// Increment `index`, looping back to zero.  Return the element at the new index.
+
+	bump() { return this[this.index = ((this.index || 0) + 1) % this.length] }
+
+	current() { return this[this.index ||= 0] }
+
+	setAny(...newElements) { return this.splice(this.anyIndex(), 1, ...newElements) }
 }
-Object.getOwnPropertyNames(MyString.prototype)
-	.forEach(method => String.prototype[method] = MyString.prototype[method]);
 
-/// Utils ////////////////////////////////////////////////////////////
+Object.getOwnPropertyNames(Sequence.prototype)
+	.forEach(m => Array.prototype[m] = Sequence.prototype[m]);
+
+/// Utils //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function p(probability) { return Math.random() < probability }
 
@@ -385,13 +360,14 @@ function mapUpTo(n, f) {
 	return mapFrom(0);
 }
 
-
 function close_window() {
 	// JavaScript can close the window if it opened it.	 It can't
 	// open a page from a different domain, including no domain.
 	// http://thecodecave.com/2006/07/20/how-to-get-around-access-is-denied-in-a-windowopen-javascript-call/
 	window.open(location.href, '_self', '').close();
 }
+
+/// Go! ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Run.init();
 
