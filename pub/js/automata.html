@@ -28,7 +28,7 @@ window.onkeydown = function keyDown(e) {
 	if (kc == 17 || kc == 18) return;			// Ignore Alt keys
 	if (kc == 27) return close_window();	// Esc key --> close window
 	if (ks == ' ') return Run.startStop();
-	if (ks == 'S') return console.log('Period', Run.period.next());
+	if (ks == 'S') return console.log('Period', Run.period.bump());
 }
 
 /// Run ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,8 @@ class Run {
 		const g = () => setTimeout(
 			() => requestAnimationFrame(
 				() => {
-					Bot.step();
+					Group.step();
+					Bot.census();
 					if (this.running && Bot.count()) { g() } else { this.reset() }
 				}
 			), this.period.current());
@@ -79,9 +80,11 @@ class Bot {
  		if (! this.pos) return;
 		this.colour = Colour.colourful(index, Bot.initialNum);
 		// Rules are Arrays of characters
-		this.rules = Bot.best && p(0.1) ? Bot.best.mutatedRules() : Bot.initialRules();
+		this.rules = Bot.getRules();
 		this.rules.index = this.rules.anyIndex();
 		this.visited = new Set();
+		this.group = new Group();
+		this.group.add(this);
 		this.pos.occupant(this); // Draws bot
 	}
 
@@ -94,11 +97,11 @@ class Bot {
 		Bot.best = undefined;
 	}
 
-	// Run one step of bot activity
+	static count() { return Bot.all.length }
 
-	static step() {
-		Bot.all.forEach(b => b.move());
-		// Find fewest and most visits
+	// Find bots with fewest and most visits
+
+	static census() {
 		let minVisits = 9E9;
 		Bot.all.forEach(b => {
 			const visitCount = b.visited.size;
@@ -106,27 +109,60 @@ class Bot {
 			if (visitCount < minVisits) minVisits = visitCount;
 		});
 		// Kill some bots with fewest visits
-		const dead = Bot.all.filter(b => b.visited.size === minVisits && p(0.2));
-		dead.forEach(b => { b.vacatePos(); b.dead = true });
+		const dead = Bot.all.filter(b => b.visited.size === minVisits && p(0.4));
+		dead.forEach(b => b.die());
 		Bot.all = Bot.all.filter(b => !b.dead);
 	}
 
-	static count() { return Bot.all.length }
+	// A rule is just a direction to move
 
-	// Move bot to next position if empty
+	static initialRules() { return [Direction.random()] }
+
+	// Return a randomly modified copy of the best rules
+
+	static getRules() {
+		const rules = Bot.best ? [...Bot.best.rules] : Bot.initialRules();
+		const n = rules.length;
+		if (n < 10 && p(0.2))	{
+			return [
+				...rules,
+				...(p(0.5) ? Bot.initialRules() : rules)
+			];
+		}
+		if (p(0.5)) {
+			rules.setAny(Direction.random()); // Change one
+		} else if (n > 1 && p(0.2)) {
+			rules.setAny(); // Remove one
+		}
+		return rules;
+	}
+
+	die() {
+		this.dead = true;
+		this.group.remove(this);
+		this.vacatePos();
+	}
+
+	// Return true if cell in `direction` from bot is empty
+
+	canMove(direction) {
+		this.nextPos = this.getNextPos(direction);
+
+		return this.nextPos && !this.nextPos.occupant();
+	}
+
+	// Move bot to its prechecked nextPos
 
 	move() {
 		this.visited.add(this.pos.toString());
-		let n = this.getNextPos();
-		if (!n || !n.equal(this.pos) && n.occupant()) return;
 		this.vacatePos();
-		this.pos = n;
-		n.occupant(this);
+		this.pos = this.nextPos;
+		this.pos.occupant(this);
 	}
 
 	vacatePos() { this.pos.occupant(undefined) }
 
-	getNextPos() { return this.pos.cellInDirection(this.rules.bump()) }
+	getNextPos(direction) { return this.pos.cellInDirection(direction) }
 
 	show() {
 		const bs = this.toString();
@@ -134,33 +170,46 @@ class Bot {
 		console.log('%cbest%c %s', `color: ${ c }`, 'color: black', bs);
 	}
 
-	// A rule is just a direction to move
-
-	static initialRules() { return [Direction.random()] }
-
-	// Return a randomly modified copy of the Bot's rules
-
-	mutatedRules() {
-		const { rules } = this;
-		const n = rules.length;
-		const d = Direction.random();
-		const s = Bot.initialRules();
-		return [
-			{ ok: true,		f: () => rules },									// No change
-			{ ok: true,		f: () => rules },									// No change
-			{ ok: true,		f: () => rules.setAny(d) },				// Change one
-			{ ok: true,		f: () => rules.setAny(d) },				// Change one
-			{ ok: true,		f: () => rules.setAny(d) },				// Change one
-			{ ok: n >  1,	f: () => rules.setAny() },				// Remove one
-			{ ok: n < 20, f: () => [...rules, ...s] },			// Append some
-			{ ok: n < 20, f: () => [...rules, ...rules] },	// Duplicate
-		].filter(change => change.ok).any().f();
-	}
-
 	toString() { return this.rules.join('') + ' ' + this.visited.size + ' visits' }
 }
 
-/// Direction ///////////////////////////////////////////////////////////////
+/// Group //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Group {
+	constructor() {
+		this.members = new Set();
+		(Group.all ||= []).push(this);
+	}
+
+	// Run one step of activity
+
+	static step() {
+		Group.all.forEach(g => g.move());
+	}
+
+	allMembers() { return [...this.members] }
+
+	add(bot) { this.members.add(bot) }
+
+	remove(bot) {
+		this.members = this.members.delete(bot);
+		if (!this.members.size) Group.all = Group.all.without(this);
+	}
+
+	leader() { return  this.allMembers()[0] }
+
+	rules() { return this.leader().rules }
+
+	move() {
+		const rules = this.rules();
+		const direction = rules.current();
+		rules.bump();
+		const members = this.allMembers();
+		if (members.every(b => b.canMove(direction))) members.forEach(b => b.move());
+	}
+}
+
+/// Direction //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Direction {
 	static init() {
@@ -169,11 +218,11 @@ class Direction {
 			E: { dx:  1, dy:  0 },
 			S: { dx:  0, dy:  1 },
 			W: { dx: -1, dy:  0 },
-			O: { dx:  0, dy:  0 },
 		};
+		this.all = Object.keys(this.vector);
 	}
 
-	static random() { return [...'NESWOOOO'].any() }
+	static random() { return this.all.any() }
 }
 
 /// Grid ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -321,9 +370,7 @@ class Colour {
 	toString() { return 'rgb(' + this.r + ',' + this.g + ',' + this.b + ')' }
 }
 
-/// Extend built-in classes /////////////////////////////////////////////////
-
-// Extend both Array class
+/// Extend Array class /////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Sequence {
 	// Return a random element
@@ -333,6 +380,10 @@ class Sequence {
 	// Return a random index or zero if it's empty
 
 	anyIndex() { return Math.floor(this.length * Math.random()) }
+
+	// Remove `value`
+
+	without(value) { return this.filter(x => x !== value) }
 
 	// Increment `index`, looping back to zero.  Return the element at the new index.
 
