@@ -35,6 +35,7 @@ window.onkeydown = function keyDown(e) {
 
 class Run {
 	static init() {
+  	this.period = [0, 50, 100, 200, 500];
 	  Grid.init();
 		Direction.init();
 		Colour.init();
@@ -44,7 +45,6 @@ class Run {
 	// Start or all dead
 
 	static reset() {
-  	this.period = [0, 100, 200, 500];
 		Cell.reset();
 	  Bot.reset();
 	  this.start();
@@ -91,7 +91,7 @@ class Bot {
 	// Recreate all Bots according to the screen size
 
 	static reset() {
-		console.log('best', Bot.best?.toString());
+		console.log('Best', Bot.best?.toString());
 		Bot.initialNum = Math.floor(Grid.numCells * botsPerCell);
 		Bot.all = mapUpTo(Bot.initialNum, i => new Bot(i));
 		Bot.best = undefined;
@@ -109,7 +109,7 @@ class Bot {
 			if (visitCount < minVisits) minVisits = visitCount;
 		});
 		// Kill some bots with fewest visits
-		const dead = Bot.all.filter(b => b.visited.size === minVisits && p(0.4));
+		const dead = Bot.all.filter(b => b.visited.size == minVisits && p(0.5));
 		dead.forEach(b => b.die());
 		Bot.all = Bot.all.filter(b => !b.dead);
 	}
@@ -123,13 +123,13 @@ class Bot {
 	static getRules() {
 		const rules = Bot.best ? [...Bot.best.rules] : Bot.initialRules();
 		const n = rules.length;
-		if (n < 10 && p(0.2))	{
+		if (n < 20 && p(0.1))	{
 			return [
 				...rules,
 				...(p(0.5) ? Bot.initialRules() : rules)
 			];
 		}
-		if (p(0.5)) {
+		if (p(0.8)) {
 			rules.setAny(Direction.random()); // Change one
 		} else if (n > 1 && p(0.2)) {
 			rules.setAny(); // Remove one
@@ -170,7 +170,9 @@ class Bot {
 		console.log('%cbest%c %s', `color: ${ c }`, 'color: black', bs);
 	}
 
-	toString() { return this.rules.join('') + ' ' + this.visited.size + ' visits' }
+	rulesString() { return compress(this.rules.join('')) }
+
+	toString() { return this.rulesString() + ' ' + this.visited.size + ' visits' }
 }
 
 /// Group //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,9 +185,7 @@ class Group {
 
 	// Run one step of activity
 
-	static step() {
-		Group.all.forEach(g => g.move());
-	}
+	static step() { Group.all.forEach(g => g.think()) }
 
 	allMembers() { return [...this.members] }
 
@@ -200,13 +200,16 @@ class Group {
 
 	rules() { return this.leader().rules }
 
-	move() {
+	think() {
 		const rules = this.rules();
 		const direction = rules.current();
 		rules.bump();
-		const members = this.allMembers();
-		if (members.every(b => b.canMove(direction))) members.forEach(b => b.move());
+		if (p(0.9) && this.canMove(direction)) this.move();
 	}
+
+	canMove(direction) { return this.allMembers().every(b => b.canMove(direction)) }
+
+	move() { this.members.forEach(b => b.move()) }
 }
 
 /// Direction //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -268,6 +271,8 @@ class Grid {
 		}
 	}
 
+	static isOn(x, y) { return x >= 0 && y >= 0 && x <= this.xMax && y <= this.yMax }
+
 	static randomCell() { return new Cell(rand(0, this.xMax), rand(0, this.yMax)) }
 }
 
@@ -303,10 +308,9 @@ class Cell {
 	cellInDirection(d) {
 		let { x, y } = this;
 		const { dx, dy } = Direction.vector[d];
-		x += dx; y+= dy;
-		const { xMax, yMax } = Grid;
+		x += dx; y += dy;
 
-		return x >= 0 && x <= xMax && y >= 0 && y <= yMax ? new Cell(x, y) : undefined;
+		return Grid.isOn(x, y) ? new Cell(x, y) : undefined;
 	}
 
 	draw() {
@@ -416,6 +420,14 @@ function close_window() {
 	// open a page from a different domain, including no domain.
 	// http://thecodecave.com/2006/07/20/how-to-get-around-access-is-denied-in-a-windowopen-javascript-call/
 	window.open(location.href, '_self', '').close();
+}
+
+// Replace n>1 repeats of character C with Cn
+
+function compress(s) {
+	return s.match(/((.)\2*)/g)
+		.map(cs => cs[0] + (cs.length > 1 ? cs.length : ''))
+		.join('');
 }
 
 /// Go! ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
