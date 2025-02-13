@@ -19,8 +19,8 @@ body {
 <canvas id="canvas" />
 <script>
 
-const cellSize = 20;
-const botsPerCell = 0.4;
+const cellSize = 24;
+const botsPerCell = 0.5;
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
@@ -48,14 +48,12 @@ class Run {
 		Cell.reset();
 	  Bot.reset();
 	  this.start();
+		this.run();
 	}
 
 	static startStop() { this.running ? this.stop() : this.start() }
 
-	static start() {
-		this.running = true;
-		this.run();
-	}
+	static start() { this.running = true }
 
 	static stop() { this.running = false }
 
@@ -63,9 +61,8 @@ class Run {
 		const g = () => setTimeout(
 			() => requestAnimationFrame(
 				() => {
-					Group.step();
-					Bot.census();
-					if (this.running && Bot.count()) { g() } else { this.reset() }
+					if (this.running) { Group.step(); Bot.census() }
+					if (!this.running || Bot.count()) { g() } else { this.reset() }
 				}
 			), this.period.current());
 		g();
@@ -75,9 +72,8 @@ class Run {
 /// Bot ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Bot {
-	constructor(index) {
-	  this.pos = Grid.anyEmpty();
- 		if (! this.pos) return;
+	constructor(index, pos) {
+	  this.pos = pos;
 		this.colour = Colour.colourful(index, Bot.initialNum);
 		// Rules are Arrays of characters
 		this.rules = Bot.getRules();
@@ -88,12 +84,21 @@ class Bot {
 		this.pos.occupant(this); // Draws bot
 	}
 
+	static getBots() {
+		const bs = [];
+		while (bs.length < Bot.initialNum) {
+			const pos = Grid.anyEmpty();
+			if (pos) bs.push(new Bot(bs.length, pos));
+		}
+		return bs;
+	}
+
 	// Recreate all Bots according to the screen size
 
 	static reset() {
 		console.log('Best', Bot.best?.toString());
 		Bot.initialNum = Math.floor(Grid.numCells * botsPerCell);
-		Bot.all = mapUpTo(Bot.initialNum, i => new Bot(i));
+		Bot.all = Bot.getBots();
 		Bot.best = undefined;
 	}
 
@@ -408,12 +413,6 @@ function p(probability) { return Math.random() < probability }
 // Return a random int, min <= r <= max
 
 function rand(min, max) { return Math.floor(min + (max+1 - min) * Math.random()) }
-
-function mapUpTo(n, f) {
-	function mapFrom(i) { return i >= n ? [] : [f(i), ...mapFrom(i + 1)] }
-
-	return mapFrom(0);
-}
 
 function close_window() {
 	// JavaScript can close the window if it opened it.	 It can't
