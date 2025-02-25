@@ -78,12 +78,9 @@ sub check_redirect
 
 	return 1 if (
 		# If there's a query string, strip everything up to the "?" before decoding URL (e.g. %3F)
-		# Test: http://foldoc.org/query?foo
 		s/.*\?(.)/$1/ +				# Eager OR
 
 		# Legacy query string parameters
-		# Test: http://foldoc.org?query=foo&action=Search
-		# Test: http://foldoc.org/?query=%2F&action=Search
 		s/query=|&action=.*//g);
 
 	$_ = url2text($_);
@@ -91,7 +88,6 @@ sub check_redirect
 	debug "url2text -> ($_)";
 
 	# Empty query
-	# Test: http://foldoc.org?query=&action=Search
 	# Test: http://foldoc.org?query=0&action=Search
 	return ! /\S/											# Redirect to home
 	# Superfluous verbiage

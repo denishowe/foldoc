@@ -1,5 +1,5 @@
 use TAP::Harness;
-use Test::More tests => 26;
+use Test::More tests => 32;
 use lib "../lib";
 use Test::Web;		# ~/Projects/Perl/Test
 
@@ -38,15 +38,26 @@ $t->get_ok("/contents/music.html", "music subject")
 	->contains(h2 => "Entries for subject music")
 	->contains("a[href=/mod]", "music mod link");
 
-# Search
+# Legacy Redirects
 
-$t->get_ok("/?query=foo&action=Search", "legacy query param", 301)
-	->header_is(Location => $t->absolute("/foo"), "Query param redirect");
+$t->redirects("/?query=foo&action=Search", "/foo", "Legacy redirect query=foo");
+
+$t->redirects("/?query=%2F&action=Search", "/%2F", "Legacy redirect query=%2F");
+
+$t->redirects("/?query=&action=Search", "/", "Legacy redirect query=''");
+
+$t->redirects("/query?foo", "/foo", "/query?foo");
 
 $t->redirects("//Fairchild", "/Fairchild", "Query starts with /");
 
 $t->get_ok("//dev/null", "Term starts with /")
 	->contains("<h2>/dev/null</h2>");
+
+# Search
+
+# Neighbouring entries
+
+# Missing entries
 
 # Entry with image
 
@@ -67,8 +78,3 @@ $t->get_ok("/Classic C")
 
 $t->get_ok('/words.pl?r=[^aeiouy]{6}')
 	->content_like(qr/crwths/);
-
-# Redirects
-
-# Neighbouring entries
-# Missing entries
