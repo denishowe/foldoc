@@ -24,7 +24,6 @@ const botsPerCell = 0.5;
 
 window.onkeydown = function keyDown(e) {
 	const kc = e.keyCode, ks = String.fromCharCode(kc);
-	// console.log('key', kc, ks);
 	if (kc == 17 || kc == 18) return;			// Ignore Alt keys
 	if (kc == 27) return close_window();	// Esc key --> close window
 	if (ks == ' ') return Run.startStop();
@@ -37,7 +36,6 @@ class Run {
 	static init() {
   	this.period = [0, 50, 100, 200, 500];
 	  Grid.init();
-		Direction.init();
 		Colour.init();
   	this.reset();
 	}
@@ -74,8 +72,8 @@ class Run {
 class Bot {
 	constructor(index, pos) {
 	  this.pos = pos;
+		this.orientation = new Direction();
 		this.colour = Colour.colourful(index, Bot.initialNum);
-		// Rules are Arrays of characters
 		this.rules = Bot.getRules();
 		this.rules.index = this.rules.anyIndex();
 		this.visited = new Set();
@@ -119,28 +117,9 @@ class Bot {
 		Bot.all = Bot.all.filter(b => !b.dead);
 	}
 
-	// A rule is just a direction to move
+	// Return a randomly modified copy of the best rules or some random new rules
 
-	static initialRules() { return [Direction.random()] }
-
-	// Return a randomly modified copy of the best rules
-
-	static getRules() {
-		const rules = Bot.best ? [...Bot.best.rules] : Bot.initialRules();
-		const n = rules.length;
-		if (n < 20 && p(0.1))	{
-			return [
-				...rules,
-				...(p(0.5) ? Bot.initialRules() : rules)
-			];
-		}
-		if (p(0.8)) {
-			rules.setAny(Direction.random()); // Change one
-		} else if (n > 1 && p(0.2)) {
-			rules.setAny(); // Remove one
-		}
-		return rules;
-	}
+	static getRules() { return Bot.best ? Bot.best.rules.mutation() : new Rules() }
 
 	die() {
 		this.dead = true;
@@ -148,17 +127,18 @@ class Bot {
 		this.vacatePos();
 	}
 
-	// Return true if cell in `direction` from bot is empty
+	// Rotate and return true if cell in front is empty
 
-	canMove(direction) {
-		this.nextPos = this.getNextPos(direction);
+	canMove(rule) {
+		this.rotate(rule);
+		this.nextPos = this.cellInFront();
 
 		return this.nextPos && !this.nextPos.occupant();
 	}
 
 	// Move bot to its prechecked nextPos
 
-	move() {
+	move(rule) {
 		this.visited.add(this.pos.toString());
 		this.vacatePos();
 		this.pos = this.nextPos;
@@ -167,7 +147,13 @@ class Bot {
 
 	vacatePos() { this.pos.occupant(undefined) }
 
-	getNextPos(direction) { return this.pos.cellInDirection(direction) }
+	// Return the cell in front
+
+	cellInFront() {
+		return this.pos.cellInDirection(this.orientation);
+	}
+
+	rotate({ rotation }) { this.orientation = this.orientation.rotate(rotation) }
 
 	show() {
 		const bs = this.toString();
@@ -175,9 +161,7 @@ class Bot {
 		console.log('%cbest%c %s', `color: ${ c }`, 'color: black', bs);
 	}
 
-	rulesString() { return compress(this.rules.join('')) }
-
-	toString() { return this.rulesString() + ' ' + this.visited.size + ' visits' }
+	toString() { return this.rules.toString() + ' ' + this.visited.size + ' visits' }
 }
 
 /// Group //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,36 +185,19 @@ class Group {
 		if (!this.members.size) Group.all = Group.all.without(this);
 	}
 
-	leader() { return  this.allMembers()[0] }
+	leader() { return this.allMembers()[0] }
 
 	rules() { return this.leader().rules }
 
 	think() {
 		const rules = this.rules();
-		const direction = rules.current();
-		rules.bump();
-		if (p(0.9) && this.canMove(direction)) this.move();
+		const rule = rules.bump();
+		if (p(0.9) && this.canMove(rule)) this.move(rule);
 	}
 
-	canMove(direction) { return this.allMembers().every(b => b.canMove(direction)) }
+	canMove(rule) { return this.allMembers().every(b => b.canMove(rule)) }
 
-	move() { this.members.forEach(b => b.move()) }
-}
-
-/// Direction //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class Direction {
-	static init() {
-		this.vector = {
-			N: { dx:  0, dy: -1 },	// y increases downwards
-			E: { dx:  1, dy:  0 },
-			S: { dx:  0, dy:  1 },
-			W: { dx: -1, dy:  0 },
-		};
-		this.all = Object.keys(this.vector);
-	}
-
-	static random() { return this.all.any() }
+	move(rule) { this.members.forEach(b => b.move(rule)) }
 }
 
 /// Grid ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -276,7 +243,7 @@ class Grid {
 		}
 	}
 
-	static isOn(x, y) { return x >= 0 && y >= 0 && x <= this.xMax && y <= this.yMax }
+	static has(x, y) { return x >= 0 && y >= 0 && x <= this.xMax && y <= this.yMax }
 
 	static randomCell() { return new Cell(rand(0, this.xMax), rand(0, this.yMax)) }
 }
@@ -308,14 +275,14 @@ class Cell {
 		return row[x];
 	}
 
-	// Return the cell in direction d from this one, or undefined if off grid
+	// Return the cell in Direction `d` from `this` or undefined if off grid
 
 	cellInDirection(d) {
 		let { x, y } = this;
-		const { dx, dy } = Direction.vector[d];
+		const { dx, dy } = d;
 		x += dx; y += dy;
 
-		return Grid.isOn(x, y) ? new Cell(x, y) : undefined;
+		return Grid.has(x, y) ? new Cell(x, y) : undefined;
 	}
 
 	draw() {
@@ -331,12 +298,106 @@ class Cell {
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
+		// occupant.orientation ??
 	}
 
 	toString() { return '(' + this.x + ',' + this.y + ')' }
 }
 
-/// Colour ///////////////////////////////////////////////////////////
+/// Direction //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Direction {
+	static all() {
+		return [
+			{ i: 0, string: 'N', dx:  0, dy: -1 },	// North is negative y
+			{ i: 1, string: 'E', dx:  1, dy:  0 },
+			{ i: 2, string: 'S', dx:  0, dy:  1 },
+			{ i: 3, string: 'W', dx: -1, dy:  0 },
+		];
+	}
+
+	static any() { return Direction.all().any() }
+
+	constructor(arg) {
+		const all = Direction.all();
+		const i = arg ? arg.i : all.anyIndex();
+		Object.assign(this, all[i]);
+	}
+
+	rotate(rotation) { return new Direction({i: (this.i + rotation + 4) % 4 }) }
+
+	toString() { return this.string }
+}
+
+/// Rule ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// A Rule has a `rotation`: -1=L, 0, +1=R
+
+class Rule {
+	constructor() {
+		this.rotation = rand(-1, +1);
+		this.string = 'L-R'[this.rotation + 1];
+	}
+
+	toString() { return this.string }
+}
+
+/// Extend Array class /////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Sequence {
+	// Return a random element
+
+	any() { return this[this.anyIndex()] }
+
+	// Return a random index or zero if it's empty
+
+	anyIndex() { return rand(0, this.length - 1) }
+
+	// Remove `value`
+
+	without(value) { return this.filter(x => x !== value) }
+
+	// Increment `index`, looping back to zero.  Return the element at the new index.
+
+	bump() { return this[this.index = ((this.index || 0) + 1) % this.length] }
+
+	current() { return this[this.index ||= 0] }
+
+	setAny(...newElements) { return this.splice(this.anyIndex(), 1, ...newElements) }
+}
+
+Object.getOwnPropertyNames(Sequence.prototype)
+	.forEach(m => Array.prototype[m] = Sequence.prototype[m]);
+
+/// Rules //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Rules extends Array {
+	constructor(rules = [new Rule()]) {
+		super();
+		Object.assign(this, rules);
+	}
+
+	clone() { return new Rules(this) }
+
+	mutation() {
+		const n = this.length;
+		const r = this.clone();
+		switch (true) {
+			case (n < 20 && p(0.5)):
+				return r.concat(p(0.5) ? new Rules() : this.clone()); // Add one or duplicate
+			case (p(0.8)):
+				return r.setAny(new Rule()); // Change one
+			case (n > 1 && p(0.2)):
+				return r.setAny(); // Remove one
+			default:
+				return r;
+		}
+	}
+
+	toString() { return compress(this.map(r => r.toString()).join('')) }
+}
+
+/// Colour /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Return a colour with components r, g, b
 
@@ -379,33 +440,6 @@ class Colour {
 	toString() { return 'rgb(' + this.r + ',' + this.g + ',' + this.b + ')' }
 }
 
-/// Extend Array class /////////////////////////////////////////////////////////////////////////////////////////////////
-
-class Sequence {
-	// Return a random element
-
-	any() { return this[this.anyIndex()] }
-
-	// Return a random index or zero if it's empty
-
-	anyIndex() { return Math.floor(this.length * Math.random()) }
-
-	// Remove `value`
-
-	without(value) { return this.filter(x => x !== value) }
-
-	// Increment `index`, looping back to zero.  Return the element at the new index.
-
-	bump() { return this[this.index = ((this.index || 0) + 1) % this.length] }
-
-	current() { return this[this.index ||= 0] }
-
-	setAny(...newElements) { return this.splice(this.anyIndex(), 1, ...newElements) }
-}
-
-Object.getOwnPropertyNames(Sequence.prototype)
-	.forEach(m => Array.prototype[m] = Sequence.prototype[m]);
-
 /// Utils //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function p(probability) { return Math.random() < probability }
@@ -421,10 +455,10 @@ function close_window() {
 	window.open(location.href, '_self', '').close();
 }
 
-// Replace n>1 repeats of character C with Cn
+// Return `string` with n>1 repeats of character C replaced with Cn
 
-function compress(s) {
-	return s.match(/((.)\2*)/g)
+function compress(string) {
+	return string.match(/((.)\2*)/g)
 		.map(cs => cs[0] + (cs.length > 1 ? cs.length : ''))
 		.join('');
 }
