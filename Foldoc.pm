@@ -527,26 +527,24 @@ sub file_contents
 	return <$f>;
 }
 
-# Substitute environment variables in contents of $template.  Process
+# Substitute environment variables in contents of $template_file.  Process
 # "set" and "if" ... "end" comments.  Write the result to $output_file
 # or output to stdout with an HTTP header.  Return the result.
 
 sub template
 {
-    my ($output_file, $template) = @_;
+	my ($output_file, $template_file) = @_;
 
-	$template ||= "template.html";
-	# debug "Template", $template, "File", $output_file;
+	$template_file ||= "template.html";
 
 	# Set defaults for common variables
 	my @t = localtime;
     my $date = sprintf "%04d-%02d-%02d %02d:%02d",
 		1900+$t[5], $t[4]+1, $t[3], $t[2], $t[1];
-	map $ENV{$_} ||= "", qw(
-		STATUS HEADERS META_DESCRIPTION BOTTOM_ADS RIGHT_ADS);
+	map $ENV{$_} ||= "", qw(STATUS HEADERS META_DESCRIPTION BOTTOM_ADS RIGHT_ADS);
 
 	map { $ENV{$_->[0]} = $_->[1] if (! defined $ENV{$_->[0]}) }
-		[SOURCE					=> $template],
+		[SOURCE					=> $template_file],
 		[URL						=> "$root_url/" . ($output_file || "")],
 		[DATE      			=> $date],
 		[NUM_ENTRIES		=> $num_entries],
@@ -557,7 +555,7 @@ sub template
 	$ENV{CONTENT} =~
 		s/<!--\s*set\s+(\w+)\s+(.*?)\s*-->\s*/$ENV{$1} = $2, ""/egs;
 
-	my $output = file_contents($template);
+	my $output = file_contents($template_file);
 
 	# Handle <!-- if VAR --> ... <!-- end VAR -->
 	$output =~
