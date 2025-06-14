@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Mac Unison never terminates
+# u="$HOME/Applications/Unison.app/Contents/MacOS/Unison-gui -ui text"
+# --> Symlink on PATH?
+# sshargs for Unison is set in ~/Library/Application Support/Unison/foldoc.prf
+
+# Windows: C:\Windows\System32\unison.exe
+
+# C:\Users\denis\Documents\Tech\Unison\home
+export UNISON=C:/Users/denis/Documents/Tech/Unison/home
+
+# Stop Git bash (mingw) prepending "C:/Program Files/Git" to paths
+export MSYS_NO_PATHCONV=1
+
+u="unison scaleway"
+$u -batch || $u
+# Makefile relative to --directory
+ssh -l denis foldoc make --directory=Projects/FOLDOC/foldoc --makefile=../Build/Makefile
+$u -batch || $u
