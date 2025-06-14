@@ -6,29 +6,37 @@
 </head>
 <body ondrop="dropped(event)" ondragover="allow_drop(event)">
 <script>
+// Dropping a URL on Firefix just opens it.  No event is fired.
+
+function sit(id, text) {
+	const el = document.getElementById(id);
+	if (el) el.innerHTML = text;
+}
 
 function allow_drop(e) { e.preventDefault() }
 
 function dropped(e)
 {
+	console.log("Dropped", e);
 	if (!e) return;
 	e.preventDefault();
 	e = e.dataTransfer;
 	if (!e) return;
 	e = e.getData("Text")
 	console.log("Text", e);
-	document.getElementById("show_text").innerHTML = e;
-	var ll = e.match(/(-?\d+\.\d*).*?(-?\d+\.\d*)/);
+	sit("show_text", e);
+	const ll = e.match(/(-?\d+\.\d*).*?(-?\d+\.\d*)/);
 	console.log("Matches", ll);
-	var lat = ll[1];
-	document.getElementById("lat").innerHTML = lat;
-	var lng = ll[2];
-	document.getElementById("lng").innerHTML = lng;
-	var name = e.match(/\((.*?)\)/);
-	console.log("Name", name);
-	name = name ? name[1] : "";
-	name = decodeURIComponent(name);
-	document.getElementById("name").innerHTML = '"' + name + '"';
+	if (!ll) return
+	const [_, lat, lng] = ll;
+	sit("lat", lat);
+	sit("lng", lng);
+	const nm = e.match(/\((.*?)\)/);
+	console.log("Name", nm);
+	name = nm ? decodeURIComponent(nm[1]) : "";
+	sit("name", '"' + name + '"');
+	const intel = `https://www.ingress.com/intel?pll=${lat},${lng}`;
+	sit("intel", `<a href="${intel}" target="_blank">${intel}</a>`);
 }
 
 var last_portal;
@@ -54,7 +62,7 @@ function peek()
 	setTimeout(peek, 1000);
 }
 
-window.open("https://www.ingress.com/intel?pll=51.575074,-0.370745");
+// window.open("https://www.ingress.com/intel?pll=51.575074,-0.370745");
 
 </script>
 
