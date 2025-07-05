@@ -13,8 +13,9 @@ WEB_ROOT = /var/www/foldoc.org
 COPY = cp
 COPYFLAGS = --recursive --update -p
 
+# Publish built files all at once
+
 default: pub keys offsets $(HTML_FILES)
-	# Publish built files all at once
 	$(COPY) $(COPYFLAGS) . $(WEB_ROOT)
 
 pub:
