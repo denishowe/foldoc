@@ -1,0 +1,8 @@
+# Irrelevant: case, whitespace, internal punctuation
+cgi-bin/authLogin.cgi
+config.json
+druid/index.html
+form.html
+jenkins/login
+portal/redlion
+_profiler/phpinfo

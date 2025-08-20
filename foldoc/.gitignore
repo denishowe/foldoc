@@ -1,0 +1,22 @@
+# One shell glob pattern per line
+about.html
+contents.html
+contents/
+contributors.html
+Dictionary*
+.eslintcache
+foldoc.tar*
+help.html
+keys
+logs
+lunch/data/*-*
+make.out
+missing.html
+new.html
+node_modules
+offsets
+private
+_pub/games/wordle
+rss.xml
+sitemap.txt
+source.html

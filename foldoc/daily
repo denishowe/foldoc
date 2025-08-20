@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Daily FOLDOC build run from cron
+
+# Denis Howe 2002-01-31 - 2018-07-23
+
+PATH=/usr/bin:/bin:.; export PATH
+
+# Restart rsync daemon (does nothing if already running)
+# [ `hostname` = albatross ] && rsync --daemon --config=/homes/dbh/rsync/rsync.conf --port=8873
+# rsync rsync://localhost:8873/
+
+cd /var/www/foldoc.org
+make > make.out 2>&1

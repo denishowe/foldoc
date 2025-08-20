@@ -1,0 +1,11 @@
+http://news.bbc.co.uk/1/hi/uk/5400052.stm
+
+ZERO DAY
+
+A Zero day vulnerability is one on which code to exploit it appears on the first day that a loophole is announced.
+
+As most of the damage done by exploiting bugs occurs in the first few days after they become public, software firms usually move quickly to patch zero day vulnerabilities.
+
+ZOMBIE
+
+Another name for a hijacked computer that is a member of a botnet.

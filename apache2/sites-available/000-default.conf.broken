@@ -1,0 +1,50 @@
+# HTTPS is forwarded as HTTP
+
+<VirtualHost *:80>
+	ServerName foldoc.org
+	DocumentRoot /var/www/foldoc.org
+	AddHandler cgi-script .pl
+
+	<Directory /var/www/foldoc.org>
+		Options +ExecCGI
+	</Directory>
+
+	RewriteEngine on
+
+	# /pub/FILE --> /_pub/FILE
+	RewriteRule ^/(pub/.*) /_$1 [L]
+
+	# ?SHORTCUT --> /_s/SHORTCUT
+	RewriteRule .* /_s/%{QUERY_STRING} [L,QSD]
+
+	# Legacy URLs
+	RewriteRule (Dictionary).txt /$1  [R=301,L]
+	RewriteRule ^/foldoc/(.*)	 /$1  [R=301,L]
+	RewriteRule ^/home.html	 /  [R=301,L]
+
+	# /foo --> /index.pl/foo
+	# Don't treat path to regular file as query
+	# RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
+	# Don't treat path to directory as query
+	# RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-d
+	# Don't treat /pub directory as query
+	# RewriteCond %{REQUEST_URI} !/pub/
+	# Don't rewrite index\. - prevent redirect loop with DirectorySlash
+	# RewriteCond %{REQUEST_URI} !index\.
+	# RewriteCond %{REQUEST_URI} !/index.pl.*
+	# RewriteRule (.*) /index.pl/$1 [L]
+
+	<Directory /var/www/foldoc.org/_pub>
+		Options +Indexes
+		IndexOptions +ScanHTMLTitles
+	</Directory>
+
+	# Add to <head> of autoindex pages
+	IndexHeadInsert "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+
+	LogFormat "%h %t \"%r\" %>s" foldoc
+	CustomLog "|/usr/bin/rotatelogs ${APACHE_LOG_DIR}/foldoc.org/access-%Y%m%d 86400" foldoc
+</VirtualHost>
+
+# In cmd:  cd Projects\FOLDOC\apache2\sites-available
+# scp 000-default.conf foldoc:/etc/apache2/sites-available& ssh foldoc apache2ctl configtest "&&" sudo apache2ctl graceful

@@ -1,0 +1,26 @@
+# Unison profile for scaleway
+
+# pa& set UNISON=.& start unison foldoc
+# UNISON=. unison foldoc
+
+root = ../foldoc
+root = ssh://denis@foldoc//var/www/foldoc.org
+
+ignore = Path Dictionary.txt
+ignore = Name foldoc.tar.gz
+ignore = Name home.html
+# ignore = Name keys
+ignore = Name logs
+ignore = Name node_modules
+ignore = Name " OLD"
+ignore = Name sync.bat
+
+auto = true
+# Don't resync contents/* every time just because of mod time change
+times = false
+# sshcmd = ssh.bat
+# ssh = C:\Program Files\Git\usr\bin\ssh.exe
+contactquietly = true
+# silent = true
+terse = true
+# debug = all

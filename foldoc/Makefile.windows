@@ -1,0 +1,50 @@
+# Makefile for FOLDOC on Windows
+
+# Denis Howe 2003-09-15 - 2014-12-18 22:16
+
+# Run in the document root, ~/Projects/FOLDOC/foldoc
+
+default:	date keys offsets foldoc.tar.gz
+
+date:
+	@perl -e"print scalar localtime(), qq(\n)"
+	unison -batch imperial -silent
+
+foldoc.tar.gz: foldoc.tar
+	gzip -c9 $? > $@
+	unison -batch imperial -silent
+
+DISTFILES = Dictionary Makefile *.html *.gif *.png *.jpg index.cgi build.pl Foldoc.pm
+
+# List built HTML explicitly
+BUILT_HTML = about.html contents.html contributors.html help.html source.html
+
+foldoc.tar: $(DISTFILES) $(BUILT_HTML)
+	tar cf $@ $(DISTFILES)
+
+# Make the contents pages (all, A-Z, other,
+# subject) and the keys and offset indexes
+
+Dictionary keys offsets:	new/Dictionary junk_searches build.pl Foldoc.pm
+	cd new & perl ../build.pl index
+	-rd /s /q jUnK 2>nul
+	-move /y contents jUnK 2>nul
+	cd new & perl ../build.pl index & move /y contents .. & move /y keys .. & move /y offsets .. & move /y sitemap.html .. & copy /y Dictionary ..
+	-rd /s /q jUnK
+
+%.html: %.inc.html template.html Foldoc.pm
+	build.pl do_template $(@:.html=.inc.html) $@
+
+new.html rss.xml: Dictionary build.pl Foldoc.pm
+	build.pl new
+
+missing.html: Dictionary build.pl Foldoc.pm template.html Makefile
+	unison -batch imperial -silent
+	"C:\Program Files\PuTTY\plink.exe" -agent -l dbh shell1.doc.ic.ac.uk make
+
+cgi-test:
+	set REQUEST_METHOD=1& set QUERY_STRING=query=database& perl index.cgi
+
+# Local variables:
+# compile-command: "gmake"
+# End:

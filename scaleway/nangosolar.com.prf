@@ -1,0 +1,12 @@
+# Unison profile to sync nangosolar.com to scaleway
+
+# pa & set UNISON=.& .\unison nangosolar.com.prf -batch
+
+root = ../nangosolar.com
+root = ssh://denis@foldoc//var/www/nangosolar.com
+
+auto = true
+contactquietly = true
+terse = true
+times = true
+sshcmd = ssh.bat

@@ -1,0 +1,1 @@
+@prove -Ilibs t/*.t
