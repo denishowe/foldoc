@@ -345,9 +345,10 @@ sub query_is_file
 {
 	local ($_) = @_;
 
-	# return -e "./_";					# Why "./"?
-	return -e $_
-		|| s/^pub/_pub/ && -e $_;		# /pub is served from _pub
+	return !/\0/ &&
+	  (-e $_
+		  ||
+		 s/^pub/_pub/ && -e $_);		# /pub is served from _pub
 }
 
 # Pre-process any unprocessed web logs.

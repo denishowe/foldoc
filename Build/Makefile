@@ -1,6 +1,6 @@
 # Makefile for FOLDOC
 
-# Denis Howe 2003-09-15 - 2025-06-22
+# Denis Howe 2003-09-15 - 2025-08-29
 
 # Run in FOLDOC/foldoc where the source files are
 
@@ -15,14 +15,19 @@ COPYFLAGS = --recursive --update -p
 
 # Publish built files all at once
 
-default: pub keys offsets $(HTML_FILES)
+default: Dictionary pub keys offsets $(HTML_FILES)
 	$(COPY) $(COPYFLAGS) . $(WEB_ROOT)
-
-pub:
-	 $(COPY) $(COPYFLAGS) $@ $(WEB_ROOT)/$@ # Publish static files for early test
 
 logged:
 	$(MAKE) > make.out 2>&1
+
+# Publish static files for early test
+
+pub:
+	$(COPY) $(COPYFLAGS) $@ $(WEB_ROOT)/$@
+
+Dictionary: $B/Dictionary
+	$(COPY) $(COPYFLAGS) $< $@
 
 # Make the contents pages, the keys and offset indexes
 

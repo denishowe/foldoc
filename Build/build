@@ -11,10 +11,13 @@
 export UNISON=C:/Users/denis/Documents/Tech/Unison/home
 
 # Stop Git bash (mingw) prepending "C:/Program Files/Git" to paths
+
 export MSYS_NO_PATHCONV=1
 
 u="unison scaleway"
 $u -batch || $u
-# Makefile relative to --directory
+
+# Makefile is relative to --directory
+
 ssh -l denis foldoc make --directory=Projects/FOLDOC/foldoc --makefile=../Build/Makefile
 $u -batch || $u
