@@ -1,5 +1,4 @@
-body
-{
+body {
     font-family: 'Belgrano', serif;
     font-size: 100%;
     background: url("images/daimondeyes-73f4.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
@@ -7,6 +6,7 @@ body
     height: 86%;
     margin: 0;
     padding: 0;
+    line-height: 150%;
 }
 
 #left, #right { float: left }
@@ -19,8 +19,7 @@ p a:hover { border: 1px dotted #8CF }
 
 h2, h3 { clear: both }
 
-hr
-{
+hr {
     clear: both;
     overflow: visible;
     height: 30px;
@@ -28,11 +27,10 @@ hr
     border-color: #999;
     border-width: 1px 0 0 0;
     border-radius: 20px;
-    margin-bottom: -20px;
+    margin-top: 30px;
 }
 
-hr:before
-{
+hr:before {
     display: block;
     content: "";
     height: 30px;
@@ -45,15 +43,13 @@ hr:before
 
 #right hr { width: 105% }
 
-table
-{
+table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 35px;
 }
 
-td
-{
+td {
     width: 33%;
     border-spacing: 0;
     border-style: solid;
@@ -66,8 +62,7 @@ dt { font-weight: bold }
 
 .vertical-space { height: 20px }
 
-#container
-{
+#container {
     width: 90%;
     min-height: 100%;
     background-color: #fff;
@@ -77,13 +72,9 @@ dt { font-weight: bold }
     overflow: hidden;
 }
 
-#left
-{
-    min-width: 75%;
-}
+#left { min-width: 75% }
 
-#right
-{
+#right {
     width: 22em;
     padding: 0 0 0 20px;
     border-left: 1px dotted #999;
@@ -92,7 +83,10 @@ dt { font-weight: bold }
 
 #right p { margin: 10px 0 20px 15px }
 
-.logo { float: left; margin: 0 25px 10px 0 }
+.logo {
+    float: left;
+    margin: 0 25px 10px 0;
+}
 
 form { clear: both }
 
@@ -143,7 +137,10 @@ input[type='text']
     border-bottom-left-radius: 6px;
 }
 
-#nav .button { height: 30px; padding-top: 8px }
+#nav .button {
+    height: 30px;
+    padding-top: 8px;
+}
 
 .button:hover
 {
@@ -160,9 +157,14 @@ input[type='text']
     top: 1px;
 }
 
-#content { clear: left; max-width: 47em }
+#content {
+    clear: left;
+    max-width: 47em;
+}
 
-#content p { line-height: 150% }
+#content p {
+    margin: 0 20px;
+}
 
 #query, #query:hover, #cse-search-box input[type='text']
 {
@@ -178,13 +180,15 @@ input[type='text']
 
 #cse-search-box .button { margin-right: 0 }
 
-#blurb
-{
+#blurb {
     clear: both;
     width: 95%;
 }
 
-.updated { float: right; font-size: 12px }
+.updated {
+    float: right;
+    font-size: 12px;
+}
 
 .neighbours b { border-bottom: 1px solid blue }
 
@@ -208,7 +212,10 @@ input[type='text']
     top: 3px;
 }
 
-#HCB_comment_box { clear: both; margin-bottom: 30px }
+#HCB_comment_box {
+    clear: both;
+    margin-bottom: 30px;
+}
 
 #HCB_comment_form_box { padding-bottom: 0px !important }
 
@@ -216,8 +223,7 @@ input[type='text']
 
 #no_comments { margin: 0 }
 
-#footer
-{
+#footer{
     clear: both;
     width: 100%;
     margin-top: 20px;

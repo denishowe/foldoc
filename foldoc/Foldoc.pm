@@ -150,8 +150,6 @@ sub cmpn
 	($whole ? $s1 : substr($s1, 0, length($s2))) cmp $s2;
 }
 
-
-
 # Compare the key of QUERY with the keys in the keys file.
 # Return the indexes of first and last matching entry.
 

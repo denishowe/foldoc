@@ -1,4 +1,0 @@
-HOSTNAME=foldoc-paris-1
-
-#Min Hour DoM Mon DoW Command # Times are UTC = BST-1
-00   00   *   *   *   make --directory=/var/www/foldoc.org logged
