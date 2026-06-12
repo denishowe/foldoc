@@ -2,7 +2,7 @@
 
 # Search for words in a word list
 
-# Denis Howe 2011-05-31 - 2012-10-18 14:07
+# Denis Howe 2011-05-31 - 2026-06-12
 
 # http://foldoc.org/words.pl?tri.*bia$
 
@@ -27,12 +27,18 @@ my @w = split /\n/, $_;
 my $re = $ENV{QUERY_STRING} || "";
 $re =~ s/.*=//;
 $re =~ s/%(..)/chr hex $1/eg;
-print qq{<html><head><title>Words matching $re</title></head>
+print qq{<html><head><title>Words matching $re</title>
+<style>
+body { font-size: 2em; }
+input, button { font-size: 2em; padding: 0.5em; }
+a { font-size: 1em; }
+</style>
+</head>
 <body>
-<form style="font-size: large">
+<form>
   <b>RE</b>
-  <input name="r" type="text" value="$re" style="width: 90%; font-size: large">
-  <input type="submit" value="Find Words" style="font-size: large">
+  <input name="r" type="text" value="$re" style="width: 90%;">
+  <input type="submit" value="Find Words">
 </form><p>
 };
 if ($re)
